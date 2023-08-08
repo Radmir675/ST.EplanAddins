@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33027.164
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddins.LastTerminalStrip", "ST.EplAddins.LastTerminalStrip\ST.EplAddins.LastTerminalStrip.csproj", "{FD5AFDE8-BBA2-4185-BDD5-1849E90FF5F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddin.ConnectionNumeration", "ST.EplAddin.ConnectionNumeration\ST.EplAddin.ConnectionNumeration.csproj", "{F8B7E7F3-87CF-4CF6-AF30-96663D7F71F4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD5AFDE8-BBA2-4185-BDD5-1849E90FF5F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD5AFDE8-BBA2-4185-BDD5-1849E90FF5F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD5AFDE8-BBA2-4185-BDD5-1849E90FF5F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD5AFDE8-BBA2-4185-BDD5-1849E90FF5F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8B7E7F3-87CF-4CF6-AF30-96663D7F71F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8B7E7F3-87CF-4CF6-AF30-96663D7F71F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8B7E7F3-87CF-4CF6-AF30-96663D7F71F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8B7E7F3-87CF-4CF6-AF30-96663D7F71F4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {18E3DB0D-0F3E-4B25-A268-4EDF56F594A4}
+	EndGlobalSection
+EndGlobal
