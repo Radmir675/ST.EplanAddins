@@ -21,7 +21,7 @@ namespace ST.EplAddins.LastTerminalStrip
 
         public bool OnInitGui()
         {
-            return true;
+            return true ;
         }
 
         public bool OnRegister(ref bool bLoadOnStart)
