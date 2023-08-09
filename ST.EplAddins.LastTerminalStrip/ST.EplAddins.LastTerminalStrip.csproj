@@ -7,8 +7,8 @@
     <ProjectGuid>{FD5AFDE8-BBA2-4185-BDD5-1849E90FF5F9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ST.EplAddins.LastTerminalStrip</RootNamespace>
-    <AssemblyName>ST.EplAddins.LastTerminalStrip</AssemblyName>
+    <RootNamespace>ST.EplAddin.LastTerminalStrip</RootNamespace>
+    <AssemblyName>ST.EplAddin.LastTerminalStrip</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
