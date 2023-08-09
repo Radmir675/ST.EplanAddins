@@ -13,8 +13,9 @@ using ST.EplAddin.ConnectionNumeration;
 
 namespace EplAddin.ConnectionNumeration
 {
-    public class AddinModule : IEplAddIn
+    public class ConnectionAddinModule : IEplAddIn
     {
+    public static uint numberOfPosition;
 
         
         public virtual string Description => "DEscriptoiion";
@@ -36,7 +37,7 @@ namespace EplAddin.ConnectionNumeration
         {
             string actionName = ConnectionPlacementSchemaAction.actionName;
             Menu menu = new Menu();
-            menu.AddMainMenu("ST Add-ins", Menu.MainMenuName.eMainMenuUtilities,"Выравнивание соединений", actionName, "Статус",1);
+            numberOfPosition= menu.AddMainMenu("ST Add-ins", Menu.MainMenuName.eMainMenuUtilities,"Выравнивание соединений", actionName, "Статус",1);
             return true;
         }
 

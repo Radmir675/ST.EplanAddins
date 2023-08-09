@@ -111,5 +111,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TerminalFilter.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ST.EplAddin.ConnectionNumeration\ST.EplAddin.ConnectionNumeration.csproj">
+      <Project>{f8b7e7f3-87cf-4cf6-af30-96663d7f71f4}</Project>
+      <Name>ST.EplAddin.ConnectionNumeration</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using ST.EplAddin.ConnectionNumeration;
 namespace ST.EplAddins.LastTerminalStrip
 {
     public class AddinModule : IEplAddIn
     {
+         
         public bool OnExit()
         {
             throw new NotImplementedException();
@@ -19,15 +20,14 @@ namespace ST.EplAddins.LastTerminalStrip
         {
             return true;
         }
-        //"ST Add-ins",, Menu.MainMenuName.eMainMenuUtilities, 
-        // "Выравнивание соединений", actionName, "Статус", 1
-        //"Принадлежности последних клемм"
+      
         public bool OnInitGui()
         {
             string actionName = FindLastTerminalAction.actionName;
             Menu menu = new Menu();
-            menu.AddMenuItem("л",actionName,"dc",1,1,false,false);
-           
+            menu.AddMainMenu("ST Add-ins", Menu.MainMenuName.eMainMenuUtilities, "Last terminal", actionName, "Статус", 1);
+            // uint ID= menu.AddMenuItem("SRV",actionName,"Статус",37265,0,false,false);
+
             return true;
             
         }

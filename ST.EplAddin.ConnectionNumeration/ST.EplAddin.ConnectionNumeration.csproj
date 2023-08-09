@@ -102,7 +102,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EplAddin\ConnectionNumeration\AddinModule.cs" />
+    <Compile Include="EplAddin\ConnectionNumeration\ConnectionAddinModule.cs" />
     <Compile Include="EplAddin\ConnectionNumeration\EsGenerateConnectionsAction.cs" />
     <Compile Include="ConnectionFilter.cs" />
     <Compile Include="ConnectionPlacementSchemaAction.cs" />
