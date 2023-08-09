@@ -1,5 +1,6 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.DataModel;
+using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.HEServices;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,10 @@ namespace ST.EplAddins.LastTerminalStrip
 {
     class FindLastTerminalAction : IEplAction
     {
+        public static string actionName = "LastTerminalStrip";
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
-            Name = "LastTerminalStrip";
+            Name =actionName ;
             Ordinal = 32;
             return true;
         }
@@ -26,14 +28,15 @@ namespace ST.EplAddins.LastTerminalStrip
             string projectName = currentProject.ProjectName;
             selectionSet.LockProjectByDefault = false;
             selectionSet.LockSelectionByDefault = false;
-          //  var s= new DMObjectsFinder(currentProject).GetConnectionsWithCF((ICustomFilter)new ConnectionFilter());
+            Terminal[] terminals = new DMObjectsFinder(currentProject)
+                .GetTerminalsWithCF(new TerminalFilter());
 
             return true;
         }
 
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
-            
+
         }
 
     }

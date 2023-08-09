@@ -1,4 +1,5 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
+using Eplan.EplApi.Gui;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,17 @@ namespace ST.EplAddins.LastTerminalStrip
         {
             return true;
         }
-
+        //"ST Add-ins",, Menu.MainMenuName.eMainMenuUtilities, 
+        // "Выравнивание соединений", actionName, "Статус", 1
+        //"Принадлежности последних клемм"
         public bool OnInitGui()
         {
-            return true ;
+            string actionName = FindLastTerminalAction.actionName;
+            Menu menu = new Menu();
+            menu.AddMenuItem("л",actionName,"dc",1,1,false,false);
+           
+            return true;
+            
         }
 
         public bool OnRegister(ref bool bLoadOnStart)
