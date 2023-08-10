@@ -28,8 +28,10 @@ namespace ST.EplAddins.LastTerminalStrip
             string projectName = currentProject.ProjectName;
             selectionSet.LockProjectByDefault = false;
             selectionSet.LockSelectionByDefault = false;
-            Terminal[] terminals = new DMObjectsFinder(currentProject)
-                .GetTerminalsWithCF(new TerminalFilter());
+            FunctionsFilter terminalStripsFunctionsFilter=new FunctionsFilter();
+            terminalStripsFunctionsFilter.Category = Function.Enums.Category.Terminal;
+            TerminalStrip[] terminalsStrip = new DMObjectsFinder(currentProject)
+                .GetTerminalStrips(terminalStripsFunctionsFilter);
 
             return true;
         }

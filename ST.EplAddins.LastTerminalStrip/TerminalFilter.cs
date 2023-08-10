@@ -8,15 +8,12 @@ using System.Threading.Tasks;
 
 namespace ST.EplAddins.LastTerminalStrip
 {
-    class TerminalFilter : ICustomFilter
+    class TerminalFilter :FunctionsFilter
     {
         public bool IsMatching(StorableObject objectToCheck)
         {
-            Terminal terminal = objectToCheck as Terminal;
-            return terminal.Category == Terminal.Enums.Category.Terminal;
-
-            
-
+            TerminalStrip terminalStrip = objectToCheck as TerminalStrip;
+            return terminalStrip.Category == TerminalStrip.Enums.Category.Terminal;
 
         }
     }
