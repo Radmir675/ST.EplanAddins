@@ -25,7 +25,7 @@ namespace ST.EplAddins.LastTerminalStrip
         {
             string actionName = FindLastTerminalAction.actionName;
             Menu menu = new Menu();
-            menu.AddMainMenu("ST Add-ins", Menu.MainMenuName.eMainMenuUtilities, "Last terminal", actionName, "Статус", 1);
+            menu.AddMainMenu("ST ", Menu.MainMenuName.eMainMenuUtilities, "Last terminal", actionName, "Статус", 1);
             // uint ID= menu.AddMenuItem("SRV",actionName,"Статус",37265,0,false,false);
 
             return true;
