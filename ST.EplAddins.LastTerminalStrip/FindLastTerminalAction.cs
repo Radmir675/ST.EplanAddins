@@ -33,11 +33,8 @@ namespace ST.EplAddins.LastTerminalStrip
             TerminalStrip[] terminalsStrip = new DMObjectsFinder(currentProject)
                 .GetTerminalStrips(terminalStripsFunctionsFilter);
 
-            //foreach (TerminalStrip terminal in terminalsStrip)
-            //{
-
-            //}
-            var resultTerminal = terminalsStrip.Where(x => x.Properties.FUNC_TERMINAL_MAIN).Select(x=>x);
+            
+            var resultTerminal = terminalsStrip.Where(x => x.Properties.FUNC_TERMINAL_MAIN==true).Select(x=>x);
             return true;
         }
 
