@@ -30,11 +30,13 @@ namespace ST.EplAddins.LastTerminalStrip
             selectionSet.LockSelectionByDefault = false;
             FunctionsFilter terminalStripsFunctionsFilter=new FunctionsFilter();
             terminalStripsFunctionsFilter.Category = Function.Enums.Category.Terminal;
-            TerminalStrip[] terminalsStrip = new DMObjectsFinder(currentProject)
+            TerminalStrip[] terminalsStrips = new DMObjectsFinder(currentProject)
                 .GetTerminalStrips(terminalStripsFunctionsFilter);
+            var s = terminalsStrips.Where(z=>z.Properties.FUNC_TERMINAL_MAIN==true).Select(x=>x.Terminals.Last());
+            var ss = s.Select(x => x.Properties.FUNC_FULLDEVICETAG);
 
             
-            var resultTerminal = terminalsStrip.Where(x => x.Properties.FUNC_TERMINAL_MAIN==true).Select(x=>x);
+            var resultTerminal = terminalsStrips.Where(x => x.Properties.FUNC_TERMINAL_MAIN==true).Select(x=>x);
             return true;
         }
 
