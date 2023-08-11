@@ -32,7 +32,7 @@ namespace ST.EplAddins.LastTerminalStrip
             terminalStripsFunctionsFilter.Category = Function.Enums.Category.Terminal;
             Terminal[] terminals = new DMObjectsFinder(currentProject)
                 .GetTerminals(terminalStripsFunctionsFilter);
-            var s = terminals.Where(z => z.IsMainFunction == true);
+            var s = terminals.Where(z => z.IsMainFunction == true).Select(x=>x).ToList();
             var groups = s.ToLookup(x=>x.Group);
             var groups1 = s.ToLookup(x => x.Properties.FUNC_FULLNAME);
 
