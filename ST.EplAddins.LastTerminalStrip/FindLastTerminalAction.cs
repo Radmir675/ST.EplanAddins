@@ -34,8 +34,8 @@ namespace ST.EplAddins.LastTerminalStrip
             terminalStripsFunctionsFilter.Category = Function.Enums.Category.Terminal;
             Terminal[] terminals = new DMObjectsFinder(currentProject)
                 .GetTerminals(terminalStripsFunctionsFilter);
-            var onlyMainTerminals = terminals.Where(z => z.IsMainTerminal == true).Select(x=>x);
-            var groupsWithMainLastTerminal = onlyMainTerminals
+            var mainTerminalsGroups = terminals.Where(z => z.IsMainTerminal == true).Select(x=>x);
+            var mainFunctionLastTerminalsGroups = mainTerminalsGroups
                 .ToLookup(x => x.Properties.FUNC_IDENTDEVICETAG)
                 .Select(x => x.Last());
           
