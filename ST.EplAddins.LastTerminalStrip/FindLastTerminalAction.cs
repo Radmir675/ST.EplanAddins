@@ -35,7 +35,9 @@ namespace ST.EplAddins.LastTerminalStrip
             Terminal[] terminals = new DMObjectsFinder(currentProject)
                 .GetTerminals(terminalStripsFunctionsFilter);
             var onlyMainTerminals = terminals.Where(z => z.IsMainTerminal == true).Select(x=>x);
-            var groupsWithMainLastTerminal = onlyMainTerminals.ToLookup(x => x.Properties.FUNC_IDENTDEVICETAG).Select(x => x.Last());
+            var groupsWithMainLastTerminal = onlyMainTerminals
+                .ToLookup(x => x.Properties.FUNC_IDENTDEVICETAG)
+                .Select(x => x.Last());
           
             return true;
         }
