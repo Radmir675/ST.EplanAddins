@@ -28,16 +28,15 @@ namespace ST.EplAddins.LastTerminalStrip
             string projectName = currentProject.ProjectName;
             selectionSet.LockProjectByDefault = false;
             selectionSet.LockSelectionByDefault = false;
+
             FunctionsFilter terminalStripsFunctionsFilter=new FunctionsFilter();
+
             terminalStripsFunctionsFilter.Category = Function.Enums.Category.Terminal;
             Terminal[] terminals = new DMObjectsFinder(currentProject)
                 .GetTerminals(terminalStripsFunctionsFilter);
-            var s = terminals.Where(z => z.IsMainFunction == true).Select(x=>x).ToList();
-            var groups = s.ToLookup(x=>x.Group);
-            var groups1 = s.ToLookup(x => x.Properties.FUNC_FULLNAME);
-
-
-
+            var onlyMainTerminals = terminals.Where(z => z.IsMainTerminal == true).Select(x=>x);
+            var groupsWithMainLastTerminal = onlyMainTerminals.ToLookup(x => x.Properties.FUNC_IDENTDEVICETAG).Select(x => x.Last());
+          
             return true;
         }
 
