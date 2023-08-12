@@ -16,7 +16,7 @@ namespace ST.EplAddins.LastTerminalStrip
         public static string actionName = "LastTerminalStrip";
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
-            Name =actionName ;
+            Name = actionName;
             Ordinal = 32;
             return true;
         }
@@ -29,12 +29,13 @@ namespace ST.EplAddins.LastTerminalStrip
             selectionSet.LockProjectByDefault = false;
             selectionSet.LockSelectionByDefault = false;
 
-           var lastTerminals=GetLastTerminsls(currentProject);
+            var lastTerminals = GetLastTerminsls(currentProject);
+
 
             return true;
         }
 
-        private  List<Terminal> GetLastTerminsls(Project currentProject)
+        private List<Terminal> GetLastTerminsls(Project currentProject)
         {
             FunctionsFilter terminalStripsFunctionsFilter = new FunctionsFilter();
 
