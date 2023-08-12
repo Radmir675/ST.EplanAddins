@@ -29,17 +29,23 @@ namespace ST.EplAddins.LastTerminalStrip
             selectionSet.LockProjectByDefault = false;
             selectionSet.LockSelectionByDefault = false;
 
-            FunctionsFilter terminalStripsFunctionsFilter=new FunctionsFilter();
+           var lastTerminals=GetLastTerminsls(currentProject);
+
+            return true;
+        }
+
+        private  List<Terminal> GetLastTerminsls(Project currentProject)
+        {
+            FunctionsFilter terminalStripsFunctionsFilter = new FunctionsFilter();
 
             terminalStripsFunctionsFilter.Category = Function.Enums.Category.Terminal;
             Terminal[] terminals = new DMObjectsFinder(currentProject)
                 .GetTerminals(terminalStripsFunctionsFilter);
-            var mainTerminalsGroups = terminals.Where(z => z.IsMainTerminal == true).Select(x=>x);
-            var mainFunctionLastTerminalsGroups = mainTerminalsGroups
-                .ToLookup(x => x.Properties.FUNC_IDENTDEVICETAG)
-                .Select(x => x.Last());
-          
-            return true;
+            var mainTerminalsGroups = terminals.Where(terminal => terminal.IsMainTerminal == true).Select(x => x);
+            List<Terminal> mainFunctionLastTerminalsGroups = mainTerminalsGroups
+                .ToLookup(terminal => terminal.Properties.FUNC_IDENTDEVICETAG)
+                .Select(terminal => terminal.Last()).ToList();
+            return mainFunctionLastTerminalsGroups;
         }
 
         public void GetActionProperties(ref ActionProperties actionProperties)
