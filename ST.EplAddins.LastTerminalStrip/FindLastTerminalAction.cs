@@ -1,4 +1,5 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
+using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.HEServices;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace ST.EplAddins.LastTerminalStrip
 {
@@ -28,11 +30,25 @@ namespace ST.EplAddins.LastTerminalStrip
             string projectName = currentProject.ProjectName;
             selectionSet.LockProjectByDefault = false;
             selectionSet.LockSelectionByDefault = false;
-
+            
             var lastTerminals = GetLastTerminsls(currentProject);
 
-
-            return true;
+            ActionManager actionManager = new ActionManager();
+            Eplan.EplApi.ApplicationFramework.Action findLastAction = actionManager.FindAction("XSeAddToSearchDBAction");
+            if (findLastAction != null)
+            {
+                ActionCallingContext ctx = new ActionCallingContext();
+                bool bRet = findLastAction.Execute(ctx);
+                if (bRet)
+                {
+                    new Decider().Decide(EnumDecisionType.eOkDecision, "The Action " + findLastAction + " ended successfully!", "", EnumDecisionReturn.eOK, EnumDecisionReturn.eOK);
+                }
+                else
+                {
+                    new Decider().Decide(EnumDecisionType.eOkDecision, "The Action " + findLastAction + " ended with errors!", "", EnumDecisionReturn.eOK, EnumDecisionReturn.eOK);
+                }
+            }
+                return true;
         }
 
         private List<Terminal> GetLastTerminsls(Project currentProject)
