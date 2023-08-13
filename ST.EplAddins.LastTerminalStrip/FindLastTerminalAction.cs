@@ -30,9 +30,20 @@ namespace ST.EplAddins.LastTerminalStrip
             string projectName = currentProject.ProjectName;
             selectionSet.LockProjectByDefault = false;
             selectionSet.LockSelectionByDefault = false;
-            
-            var lastTerminals = GetLastTerminsls(currentProject);
 
+            var lastTerminals = GetLastTerminsls(currentProject);
+            StorableObject[] storable = lastTerminals.ToArray();
+
+
+
+            Search search = new Search();
+            search.AddToSearchDB(storable);
+           
+            return true;
+        }
+
+        private static void ActionCallingContext()
+        {
             ActionManager actionManager = new ActionManager();
             Eplan.EplApi.ApplicationFramework.Action findLastAction = actionManager.FindAction("XSeAddToSearchDBAction");
             if (findLastAction != null)
@@ -48,7 +59,6 @@ namespace ST.EplAddins.LastTerminalStrip
                     new Decider().Decide(EnumDecisionType.eOkDecision, "The Action " + findLastAction + " ended with errors!", "", EnumDecisionReturn.eOK, EnumDecisionReturn.eOK);
                 }
             }
-                return true;
         }
 
         private List<Terminal> GetLastTerminsls(Project currentProject)
@@ -63,6 +73,7 @@ namespace ST.EplAddins.LastTerminalStrip
                 .ToLookup(terminal => terminal.Properties.FUNC_IDENTDEVICETAG)
                 .Select(terminal => terminal.Last()).ToList();
             return mainFunctionLastTerminalsGroups;
+            
         }
 
         public void GetActionProperties(ref ActionProperties actionProperties)
