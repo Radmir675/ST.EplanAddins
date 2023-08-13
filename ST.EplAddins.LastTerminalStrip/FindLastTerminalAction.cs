@@ -34,11 +34,9 @@ namespace ST.EplAddins.LastTerminalStrip
             var lastTerminals = GetLastTerminsls(currentProject);
             StorableObject[] storable = lastTerminals.ToArray();
 
-
-
             Search search = new Search();
             search.AddToSearchDB(storable);
-           
+
             return true;
         }
 
@@ -71,9 +69,10 @@ namespace ST.EplAddins.LastTerminalStrip
             var mainTerminalsGroups = terminals.Where(terminal => terminal.IsMainTerminal == true).Select(x => x);
             List<Terminal> mainFunctionLastTerminalsGroups = mainTerminalsGroups
                 .ToLookup(terminal => terminal.Properties.FUNC_IDENTDEVICETAG)
+                //.OrderBy(x=>x.Key.Id.Index);
                 .Select(terminal => terminal.Last()).ToList();
             return mainFunctionLastTerminalsGroups;
-            
+
         }
 
         public void GetActionProperties(ref ActionProperties actionProperties)
