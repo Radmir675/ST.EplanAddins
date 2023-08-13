@@ -69,7 +69,7 @@ namespace ST.EplAddins.LastTerminalStrip
             var mainTerminalsGroups = terminals.Where(terminal => terminal.IsMainTerminal == true).Select(x => x);
             List<Terminal> mainFunctionLastTerminalsGroups = mainTerminalsGroups
                 .ToLookup(terminal => terminal.Properties.FUNC_IDENTDEVICETAG)
-                //.OrderBy(x=>x.Key.Id.Index);
+                .OrderBy(x=>x.Key.Id.Index=20030)
                 .Select(terminal => terminal.Last()).ToList();
             return mainFunctionLastTerminalsGroups;
 
