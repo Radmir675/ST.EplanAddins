@@ -4,6 +4,7 @@ using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.HEServices;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,14 @@ using System.Windows.Forms;
 
 namespace ST.EplAddins.LastTerminalStrip
 {
+    public  class Comparer : IComparer<Terminal>
+    {
+        public int Compare(Terminal x, Terminal y)
+        {
+            return x.Properties.FUNC_PINORTERMINALNUMBER.ToString().CompareTo(x.Properties.FUNC_PINORTERMINALNUMBER.ToString());
+        }
+    }
+
     class FindLastTerminalAction : IEplAction
     {
         public static string actionName = "LastTerminalStrip";
@@ -69,7 +78,8 @@ namespace ST.EplAddins.LastTerminalStrip
             var mainTerminalsGroups = terminals.Where(terminal => terminal.IsMainTerminal == true).Select(x => x);
             List<Terminal> mainFunctionLastTerminalsGroups = mainTerminalsGroups
                 .ToLookup(terminal => terminal.Properties.FUNC_IDENTDEVICETAG)
-                .Select(z => z.OrderBy(x => (x.Properties.FUNC_PINORTERMINALNUMBER).ToString()))
+                //.Select(z => z.OrderBy(x => (x.Properties.FUNC_PINORTERMINALNUMBER).ToString()))
+                .Select(x=>x.OrderBy(x1 => x1, new Comparer()))//OrderBy(x1=>x1 ,new Comparer())
                 .Select(terminal => terminal.Last()).ToList();
             return mainFunctionLastTerminalsGroups;
 
