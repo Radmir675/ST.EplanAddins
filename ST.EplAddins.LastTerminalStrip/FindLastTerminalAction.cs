@@ -62,8 +62,8 @@ namespace ST.EplAddins.LastTerminalStrip
         private List<Terminal> GetLastTerminsls(Project currentProject)
         {
             FunctionsFilter terminalStripsFunctionsFilter = new FunctionsFilter();
-
             terminalStripsFunctionsFilter.Category = Function.Enums.Category.Terminal;
+
             Terminal[] terminals = new DMObjectsFinder(currentProject)
                 .GetTerminals(terminalStripsFunctionsFilter);
             var mainTerminalsGroups = terminals.Where(terminal => terminal.IsMainTerminal == true).Select(x => x);
