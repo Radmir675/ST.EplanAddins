@@ -14,11 +14,36 @@ using System.Windows.Forms;
 
 namespace ST.EplAddins.LastTerminalStrip
 {
-    public  class ComparerMy : IComparer<Terminal>
+    public class ComparerMy : IComparer<Terminal>
     {
         public int Compare(Terminal x, Terminal y)
         {
-            return x.Properties.FUNC_PINORTERMINALNUMBER.ToString().CompareTo(x.Properties.FUNC_PINORTERMINALNUMBER.ToString());
+            string s = string.Empty;
+
+            try
+            {
+                s=(string)x?.Properties?.FUNC_PINORTERMINALNUMBER;
+            }
+            catch (Exception)
+            {
+
+                
+            }
+
+
+
+            string ss= string.Empty;
+            try
+            {
+                ss = (string)y?.Properties?.FUNC_PINORTERMINALNUMBER;
+            }
+            catch (Exception)
+            {
+
+                
+            }
+            var result= s?.CompareTo(ss)??0;
+            return result;
         }
     }
 
@@ -72,17 +97,21 @@ namespace ST.EplAddins.LastTerminalStrip
         {
             FunctionsFilter terminalStripsFunctionsFilter = new FunctionsFilter();
             terminalStripsFunctionsFilter.Category = Function.Enums.Category.Terminal;
+            
 
             Terminal[] terminals = new DMObjectsFinder(currentProject)
                 .GetTerminals(terminalStripsFunctionsFilter);
             var mainTerminalsGroups = terminals.Where(terminal => terminal.IsMainTerminal == true).Select(x => x);
-            List<Terminal> mainFunctionLastTerminalsGroups = mainTerminalsGroups
-                .ToLookup(terminal => terminal.Properties.FUNC_IDENTDEVICETAG)
-                //.Select(z => z.OrderBy(x => (x.Properties.FUNC_PINORTERMINALNUMBER).ToString()))
-                .OrderBy(x=>x, new ComparerMy())
-                //.Select(terminal => terminal.Last()).ToList();
-            return mainFunctionLastTerminalsGroups;
+            var mainFunctionLastTerminalsGroups = mainTerminalsGroups
+                .ToLookup(terminal => terminal.Properties.FUNC_IDENTDEVICETAG).ToList();
 
+            List<Terminal> sorted = mainFunctionLastTerminalsGroups.Select(x => x?.OrderBy(y => y, new ComparerMy()).Last()).ToList();
+         
+
+
+
+
+            return sorted;
         }
 
         public void GetActionProperties(ref ActionProperties actionProperties)
