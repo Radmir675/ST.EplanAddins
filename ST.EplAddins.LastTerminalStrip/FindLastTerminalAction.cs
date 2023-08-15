@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace ST.EplAddins.LastTerminalStrip
 {
-    public  class Comparer : IComparer<Terminal>
+    public  class ComparerMy : IComparer<Terminal>
     {
         public int Compare(Terminal x, Terminal y)
         {
@@ -79,8 +79,8 @@ namespace ST.EplAddins.LastTerminalStrip
             List<Terminal> mainFunctionLastTerminalsGroups = mainTerminalsGroups
                 .ToLookup(terminal => terminal.Properties.FUNC_IDENTDEVICETAG)
                 //.Select(z => z.OrderBy(x => (x.Properties.FUNC_PINORTERMINALNUMBER).ToString()))
-                .Select(x=>x.OrderBy(x1 => x1, new Comparer()))//OrderBy(x1=>x1 ,new Comparer())
-                .Select(terminal => terminal.Last()).ToList();
+                .OrderBy(x=>x, new ComparerMy())
+                //.Select(terminal => terminal.Last()).ToList();
             return mainFunctionLastTerminalsGroups;
 
         }
