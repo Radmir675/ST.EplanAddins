@@ -69,6 +69,7 @@ namespace ST.EplAddins.LastTerminalStrip
             StorableObject[] storable = lastTerminals.ToArray();
 
             Search search = new Search();
+            search.ClearSearchDB(currentProject);
             search.AddToSearchDB(storable);
 
             return true;
