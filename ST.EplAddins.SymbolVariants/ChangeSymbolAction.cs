@@ -26,7 +26,7 @@ namespace ST.EplAddins.SymbolVariants
 
             if (userSelection.Count() != 1)
             {
-                MessageBox.Show("Вы выбрали более одного объекта!");
+                MessageBox.Show("Пожалуйста выберите лишь 1 объект");
                 return false;
             }
 
