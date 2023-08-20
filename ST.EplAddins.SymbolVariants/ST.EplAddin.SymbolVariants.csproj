@@ -7,8 +7,8 @@
     <ProjectGuid>{12B286E5-29AC-4F40-92F7-50095CDC94B8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ST.EplAddins.SymbolVariants</RootNamespace>
-    <AssemblyName>ST.EplAddins.SymbolVariants</AssemblyName>
+    <RootNamespace>ST.EplAddin.SymbolVariants</RootNamespace>
+    <AssemblyName>ST.EplAddin.SymbolVariants</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

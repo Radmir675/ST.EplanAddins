@@ -22,8 +22,10 @@ namespace ST.EplAddins.SymbolVariants
 
         public bool OnInitGui()
         {
+
             Menu menu = new Menu();
-            menu.AddMainMenu("Scan ", Menu.MainMenuName.eMainMenuUtilities, "Change symbol", actionName, "Статус", 1);
+            menu.AddMainMenu("Scan ", Menu.MainMenuName.eMainMenuUtilities, "Change symbol", ChangeSymbolAction.actionName, "Статус", 1);
+            return true;
         }
 
         public bool OnRegister(ref bool bLoadOnStart)
