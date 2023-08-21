@@ -35,8 +35,24 @@ namespace ST.EplAddins.SymbolVariants
             StorableObject storableObject = userSelection.Single();
             SymbolLibrary symbolLibrary = new SymbolLibrary();
             SymbolReference symbolref = storableObject as SymbolReference;
-            var symbolVariantCurrent = symbolref.SymbolVariant;
-            var symbolsCount = symbolref.SymbolVariant.VariantNr;
+
+            Symbol parent = symbolref.SymbolVariant.Parent;
+
+            int intSymbolcurrent = symbolref.SymbolVariant.VariantNr;
+            int symbolsCount = parent.Variants.Count();
+
+            //находишь в библиотеке и берешь вариант нужный
+            currentProject.SymbolLibraries[""].[""].
+            //присваеваешь
+            symbolref.SymbolVariant= 
+
+
+
+
+
+
+
+
 
 
             return true;
