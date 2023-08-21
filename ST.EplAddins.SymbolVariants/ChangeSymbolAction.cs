@@ -38,23 +38,22 @@ namespace ST.EplAddins.SymbolVariants
 
             Symbol parent = symbolref.SymbolVariant.Parent;
 
-            int intSymbolcurrent = symbolref.SymbolVariant.VariantNr;
-            int symbolsCount = parent.Variants.Count();
+            int intSymbolCurrent = symbolref.SymbolVariant.VariantNr;//отсчет идет от 0
+            int symbolsCount = parent.Variants.Count();//общее число
+            int intSymbolNext = intSymbolCurrent < symbolsCount-1 ? intSymbolNext= intSymbolCurrent + 1 : 0;
 
-            //находишь в библиотеке и берешь вариант нужный
-            currentProject.SymbolLibraries[""].[""].
-            //присваеваешь
-            symbolref.SymbolVariant= 
+            var currentVariant = symbolref.SymbolVariant;
 
-
-
-
-
-
-
-
-
-
+            string symbolLibraryName = symbolref.SymbolVariant.SymbolLibraryName;
+            string symbolName = symbolref.SymbolVariant.SymbolName ;
+            
+           
+            var currentSymbol = currentProject.SymbolLibraries
+                .Where(x => x.Name == symbolLibraryName)
+                .Select(x => x.Symbols.Where(symbolNamez => symbolNamez.Name == symbolName)).Single();
+            var symbolVariantToReplace = currentSymbol.Select( c => c.Variants.Single(g=>g.VariantNr== intSymbolNext)).Single();
+            symbolref.SymbolVariant = symbolVariantToReplace;
+              
             return true;
         }
 
