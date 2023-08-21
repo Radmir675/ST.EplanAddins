@@ -33,14 +33,12 @@ namespace ST.EplAddins.SymbolVariants
             }
 
             StorableObject storableObject = userSelection.Single();
-            var s=((Symbol)storableObject).Variants;
-            Symbol symbols = (Symbol)userSelection.Single() ;
-            
-            var selectedSymbolVariantsCount=symbols.Variants;
-            
+            SymbolLibrary symbolLibrary = new SymbolLibrary();
+            SymbolReference symbolref = storableObject as SymbolReference;
+            var symbolVariantCurrent = symbolref.SymbolVariant;
+            var symbolsCount = symbolref.SymbolVariant.VariantNr;
 
-            SymbolReference symbolReference = new SymbolReference();
-            var currentSymbol=symbolReference.SymbolVariant.VariantNr;
+
             return true;
         }
 
