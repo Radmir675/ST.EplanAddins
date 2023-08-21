@@ -1,5 +1,6 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.DataModel;
+using Eplan.EplApi.DataModel.MasterData;
 using Eplan.EplApi.HEServices;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace ST.EplAddins.SymbolVariants
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
             SelectionSet selectionSet = new SelectionSet();
+            Project currentProject = selectionSet.GetCurrentProject(true);
             var userSelection = selectionSet.Selection;
 
             if (userSelection.Count() != 1)
@@ -31,7 +33,14 @@ namespace ST.EplAddins.SymbolVariants
             }
 
             StorableObject storableObject = userSelection.Single();
+            var s=((Symbol)storableObject).Variants;
+            Symbol symbols = (Symbol)userSelection.Single() ;
             
+            var selectedSymbolVariantsCount=symbols.Variants;
+            
+
+            SymbolReference symbolReference = new SymbolReference();
+            var currentSymbol=symbolReference.SymbolVariant.VariantNr;
             return true;
         }
 
