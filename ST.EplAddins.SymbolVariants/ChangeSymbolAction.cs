@@ -56,6 +56,7 @@ namespace ST.EplAddins.SymbolVariants
             var currentSymbol = currentProject.SymbolLibraries
                 .Where(x => x.Name == symbolLibraryName)
                 .Select(x => x.Symbols.Where(symbolNamez => symbolNamez.Name == symbolName)).Single();
+
             SymbolVariant symbolVariantToReplace = null;
             try
             {
