@@ -21,7 +21,7 @@ namespace ST.EplAddins.SymbolVariants
             Ordinal = 32;
             return true;
             Settings oSettings = new Settings();
-           
+
 
 
         }
@@ -45,26 +45,38 @@ namespace ST.EplAddins.SymbolVariants
 
             int intSymbolCurrent = symbolref.SymbolVariant.VariantNr;//отсчет идет от 0
             int symbolsCount = parent.Variants.Count();//общее число
-            int intSymbolNext = intSymbolCurrent < symbolsCount-1 ? intSymbolNext= intSymbolCurrent + 1 : 0;
+            int intSymbolNext = intSymbolCurrent < symbolsCount - 1 ? intSymbolNext = intSymbolCurrent + 1 : 0;
 
             var currentVariant = symbolref.SymbolVariant;
 
             string symbolLibraryName = symbolref.SymbolVariant.SymbolLibraryName;
-            string symbolName = symbolref.SymbolVariant.SymbolName ;
-            
-           
+            string symbolName = symbolref.SymbolVariant.SymbolName;
+
+
             var currentSymbol = currentProject.SymbolLibraries
                 .Where(x => x.Name == symbolLibraryName)
                 .Select(x => x.Symbols.Where(symbolNamez => symbolNamez.Name == symbolName)).Single();
-            var symbolVariantToReplace = currentSymbol.Select( c => c.Variants.Single(g=>g.VariantNr== intSymbolNext)).Single();
+            SymbolVariant symbolVariantToReplace = null;
+            try
+            {
+                symbolVariantToReplace = currentSymbol.Select(c => c.Variants.Single(g => g.VariantNr == intSymbolNext)).Single();
+
+            }
+            catch (Exception)
+            {
+
+                symbolVariantToReplace = currentSymbol.Select(c => c.Variants.Single(g => g.VariantNr == 0)).Single();
+
+            }
+
             symbolref.SymbolVariant = symbolVariantToReplace;
-              
+
             return true;
         }
 
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
-            
+
         }
 
 
