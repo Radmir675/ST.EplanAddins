@@ -1,4 +1,5 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
+using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.MasterData;
 using Eplan.EplApi.HEServices;
@@ -19,6 +20,10 @@ namespace ST.EplAddins.SymbolVariants
             Name = actionName;
             Ordinal = 32;
             return true;
+            Settings oSettings = new Settings();
+           
+
+
         }
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
@@ -59,7 +64,7 @@ namespace ST.EplAddins.SymbolVariants
 
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
-
+            
         }
 
 
