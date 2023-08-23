@@ -23,7 +23,11 @@ namespace ST.EplAddins.SymbolVariants
             using (new LockingStep())
             {
 
-                SelectionSet selectionSet = new SelectionSet();
+                SelectionSet selectionSet = new SelectionSet()
+                {
+                    LockProjectByDefault = false,
+                    LockSelectionByDefault = false
+                };
                 Project currentProject = selectionSet.GetCurrentProject(true);
                 var userSelection = selectionSet.Selection;
                 // TODO отсортировать объекты одного типа(символы)
