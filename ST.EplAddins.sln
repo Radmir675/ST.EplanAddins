@@ -3,6 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.33027.164
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddin.LastTerminalStrip", "ST.EplAddins.LastTerminalStrip\ST.EplAddin.LastTerminalStrip.csproj", "{FD5AFDE8-BBA2-4185-BDD5-1849E90FF5F9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{12B286E5-29AC-4F40-92F7-50095CDC94B8} = {12B286E5-29AC-4F40-92F7-50095CDC94B8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddin.ConnectionNumeration", "ST.EplAddin.ConnectionNumeration\ST.EplAddin.ConnectionNumeration.csproj", "{F8B7E7F3-87CF-4CF6-AF30-96663D7F71F4}"
 EndProject
