@@ -23,11 +23,12 @@ namespace ST.EplAddins.SymbolVariants
             using (new LockingStep())
             {
 
-                SelectionSet selectionSet = new SelectionSet()
-                {
-                    LockProjectByDefault = false,
-                    LockSelectionByDefault = false
-                };
+                SelectionSet selectionSet = new SelectionSet();
+
+
+                selectionSet.LockProjectByDefault = false;
+                selectionSet.LockSelectionByDefault = false;
+
                 Project currentProject = selectionSet.GetCurrentProject(true);
                 var userSelection = selectionSet.Selection;
                 // TODO отсортировать объекты одного типа(символы)
@@ -72,6 +73,7 @@ namespace ST.EplAddins.SymbolVariants
                     {
                         symbolVariantToReplace = currentSymbol.Select(c => c.Variants.Single(g => g.VariantNr == 0)).Single();
                     }
+                    symbolref.LockObject();
                     symbolref.SymbolVariant = symbolVariantToReplace;
                     safetyPoint.Commit();
                 }
