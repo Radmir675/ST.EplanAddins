@@ -40,8 +40,8 @@ namespace ST.EplAddins.SymbolVariants
                     return false;
                 }
 
-                using (SafetyPoint safetyPoint = SafetyPoint.Create())
-                {
+              //  using (SafetyPoint safetyPoint = SafetyPoint.Create())
+               // {
 
                     StorableObject storableObject = userSelection.Single();
                     SymbolLibrary symbolLibrary = new SymbolLibrary();
@@ -73,10 +73,10 @@ namespace ST.EplAddins.SymbolVariants
                     {
                         symbolVariantToReplace = currentSymbol.Select(c => c.Variants.Single(g => g.VariantNr == 0)).Single();
                     }
-                    symbolref.LockObject();
+                    symbolref.SmartLock();
                     symbolref.SymbolVariant = symbolVariantToReplace;
-                    safetyPoint.Commit();
-                }
+                  //  safetyPoint.Commit();
+               //}
 
             }
             return true;
