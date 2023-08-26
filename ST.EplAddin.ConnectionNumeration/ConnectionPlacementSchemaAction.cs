@@ -42,7 +42,7 @@ namespace ST.EplAddin.ConnectionNumeration
                         {
                             PinBase[] connectionPoints = ((SymbolReference)connectionDefPoint).GraphicalConnectionPoints;
                             SymbolReference.GraphicalConnection graphicalConnection = ((IEnumerable<SymbolReference.GraphicalConnection>)((SymbolReference)connectionDefPoint).GraphicalConnections).FirstOrDefault<SymbolReference.GraphicalConnection>();
-                            if (graphicalConnection.StartConnectionPoint.Direction == Pin.Directions.Left | graphicalConnection.StartConnectionPoint.Direction == Pin.Directions.Right)
+                            if (graphicalConnection?.StartConnectionPoint.Direction == Pin.Directions.Left | graphicalConnection?.StartConnectionPoint.Direction == Pin.Directions.Right)
                             {
                                 SymbolReference.PropertyPlacementsSchema placementsSchema = ((IEnumerable<SymbolReference.PropertyPlacementsSchema>)((SymbolReference)connectionDefPoint).
                                     PropertyPlacementsSchemas.All).Where<SymbolReference.PropertyPlacementsSchema>((Func<SymbolReference.PropertyPlacementsSchema, bool>)
@@ -50,7 +50,7 @@ namespace ST.EplAddin.ConnectionNumeration
                                 if (placementsSchema != null)
                                     ((SymbolReference)connectionDefPoint).PropertyPlacementsSchemas.Selected = placementsSchema;
                             }
-                            if (graphicalConnection.StartConnectionPoint.Direction == Pin.Directions.Up | graphicalConnection.StartConnectionPoint.Direction == Pin.Directions.Down)
+                            if (graphicalConnection?.StartConnectionPoint.Direction == Pin.Directions.Up | graphicalConnection?.StartConnectionPoint.Direction == Pin.Directions.Down)
                             {
                                 SymbolReference.PropertyPlacementsSchema placementsSchema = ((IEnumerable<SymbolReference.PropertyPlacementsSchema>)((SymbolReference)connectionDefPoint).PropertyPlacementsSchemas.All).Where<SymbolReference.PropertyPlacementsSchema>((Func<SymbolReference.PropertyPlacementsSchema, bool>)(p => p.Name == "Соединение.Обозначение.Вертикальное")).FirstOrDefault<SymbolReference.PropertyPlacementsSchema>();
                                 if (placementsSchema != null)
