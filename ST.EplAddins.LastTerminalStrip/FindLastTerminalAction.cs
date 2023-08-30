@@ -101,13 +101,47 @@ namespace ST.EplAddins.LastTerminalStrip
 
             Terminal[] terminals = new DMObjectsFinder(currentProject)
                 .GetTerminals(terminalStripsFunctionsFilter);
-            var mainTerminalsGroups = terminals.Where(terminal => terminal.IsMainTerminal == true).Select(x => x);
-            var mainFunctionLastTerminalsGroups = mainTerminalsGroups
-                .ToLookup(terminal => terminal.Properties.FUNC_IDENTDEVICETAG).ToList();
-                 List<Terminal> sorted = mainFunctionLastTerminalsGroups.Select(x => x?.OrderBy(y => y, new ComparerMy()).Last()).ToList();
+            var terminalGroups = terminals
+                .ToLookup(terminal => terminal.Properties.FUNC_IDENTDEVICETAG);
 
+            //TODO:если нет определения клеммника то создать
 
-            return sorted;
+            TerminalStrip[] terminalStrips = terminalGroups.Select(x =>
+           {
+               //if (x.First().TerminalStrip == null)
+               //{
+               //    return new TerminalStrip().Cr;
+               //   // return new TerminalStrip().Create(currentProject);
+               //}
+               return x.First().TerminalStrip;
+           }).ToArray();
+
+            DeviceService deviceService = new DeviceService();
+          //TODO:убрал пока на всякий случай
+          //deviceService.SortTerminalStrips(terminalStrips, DeviceService.TerminalStripSortMethods.Default);
+            deviceService.SortTerminalStrips(terminalStrips, DeviceService.TerminalStripSortMethods.Numeric);
+            //потом взять из по свойству #20809 последнюю главную клемму;
+
+            List<Terminal> record = new List<Terminal>();
+            foreach (var terminalstrip in terminalStrips)
+            {
+                if (terminalstrip != null && terminalstrip.Terminals != null)
+                {
+
+                    List<Terminal> TerminalOff = new List<Terminal>();
+                    foreach (Terminal terminal in terminalstrip.Terminals)
+                    {
+                        if (terminal.IsMainTerminal == true)
+                        {
+                            TerminalOff.Add(terminal);
+                        }
+                    }
+                    if (TerminalOff != null && TerminalOff.Count() >= 1)
+                        record.Add(TerminalOff?.Last());
+                }
+
+            }
+            return record;
         }
 
         public void GetActionProperties(ref ActionProperties actionProperties)
