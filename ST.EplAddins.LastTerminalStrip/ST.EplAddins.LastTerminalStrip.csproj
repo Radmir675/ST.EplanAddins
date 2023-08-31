@@ -127,6 +127,10 @@
     <Compile Include="TerminalFilter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonLibrary\CommonLibrary.csproj">
+      <Project>{9c21e9ba-7cd5-4e59-a509-af54a92f490b}</Project>
+      <Name>CommonLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.EplAddin.ConnectionNumeration\ST.EplAddin.ConnectionNumeration.csproj">
       <Project>{f8b7e7f3-87cf-4cf6-af30-96663d7f71f4}</Project>
       <Name>ST.EplAddin.ConnectionNumeration</Name>

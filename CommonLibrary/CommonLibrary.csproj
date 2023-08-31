@@ -49,6 +49,10 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Eplan.EplApi.Baseu, Version=1.0.0.0, Culture=neutral, PublicKeyToken=57aaa27e22f7b107, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\EPLAN\Platform\2.8.3\Bin\Eplan.EplApi.Baseu.dll</HintPath>
+    </Reference>
     <Reference Include="Eplan.EplApi.Guiu, Version=1.0.0.0, Culture=neutral, PublicKeyToken=57aaa27e22f7b107, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files\EPLAN\Platform\2.8.3\Bin\Eplan.EplApi.Guiu.dll</HintPath>
