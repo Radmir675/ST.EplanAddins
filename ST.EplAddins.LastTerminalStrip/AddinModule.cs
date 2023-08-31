@@ -1,16 +1,14 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.Gui;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ST.EplAddin.ConnectionNumeration;
+using Eplan.EplApi.Base;
+
 namespace ST.EplAddins.LastTerminalStrip
 {
     public class AddinModule : IEplAddIn
     {
          
+            string actionName = FindLastTerminalAction.actionName;
         public bool OnExit()
         {
             throw new NotImplementedException();
@@ -23,7 +21,6 @@ namespace ST.EplAddins.LastTerminalStrip
       
         public bool OnInitGui()
         {
-            string actionName = FindLastTerminalAction.actionName;
             Menu menu = new Menu();
             menu.AddMainMenu("ST ", Menu.MainMenuName.eMainMenuUtilities, "Last terminal", actionName, "Статус", 1);
             // uint ID= menu.AddMenuItem("SRV",actionName,"Статус",37265,0,false,false);
@@ -36,12 +33,25 @@ namespace ST.EplAddins.LastTerminalStrip
         {
             bLoadOnStart = true;
             System.Windows.Forms.MessageBox.Show("Last terminal addin is implemented");
+           // CreateStaticMenu();
             return true;
         }
 
         public bool OnUnregister()
         {
             return true;
+        }
+        public void CreateStaticMenu()
+        {
+            Menu staticMenu = new Menu();
+            staticMenu.AddStaticMainMenu("STS", NewmultiLanfString("Rlc"), Menu.MainMenuName.eMainMenuUtilities, NewmultiLanfString("Последние клеммы"), actionName, NewmultiLanfString("ms"),1);
+        }
+
+        private  MultiLangString NewmultiLanfString(string input)
+        {
+            MultiLangString multyLangString = new MultiLangString();
+            multyLangString.AddString(ISOCode.Language.L_ru_RU, input);
+            return multyLangString;
         }
     }
 }

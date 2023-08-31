@@ -10,38 +10,6 @@ using System.Linq;
 
 namespace ST.EplAddins.LastTerminalStrip
 {
-    public class ComparerMy : IComparer<Terminal>
-    {
-        public int Compare(Terminal x, Terminal y)
-        {
-            string s = string.Empty;
-
-            try
-            {
-                s = (string)x?.Properties?.FUNC_PINORTERMINALNUMBER;
-            }
-            catch (Exception)
-            {
-
-
-            }
-
-
-
-            string ss = string.Empty;
-            try
-            {
-                ss = (string)y?.Properties?.FUNC_PINORTERMINALNUMBER;
-            }
-            catch (Exception)
-            {
-
-
-            }
-            var result = s?.CompareTo(ss) ?? 0;
-            return result;
-        }
-    }
     class FindLastTerminalAction : IEplAction
     {
         public static string actionName = "LastTerminalStrip";
