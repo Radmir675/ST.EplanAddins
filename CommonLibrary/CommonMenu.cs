@@ -1,4 +1,5 @@
-﻿using Eplan.EplApi.Base;
+﻿using Eplan.EplApi.ApplicationFramework;
+using Eplan.EplApi.Base;
 using Eplan.EplApi.Gui;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace ST.EplAddin.CommonLibrary
         private void CreateStaticMenu(string actionName)
         {
             Menu staticMenu = new Menu();
-            staticMenu.AddStaticMainMenu("STS", NewmultiLanfString("Rlc"), Menu.MainMenuName.eMainMenuUtilities, NewmultiLanfString("Последние клеммы"), actionName, NewmultiLanfString("ms"), 1);
+            staticMenu.AddStaticMainMenu("STS", NewmultiLanfString("Scantronic"), Menu.MainMenuName.eMainMenuUtilities, NewmultiLanfString("Последние клеммы"), actionName, NewmultiLanfString("ms"), 1);
         }
 
         private MultiLangString NewmultiLanfString(string input)
