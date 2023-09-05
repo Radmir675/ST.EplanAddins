@@ -10,6 +10,7 @@ using ST.EplAddin.Base;
 using System.Diagnostics;
 using Eplan.EplApi.Gui;
 using ST.EplAddin.ConnectionNumeration;
+using ST.EplAddin.CommonLibrary;
 
 namespace EplAddin.ConnectionNumeration
 {
@@ -36,8 +37,10 @@ namespace EplAddin.ConnectionNumeration
         public bool OnInitGui()
         {
             string actionName = ConnectionPlacementSchemaAction.actionName;
-            Menu menu = new Menu();
-            numberOfPosition= menu.AddMainMenu("ST Add-ins", Menu.MainMenuName.eMainMenuUtilities,"Выравнивание соединений", actionName, "Статус",1);
+            CommonMenu commonMenu = new CommonMenu();
+            commonMenu.OnInitGuiST(actionName,"Выравнивание соединений");
+            //Menu menu = new Menu();
+            //numberOfPosition= menu.AddMainMenu("ST Add-ins", Menu.MainMenuName.eMainMenuUtilities,"Выравнивание соединений", actionName, "Статус",1);
             return true;
         }
 

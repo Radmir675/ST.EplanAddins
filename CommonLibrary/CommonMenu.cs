@@ -6,17 +6,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace ST.EplAddin.CommonLibrary
 {
+   
     public class CommonMenu
     {
-        public void OnInitGuiST(string ActionName) 
+
+        private int insertCount;
+        public void OnInitGuiST(string ActionName,string menuName) 
         {
-            CreateStaticMenu(ActionName);
+      
+            if (insertCount == 0)
+            {
+                CreateStaticMenu(ActionName, menuName);
+
+            }
+            else 
+            {
+                AddStaticMenuItem(ActionName, menuName);
+            }
            
-            //TODO: при вызове метода создавалось меню или добавлялс новый Action
-           // если оно создано то 
+           
         }
         public void OnOutGuiST() 
         {
@@ -29,10 +41,17 @@ namespace ST.EplAddin.CommonLibrary
 
           // new Menu().AddStaticMenuItem();
         }
-        private void CreateStaticMenu(string actionName)
+        private void CreateStaticMenu(string actionName, string menuName)
         {
             Menu staticMenu = new Menu();
-            staticMenu.AddStaticMainMenu("STS", NewmultiLanfString("Scantronic"), Menu.MainMenuName.eMainMenuUtilities, NewmultiLanfString("Последние клеммы"), actionName, NewmultiLanfString("ms"), 1);
+            staticMenu.AddStaticMainMenu("STS", NewmultiLanfString("Scantronic"), Menu.MainMenuName.eMainMenuUtilities, NewmultiLanfString(menuName), actionName, NewmultiLanfString("ms"), 1);
+            insertCount++;
+        }
+        private void AddStaticMenuItem(string actionName, string menuName) 
+        {
+            Menu staticMenu = new Menu();
+            staticMenu.AddStaticMenuItem("STS", NewmultiLanfString("Scantronic"), actionName, NewmultiLanfString("Status"),0,"wd",1,false,false);
+            insertCount++;
         }
 
         private MultiLangString NewmultiLanfString(string input)
@@ -40,6 +59,10 @@ namespace ST.EplAddin.CommonLibrary
             MultiLangString multyLangString = new MultiLangString();
             multyLangString.AddString(ISOCode.Language.L_ru_RU, input);
             return multyLangString;
+        }
+        private AddCallStack() 
+        {
+            JsonSerializer.Serialize(,);
         }
     }
 }

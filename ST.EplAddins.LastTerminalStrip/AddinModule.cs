@@ -22,10 +22,10 @@ namespace ST.EplAddins.LastTerminalStrip
         public bool OnInitGui()
         {
             CommonMenu commonMenu = new CommonMenu();
-            commonMenu.OnInitGuiST(actionName);
+            commonMenu.OnInitGuiST(actionName,"Поиск последних клемм");
 
-            Menu menu = new Menu();
-            menu.AddMainMenu("ST ", Menu.MainMenuName.eMainMenuUtilities, "Last terminal", actionName, "Статус", 1);
+           // Menu menu = new Menu();
+           // menu.AddMainMenu("ST ", Menu.MainMenuName.eMainMenuUtilities, "Last terminal", actionName, "Статус", 1);
             // uint ID= menu.AddMenuItem("SRV",actionName,"Статус",37265,0,false,false);
 
             return true;

@@ -113,5 +113,11 @@
     <Compile Include="EsSwitchConnectionUpdateAction.cs" />
     <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CommonLibrary\CommonLibrary.csproj">
+      <Project>{9C21E9BA-7CD5-4E59-A509-AF54A92F490B}</Project>
+      <Name>CommonLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
