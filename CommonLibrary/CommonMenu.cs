@@ -10,59 +10,101 @@ using System.Text.Json;
 
 namespace ST.EplAddin.CommonLibrary
 {
-   
+
     public class CommonMenu
     {
+        Menu menu;
+        DataStorageJson<MenuIdentifier> dataStorageJson;
 
-        private int insertCount;
-        public void OnInitGuiST(string ActionName,string menuName) 
+        public CommonMenu()
         {
-      
-            if (insertCount == 0)
+            string userName = Environment.UserName;
+            dataStorageJson = new DataStorageJson<MenuIdentifier>(@"C:\Users\Public\path.json");
+        }
+
+        public void AddMenu(string actionName, string menuName, string actionMenuName)
+        {
+            MenuIdentifier menuIdentifier;
+            menuName = "Scantronic Systems";
+            uint menuId;
+            menu = new Menu();
+            if (GetAddinnsInjectedCount() == 0)
             {
-                CreateStaticMenu(ActionName, menuName);
+                menuId = menu.AddMainMenu(menuName, Menu.MainMenuName.eMainMenuUtilities, actionMenuName, actionName, "Статус", 1);
+                dataStorageJson.SaveItemToStorage(new MenuIdentifier(menuId));
+            }
+            else
+            {
+                uint currentMenuId = GetMenuId();
+                menuId = menu.AddMenuItem(actionMenuName, actionName, "Статус", currentMenuId, 0, false, false);
+                var current = dataStorageJson.ReadAllFromStorage();
+                current.AddinsInjectedQuantity++;
+                //проверить
+                dataStorageJson.SaveItemToStorage(current);
+
+                //все по нулям потому что создаем новый объект
+            }
+        }
+
+        public uint GetMenuId()
+        {
+            uint menuId = dataStorageJson.ReadAllFromStorage().MenuId;
+            return menuId;
+        }
+        public int GetAddinnsInjectedCount()
+        {
+            int totalAddinsInjected;
+            try
+            {
+                totalAddinsInjected = dataStorageJson.ReadAllFromStorage().AddinsInjectedQuantity;
 
             }
-            else 
+            catch (Exception)
             {
-                AddStaticMenuItem(ActionName, menuName);
+
+                return 0;
             }
-           
-           
+            return totalAddinsInjected;
+
         }
-        public void OnOutGuiST() 
+        public void RemoveMenu(uint currentId)
         {
-           
-            //если есть еще модули в меню, то его просто не удаляем
+            menu.RemoveMenuItem(32);
+        }
+        public void OnExitAddin()
+        {
+            var current = dataStorageJson.ReadAllFromStorage();
+            var total = current.AddinsInjectedQuantity;
+           var count=current.AddinsInjectedQuantity-1;
+            dataStorageJson.SaveItemToStorage(new MenuIdentifier(current.MenuId, count));
+
+            if (GetAddinnsInjectedCount() == 0)
+            {
+                dataStorageJson.RemoveJsonFile();
+            }
         }
 
-        private void AddSMenuItem() 
+        public class MenuIdentifier
         {
 
-          // new Menu().AddStaticMenuItem();
-        }
-        private void CreateStaticMenu(string actionName, string menuName)
-        {
-            Menu staticMenu = new Menu();
-            staticMenu.AddStaticMainMenu("STS", NewmultiLanfString("Scantronic"), Menu.MainMenuName.eMainMenuUtilities, NewmultiLanfString(menuName), actionName, NewmultiLanfString("ms"), 1);
-            insertCount++;
-        }
-        private void AddStaticMenuItem(string actionName, string menuName) 
-        {
-            Menu staticMenu = new Menu();
-            staticMenu.AddStaticMenuItem("STS", NewmultiLanfString("Scantronic"), actionName, NewmultiLanfString("Status"),0,"wd",1,false,false);
-            insertCount++;
+            public MenuIdentifier(uint menuId)
+            {
+                MenuId = menuId;
+                AddinsInjectedQuantity++;
+            }
+            public MenuIdentifier(uint menuId,int AddinsInjectedQuantity)
+            {
+                MenuId = menuId;
+                this.AddinsInjectedQuantity=AddinsInjectedQuantity;
+            }
+            public MenuIdentifier()
+            {
+                
+            }
+            public uint MenuId { get; set; }
+            public int AddinsInjectedQuantity { get; set; }
         }
 
-        private MultiLangString NewmultiLanfString(string input)
-        {
-            MultiLangString multyLangString = new MultiLangString();
-            multyLangString.AddString(ISOCode.Language.L_ru_RU, input);
-            return multyLangString;
-        }
-        private AddCallStack() 
-        {
-            JsonSerializer.Serialize(,);
-        }
+
     }
 }

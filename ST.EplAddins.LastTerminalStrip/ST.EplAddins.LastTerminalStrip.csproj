@@ -110,6 +110,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files\EPLAN\Platform\2.8.3\Bin\Eplan.EplApi.WebServiceu.dll</HintPath>
     </Reference>
+    <Reference Include="ST.EplAddin.CommonLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CommonLibrary\bin\x64\Debug\ST.EplAddin.CommonLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />

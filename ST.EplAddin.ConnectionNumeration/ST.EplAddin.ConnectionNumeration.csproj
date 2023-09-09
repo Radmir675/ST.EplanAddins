@@ -100,6 +100,10 @@
     <Reference Include="ST.EplAddin.Base">
       <HintPath>lib\ST.EplAddin.Base.dll</HintPath>
     </Reference>
+    <Reference Include="ST.EplAddin.CommonLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CommonLibrary\bin\x64\Debug\ST.EplAddin.CommonLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />

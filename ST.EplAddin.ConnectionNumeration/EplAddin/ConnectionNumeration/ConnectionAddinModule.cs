@@ -16,6 +16,7 @@ namespace EplAddin.ConnectionNumeration
 {
     public class ConnectionAddinModule : IEplAddIn
     {
+        CommonMenu commonMenu;
     public static uint numberOfPosition;
 
         
@@ -25,8 +26,12 @@ namespace EplAddin.ConnectionNumeration
 
         public virtual string MenuIcon => "DEscriptoiion.ico";
 
-       
-        public bool OnExit() => true;
+
+        public bool OnExit() 
+        {
+            commonMenu.OnExitAddin();
+            return true;
+        }
 
         public bool OnInit()
         {
@@ -37,9 +42,9 @@ namespace EplAddin.ConnectionNumeration
         public bool OnInitGui()
         {
             string actionName = ConnectionPlacementSchemaAction.actionName;
-            CommonMenu commonMenu = new CommonMenu();
-            commonMenu.OnInitGuiST(actionName,"Выравнивание соединений");
-            //Menu menu = new Menu();
+             commonMenu = new CommonMenu();
+            commonMenu.AddMenu(actionName, "SCRadmir", "Выравнивание соединений");
+
             //numberOfPosition= menu.AddMainMenu("ST Add-ins", Menu.MainMenuName.eMainMenuUtilities,"Выравнивание соединений", actionName, "Статус",1);
             return true;
         }

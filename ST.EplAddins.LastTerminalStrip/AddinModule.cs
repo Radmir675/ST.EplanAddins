@@ -7,11 +7,12 @@ namespace ST.EplAddins.LastTerminalStrip
 {
     public class AddinModule : IEplAddIn
     {
-
+        CommonMenu commonMenu;
         string actionName = FindLastTerminalAction.actionName;
         public bool OnExit()
         {
-            throw new NotImplementedException();
+            commonMenu.OnExitAddin();
+            return true;
         }
 
         public bool OnInit()
@@ -21,13 +22,13 @@ namespace ST.EplAddins.LastTerminalStrip
 
         public bool OnInitGui()
         {
-            CommonMenu commonMenu = new CommonMenu();
-            commonMenu.OnInitGuiST(actionName,"Поиск последних клемм");
 
-           // Menu menu = new Menu();
-           // menu.AddMainMenu("ST ", Menu.MainMenuName.eMainMenuUtilities, "Last terminal", actionName, "Статус", 1);
-            // uint ID= menu.AddMenuItem("SRV",actionName,"Статус",37265,0,false,false);
-
+            //Menu menu = new Menu();
+            //uint S = menu.AddMainMenu("ST", Menu.MainMenuName.eMainMenuUtilities, "Last terminal", actionName, "Статус", 1);
+            //uint ID = menu.AddMenuItem("SRV", actionName, "Статус", S, 0, false, false);
+            //uint GetID = menu.GetCustomMenuId("Last terminal", actionName);
+             commonMenu = new CommonMenu();
+            commonMenu.AddMenu(actionName,"SCRadmir","Найти клемму");
             return true;
 
         }
@@ -43,18 +44,18 @@ namespace ST.EplAddins.LastTerminalStrip
         {
             return true;
         }
-        public void CreateStaticMenu()
-        {
-            Menu staticMenu = new Menu();
-            staticMenu.AddStaticMainMenu("STS", NewmultiLanfString("Rlc"), Menu.MainMenuName.eMainMenuUtilities, NewmultiLanfString("Последние клеммы"), actionName, NewmultiLanfString("ms"), 1);
-        }
+        //public void CreateStaticMenu()
+        //{
+        //    Menu staticMenu = new Menu();
+        //    staticMenu.AddStaticMainMenu("STS", NewmultiLanfString("Rlc"), Menu.MainMenuName.eMainMenuUtilities, NewmultiLanfString("Последние клеммы"), actionName, NewmultiLanfString("ms"), 1);
+        //}
 
-        private MultiLangString NewmultiLanfString(string input)
-        {
-            MultiLangString multyLangString = new MultiLangString();
-            multyLangString.AddString(ISOCode.Language.L_ru_RU, input);
-            return multyLangString;
-        }
+        //private MultiLangString NewmultiLanfString(string input)
+        //{
+        //    MultiLangString multyLangString = new MultiLangString();
+        //    multyLangString.AddString(ISOCode.Language.L_ru_RU, input);
+        //    return multyLangString;
+        //}
     }
 
 }
