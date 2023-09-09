@@ -51,17 +51,7 @@ namespace ST.EplAddin.CommonLibrary
         }
         public int GetAddinnsInjectedCount()
         {
-            int totalAddinsInjected;
-            try
-            {
-                totalAddinsInjected = dataStorageJson.ReadAllFromStorage().AddinsInjectedQuantity;
-                //ловим ошибку при обращении к quantity
-            }
-            catch (Exception)
-            {
-
-                return 0;
-            }
+            int totalAddinsInjected = dataStorageJson.ReadAllFromStorage()?.AddinsInjectedQuantity ?? 0;
             return totalAddinsInjected;
 
         }
