@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace ST.EplAddin.CommonLibrary
 {
 
-    public class CommonMenu
+    public partial class CommonMenu
     {
         Menu menu;
         DataStorageJson<MenuIdentifier> dataStorageJson;
@@ -55,9 +55,9 @@ namespace ST.EplAddin.CommonLibrary
             return totalAddinsInjected;
 
         }
-        public void RemoveMenu(uint currentId)
+        public void RemoveMenu(uint currentMenuId)
         {
-            menu.RemoveMenuItem(32);
+            menu.RemoveMenuItem(currentMenuId);
         }
         public void OnExitAddin()
         {
@@ -71,28 +71,7 @@ namespace ST.EplAddin.CommonLibrary
                 dataStorageJson.RemoveJsonFile();
             }
         }
-
-        public class MenuIdentifier
-        {
-
-            public MenuIdentifier(uint menuId)
-            {
-                MenuId = menuId;
-                AddinsInjectedQuantity++;
-            }
-            public MenuIdentifier(uint menuId, int AddinsInjectedQuantity)
-            {
-                MenuId = menuId;
-                this.AddinsInjectedQuantity = AddinsInjectedQuantity;
-            }
-            public MenuIdentifier()
-            {
-
-            }
-            public uint MenuId { get; set; }
-            public int AddinsInjectedQuantity { get; set; }
-        }
-
+       
 
     }
 }
