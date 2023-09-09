@@ -39,10 +39,8 @@ namespace ST.EplAddin.CommonLibrary
                 menuId = menu.AddMenuItem(actionMenuName, actionName, "Статус", currentMenuId, 0, false, false);
                 var current = dataStorageJson.ReadAllFromStorage();
                 current.AddinsInjectedQuantity++;
-                //проверить
                 dataStorageJson.SaveItemToStorage(current);
 
-                //все по нулям потому что создаем новый объект
             }
         }
 
@@ -57,7 +55,7 @@ namespace ST.EplAddin.CommonLibrary
             try
             {
                 totalAddinsInjected = dataStorageJson.ReadAllFromStorage().AddinsInjectedQuantity;
-
+                //ловим ошибку при обращении к quantity
             }
             catch (Exception)
             {
@@ -75,7 +73,7 @@ namespace ST.EplAddin.CommonLibrary
         {
             var current = dataStorageJson.ReadAllFromStorage();
             var total = current.AddinsInjectedQuantity;
-           var count=current.AddinsInjectedQuantity-1;
+            var count = current.AddinsInjectedQuantity - 1;
             dataStorageJson.SaveItemToStorage(new MenuIdentifier(current.MenuId, count));
 
             if (GetAddinnsInjectedCount() == 0)
@@ -92,14 +90,14 @@ namespace ST.EplAddin.CommonLibrary
                 MenuId = menuId;
                 AddinsInjectedQuantity++;
             }
-            public MenuIdentifier(uint menuId,int AddinsInjectedQuantity)
+            public MenuIdentifier(uint menuId, int AddinsInjectedQuantity)
             {
                 MenuId = menuId;
-                this.AddinsInjectedQuantity=AddinsInjectedQuantity;
+                this.AddinsInjectedQuantity = AddinsInjectedQuantity;
             }
             public MenuIdentifier()
             {
-                
+
             }
             public uint MenuId { get; set; }
             public int AddinsInjectedQuantity { get; set; }

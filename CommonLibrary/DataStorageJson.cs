@@ -21,61 +21,25 @@ namespace ST.EplAddin.CommonLibrary
         public T ReadAllFromStorage()
         {
             T data1;
-
-
             if (File.Exists(filePathToSaveData) == false)
             {
                 var file = File.Create(filePathToSaveData);
                 file.Close();
                 file.Dispose();
-                
             }
             try
             {
-
                 var date = File.ReadAllText(filePathToSaveData);
                 data1 = JsonConvert.DeserializeObject<T>(date);
                 return data1;
-
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.Message);
                 return (T)Activator.CreateInstance(typeof(T));
             }
 
         }
-
-
-
-
-
-
-
-
-
-        //    if (File.Exists(filePathToSaveData) == false)
-        //{
-        //    var file = File.Create(filePathToSaveData);
-        //    //(T)Activator.CreateInstance(typeof(T))
-
-        //}
-        //try
-        //{
-
-        //string date = File.ReadAllText(filePathToSaveData);
-
-        // data1 = JsonConvert.DeserializeObject<T>(date);
-        //return data1;
-        //}
-        //catch (Exception ex)
-        //{
-
-        //    MessageBox.Show(ex.Message) ;
-        //return (T)Activator.CreateInstance(typeof(T));
-        //}
-
 
         public static T GetObject<T>() where T : new()
         {
@@ -86,11 +50,6 @@ namespace ST.EplAddin.CommonLibrary
             string serializedData = JsonConvert.SerializeObject(newData, Formatting.Indented);
           
 
-                //if (File.Exists(filePathToSaveData) == false)
-                //{
-                //    FileStream file = File.Create(filePathToSaveData);
-                //    file.Close();
-                //}
                 try
                 {
                     File.WriteAllText(filePathToSaveData, serializedData);
@@ -109,14 +68,7 @@ namespace ST.EplAddin.CommonLibrary
             File.Delete(filePathToSaveData);
         }
 
-        //public void RemovefromStorage(int numberDataToDelete)
-        //{
-        //    List<T> dataFromStorage = ReadAllFromStorage();
-        //    dataFromStorage.Remove(dataFromStorage[numberDataToDelete]);
-        //    string serializedData = JsonConvert.SerializeObject(dataFromStorage, Formatting.Indented);
-        //    File.WriteAllText(filePathToSaveData, serializedData);
-        //}
-
+      
 
 
 
