@@ -11,10 +11,10 @@ using System.Text.Json;
 namespace ST.EplAddin.CommonLibrary
 {
 
-    public partial class CommonMenu
+    public  class CommonMenu
     {
         Menu menu;
-        DataStorageJson<MenuIdentifier> dataStorageJson;
+       public  DataStorageJson<MenuIdentifier> dataStorageJson;
 
         public CommonMenu()
         {
@@ -22,10 +22,10 @@ namespace ST.EplAddin.CommonLibrary
             dataStorageJson = new DataStorageJson<MenuIdentifier>(@"C:\Users\Public\path.json");
         }
 
-        public void AddMenu(string actionName, string menuName, string actionMenuName)
+        public void AddMenu(string actionName, string actionMenuName)
         {
             MenuIdentifier menuIdentifier;
-            menuName = "Scantronic Systems";
+            string menuName = "Scantronic Systems";
             uint menuId;
             menu = new Menu();
             if (GetAddinnsInjectedCount() == 0)

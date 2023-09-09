@@ -23,14 +23,9 @@ namespace ST.EplAddins.LastTerminalStrip
         public bool OnInitGui()
         {
 
-            //Menu menu = new Menu();
-            //uint S = menu.AddMainMenu("ST", Menu.MainMenuName.eMainMenuUtilities, "Last terminal", actionName, "Статус", 1);
-            //uint ID = menu.AddMenuItem("SRV", actionName, "Статус", S, 0, false, false);
-            //uint GetID = menu.GetCustomMenuId("Last terminal", actionName);
              commonMenu = new CommonMenu();
-            commonMenu.AddMenu(actionName,"SCRadmir","Найти клемму");
+            commonMenu.AddMenu(actionName,"Найти клемму");
             return true;
-
         }
 
         public bool OnRegister(ref bool bLoadOnStart)
@@ -44,18 +39,7 @@ namespace ST.EplAddins.LastTerminalStrip
         {
             return true;
         }
-        //public void CreateStaticMenu()
-        //{
-        //    Menu staticMenu = new Menu();
-        //    staticMenu.AddStaticMainMenu("STS", NewmultiLanfString("Rlc"), Menu.MainMenuName.eMainMenuUtilities, NewmultiLanfString("Последние клеммы"), actionName, NewmultiLanfString("ms"), 1);
-        //}
-
-        //private MultiLangString NewmultiLanfString(string input)
-        //{
-        //    MultiLangString multyLangString = new MultiLangString();
-        //    multyLangString.AddString(ISOCode.Language.L_ru_RU, input);
-        //    return multyLangString;
-        //}
+       
     }
 
 }

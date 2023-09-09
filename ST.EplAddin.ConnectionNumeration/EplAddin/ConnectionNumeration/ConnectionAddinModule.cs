@@ -43,9 +43,7 @@ namespace EplAddin.ConnectionNumeration
         {
             string actionName = ConnectionPlacementSchemaAction.actionName;
              commonMenu = new CommonMenu();
-            commonMenu.AddMenu(actionName, "SCRadmir", "Выравнивание соединений");
-
-            //numberOfPosition= menu.AddMainMenu("ST Add-ins", Menu.MainMenuName.eMainMenuUtilities,"Выравнивание соединений", actionName, "Статус",1);
+            commonMenu.AddMenu(actionName, "Выравнивание соединений");
             return true;
         }
 

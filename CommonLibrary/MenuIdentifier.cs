@@ -1,8 +1,7 @@
 ﻿namespace ST.EplAddin.CommonLibrary
 {
 
-    public partial class CommonMenu
-    {
+  
         public class MenuIdentifier
         {
 
@@ -25,5 +24,5 @@
         }
        
 
-    }
+    
 }
