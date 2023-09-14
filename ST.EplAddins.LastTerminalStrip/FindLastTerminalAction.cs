@@ -36,6 +36,7 @@ namespace ST.EplAddins.LastTerminalStrip
                 Search search = new Search();
                 search.ClearSearchDB(currentProject);
                 search.AddToSearchDB(storable);
+                //XSeShowSearchResultsAction
                 safetyPoint.Commit();
             }
 
