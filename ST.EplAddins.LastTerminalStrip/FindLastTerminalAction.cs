@@ -23,6 +23,8 @@ namespace ST.EplAddins.LastTerminalStrip
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
+            string function = "";
+            var s=oActionCallingContext.GetParameters();
             SelectionSet selectionSet = new SelectionSet();
             Project currentProject = selectionSet.GetCurrentProject(true);
             string projectName = currentProject.ProjectName;
