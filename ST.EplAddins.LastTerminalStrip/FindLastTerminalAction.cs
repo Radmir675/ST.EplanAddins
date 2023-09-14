@@ -93,7 +93,10 @@ namespace ST.EplAddins.LastTerminalStrip
            {
                if (x.First().TerminalStrip == null)
                {
-                   //FunctionDefinition function = new FunctionDefinition(new FunctionDefinitionLibrary().Project.);
+                   
+                   TerminalStrip terminalStrip = new TerminalStrip().CreateTransient(currentProject, new SymbolVariant(new ,0));
+                   x.First().Add
+                   FunctionDefinition function = new FunctionDefinition(new FunctionDefinitionLibrary().Project.);
 
                    //return new TerminalStrip().Create(currentProject,);
                    // return new TerminalStrip().Create(currentProject);
