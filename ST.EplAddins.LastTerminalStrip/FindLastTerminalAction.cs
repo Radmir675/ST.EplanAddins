@@ -23,8 +23,6 @@ namespace ST.EplAddins.LastTerminalStrip
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            string function = "";
-            var s=oActionCallingContext.GetParameters();
             SelectionSet selectionSet = new SelectionSet();
             Project currentProject = selectionSet.GetCurrentProject(true);
             string projectName = currentProject.ProjectName;
@@ -96,20 +94,19 @@ namespace ST.EplAddins.LastTerminalStrip
            {
                if (x.First().TerminalStrip == null)
                {
-                  
-                   //SymbolLibrary s = new SymbolLibrary(currentProject,"SPECIAL");
-                   //Symbol symbol = new Symbol(s, 6);
-                   //SymbolVariant symbolVariant = new SymbolVariant(symbol,0);
-                   
-                   
-                   //TerminalStrip terminalStrip = new TerminalStrip();
-                   //terminalStrip.Create(currentProject, symbolVariant);
+                   string strSymbolLibName= "SPECIAL";
+                   string strSymbolName = "TDEF";
+                   int nVariant = 0;
 
-                   
+                   SymbolLibrary symbolLibriary = new SymbolLibrary(currentProject, strSymbolLibName);
+                   Symbol symbol = new Symbol(symbolLibriary, strSymbolName);
+                   SymbolVariant symbolVariant = new SymbolVariant();
+                   symbolVariant.Initialize(symbol, nVariant);
 
-                   ////return new TerminalStrip().Create(currentProject,);
-                   //// return new TerminalStrip().Create(currentProject);
-                  AddFunctionDifinition();
+                   Function function = new Function();
+                   function.Create(currentProject,symbolVariant);
+                   function.Name = x.First().Properties.FUNC_VISIBLEDEVICETAG;
+
                }
                return x.First().TerminalStrip;
            }).ToArray();
@@ -118,7 +115,6 @@ namespace ST.EplAddins.LastTerminalStrip
           //TODO:убрал пока на всякий случай
           //deviceService.SortTerminalStrips(terminalStrips, DeviceService.TerminalStripSortMethods.Default);
             deviceService.SortTerminalStrips(terminalStrips, DeviceService.TerminalStripSortMethods.Numeric);
-            //потом взять из по свойству #20809 последнюю главную клемму;
 
             List<Terminal> record = new List<Terminal>();
             foreach (var terminalstrip in terminalStrips)
