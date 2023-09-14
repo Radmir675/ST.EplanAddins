@@ -58,7 +58,6 @@ namespace ST.EplAddins.LastTerminalStrip
             bool result = baseAction.Execute(ctx);
         }
         
-
         private List<Terminal> GetLastTerminsls(Project currentProject)
         {
             FunctionsFilter terminalStripsFunctionsFilter = new FunctionsFilter();
@@ -70,6 +69,7 @@ namespace ST.EplAddins.LastTerminalStrip
             var terminalGroups = terminals
                 .ToLookup(terminal => terminal.Properties.FUNC_IDENTDEVICETAG);
 
+            //TODO:если нет определения клеммника то создать
 
             TerminalStrip[] terminalStrips = terminalGroups.Select(x =>
            {
@@ -114,6 +114,7 @@ namespace ST.EplAddins.LastTerminalStrip
                     if (TerminalOff != null && TerminalOff.Count() >= 1)
                         record.Add(TerminalOff?.Last());
                 }
+
             }
             return record;
         }
