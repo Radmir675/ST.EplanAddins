@@ -58,6 +58,24 @@ namespace ST.EplAddins.LastTerminalStrip
             bool result = baseAction.Execute(ctx);
         }
         
+        private static void ActionCallingContext()
+        {
+            ActionManager actionManager = new ActionManager();
+            Eplan.EplApi.ApplicationFramework.Action findLastAction = actionManager.FindAction("XSeAddToSearchDBAction");
+            if (findLastAction != null)
+            {
+                ActionCallingContext ctx = new ActionCallingContext();
+                bool bRet = findLastAction.Execute(ctx);
+                if (bRet)
+                {
+                    new Decider().Decide(EnumDecisionType.eOkDecision, "The Action " + findLastAction + " ended successfully!", "", EnumDecisionReturn.eOK, EnumDecisionReturn.eOK);
+                }
+                else
+                {
+                    new Decider().Decide(EnumDecisionType.eOkDecision, "The Action " + findLastAction + " ended with errors!", "", EnumDecisionReturn.eOK, EnumDecisionReturn.eOK);
+                }
+            }
+        }
 
         private List<Terminal> GetLastTerminsls(Project currentProject)
         {
@@ -70,6 +88,7 @@ namespace ST.EplAddins.LastTerminalStrip
             var terminalGroups = terminals
                 .ToLookup(terminal => terminal.Properties.FUNC_IDENTDEVICETAG);
 
+            //TODO:если нет определения клеммника то создать
 
             TerminalStrip[] terminalStrips = terminalGroups.Select(x =>
            {
@@ -114,6 +133,7 @@ namespace ST.EplAddins.LastTerminalStrip
                     if (TerminalOff != null && TerminalOff.Count() >= 1)
                         record.Add(TerminalOff?.Last());
                 }
+
             }
             return record;
         }
