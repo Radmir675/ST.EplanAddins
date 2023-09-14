@@ -69,7 +69,7 @@ namespace ST.EplAddins.SymbolVariants
                     symbolVariantToReplace = currentSymbol.Select(c => c.Variants.Single(g => g.VariantNr == 0)).Single();
                 }
                 bool locked = symbolref.IsLocked;
-              
+
                 locked = symbolref.IsLocked;
                 try
                 {
@@ -83,16 +83,19 @@ namespace ST.EplAddins.SymbolVariants
                 }
                 safetyPoint.Commit();
 
-            // }
-            return true;
+
+                return true;
+            }
+            //TODO: допилить множественное изменение если это один и тот же символ
+
+           
+
+
         }
-        //TODO: допилить множественное изменение если это один и тот же символ
 
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
-
+            throw new NotImplementedException();
         }
-
-
     }
 }
