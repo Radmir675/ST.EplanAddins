@@ -57,6 +57,7 @@ namespace ST.EplAddins.LastTerminalStrip
             ActionCallingContext ctx = new ActionCallingContext();
             bool result = baseAction.Execute(ctx);
         }
+        
         private static void ActionCallingContext()
         {
             ActionManager actionManager = new ActionManager();
@@ -93,14 +94,20 @@ namespace ST.EplAddins.LastTerminalStrip
            {
                if (x.First().TerminalStrip == null)
                {
+                  
+                   //SymbolLibrary s = new SymbolLibrary(currentProject,"SPECIAL");
+                   //Symbol symbol = new Symbol(s, 6);
+                   //SymbolVariant symbolVariant = new SymbolVariant(symbol,0);
                    
-                   TerminalStrip terminalStrip = new TerminalStrip().CreateTransient(currentProject, new SymbolVariant(new ,0));
-                   x.First().Add
-                   FunctionDefinition function = new FunctionDefinition(new FunctionDefinitionLibrary().Project.);
+                   
+                   //TerminalStrip terminalStrip = new TerminalStrip();
+                   //terminalStrip.Create(currentProject, symbolVariant);
 
-                   //return new TerminalStrip().Create(currentProject,);
-                   // return new TerminalStrip().Create(currentProject);
-                   AddFunctionDifinition();
+                   
+
+                   ////return new TerminalStrip().Create(currentProject,);
+                   //// return new TerminalStrip().Create(currentProject);
+                  AddFunctionDifinition();
                }
                return x.First().TerminalStrip;
            }).ToArray();
