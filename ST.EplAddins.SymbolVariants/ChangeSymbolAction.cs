@@ -20,11 +20,8 @@ namespace ST.EplAddins.SymbolVariants
         }
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-    
 
             SelectionSet selectionSet = new SelectionSet();
-
-
             selectionSet.LockProjectByDefault = false;
             selectionSet.LockSelectionByDefault = false;
 
@@ -41,7 +38,6 @@ namespace ST.EplAddins.SymbolVariants
 
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-
                 StorableObject storableObject = userSelection.Single();
                 SymbolLibrary symbolLibrary = new SymbolLibrary();
                 SymbolReference symbolref = storableObject as SymbolReference;
@@ -73,7 +69,7 @@ namespace ST.EplAddins.SymbolVariants
                     symbolVariantToReplace = currentSymbol.Select(c => c.Variants.Single(g => g.VariantNr == 0)).Single();
                 }
                 bool locked = symbolref.IsLocked;
-               // symbolref.SmartLock();
+              
                 locked = symbolref.IsLocked;
                 try
                 {
@@ -87,8 +83,7 @@ namespace ST.EplAddins.SymbolVariants
                 }
                 safetyPoint.Commit();
 
-            }
-         
+            // }
             return true;
         }
         //TODO: допилить множественное изменение если это один и тот же символ
