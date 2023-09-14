@@ -85,6 +85,7 @@ namespace ST.EplAddins.LastTerminalStrip
                    Function function = new Function();
                    function.Create(currentProject,symbolVariant);
                    function.Name = x.First().Properties.FUNC_VISIBLEDEVICETAG;
+
                }
                return x.First().TerminalStrip;
            }).ToArray();
@@ -111,7 +112,7 @@ namespace ST.EplAddins.LastTerminalStrip
                     if (TerminalOff != null && TerminalOff.Count() >= 1)
                         record.Add(TerminalOff?.Last());
                 }
-
+                AddFunctionDifinition();
             }
             return record;
         }
