@@ -2,6 +2,7 @@
 using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.EObjects;
+using Eplan.EplApi.DataModel.MasterData;
 using Eplan.EplApi.HEServices;
 using System;
 using System.Collections.Generic;
@@ -36,13 +37,26 @@ namespace ST.EplAddins.LastTerminalStrip
                 Search search = new Search();
                 search.ClearSearchDB(currentProject);
                 search.AddToSearchDB(storable);
-                //XSeShowSearchResultsAction
+                ShowSearchNavigator();
                 safetyPoint.Commit();
             }
 
             return true;
         }
-
+        public void ShowSearchNavigator() 
+        {
+            ActionManager oMng = new ActionManager();
+            Eplan.EplApi.ApplicationFramework.Action baseAction = oMng.FindAction("XSeShowSearchResultsAction");
+            ActionCallingContext ctx = new ActionCallingContext();
+            bool result = baseAction.Execute(ctx);
+        }
+        public void AddFunctionDifinition()
+        {
+            ActionManager oMng = new ActionManager();
+            Eplan.EplApi.ApplicationFramework.Action baseAction = oMng.FindAction("TerminalGuiIGfWindAddDefinition");
+            ActionCallingContext ctx = new ActionCallingContext();
+            bool result = baseAction.Execute(ctx);
+        }
         private static void ActionCallingContext()
         {
             ActionManager actionManager = new ActionManager();
@@ -77,11 +91,14 @@ namespace ST.EplAddins.LastTerminalStrip
 
             TerminalStrip[] terminalStrips = terminalGroups.Select(x =>
            {
-               //if (x.First().TerminalStrip == null)
-               //{
-               //    return new TerminalStrip().Cr;
-               //   // return new TerminalStrip().Create(currentProject);
-               //}
+               if (x.First().TerminalStrip == null)
+               {
+                   //FunctionDefinition function = new FunctionDefinition(new FunctionDefinitionLibrary().Project.);
+
+                   //return new TerminalStrip().Create(currentProject,);
+                   // return new TerminalStrip().Create(currentProject);
+                   AddFunctionDifinition();
+               }
                return x.First().TerminalStrip;
            }).ToArray();
 
