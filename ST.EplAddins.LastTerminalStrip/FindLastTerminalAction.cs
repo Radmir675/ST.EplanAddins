@@ -69,8 +69,6 @@ namespace ST.EplAddins.LastTerminalStrip
             var terminalGroups = terminals
                 .ToLookup(terminal => terminal.Properties.FUNC_IDENTDEVICETAG);
 
-            //TODO:если нет определения клеммника то создать
-
             TerminalStrip[] terminalStrips = terminalGroups.Select(x =>
            {
                if (x.First().TerminalStrip == null)
@@ -87,7 +85,6 @@ namespace ST.EplAddins.LastTerminalStrip
                    Function function = new Function();
                    function.Create(currentProject,symbolVariant);
                    function.Name = x.First().Properties.FUNC_VISIBLEDEVICETAG;
-
                }
                return x.First().TerminalStrip;
            }).ToArray();
