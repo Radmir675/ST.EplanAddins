@@ -20,8 +20,7 @@ namespace ST.EplAddins.SymbolVariants
         }
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            // using (LockingStep lk= new LockingStep())
-            //{
+    
 
             SelectionSet selectionSet = new SelectionSet();
 
@@ -89,7 +88,7 @@ namespace ST.EplAddins.SymbolVariants
                 safetyPoint.Commit();
 
             }
-            // }
+         
             return true;
         }
         //TODO: допилить множественное изменение если это один и тот же символ
