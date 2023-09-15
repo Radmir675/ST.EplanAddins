@@ -70,6 +70,7 @@ namespace ST.EplAddin.CommonLibrary
             {
                 dataStorageJson.RemoveJsonFile();
             }
+            //Check that all json files is deleted except current processes
         }
        
 

@@ -21,8 +21,6 @@ namespace ST.EplAddin.CommonLibrary
 
         public bool OnInitGui()
         {
-            //CommonMenu commonMenu = new CommonMenu();
-            //commonMenu.dataStorageJson.RemoveJsonFile();
             return true;
         }
 
