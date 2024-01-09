@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
-using Eplan.EplApi.ApplicationFramework;
+﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.MasterData;
-using Eplan.EplSDK.WPF;
 using Eplan.EplSDK.WPF.DB;
 using System.IO;
 
@@ -51,6 +44,7 @@ namespace EplAddin.Article_AddImageContextDialog
             partsManagement.UnregisterAddin(AddinName);
             partsManagement.UnregisterItem(ItemType);
             partsManagement.UnregisterTabsheet(TabsheetName);
+            partsManagement.UnregisterTabsheet("IMG");
             return true;
         }
 

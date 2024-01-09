@@ -22,20 +22,30 @@ namespace EplAddin.Article_AddImageContextDialog
         private readonly MDPartsManagement _partsManagement = new MDPartsManagement();
         public PartsManagementExtensionContent()
         {
-            InitializeComponent();
-            ViewModel = new ViewModel();
-            DataContext = ViewModel;
-            ViewModel.IsReadOnly = _partsManagement.SelectedPartsDatabase.IsReadOnly;
-            // Events, called from Action of this Tab
-            WPFDialogEventManager dialogEventManager = new WPFDialogEventManager();
-            dialogEventManager.getOnWPFNotifyEvent("XPartsManagementDialog", "SelectItem").Notify += SelectItem;
-            dialogEventManager.getOnWPFNotifyEvent("XPartsManagementDialog", "SaveItem").Notify += SaveItem;
-            dialogEventManager.getOnWPFNotifyEvent("XPartsManagementDialog", "PreShowTab").Notify += PreShowTab;
-            dialogEventManager.getOnWPFNotifyEvent("XPartsManagementDialog", "OpenDatabase").Notify += OpenDatabase;
-            dialogEventManager.getOnWPFNotifyEvent("XPartsManagementDialog", "CreateDatabase").Notify += CreateDatabase;
-            clip.Click += Cipboard;
-            save.Click += Save;
-
+            using (SafetyPoint safetyPoint = SafetyPoint.Create())
+            {
+                InitializeComponent();
+                ViewModel = new ViewModel();
+                DataContext = ViewModel;
+                try
+                {
+                    ViewModel.IsReadOnly = _partsManagement.SelectedPartsDatabase.IsReadOnly;
+                }
+                catch (AccessViolationException e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                // Events, called from Action of this Tab
+                WPFDialogEventManager dialogEventManager = new WPFDialogEventManager();
+                dialogEventManager.getOnWPFNotifyEvent("XPartsManagementDialog", "SelectItem").Notify += SelectItem;
+                dialogEventManager.getOnWPFNotifyEvent("XPartsManagementDialog", "SaveItem").Notify += SaveItem;
+                dialogEventManager.getOnWPFNotifyEvent("XPartsManagementDialog", "PreShowTab").Notify += PreShowTab;
+                dialogEventManager.getOnWPFNotifyEvent("XPartsManagementDialog", "OpenDatabase").Notify += OpenDatabase;
+                dialogEventManager.getOnWPFNotifyEvent("XPartsManagementDialog", "CreateDatabase").Notify += CreateDatabase;
+                clip.Click += Cipboard;
+                save.Click += Save;
+                safetyPoint.Commit();
+            }
 
         }
 
