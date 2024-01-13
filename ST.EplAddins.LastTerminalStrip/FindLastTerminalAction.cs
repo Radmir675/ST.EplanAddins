@@ -84,7 +84,7 @@ namespace ST.EplAddins.LastTerminalStrip
 
                    Function function = new Function();
                    function.Create(currentProject,symbolVariant);
-                   function.Name = x.First().Properties.FUNC_VISIBLEDEVICETAG;
+                   function.Name = x.First().Properties.FUNC_FULLDEVICETAG;//FUNC_VISIBLEDEVICETAG;
 
                }
                return x.First().TerminalStrip;
