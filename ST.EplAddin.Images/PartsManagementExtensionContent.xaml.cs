@@ -27,14 +27,10 @@ namespace EplAddin.Article_AddImageContextDialog
                 InitializeComponent();
                 ViewModel = new ViewModel();
                 DataContext = ViewModel;
-                try
-                {
-                    ViewModel.IsReadOnly = _partsManagement.SelectedPartsDatabase.IsReadOnly;
-                }
-                catch (AccessViolationException e)
-                {
-                    MessageBox.Show(e.Message);
-                }
+
+                // ViewModel.IsReadOnly = _partsManagement.SelectedPartsDatabase.IsReadOnly;
+
+
                 // Events, called from Action of this Tab
                 WPFDialogEventManager dialogEventManager = new WPFDialogEventManager();
                 dialogEventManager.getOnWPFNotifyEvent("XPartsManagementDialog", "SelectItem").Notify += SelectItem;
@@ -101,7 +97,7 @@ namespace EplAddin.Article_AddImageContextDialog
 
                     var encoder = new PngBitmapEncoder();
                     encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img.Source));
-                    using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                    using (FileStream stream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
                         encoder.Save(stream);
 
 
