@@ -27,10 +27,7 @@ namespace EplAddin.Article_AddImageContextDialog
                 InitializeComponent();
                 ViewModel = new ViewModel();
                 DataContext = ViewModel;
-
                 // ViewModel.IsReadOnly = _partsManagement.SelectedPartsDatabase.IsReadOnly;
-
-
                 // Events, called from Action of this Tab
                 WPFDialogEventManager dialogEventManager = new WPFDialogEventManager();
                 dialogEventManager.getOnWPFNotifyEvent("XPartsManagementDialog", "SelectItem").Notify += SelectItem;
@@ -42,9 +39,7 @@ namespace EplAddin.Article_AddImageContextDialog
                 save.Click += Save;
                 safetyPoint.Commit();
             }
-
         }
-
         public void Cipboard(object sender, RoutedEventArgs e)
         {
             IDataObject iData = Clipboard.GetDataObject();
@@ -57,7 +52,6 @@ namespace EplAddin.Article_AddImageContextDialog
                 img.Source = bs;
             }
         }
-
         public void Save(object sender, RoutedEventArgs e)
         {
             string ImagePath = new ProjectManager().Paths.Images;
@@ -94,14 +88,17 @@ namespace EplAddin.Article_AddImageContextDialog
                     string filePath = ImagePath + "\\" + filename;
                     string filePathShort = "$(MD_IMG)" + "\\" + filename;
 
+                    items.First().Properties.ARTICLE_PICTUREFILE = string.Empty;
+                    bool res = _partsManagement.SetModified();
 
-                    var encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img.Source));
                     using (FileStream stream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
+                    {
+                        var encoder = new PngBitmapEncoder();
+                        var cachedBitmap = new CachedBitmap((BitmapSource)img.Source, BitmapCreateOptions.IgnoreImageCache, BitmapCacheOption.OnLoad);
+                        encoder.Frames.Add(BitmapFrame.Create(cachedBitmap));
                         encoder.Save(stream);
 
-
-
+                    }
                     MDPartsDatabaseItem mdprt = items.First();
 
                     items.First().Properties.ARTICLE_PICTUREFILE = filePathShort;
@@ -111,7 +108,6 @@ namespace EplAddin.Article_AddImageContextDialog
                     eventParameterString2.String = "";
                     new Eplan.EplApi.ApplicationFramework.EventManager().Send("ActualiseMenuConditions", eventParameterString2);
 
-
                     EventParameterString eventParameterString3 = new EventParameterString();
                     eventParameterString2.String = "";
                     new Eplan.EplApi.ApplicationFramework.EventManager().Send("onModifiedChanged.Bool.Dialog", eventParameterString3);
@@ -120,39 +116,19 @@ namespace EplAddin.Article_AddImageContextDialog
                     eventParameterString2.String = "";
                     new Eplan.EplApi.ApplicationFramework.EventManager().Send("Ged.ClearFastImageCache", eventParameterString4);
 
-
-                    bool res = _partsManagement.SetModified();
-                    //_partsManagement.RefreshPartsManagementDialog();
-
-                    /*
-                     17:06:43	onSelChanged.SelectionSet.XPreview	
-17:06:43	onSelChanged.SelectionSet.XMessageManagement	
-17:06:44	Ged.ClearFastImageCache	
-17:06:47	onModifiedChanged.Bool.Dialog
-PartsManagement.SaveData
-PartsManagement.PartsModified
-                     * 
-                     */
-
+                    bool res1 = _partsManagement.SetModified();
                 }
                 catch (Exception ee)
                 {
                     MessageBox.Show(ee.Message);
                 }
-
-                //SetImage(filePathShort);
             }
-
-
-
         }
 
         public void Clear()
         {
             img.Source = null;
         }
-
-
         public void SetImage(string filename)
         {
             MDPartsManagement _partsManagement2 = new MDPartsManagement();
@@ -165,8 +141,6 @@ PartsManagement.PartsModified
 
             _partsManagement2.RefreshPartsManagementDialog();
         }
-
-
         private void CreateDatabase(string data)
         {
 
@@ -187,7 +161,6 @@ PartsManagement.PartsModified
         {
 
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
