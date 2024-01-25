@@ -8,22 +8,25 @@ namespace ST.Epl.Addin.SyncPage
 {
     internal class FindCurrentPageAction : IEplAction
     {
-        public static string actionName = "LastTerminalStrip";
+        public static string actionName = "SyncPage";
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
             SelectionSet selectionSet = new SelectionSet();
             Project currentProject = selectionSet.GetCurrentProject(true);
-            var projectName = currentProject.ProjectName;
+
             selectionSet.LockProjectByDefault = false;
             selectionSet.LockSelectionByDefault = false;
             var currentPage = selectionSet.CurrentlyEdited;
+            var fulLinkProject = currentPage.Project.ProjectLinkFilePath;
 
             var identifier = currentPage.ToStringIdentifier();
             StringCollection strings = new StringCollection();
             strings.Add(identifier);
             Edit edit = new Edit();
-            edit.SelectObjects(projectName, strings, true);
-            edit.SetFocusToGED();
+            edit.SelectObjects(fulLinkProject, strings, true);
+            StorableObject[] storableObject = new StorableObject[1] { currentPage };
+            edit.SynchronizeObjectsToNavigators(storableObject);
+            var isFocused = edit.SetFocusToGED();
             return true;
         }
 

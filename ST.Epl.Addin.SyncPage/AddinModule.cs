@@ -1,4 +1,5 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
+using Eplan.EplApi.Gui;
 
 namespace ST.Epl.Addin.SyncPage
 {
@@ -16,6 +17,8 @@ namespace ST.Epl.Addin.SyncPage
 
         public bool OnInitGui()
         {
+            Menu menu = new Menu();
+            menu.AddMainMenu("ST1 ", Menu.MainMenuName.eMainMenuUtilities, "Sync", FindCurrentPageAction.actionName, "Статус", 1);
             return true;
         }
 
