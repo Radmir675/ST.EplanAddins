@@ -1,17 +1,16 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
-using Eplan.EplApi.Gui;
-using System;
-using Eplan.EplApi.Base;
 using ST.EplAddin.CommonLibrary;
+
 namespace ST.EplAddins.LastTerminalStrip
 {
     public class AddinModule : IEplAddIn
     {
+
         CommonMenu commonMenu;
         string actionName = FindLastTerminalAction.actionName;
         public bool OnExit()
         {
-            commonMenu.OnExitAddin();
+            //commonMenu.OnExitAddin();
             return true;
         }
 
@@ -23,8 +22,11 @@ namespace ST.EplAddins.LastTerminalStrip
         public bool OnInitGui()
         {
 
-             commonMenu = new CommonMenu();
-            commonMenu.AddMenu(actionName,"Найти клемму");
+            StaticMenu staticMenu = new StaticMenu();
+            staticMenu.AddMenuItem1("LastTerminal", actionName);
+            //commonMenu = new CommonMenu();
+
+            //commonMenu.AddMenu(actionName, "Найти клемму");
             return true;
         }
 
@@ -39,7 +41,7 @@ namespace ST.EplAddins.LastTerminalStrip
         {
             return true;
         }
-       
+
     }
 
 }

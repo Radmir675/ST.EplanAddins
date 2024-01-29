@@ -110,9 +110,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files\EPLAN\Platform\2.8.3\Bin\Eplan.EplApi.WebServiceu.dll</HintPath>
     </Reference>
-    <Reference Include="ST.EplAddin.CommonLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CommonLibrary\bin\x64\Debug\ST.EplAddin.CommonLibrary.dll</HintPath>
+    <Reference Include="ST.EplAddin.CommonLibrary">
+      <HintPath>..\CommonLibrary\bin\Debug\ST.EplAddin.CommonLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -131,10 +130,6 @@
     <Compile Include="TerminalFilter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CommonLibrary\CommonLibrary.csproj">
-      <Project>{9c21e9ba-7cd5-4e59-a509-af54a92f490b}</Project>
-      <Name>CommonLibrary</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ST.EplAddin.ConnectionNumeration\ST.EplAddin.ConnectionNumeration.csproj">
       <Project>{f8b7e7f3-87cf-4cf6-af30-96663d7f71f4}</Project>
       <Name>ST.EplAddin.ConnectionNumeration</Name>

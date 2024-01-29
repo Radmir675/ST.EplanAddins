@@ -1,20 +1,13 @@
-﻿using Eplan.EplApi.ApplicationFramework;
-using Eplan.EplApi.Base;
-using Eplan.EplApi.Gui;
+﻿using Eplan.EplApi.Gui;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.Json;
 
 namespace ST.EplAddin.CommonLibrary
 {
 
-    public  class CommonMenu
+    public class CommonMenu
     {
         Menu menu;
-       public  DataStorageJson<MenuIdentifier> dataStorageJson;
+        public DataStorageJson<MenuIdentifier> dataStorageJson;
 
         public CommonMenu()
         {
@@ -70,9 +63,10 @@ namespace ST.EplAddin.CommonLibrary
             {
                 dataStorageJson.RemoveJsonFile();
             }
+
             //Check that all json files is deleted except current processes
         }
-       
+
 
     }
 }

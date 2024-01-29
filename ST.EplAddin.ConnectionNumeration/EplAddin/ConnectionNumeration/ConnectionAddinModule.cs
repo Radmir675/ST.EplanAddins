@@ -5,21 +5,17 @@
 // Assembly location: C:\Users\tembr\Desktop\AddIns\ST.EplAddin.ConnectionNumeration.dll
 
 using Eplan.EplApi.ApplicationFramework;
-using Eplan.EplApi.Base;
-using ST.EplAddin.Base;
-using System.Diagnostics;
-using Eplan.EplApi.Gui;
-using ST.EplAddin.ConnectionNumeration;
 using ST.EplAddin.CommonLibrary;
+using ST.EplAddin.ConnectionNumeration;
 
 namespace EplAddin.ConnectionNumeration
 {
     public class ConnectionAddinModule : IEplAddIn
     {
         CommonMenu commonMenu;
-    public static uint numberOfPosition;
+        public static uint numberOfPosition;
 
-        
+
         public virtual string Description => "DEscriptoiion";
 
         public virtual string MenuPath => nameof(MenuPath);
@@ -27,9 +23,9 @@ namespace EplAddin.ConnectionNumeration
         public virtual string MenuIcon => "DEscriptoiion.ico";
 
 
-        public bool OnExit() 
+        public bool OnExit()
         {
-            commonMenu.OnExitAddin();
+            //commonMenu.OnExitAddin();
             return true;
         }
 
@@ -42,8 +38,10 @@ namespace EplAddin.ConnectionNumeration
         public bool OnInitGui()
         {
             string actionName = ConnectionPlacementSchemaAction.actionName;
-             commonMenu = new CommonMenu();
-            commonMenu.AddMenu(actionName, "Выравнивание соединений");
+            StaticMenu staticMenu = new StaticMenu();
+            staticMenu.AddMenuItem1("Выравнивание соединений", actionName);
+            // commonMenu = new CommonMenu();
+            //commonMenu.AddMenu(actionName, "Выравнивание соединений");
             return true;
         }
 
