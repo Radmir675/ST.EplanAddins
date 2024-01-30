@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
+    <Compile Include="SyncPageAction.cs" />
     <Compile Include="FindCurrentPageAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
