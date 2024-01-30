@@ -1,33 +1,22 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
-using Eplan.EplApi.DataModel;
-using Eplan.EplApi.HEServices;
+using ST.EplAddin.SyncPage;
 using System;
-using System.Collections.Specialized;
+using Action = Eplan.EplApi.ApplicationFramework.Action;
 
 namespace ST.Epl.Addin.SyncPage
 {
-    internal class FindCurrentPageAction : IEplAction
+    class FindCurrentPageAction : IEplAction
     {
-        public static string actionName = "SyncPage";
+        public static string actionName = "XEsSyncPDDsAction";
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            SelectionSet selectionSet = new SelectionSet();
-            Project currentProject = selectionSet.GetCurrentProject(true);
+            ActionManager oMng = new ActionManager();
+            Action baseAction = oMng.FindBaseAction(this, true);
+            bool resultSync = baseAction.Execute(oActionCallingContext);
 
-            selectionSet.LockProjectByDefault = false;
-            selectionSet.LockSelectionByDefault = false;
-            var currentPage = selectionSet.CurrentlyEdited;
-            var fulLinkProject = currentPage.Project.ProjectLinkFilePath;
-
-            var identifier = currentPage.ToStringIdentifier();
-            StringCollection strings = new StringCollection();
-            strings.Add(identifier);
-            Edit edit = new Edit();
-            edit.SelectObjects(fulLinkProject, strings, true);
-            StorableObject[] storableObject = new StorableObject[1] { currentPage };
-            edit.SynchronizeObjectsToNavigators(storableObject);
-            var isFocused = edit.SetFocusToGED();
-            return true;
+            SyncPageAction syncPageAction = new SyncPageAction();
+            var result = syncPageAction.Execute();
+            return result;
         }
 
         public void GetActionProperties(ref ActionProperties actionProperties)
