@@ -1,4 +1,5 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
+using Eplan.EplApi.DataModel;
 using ST.EplAddin.SyncPage;
 using System;
 using Action = Eplan.EplApi.ApplicationFramework.Action;
@@ -19,10 +20,10 @@ namespace ST.Epl.Addin.SyncPage
                 SyncPageAction syncPageAction = new SyncPageAction();
                 var result = syncPageAction.Execute();
                 safetyPoint.Commit();
+                return result;
             }
-            return result;
-                
-            }
+
+        }
 
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
