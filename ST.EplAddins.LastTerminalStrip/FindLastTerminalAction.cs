@@ -1,10 +1,8 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
-using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.DataModel.MasterData;
 using Eplan.EplApi.HEServices;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -43,7 +41,7 @@ namespace ST.EplAddins.LastTerminalStrip
 
             return true;
         }
-        public void ShowSearchNavigator() 
+        public void ShowSearchNavigator()
         {
             ActionManager oMng = new ActionManager();
             Eplan.EplApi.ApplicationFramework.Action baseAction = oMng.FindAction("XSeShowSearchResultsAction");
@@ -57,7 +55,7 @@ namespace ST.EplAddins.LastTerminalStrip
             ActionCallingContext ctx = new ActionCallingContext();
             bool result = baseAction.Execute(ctx);
         }
-        
+
         private List<Terminal> GetLastTerminsls(Project currentProject)
         {
             FunctionsFilter terminalStripsFunctionsFilter = new FunctionsFilter();
@@ -67,13 +65,13 @@ namespace ST.EplAddins.LastTerminalStrip
             Terminal[] terminals = new DMObjectsFinder(currentProject)
                 .GetTerminals(terminalStripsFunctionsFilter);
             var terminalGroups = terminals
-                .ToLookup(terminal => terminal.Properties.FUNC_IDENTDEVICETAG);
+                .ToLookup(terminal => terminal.Properties.FUNC_FULLDEVICETAG);///
 
             TerminalStrip[] terminalStrips = terminalGroups.Select(x =>
            {
                if (x.First().TerminalStrip == null)
                {
-                   string strSymbolLibName= "SPECIAL";
+                   string strSymbolLibName = "SPECIAL";
                    string strSymbolName = "TDEF";
                    int nVariant = 0;
 
@@ -83,7 +81,7 @@ namespace ST.EplAddins.LastTerminalStrip
                    symbolVariant.Initialize(symbol, nVariant);
 
                    Function function = new Function();
-                   function.Create(currentProject,symbolVariant);
+                   function.Create(currentProject, symbolVariant);
                    function.Name = x.First().Properties.FUNC_FULLDEVICETAG;//FUNC_VISIBLEDEVICETAG;
 
                }
@@ -91,8 +89,8 @@ namespace ST.EplAddins.LastTerminalStrip
            }).ToArray();
 
             DeviceService deviceService = new DeviceService();
-          //TODO:убрал пока на всякий случай
-          //deviceService.SortTerminalStrips(terminalStrips, DeviceService.TerminalStripSortMethods.Default);
+            //TODO:убрал пока на всякий случай
+            //deviceService.SortTerminalStrips(terminalStrips, DeviceService.TerminalStripSortMethods.Default);
             deviceService.SortTerminalStrips(terminalStrips, DeviceService.TerminalStripSortMethods.Numeric);
 
             List<Terminal> record = new List<Terminal>();
