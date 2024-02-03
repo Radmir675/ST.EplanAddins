@@ -28,7 +28,6 @@ namespace ST.EplAddins.LastTerminalStrip
             selectionSet.LockSelectionByDefault = false;
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-
                 var lastTerminals = GetLastTerminsls(currentProject);
                 StorableObject[] storable = lastTerminals.ToArray();
 
@@ -61,11 +60,10 @@ namespace ST.EplAddins.LastTerminalStrip
             FunctionsFilter terminalStripsFunctionsFilter = new FunctionsFilter();
             terminalStripsFunctionsFilter.Category = Function.Enums.Category.Terminal;
 
-
             Terminal[] terminals = new DMObjectsFinder(currentProject)
                 .GetTerminals(terminalStripsFunctionsFilter);
             var terminalGroups = terminals
-                .ToLookup(terminal => terminal.Properties.FUNC_FULLDEVICETAG);///
+                .ToLookup(terminal => terminal.Properties.FUNC_FULLDEVICETAG);
 
             TerminalStrip[] terminalStrips = terminalGroups.Select(x =>
            {
@@ -82,15 +80,13 @@ namespace ST.EplAddins.LastTerminalStrip
 
                    Function function = new Function();
                    function.Create(currentProject, symbolVariant);
-                   function.Name = x.First().Properties.FUNC_FULLDEVICETAG;//FUNC_VISIBLEDEVICETAG;
+                   function.Name = x.First().Properties.FUNC_FULLDEVICETAG;
 
                }
                return x.First().TerminalStrip;
            }).ToArray();
 
             DeviceService deviceService = new DeviceService();
-            //TODO:убрал пока на всякий случай
-            //deviceService.SortTerminalStrips(terminalStrips, DeviceService.TerminalStripSortMethods.Default);
             deviceService.SortTerminalStrips(terminalStrips, DeviceService.TerminalStripSortMethods.Numeric);
 
             List<Terminal> record = new List<Terminal>();
