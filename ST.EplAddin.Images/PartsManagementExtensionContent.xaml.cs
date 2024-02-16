@@ -88,8 +88,8 @@ namespace EplAddin.Article_AddImageContextDialog
                     string filePath = ImagePath + "\\" + filename;
                     string filePathShort = "$(MD_IMG)" + "\\" + filename;
 
-                    items.First().Properties.ARTICLE_PICTUREFILE = string.Empty;
-                    bool res = _partsManagement.SetModified();
+                    //items.First().Properties.ARTICLE_PICTUREFILE = string.Empty;
+                    //bool res = _partsManagement.SetModified();
 
                     using (FileStream stream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
                     {
@@ -99,7 +99,7 @@ namespace EplAddin.Article_AddImageContextDialog
                         encoder.Save(stream);
 
                     }
-                    MDPartsDatabaseItem mdprt = items.First();
+                    //MDPartsDatabaseItem mdprt = items.First();
 
                     items.First().Properties.ARTICLE_PICTUREFILE = filePathShort;
                     _partsManagement.RefreshPartsManagementDialog();
