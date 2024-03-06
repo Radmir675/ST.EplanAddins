@@ -33,9 +33,12 @@ namespace ST.EplAddin.LastTerminalStrip
         private void LoggerForm_KeyDown(object sender, KeyEventArgs e)
         {
             string copyText = richTextBox.SelectedText;
-
-            //if (richTextBox.ContainsFocus && e.Control && e.KeyCode == Keys.C)
             Clipboard.SetText(copyText);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Функционал находится в разработке");
         }
     }
 }
