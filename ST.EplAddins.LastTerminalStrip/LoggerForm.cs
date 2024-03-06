@@ -24,5 +24,18 @@ namespace ST.EplAddin.LastTerminalStrip
         {
             richTextBox.AppendText(Environment.NewLine + DateTime.Now.ToString() + " | " + log.Remove(0, 2));
         }
+
+        private void richTextBox_Click(object sender, EventArgs e)
+        {
+            richTextBox.Focus();
+        }
+
+        private void LoggerForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            string copyText = richTextBox.SelectedText;
+
+            //if (richTextBox.ContainsFocus && e.Control && e.KeyCode == Keys.C)
+            Clipboard.SetText(copyText);
+        }
     }
 }

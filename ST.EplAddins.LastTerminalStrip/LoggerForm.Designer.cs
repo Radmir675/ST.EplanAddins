@@ -39,6 +39,7 @@
             this.richTextBox.Size = new System.Drawing.Size(420, 376);
             this.richTextBox.TabIndex = 0;
             this.richTextBox.Text = "";
+            this.richTextBox.Click += new System.EventHandler(this.richTextBox_Click);
             // 
             // LoggerForm
             // 
@@ -47,9 +48,11 @@
             this.ClientSize = new System.Drawing.Size(439, 400);
             this.Controls.Add(this.richTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.KeyPreview = true;
             this.Name = "LoggerForm";
             this.Text = "LoggerForm";
             this.TopMost = true;
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LoggerForm_KeyDown);
             this.ResumeLayout(false);
 
         }
