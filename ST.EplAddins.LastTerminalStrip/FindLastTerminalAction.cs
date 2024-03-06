@@ -3,6 +3,8 @@ using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.DataModel.MasterData;
 using Eplan.EplApi.HEServices;
+using NLog;
+using ST.EplAddin.LastTerminalStrip;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,7 +13,10 @@ namespace ST.EplAddins.LastTerminalStrip
 {
     class FindLastTerminalAction : IEplAction
     {
+        private static Logger Logger = LogManager.GetCurrentClassLogger();
+        List<string> newTerminalsStripName = new List<string>();
         public static string actionName = "LastTerminalStrip";
+        LoggerForm loggerForm;
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
             Name = actionName;
@@ -21,6 +26,7 @@ namespace ST.EplAddins.LastTerminalStrip
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
+            loggerForm = new LoggerForm();
             SelectionSet selectionSet = new SelectionSet();
             Project currentProject = selectionSet.GetCurrentProject(true);
             string projectName = currentProject.ProjectName;
@@ -64,7 +70,7 @@ namespace ST.EplAddins.LastTerminalStrip
                 .GetTerminals(terminalStripsFunctionsFilter);
             var terminalGroups = terminals
                 .ToLookup(terminal => terminal.Properties.FUNC_FULLDEVICETAG);
-
+            loggerForm.AddFirstLog();
             TerminalStrip[] terminalStrips = terminalGroups.Select(x =>
            {
                if (x.First().TerminalStrip == null)
@@ -81,7 +87,7 @@ namespace ST.EplAddins.LastTerminalStrip
                    Function function = new Function();
                    function.Create(currentProject, symbolVariant);
                    function.Name = x.First().Properties.FUNC_FULLDEVICETAG;
-
+                   LogTerminalStripName(function.Name.ToString());
                }
                return x.First().TerminalStrip;
            }).ToArray();
@@ -106,9 +112,15 @@ namespace ST.EplAddins.LastTerminalStrip
                     if (TerminalOff != null && TerminalOff.Count() >= 1)
                         record.Add(TerminalOff?.Last());
                 }
-                AddFunctionDifinition();
             }
             return record;
+        }
+
+        private void LogTerminalStripName(string terminalStripName)
+        {
+            Logger.Info(terminalStripName);
+            loggerForm.AddLog(terminalStripName);
+            loggerForm.Show();
         }
 
         public void GetActionProperties(ref ActionProperties actionProperties)
