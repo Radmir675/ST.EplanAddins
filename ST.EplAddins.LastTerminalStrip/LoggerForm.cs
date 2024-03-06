@@ -13,11 +13,11 @@ namespace ST.EplAddin.LastTerminalStrip
         {
             if (richTextBox.Text != string.Empty)
             {
-                richTextBox.AppendText(Environment.NewLine + "Следующие клеммы были добавлены:");
+                richTextBox.AppendText(Environment.NewLine + "Следующие определения клеммников были добавлены:");
             }
             else
             {
-                richTextBox.AppendText("Следующие клеммы были добавлены:");
+                richTextBox.AppendText("Следующие определения клеммников были добавлены:");
             }
         }
         public void AddLog(string log)
