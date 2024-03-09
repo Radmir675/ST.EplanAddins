@@ -140,7 +140,6 @@
       <DependentUpon>LoggerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TerminalFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ST.EplAddin.ConnectionNumeration\ST.EplAddin.ConnectionNumeration.csproj">

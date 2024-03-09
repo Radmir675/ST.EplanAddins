@@ -8,7 +8,6 @@ namespace ST.EplAddin.LastTerminalStrip
     public partial class LoggerForm : Form
     {
         private readonly string projectName;
-
         public LoggerForm(string projectName)
         {
             InitializeComponent();
@@ -30,7 +29,6 @@ namespace ST.EplAddin.LastTerminalStrip
             }
             this.Show();
         }
-
 
         private void richTextBox_Click(object sender, EventArgs e)
         {
