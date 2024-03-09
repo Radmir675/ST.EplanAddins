@@ -132,6 +132,7 @@
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
     <Compile Include="FindLastTerminalAction.cs" />
+    <Compile Include="InternalLogger.cs" />
     <Compile Include="LoggerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,12 +149,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="nlog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="NLog.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

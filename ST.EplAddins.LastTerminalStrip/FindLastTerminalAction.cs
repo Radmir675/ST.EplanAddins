@@ -1,9 +1,9 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
+using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.DataModel.MasterData;
 using Eplan.EplApi.HEServices;
-using NLog;
 using ST.EplAddin.LastTerminalStrip;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +13,12 @@ namespace ST.EplAddins.LastTerminalStrip
 {
     class FindLastTerminalAction : IEplAction
     {
-        private static Logger Logger = LogManager.GetCurrentClassLogger();
-        List<string> newTerminalsStripName = new List<string>();
+        InternalLogger logger = new InternalLogger();
+        List<string> writtenLogs = new List<string>();
         public static string actionName = "LastTerminalStrip";
         LoggerForm loggerForm;
+        Progress oProgress;
+
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
             Name = actionName;
@@ -26,6 +28,9 @@ namespace ST.EplAddins.LastTerminalStrip
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
+            //oProgress = new Progress("SimpleProgress");
+            //oProgress.ShowImmediately();
+
             loggerForm = new LoggerForm();
             SelectionSet selectionSet = new SelectionSet();
             Project currentProject = selectionSet.GetCurrentProject(true);
@@ -40,7 +45,10 @@ namespace ST.EplAddins.LastTerminalStrip
                 Search search = new Search();
                 search.ClearSearchDB(currentProject);
                 search.AddToSearchDB(storable);
+                loggerForm.ShowLogs(writtenLogs);
                 ShowSearchNavigator();
+                logger.WriteFileLog(writtenLogs);
+                writtenLogs.Clear();
                 safetyPoint.Commit();
             }
 
@@ -70,7 +78,7 @@ namespace ST.EplAddins.LastTerminalStrip
                 .GetTerminals(terminalStripsFunctionsFilter);
             var terminalGroups = terminals
                 .ToLookup(terminal => terminal.Properties.FUNC_FULLDEVICETAG);
-            loggerForm.AddFirstLog();
+
             TerminalStrip[] terminalStrips = terminalGroups.Select(x =>
            {
                if (x.First().TerminalStrip == null)
@@ -88,6 +96,10 @@ namespace ST.EplAddins.LastTerminalStrip
                    function.Create(currentProject, symbolVariant);
                    function.Name = x.First().Properties.FUNC_FULLDEVICETAG;
                    LogTerminalStripName(function.Name.ToString());
+                   //oProgress.BeginPart(12.5, "dwed");
+                   //oProgress.SetNeededSteps(1);
+                   //oProgress.Step(1);
+                   //oProgress.EndPart(false);
                }
                return x.First().TerminalStrip;
            }).ToArray();
@@ -118,9 +130,7 @@ namespace ST.EplAddins.LastTerminalStrip
 
         private void LogTerminalStripName(string terminalStripName)
         {
-            Logger.Info(terminalStripName);
-            loggerForm.AddLog(terminalStripName);
-            loggerForm.Show();
+            writtenLogs.Add(terminalStripName);
         }
 
         public void GetActionProperties(ref ActionProperties actionProperties)

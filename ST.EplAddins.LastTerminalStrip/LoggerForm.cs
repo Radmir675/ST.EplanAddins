@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ST.EplAddin.LastTerminalStrip
@@ -9,7 +11,7 @@ namespace ST.EplAddin.LastTerminalStrip
         {
             InitializeComponent();
         }
-        public void AddFirstLog()
+        public void ShowLogs(List<string> logs)
         {
             if (richTextBox.Text != string.Empty)
             {
@@ -19,11 +21,13 @@ namespace ST.EplAddin.LastTerminalStrip
             {
                 richTextBox.AppendText("Следующие определения клеммников были добавлены:");
             }
+            foreach (string log in logs)
+            {
+                richTextBox.AppendText(Environment.NewLine + DateTime.Now.ToString() + " | " + log.Remove(0, 2));
+            }
+            this.Show();
         }
-        public void AddLog(string log)
-        {
-            richTextBox.AppendText(Environment.NewLine + DateTime.Now.ToString() + " | " + log.Remove(0, 2));
-        }
+
 
         private void richTextBox_Click(object sender, EventArgs e)
         {
@@ -33,12 +37,22 @@ namespace ST.EplAddin.LastTerminalStrip
         private void LoggerForm_KeyDown(object sender, KeyEventArgs e)
         {
             string copyText = richTextBox.SelectedText;
-            Clipboard.SetText(copyText);
+            if (copyText != string.Empty)
+                Clipboard.SetText(copyText);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Функционал находится в разработке");
+            InternalLogger internalLogger = new InternalLogger();
+            var oldLogs = internalLogger.ReadFileLog();
+            if (oldLogs.Any())
+            {
+                richTextBox.Text = null;
+                foreach (var log in oldLogs)
+                {
+                    richTextBox.AppendText(log + Environment.NewLine);
+                }
+            }
         }
     }
 }
