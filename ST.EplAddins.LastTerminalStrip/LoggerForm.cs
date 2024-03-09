@@ -7,9 +7,12 @@ namespace ST.EplAddin.LastTerminalStrip
 {
     public partial class LoggerForm : Form
     {
-        public LoggerForm()
+        private readonly string projectName;
+
+        public LoggerForm(string projectName)
         {
             InitializeComponent();
+            this.projectName = projectName;
         }
         public void ShowLogs(List<string> logs)
         {
@@ -41,9 +44,9 @@ namespace ST.EplAddin.LastTerminalStrip
                 Clipboard.SetText(copyText);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void ShowHistory_Click(object sender, EventArgs e)
         {
-            InternalLogger internalLogger = new InternalLogger();
+            InternalLogger internalLogger = new InternalLogger(projectName);
             var oldLogs = internalLogger.ReadFileLog();
             if (oldLogs.Any())
             {

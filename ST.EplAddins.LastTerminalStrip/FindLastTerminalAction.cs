@@ -5,15 +5,17 @@ using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.DataModel.MasterData;
 using Eplan.EplApi.HEServices;
 using ST.EplAddin.LastTerminalStrip;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 
 namespace ST.EplAddins.LastTerminalStrip
 {
     class FindLastTerminalAction : IEplAction
     {
-        InternalLogger logger = new InternalLogger();
+        InternalLogger fileLoggger;
         List<string> writtenLogs = new List<string>();
         public static string actionName = "LastTerminalStrip";
         LoggerForm loggerForm;
@@ -28,31 +30,45 @@ namespace ST.EplAddins.LastTerminalStrip
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            //oProgress = new Progress("SimpleProgress");
-            //oProgress.ShowImmediately();
-
-            loggerForm = new LoggerForm();
-            SelectionSet selectionSet = new SelectionSet();
-            Project currentProject = selectionSet.GetCurrentProject(true);
-            string projectName = currentProject.ProjectName;
-            selectionSet.LockProjectByDefault = false;
-            selectionSet.LockSelectionByDefault = false;
-            using (SafetyPoint safetyPoint = SafetyPoint.Create())
+            try
             {
-                var lastTerminals = GetLastTerminsls(currentProject);
-                StorableObject[] storable = lastTerminals.ToArray();
+                oProgress = new Progress("SimpleProgress");
+                oProgress.ShowImmediately();
 
-                Search search = new Search();
-                search.ClearSearchDB(currentProject);
-                search.AddToSearchDB(storable);
-                loggerForm.ShowLogs(writtenLogs);
-                ShowSearchNavigator();
-                logger.WriteFileLog(writtenLogs);
-                writtenLogs.Clear();
-                safetyPoint.Commit();
+                SelectionSet selectionSet = new SelectionSet();
+                Project currentProject = selectionSet.GetCurrentProject(true);
+                loggerForm = new LoggerForm(currentProject.ProjectName);
+                fileLoggger = new InternalLogger(currentProject.ProjectName);
+                string projectName = currentProject.ProjectName;
+                selectionSet.LockProjectByDefault = false;
+                selectionSet.LockSelectionByDefault = false;
+                using (SafetyPoint safetyPoint = SafetyPoint.Create())
+                {
+                    var lastTerminals = GetLastTerminsls(currentProject);
+                    StorableObject[] storable = lastTerminals.ToArray();
+
+                    Search search = new Search();
+                    search.ClearSearchDB(currentProject);
+                    search.AddToSearchDB(storable);
+                    fileLoggger.WriteFileLog(writtenLogs);
+                    loggerForm.ShowLogs(writtenLogs);
+                    writtenLogs.Clear();
+                    ShowSearchNavigator();
+                    safetyPoint.Commit();
+                }
+                oProgress.EndPart(true);
+                return true;
+
             }
-
-            return true;
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
+            finally
+            {
+                oProgress.EndPart(true);
+            }
         }
         public void ShowSearchNavigator()
         {
@@ -83,6 +99,7 @@ namespace ST.EplAddins.LastTerminalStrip
            {
                if (x.First().TerminalStrip == null)
                {
+                   oProgress.BeginPart(100 / (terminalGroups.Count()), "dwed");
                    string strSymbolLibName = "SPECIAL";
                    string strSymbolName = "TDEF";
                    int nVariant = 0;
@@ -96,10 +113,9 @@ namespace ST.EplAddins.LastTerminalStrip
                    function.Create(currentProject, symbolVariant);
                    function.Name = x.First().Properties.FUNC_FULLDEVICETAG;
                    LogTerminalStripName(function.Name.ToString());
-                   //oProgress.BeginPart(12.5, "dwed");
-                   //oProgress.SetNeededSteps(1);
-                   //oProgress.Step(1);
-                   //oProgress.EndPart(false);
+
+
+                   oProgress.EndPart(false);
                }
                return x.First().TerminalStrip;
            }).ToArray();

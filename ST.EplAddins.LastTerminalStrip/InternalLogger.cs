@@ -7,36 +7,45 @@ namespace ST.EplAddin.LastTerminalStrip
 {
     internal class InternalLogger
     {
-        private string path = @"C:\temp\EplanTerminalStrips.txt";
-        List<string> logsFromFile;
+        public string Path { get; }
+        public string ProjectName { get; }
+        public List<string> LogsFromFile { get; set; }
+
+        public InternalLogger(string project)
+        {
+            ProjectName = project;
+            Path = System.IO.Path.Combine(@"C:\temp\EplanLogs", $"{ProjectName}.txt");
+        }
         public List<string> ReadFileLog()
         {
-            FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate);
+            FileStream fileStream = new FileStream(Path, FileMode.OpenOrCreate);
             using (StreamReader streamReader = new StreamReader(fileStream))
             {
-                logsFromFile = new List<string>();
+                LogsFromFile = new List<string>();
                 while (!streamReader.EndOfStream)
                 {
                     var data = streamReader.ReadLine();
 
-                    logsFromFile.Add(data);
+                    LogsFromFile.Add(data);
 
                 }
             }
-            return logsFromFile ?? new List<string>();
+            return LogsFromFile ?? new List<string>();
         }
         public void WriteFileLog(List<string> logs)
         {
-            FileStream fileStream = new FileStream(path, FileMode.Append, FileAccess.Write);
+            new System.IO.FileInfo(Path).Directory.Create();
+            //  Directory.CreateDirectory(Path);
+            FileStream fileStream = new FileStream(Path, FileMode.Append, FileAccess.Write);
             using (StreamWriter streamWriter = new StreamWriter(fileStream))
             {
-                if (!logs.Any())
+                if (logs.Any())
                 {
                     streamWriter.WriteLine("Следующие определения клеммников были добавлены:");
-                    foreach (string log in logs)
-                    {
-                        streamWriter.WriteLine(DateTime.Now + " | " + log);
-                    }
+                }
+                foreach (string log in logs)
+                {
+                    streamWriter.WriteLine(DateTime.Now + " | " + log);
                 }
             }
         }
