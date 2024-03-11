@@ -32,8 +32,11 @@ namespace ST.EplAddins.LastTerminalStrip
         {
             try
             {
-                oProgress = new Progress("SimpleProgress");
+                oProgress = new Progress("Searching last terminals strips...");
+                oProgress.SetTitle("Searching last terminals strips...");
+                oProgress.SetAllowCancel(false);
                 oProgress.ShowImmediately();
+                oProgress.SetNeededSteps(10);
 
                 SelectionSet selectionSet = new SelectionSet();
                 Project currentProject = selectionSet.GetCurrentProject(true);
@@ -99,7 +102,8 @@ namespace ST.EplAddins.LastTerminalStrip
            {
                if (x.First().TerminalStrip == null)
                {
-                   oProgress.BeginPart(100 / (terminalGroups.Count()), "dwed");
+                   oProgress.BeginPart(100 / (terminalGroups.Count()), x.First().Name);
+
                    string strSymbolLibName = "SPECIAL";
                    string strSymbolName = "TDEF";
                    int nVariant = 0;
@@ -114,22 +118,25 @@ namespace ST.EplAddins.LastTerminalStrip
                    function.Name = x.First().Properties.FUNC_FULLDEVICETAG;
                    LogTerminalStripName(function.Name.ToString());
 
-
                    oProgress.EndPart(false);
                }
                return x.First().TerminalStrip;
            }).ToArray();
-
+            oProgress.SetNeededParts(1);
+            oProgress.BeginPart(25.0, "");
+            oProgress.Step(1);
             DeviceService deviceService = new DeviceService();
             deviceService.SortTerminalStrips(terminalStrips, DeviceService.TerminalStripSortMethods.Numeric);
-
+            oProgress.EndPart(false);
             List<Terminal> record = new List<Terminal>();
             foreach (var terminalstrip in terminalStrips)
             {
+                oProgress.SetNeededSteps(terminalStrips.Count());
                 if (terminalstrip != null && terminalstrip.Terminals != null)
                 {
-
+                    oProgress.Step(1);
                     List<Terminal> TerminalOff = new List<Terminal>();
+                    oProgress.BeginPart(100 / (terminalStrips.Count()), terminalstrip.Name);
                     foreach (Terminal terminal in terminalstrip.Terminals)
                     {
                         if (terminal.IsMainTerminal == true)
