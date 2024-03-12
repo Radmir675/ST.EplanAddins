@@ -8,6 +8,7 @@ namespace ST.EplAddins.LastTerminalStrip
     public class AddinModule : IEplAddIn
     {
         string actionName = FindLastTerminalAction.actionName;
+        string showHistoryName = ShowHistoryAction.actionName1;
         public bool OnExit()
         {
             throw new NotImplementedException();
@@ -21,18 +22,12 @@ namespace ST.EplAddins.LastTerminalStrip
         public bool OnInitGui()
         {
             Menu menu = new Menu();
-            menu.AddMainMenu("ST ", Menu.MainMenuName.eMainMenuUtilities, "Terminal", actionName, "Статус", 1);
-            var menuId = menu.GetCustomMenuId("Terminal", actionName);
-
-
-
-            //var menuId = menu.GetCustomMenuId("ST", actionName);
-            //if (menuId == 0)
-            //    menuId = menu.AddMainMenu("ST", Eplan.EplApi.Gui.Menu.MainMenuName.eMainMenuHelp, ".", ".", "", 1);
-            //uint subMenuID = menu.AddPopupMenuItem(
-            //   "Terminals strips", "Show history", "gstatistic", "", menuId, 0, false, false);
-            //menu.AddMenuItem("Find last terminals", actionName, "", subMenuID, 0, false, false);
-            //menu.AddMenuItem("Show history", "gfixmergearcs", null, subMenuID, 0, false, false);
+            var menuId = menu.GetCustomMenuId("ST", null);
+            if (menuId == 0)
+                menuId = menu.AddMainMenu("ST", Menu.MainMenuName.eMainMenuUtilities, "None", "None", "Статус", 1);
+            uint subMenuID = menu.AddPopupMenuItem(
+             "Terminals strips", "Show history", showHistoryName, "", menuId, 0, false, false);
+            menu.AddMenuItem("Find last terminals", actionName, "", subMenuID, 0, false, false);
             return true;
         }
 

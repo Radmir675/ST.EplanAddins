@@ -55,5 +55,9 @@ namespace ST.EplAddin.LastTerminalStrip
                 }
             }
         }
+        public void PressShowHistory()
+        {
+            button1.PerformClick();
+        }
     }
 }

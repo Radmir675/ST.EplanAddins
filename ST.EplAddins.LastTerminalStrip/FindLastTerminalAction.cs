@@ -16,11 +16,11 @@ namespace ST.EplAddins.LastTerminalStrip
     class FindLastTerminalAction : IEplAction
     {
         InternalLogger fileLoggger;
-        List<string> writtenLogs = new List<string>();
+        public List<string> writtenLogs = new List<string>();
         public static string actionName = "LastTerminalStrip";
         LoggerForm loggerForm;
         Progress oProgress;
-
+        public string projectName;
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
             Name = actionName;
@@ -40,9 +40,9 @@ namespace ST.EplAddins.LastTerminalStrip
 
                 SelectionSet selectionSet = new SelectionSet();
                 Project currentProject = selectionSet.GetCurrentProject(true);
-                loggerForm = new LoggerForm(currentProject.ProjectName);
-                fileLoggger = new InternalLogger(currentProject.ProjectName);
-                string projectName = currentProject.ProjectName;
+                projectName = currentProject.ProjectName;
+                loggerForm = new LoggerForm(projectName);
+                fileLoggger = new InternalLogger(projectName);
                 selectionSet.LockProjectByDefault = false;
                 selectionSet.LockSelectionByDefault = false;
                 using (SafetyPoint safetyPoint = SafetyPoint.Create())

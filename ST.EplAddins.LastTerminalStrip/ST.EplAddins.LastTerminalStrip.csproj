@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
+    <Compile Include="ShowHistoryAction.cs" />
     <Compile Include="FindLastTerminalAction.cs" />
     <Compile Include="InternalLogger.cs" />
     <Compile Include="LoggerForm.cs">
