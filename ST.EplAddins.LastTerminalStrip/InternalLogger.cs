@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ST.EplAddin.LastTerminalStrip
 {
-    internal class InternalLogger
+    public class InternalLogger
     {
         public string Path { get; }
         public string ProjectName { get; }
@@ -26,7 +26,6 @@ namespace ST.EplAddin.LastTerminalStrip
                     var data = streamReader.ReadLine();
 
                     LogsFromFile.Add(data);
-
                 }
             }
             return LogsFromFile ?? new List<string>();

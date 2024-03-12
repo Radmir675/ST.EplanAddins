@@ -6,13 +6,13 @@ using ST.EplAddin.LastTerminalStrip;
 
 namespace ST.EplAddins.LastTerminalStrip
 {
-    class ShowHistoryAction : IEplAction
+    public class ShowHistoryAction : IEplAction
     {
 
-        public static string actionName1 = "ShowHistory";
+        public static string ActionName { get; set; } = "ShowHistory";
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
-            Name = actionName1;
+            Name = ActionName;
             Ordinal = 32;
             return true;
         }

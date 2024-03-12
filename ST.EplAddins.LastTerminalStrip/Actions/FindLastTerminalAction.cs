@@ -13,55 +13,53 @@ using System.Windows.Forms;
 
 namespace ST.EplAddins.LastTerminalStrip
 {
-    class FindLastTerminalAction : IEplAction
+    public class FindLastTerminalAction : IEplAction
     {
-        InternalLogger fileLoggger;
-        public List<string> writtenLogs = new List<string>();
-        public static string actionName = "LastTerminalStrip";
-        LoggerForm loggerForm;
-        Progress oProgress;
-        public string projectName;
+        public InternalLogger FileLoggger { get; set; }
+        public List<string> WrittenLogs { get; set; } = new List<string>();
+        public static string ActionName { get; set; } = "LastTerminalStrip";
+        public LoggerForm LoggerForm { get; set; }
+        public Progress Progress { get; set; }
+        public string ProjectName { get; set; }
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
-            Name = actionName;
+            Name = ActionName;
             Ordinal = 32;
             return true;
         }
-
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
             try
             {
-                oProgress = new Progress("Searching last terminals strips...");
-                oProgress.SetTitle("Searching last terminals strips...");
-                oProgress.SetAllowCancel(false);
-                oProgress.ShowImmediately();
-                oProgress.SetNeededSteps(10);
+                Progress = new Progress("Searching last terminals strips...");
+                Progress.SetTitle("Searching last terminals strips...");
+                Progress.SetAllowCancel(false);
+                Progress.ShowImmediately();
+                Progress.SetNeededSteps(10);
 
                 SelectionSet selectionSet = new SelectionSet();
                 Project currentProject = selectionSet.GetCurrentProject(true);
-                projectName = currentProject.ProjectName;
-                loggerForm = new LoggerForm(projectName);
-                fileLoggger = new InternalLogger(projectName);
+                ProjectName = currentProject.ProjectName;
+                LoggerForm = new LoggerForm(ProjectName);
+                FileLoggger = new InternalLogger(ProjectName);
                 selectionSet.LockProjectByDefault = false;
                 selectionSet.LockSelectionByDefault = false;
                 using (SafetyPoint safetyPoint = SafetyPoint.Create())
                 {
-                    var lastTerminals = GetLastTerminsls(currentProject);
+                    var lastTerminals = GetLastTerminals(currentProject);
                     StorableObject[] storable = lastTerminals.ToArray();
 
                     Search search = new Search();
                     search.ClearSearchDB(currentProject);
                     search.AddToSearchDB(storable);
-                    fileLoggger.WriteFileLog(writtenLogs);
-                    loggerForm.ShowLogs(writtenLogs);
-                    writtenLogs.Clear();
+                    FileLoggger.WriteFileLog(WrittenLogs);
+                    LoggerForm.ShowLogs(WrittenLogs);
+                    WrittenLogs.Clear();
                     ShowSearchNavigator();
                     safetyPoint.Commit();
                 }
-                oProgress.EndPart(true);
+                Progress.EndPart(true);
                 return true;
-
             }
             catch (Exception e)
             {
@@ -70,25 +68,24 @@ namespace ST.EplAddins.LastTerminalStrip
             }
             finally
             {
-                oProgress.EndPart(true);
+                Progress.EndPart(true);
             }
         }
-        public void ShowSearchNavigator()
+        private void ShowSearchNavigator()
         {
             ActionManager oMng = new ActionManager();
             Eplan.EplApi.ApplicationFramework.Action baseAction = oMng.FindAction("XSeShowSearchResultsAction");
             ActionCallingContext ctx = new ActionCallingContext();
             bool result = baseAction.Execute(ctx);
         }
-        public void AddFunctionDifinition()
+        private void AddFunctionDifinition()
         {
             ActionManager oMng = new ActionManager();
             Eplan.EplApi.ApplicationFramework.Action baseAction = oMng.FindAction("TerminalGuiIGfWindAddDefinition");
             ActionCallingContext ctx = new ActionCallingContext();
             bool result = baseAction.Execute(ctx);
         }
-
-        private List<Terminal> GetLastTerminsls(Project currentProject)
+        private List<Terminal> GetLastTerminals(Project currentProject)
         {
             FunctionsFilter terminalStripsFunctionsFilter = new FunctionsFilter();
             terminalStripsFunctionsFilter.Category = Function.Enums.Category.Terminal;
@@ -98,45 +95,31 @@ namespace ST.EplAddins.LastTerminalStrip
             var terminalGroups = terminals
                 .ToLookup(terminal => terminal.Properties.FUNC_FULLDEVICETAG);
 
-            TerminalStrip[] terminalStrips = terminalGroups.Select(x =>
-           {
-               if (x.First().TerminalStrip == null)
-               {
-                   oProgress.BeginPart(100 / (terminalGroups.Count()), x.First().Name);
+            TerminalStrip[] terminalStrips = FindTerminalStrips(terminalGroups, currentProject);
 
-                   string strSymbolLibName = "SPECIAL";
-                   string strSymbolName = "TDEF";
-                   int nVariant = 0;
-
-                   SymbolLibrary symbolLibriary = new SymbolLibrary(currentProject, strSymbolLibName);
-                   Symbol symbol = new Symbol(symbolLibriary, strSymbolName);
-                   SymbolVariant symbolVariant = new SymbolVariant();
-                   symbolVariant.Initialize(symbol, nVariant);
-
-                   Function function = new Function();
-                   function.Create(currentProject, symbolVariant);
-                   function.Name = x.First().Properties.FUNC_FULLDEVICETAG;
-                   LogTerminalStripName(function.Name.ToString());
-
-                   oProgress.EndPart(false);
-               }
-               return x.First().TerminalStrip;
-           }).ToArray();
-            oProgress.SetNeededParts(1);
-            oProgress.BeginPart(25.0, "");
-            oProgress.Step(1);
+            Progress.SetNeededParts(1);
+            Progress.BeginPart(25.0, "");
+            Progress.Step(1);
+            SortTerminalsByNumeric(ref terminalStrips);
+            Progress.EndPart(false);
+            return FindLastTerminals(ref terminalStrips);
+        }
+        private void SortTerminalsByNumeric(ref TerminalStrip[] terminalStrips)
+        {
             DeviceService deviceService = new DeviceService();
             deviceService.SortTerminalStrips(terminalStrips, DeviceService.TerminalStripSortMethods.Numeric);
-            oProgress.EndPart(false);
+        }
+        private List<Terminal> FindLastTerminals(ref TerminalStrip[] terminalStrips)
+        {
             List<Terminal> record = new List<Terminal>();
             foreach (var terminalstrip in terminalStrips)
             {
-                oProgress.SetNeededSteps(terminalStrips.Count());
+                Progress.SetNeededSteps(terminalStrips.Count());
                 if (terminalstrip != null && terminalstrip.Terminals != null)
                 {
-                    oProgress.Step(1);
+                    Progress.Step(1);
                     List<Terminal> TerminalOff = new List<Terminal>();
-                    oProgress.BeginPart(100 / (terminalStrips.Count()), terminalstrip.Name);
+                    Progress.BeginPart(100 / (terminalStrips.Count()), terminalstrip.Name);
                     foreach (Terminal terminal in terminalstrip.Terminals)
                     {
                         if (terminal.IsMainTerminal == true)
@@ -150,16 +133,34 @@ namespace ST.EplAddins.LastTerminalStrip
             }
             return record;
         }
-
-        private void LogTerminalStripName(string terminalStripName)
+        private TerminalStrip[] FindTerminalStrips(ILookup<PropertyValue, Terminal> terminalGroups, Project currentProject)
         {
-            writtenLogs.Add(terminalStripName);
+            TerminalStrip[] terminalStrips = terminalGroups.Select(x =>
+            {
+                if (x.First().TerminalStrip == null)
+                {
+                    Progress.BeginPart(100 / (terminalGroups.Count()), x.First().Name);
+
+                    string strSymbolLibName = "SPECIAL";
+                    string strSymbolName = "TDEF";
+                    int nVariant = 0;
+
+                    SymbolLibrary symbolLibriary = new SymbolLibrary(currentProject, strSymbolLibName);
+                    Symbol symbol = new Symbol(symbolLibriary, strSymbolName);
+                    SymbolVariant symbolVariant = new SymbolVariant();
+                    symbolVariant.Initialize(symbol, nVariant);
+
+                    Function function = new Function();
+                    function.Create(currentProject, symbolVariant);
+                    function.Name = x.First().Properties.FUNC_FULLDEVICETAG;
+                    WrittenLogs.Add(function.Name.ToString());
+                    Progress.EndPart(false);
+                }
+                return x.First().TerminalStrip;
+            }).ToArray();
+            return terminalStrips;
+
         }
-
-        public void GetActionProperties(ref ActionProperties actionProperties)
-        {
-
-        }
-
+        public void GetActionProperties(ref ActionProperties actionProperties) { }
     }
 }
