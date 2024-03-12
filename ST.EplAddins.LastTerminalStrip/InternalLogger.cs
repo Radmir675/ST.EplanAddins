@@ -10,7 +10,6 @@ namespace ST.EplAddin.LastTerminalStrip
         public string Path { get; }
         public string ProjectName { get; }
         public List<string> LogsFromFile { get; set; }
-
         public InternalLogger(string project)
         {
             ProjectName = project;
@@ -35,7 +34,6 @@ namespace ST.EplAddin.LastTerminalStrip
         public void WriteFileLog(List<string> logs)
         {
             new System.IO.FileInfo(Path).Directory.Create();
-            //  Directory.CreateDirectory(Path);
             FileStream fileStream = new FileStream(Path, FileMode.Append, FileAccess.Write);
             using (StreamWriter streamWriter = new StreamWriter(fileStream))
             {
