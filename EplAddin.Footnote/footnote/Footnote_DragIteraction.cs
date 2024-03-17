@@ -3,12 +3,7 @@ using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.EServices.Ged;
 using Eplan.EplApi.HEServices;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using Action = Eplan.EplApi.ApplicationFramework.Action;
 
 namespace ST.EplAddin.Footnote
@@ -69,7 +64,7 @@ namespace ST.EplAddin.Footnote
 
                         //SetStaticCursor(bl, new PointD(0, 0));
                         if (STSettings.instance.LINECURSOR)
-                        SetRubberlineCursor();
+                            SetRubberlineCursor();
 
                         PromptForStatusLine = "Перетащите сноску";
                         this.Description = "Переместить сноску";
@@ -99,7 +94,7 @@ namespace ST.EplAddin.Footnote
 
         public override StorableObject[] OnDrawCursor(Position oPosition)
         {
-           
+
             if (isFootnote && !STSettings.instance.LINECURSOR)
             {
                 //FootnoteItem cursor = new FootnoteItem();
@@ -114,9 +109,10 @@ namespace ST.EplAddin.Footnote
                 note.SetNotePoint(new PointD(x2, y2));
 
                 return new StorableObject[] { note.block };
-            } else
-            
-            return base.OnDrawCursor(oPosition);
+            }
+            else
+
+                return base.OnDrawCursor(oPosition);
         }
 
 
@@ -155,12 +151,12 @@ namespace ST.EplAddin.Footnote
 
                 note.GroupWithViewPlacement();
 
-                
+
 
                 ActionManager oMng = new ActionManager();
                 Action baseAction = oMng.FindAction("gedRedraw");
                 baseAction.Execute(new ActionCallingContext());
-                
+
                 return;
             }
             base.OnSuccess(result);

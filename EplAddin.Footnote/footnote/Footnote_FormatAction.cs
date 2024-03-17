@@ -1,12 +1,5 @@
-﻿using Eplan.EplApi.ApplicationFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-        //XGedCopyGraphicalFormatAction /Cursor:FORMATPAINTER
-        //XGedAcceptGraphicalFormatAction /Cursor:FORMATPAINTER
+﻿//XGedCopyGraphicalFormatAction /Cursor:FORMATPAINTER
+//XGedAcceptGraphicalFormatAction /Cursor:FORMATPAINTER
 namespace ST.EplAddin.Footnote.footnote
 {/*
     class Footnote_FormatCopyAction : IEplAction

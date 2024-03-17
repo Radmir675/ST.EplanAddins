@@ -1,18 +1,10 @@
-﻿using Eplan.EplApi.ApplicationFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Eplan.EplApi.EServices.Ged;
+﻿using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
-using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel.Graphics;
+using Eplan.EplApi.EServices.Ged;
 using Eplan.EplApi.HEServices;
 using System.Diagnostics;
-using Eplan.EplApi.DataModel.E3D;
-using System.Windows.Forms;
-using ST.EplAddin.Footnote;
+using System.Linq;
 
 namespace ST.EplAddin.Footnote
 {
@@ -94,7 +86,7 @@ namespace ST.EplAddin.Footnote
                 vpartID = (o as ViewPart).ToStringIdentifier();
                 vpart = (o as ViewPart);
             }
-                
+
         }
 
         public override RequestCode OnStart(InteractionContext oContext)

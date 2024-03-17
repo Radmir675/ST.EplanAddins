@@ -1,8 +1,5 @@
 ﻿using System.Runtime.Serialization;
 
-
-
-//LEGEND NOTE
 namespace ST.EplAddin.Footnote
 {
     public partial class FootnoteItem

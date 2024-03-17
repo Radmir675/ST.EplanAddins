@@ -2,10 +2,6 @@
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Action = Eplan.EplApi.ApplicationFramework.Action;
 
 namespace ST.EplAddin.Footnote.footnote
@@ -45,12 +41,12 @@ namespace ST.EplAddin.Footnote.footnote
                     bool isFootnoteBlock = bl.Name.Contains(FootnoteItem.FOOTNOTE_KEY);
                     if (isFootnoteBlock)
                     {
-                       /* FootnoteItem note = new FootnoteItem();
-                        note.Create(bl);
-                        PropertiesDialog p = new PropertiesDialog();
-                        p.setItem(note);
-                        p.ShowDialog();
-                        */
+                        /* FootnoteItem note = new FootnoteItem();
+                         note.Create(bl);
+                         PropertiesDialog p = new PropertiesDialog();
+                         p.setItem(note);
+                         p.ShowDialog();
+                         */
                         return true;
                     }
                 }
@@ -66,6 +62,6 @@ namespace ST.EplAddin.Footnote.footnote
             throw new NotImplementedException();
         }
 
-        
+
     }
 }

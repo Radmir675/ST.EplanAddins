@@ -2,15 +2,11 @@
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Action = Eplan.EplApi.ApplicationFramework.Action;
 
 namespace ST.EplAddin.Footnote
 {
-    
+
     class Footnote_PropertiesActionXGed : IEplAction
     {
 
@@ -19,7 +15,7 @@ namespace ST.EplAddin.Footnote
             string function = "", cmdline = "";
             oActionCallingContext.GetParameter("specialGroupHandling", ref function);
             oActionCallingContext.GetParameter("_cmdline", ref cmdline);
-            
+
             int count = oActionCallingContext.GetParameterCount();
             string[] contextParams = oActionCallingContext.GetParameters();
             string[] contextStrings = oActionCallingContext.GetStrings();

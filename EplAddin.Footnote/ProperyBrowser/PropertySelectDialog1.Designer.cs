@@ -64,7 +64,6 @@
             this.label1.Size = new System.Drawing.Size(191, 25);
             this.label1.TabIndex = 1;
             this.label1.Text = "Объект источника:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // splitContainer1
             // 
@@ -158,7 +157,6 @@
             this.Name = "PropertySelectDialog1";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Выбор свойства";
-            this.Load += new System.EventHandler(this.PropertySelectDialog1_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
