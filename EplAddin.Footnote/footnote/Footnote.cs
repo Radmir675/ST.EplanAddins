@@ -13,8 +13,6 @@ using System.Text;
 using System.Windows.Forms;
 using static Eplan.EplApi.DataModel.Placement;
 
-
-
 //LEGEND NOTE
 namespace ST.EplAddin.Footnote
 {
