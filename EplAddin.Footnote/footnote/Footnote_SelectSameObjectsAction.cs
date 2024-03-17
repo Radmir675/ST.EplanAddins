@@ -13,9 +13,7 @@ namespace ST.EplAddin.Footnote.footnote
             Name = "XGedSelectSameObjectsAction2";
             Ordinal = 99;
             return true;
-
         }
-
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
             string function = "", cmdline = "";
@@ -61,7 +59,5 @@ namespace ST.EplAddin.Footnote.footnote
         {
             throw new NotImplementedException();
         }
-
-
     }
 }

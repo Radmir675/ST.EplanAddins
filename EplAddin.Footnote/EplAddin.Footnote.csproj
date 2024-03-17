@@ -98,7 +98,7 @@
     <Compile Include="AddinModule.cs" />
     <Compile Include="EplHelper.cs" />
     <Compile Include="footnote\Footnote.cs" />
-    <Compile Include="footnote\Footnote_FormatAction.cs" />
+    <Compile Include="footnote\Footnote_FormatCopyAction.cs" />
     <Compile Include="footnote\Footnote_MoveElementAction.cs" />
     <Compile Include="footnote\Footnote_DragIteraction.cs" />
     <Compile Include="footnote\Footnote_InsertAction.cs" />

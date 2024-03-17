@@ -15,7 +15,6 @@ namespace ST.EplAddin.Footnote
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-
             SelectionSet s = new SelectionSet();
             s.LockProjectByDefault = false;
             s.LockSelectionByDefault = false;
@@ -39,8 +38,6 @@ namespace ST.EplAddin.Footnote
             bool result = oAction1.Execute(oActionCallingContext);
             if (isFootnote)
             {
-
-
                 int count = oActionCallingContext.GetParameterCount();
                 string[] contextParams = oActionCallingContext.GetParameters();
                 string[] contextStrings = oActionCallingContext.GetStrings();
@@ -62,7 +59,6 @@ namespace ST.EplAddin.Footnote
             Name = "XGedMoveElementAction1";
             Ordinal = 99;
             return true;
-
         }
     }
 }

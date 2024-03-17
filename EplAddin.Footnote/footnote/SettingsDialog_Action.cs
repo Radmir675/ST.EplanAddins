@@ -17,7 +17,6 @@ namespace ST.EplAddin.Footnote
 
             return true;
         }
-
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
             throw new NotImplementedException();

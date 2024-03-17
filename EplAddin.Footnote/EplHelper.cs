@@ -6,7 +6,6 @@ namespace ST.EplAddin.Footnote
     public class EplHelper
     {
         public static ISOCode.Language GuiLanguage { get { return new Languages().GuiLanguage.GetNumber(); } }
-
     }
     public class WindowWrapper : System.Windows.Forms.IWin32Window
     {

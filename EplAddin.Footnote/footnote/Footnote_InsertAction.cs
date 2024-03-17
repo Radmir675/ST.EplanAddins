@@ -24,7 +24,6 @@ namespace ST.EplAddin.Footnote
             }
         }
 
-
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
             /*
@@ -51,7 +50,6 @@ namespace ST.EplAddin.Footnote
             string strActionName = "";
             bool bIsSeparator = false;
             oTestMenu.GetMenuItem(oLocation, 1, ref strMenuName, ref strActionName, ref bIsSeparator);
-
 
             string strAction = "XGedStartInteractionAction2D";
 
@@ -87,7 +85,6 @@ namespace ST.EplAddin.Footnote
             Name = "Footnote_InsertAction";
             Ordinal = 99;
             return true;
-
         }
     }
 }

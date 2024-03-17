@@ -9,7 +9,6 @@ namespace ST.EplAddin.Footnote
 {
     class Footnote_UpdateAction : IEplAction
     {
-
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
 

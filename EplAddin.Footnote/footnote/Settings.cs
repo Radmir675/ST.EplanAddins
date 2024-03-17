@@ -1,12 +1,7 @@
 ﻿using Eplan.EplApi.Base;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static ST.EplAddin.Footnote.FootnoteItem;
 
 namespace ST.EplAddin.Footnote
 {
@@ -40,9 +35,7 @@ namespace ST.EplAddin.Footnote
         static String KEY_PROPERTYID = "USER.ST.FOOTNOTE.PROPERTYID";
         static String KEY_STARTPOINT = "USER.ST.FOOTNOTE.STARTPOINT";
         static String KEY_STARTPOINTRADIUS = "USER.ST.FOOTNOTE.STARTPOINTRADIUS";
-
         private STSettings() { }
-
         public void RemoveSettings()
         {
             Eplan.EplApi.Base.Settings oSettings = new Eplan.EplApi.Base.Settings();
@@ -143,7 +136,6 @@ namespace ST.EplAddin.Footnote
 
         public void SaveSettings()
         {
-
             Eplan.EplApi.Base.Settings oSettings = new Eplan.EplApi.Base.Settings();
             if (!oSettings.ExistSetting(KEY_LINEWIDTH))
             {
@@ -197,7 +189,6 @@ namespace ST.EplAddin.Footnote
                     ISettings.CreationFlag.Insert);
             }
             oSettings.SetDoubleSetting(KEY_STARTPOINTRADIUS, STARTPOINTRADIUS, 0);
-
         }
     }
 }

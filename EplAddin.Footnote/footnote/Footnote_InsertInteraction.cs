@@ -8,7 +8,6 @@ using System.Linq;
 
 namespace ST.EplAddin.Footnote
 {
-
     /// <summary>
     /// XGedStartInteractionAction /Name:XGedFootnote
     /// https://www.eplan.help/en-US/infoportal/content/api/2.8/Interactions.html
@@ -25,7 +24,6 @@ namespace ST.EplAddin.Footnote
         private string vpartID;
         private ViewPart vpart;
         //FootnoteItem cursor = null;
-
         public override bool IsAutorestartEnabled => true;
 
         public void stateInit()
@@ -88,7 +86,6 @@ namespace ST.EplAddin.Footnote
             }
 
         }
-
         public override RequestCode OnStart(InteractionContext oContext)
         {
             STSettings.instance.LoadSettings();
