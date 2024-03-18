@@ -11,7 +11,7 @@ namespace ST.EplAddin.Footnote
             Process oCurrent = Process.GetCurrentProcess();
             var eplanHandle = new WindowWrapper(oCurrent.MainWindowHandle);
 
-            SettingsDialog dialog = new SettingsDialog();
+            SettingsDialogForm dialog = new SettingsDialogForm();
 
             dialog.ShowDialog(eplanHandle);
 

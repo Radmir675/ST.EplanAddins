@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace ST.EplAddin.Footnote
 {
-    public partial class SettingsDialog : Form
+    public partial class SettingsDialogForm : Form
     {
-        public SettingsDialog()
+        public SettingsDialogForm()
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;

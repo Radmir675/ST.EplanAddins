@@ -1,6 +1,6 @@
 ﻿namespace ST.EplAddin.Footnote
 {
-    partial class SettingsDialog
+    partial class SettingsDialogForm
     {
         /// <summary>
         /// Required designer variable.
@@ -61,7 +61,7 @@
             this.propertyGrid1.Size = new System.Drawing.Size(350, 234);
             this.propertyGrid1.TabIndex = 12;
             // 
-            // SettingsDialog
+            // SettingsDialogForm
             // 
             this.AcceptButton = this.apply_Button;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -73,7 +73,7 @@
             this.Controls.Add(this.apply_Button);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "SettingsDialog";
+            this.Name = "SettingsDialogForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SettingsDialog";
