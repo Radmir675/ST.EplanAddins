@@ -5,6 +5,12 @@ using System.IO;
 
 namespace EplAddin.Article_AddImageContextDialog
 {
+    /*
+        XPartsManagementDialog 1178 вставит картинку
+        из буфера, перетаскиванием из файла и по ссылке
+        обрезать уменьшить.
+        сохранить */
+    //https://suplanus.de/partsmanagementextension/
     public class AddinModule : IEplAddIn
     {
 
@@ -19,19 +25,6 @@ namespace EplAddin.Article_AddImageContextDialog
                 return addinName;
             }
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bLoadOnStart"></param>
-        /// <returns></returns>
-        /*
-        XPartsManagementDialog 1178
-        вставит картинку
-        из буфера, перетаскиванием из файла и по ссылке
-        обрезать уменьшить.
-        сохранить */
-
         public bool OnRegister(ref bool bLoadOnStart)
         {
             bLoadOnStart = true;
@@ -70,9 +63,5 @@ namespace EplAddin.Article_AddImageContextDialog
         {
             return true;
         }
-
-        //https://suplanus.de/partsmanagementextension/
-
-        //
     }
 }

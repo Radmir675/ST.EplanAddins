@@ -8,9 +8,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="638">
     <Grid>
-        <Image x:Name="img"  HorizontalAlignment="Left" Height="355" Margin="10,85,0,0" VerticalAlignment="Top" Width="618"/>
-        <Button x:Name="clip" Content="Clipboard" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="185" Click="Button_Click" Height="47"/>
-        <Button x:Name="save" Content="Save" HorizontalAlignment="Left" Margin="268,10,0,0" VerticalAlignment="Top" Width="168" Height="47"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="31*"/>
+            <ColumnDefinition Width="607*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="421*"/>
+        </Grid.RowDefinitions>
+        <Image x:Name="img"  HorizontalAlignment="Left" Height="355" Margin="10,56,0,0" VerticalAlignment="Top" Width="618" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Button x:Name="clip" Content="Clipboard" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="185" Click="Button_Click" Height="47" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+        <Button x:Name="save" Content="Save" HorizontalAlignment="Left" Margin="237,10,0,0" VerticalAlignment="Top" Width="168" Height="47" Grid.RowSpan="2" Grid.Column="1"/>
 
     </Grid>
 </UserControl>

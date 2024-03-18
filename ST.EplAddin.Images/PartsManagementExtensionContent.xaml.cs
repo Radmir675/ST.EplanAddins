@@ -88,9 +88,6 @@ namespace EplAddin.Article_AddImageContextDialog
                     string filePath = ImagePath + "\\" + filename;
                     string filePathShort = "$(MD_IMG)" + "\\" + filename;
 
-                    //items.First().Properties.ARTICLE_PICTUREFILE = string.Empty;
-                    //bool res = _partsManagement.SetModified();
-
                     using (FileStream stream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
                     {
                         var encoder = new PngBitmapEncoder();
@@ -99,7 +96,6 @@ namespace EplAddin.Article_AddImageContextDialog
                         encoder.Save(stream);
 
                     }
-                    //MDPartsDatabaseItem mdprt = items.First();
 
                     items.First().Properties.ARTICLE_PICTUREFILE = filePathShort;
                     _partsManagement.RefreshPartsManagementDialog();
@@ -116,7 +112,7 @@ namespace EplAddin.Article_AddImageContextDialog
                     eventParameterString2.String = "";
                     new Eplan.EplApi.ApplicationFramework.EventManager().Send("Ged.ClearFastImageCache", eventParameterString4);
 
-                    bool res1 = _partsManagement.SetModified();
+                    // bool res1 = _partsManagement.SetModified();
                 }
                 catch (Exception ee)
                 {

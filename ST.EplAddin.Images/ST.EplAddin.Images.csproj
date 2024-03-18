@@ -140,7 +140,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="PartsManagementExtensionContent.xaml.cs">
       <DependentUpon>PartsManagementExtensionContent.xaml</DependentUpon>
     </Compile>

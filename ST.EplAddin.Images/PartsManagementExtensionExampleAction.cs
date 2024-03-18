@@ -1,10 +1,5 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplSDK.WPF.EEvent;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EplAddin.Article_AddImageContextDialog
 {
