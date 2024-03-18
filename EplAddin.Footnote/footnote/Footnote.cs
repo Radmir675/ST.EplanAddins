@@ -23,7 +23,6 @@ namespace ST.EplAddin.Footnote
     [RefreshProperties(RefreshProperties.All)]
     public partial class FootnoteItem
     {
-
         public static String FOOTNOTE_KEY = "FOOTNOTE_OBJID#";
 
         public Block block = null;

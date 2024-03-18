@@ -26,10 +26,8 @@ namespace ST.EplAddin.Footnote
         PointD oldposition;
         bool isFootnote = false;
 
-
         public override RequestCode OnStart(InteractionContext pContext)
         {
-
             string[] param = pContext.GetParameters();
 
             if (param.Count() > 3
@@ -39,20 +37,20 @@ namespace ST.EplAddin.Footnote
                  && param[3] == "object2drag")
             {
 
-                SelectionSet s = new SelectionSet();
-                s.LockProjectByDefault = false;
-                s.LockSelectionByDefault = false;
-                StorableObject so = s.GetSelectedObject(true);
+                SelectionSet selectionSet = new SelectionSet();
+                selectionSet.LockProjectByDefault = false;
+                selectionSet.LockSelectionByDefault = false;
+                StorableObject storableObject = selectionSet.GetSelectedObject(true);
 
-                bool isBlock = so is Block;
+                bool isBlock = storableObject is Block;
                 if (isBlock)
                 {
-                    Block bl = so as Block;
-                    bool isFootnoteBlock = bl.Name.Contains(FootnoteItem.FOOTNOTE_KEY);
+                    Block block = storableObject as Block;
+                    bool isFootnoteBlock = block.Name.Contains(FootnoteItem.FOOTNOTE_KEY);
                     if (isFootnoteBlock)
                     {
                         note = new FootnoteItem();
-                        note.Create(bl);
+                        note.Create(block);
                         oldposition = note.notePosition;
                         isFootnote = true;
 
@@ -60,7 +58,6 @@ namespace ST.EplAddin.Footnote
                         double y = note.itemPosition.Y + note.block.Properties.INSTANCE_YCOORD.ToDouble();
                         StartPosition = new Position(new PointD(x, y));
                         //StartPosition = new Position(note.itemPosition));
-
 
                         //SetStaticCursor(bl, new PointD(0, 0));
                         if (STSettings.instance.LINECURSOR)
@@ -72,10 +69,8 @@ namespace ST.EplAddin.Footnote
                     }
                 }
             }
-
             return base.OnStart(pContext);
         }
-
 
         public override RequestCode OnSpecialEvent(InteractionEvent pEvent)
         {
@@ -115,13 +110,11 @@ namespace ST.EplAddin.Footnote
                 return base.OnDrawCursor(oPosition);
         }
 
-
         public override RequestCode OnStartDrag(Position oPosition)
         {
             return RequestCode.Nothing;
             return base.OnStartDrag(oPosition);
         }
-
 
         public override RequestCode OnEndDrag(bool bSuccess, Position oPosition)
         {
@@ -136,7 +129,6 @@ namespace ST.EplAddin.Footnote
                 ClearCursor();
                 return RequestCode.Success;
             }
-
             return base.OnEndDrag(bSuccess, oPosition);
         }
 
@@ -150,8 +142,6 @@ namespace ST.EplAddin.Footnote
                 note.Serialize();
 
                 note.GroupWithViewPlacement();
-
-
 
                 ActionManager oMng = new ActionManager();
                 Action baseAction = oMng.FindAction("gedRedraw");
