@@ -13,6 +13,8 @@ namespace ST.EplAddin.Footnote
         P20487 = 20487,
         [EnumMember(Value = "ОУ идентифицируещее без структуры")]
         P20008 = 20008,
+        [EnumMember(Value = "Пользовательский текст")]
+        User_defined = 0,
     }
 
 }

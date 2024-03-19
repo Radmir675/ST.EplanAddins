@@ -726,6 +726,9 @@ namespace ST.EplAddin.Footnote
             {
                 switch (PROPERTYID)
                 {
+                    case PropertiesList.User_defined:
+                        result = new Footnote_CustomTextForm().GetUserText();
+                        break;
                     case PropertiesList.P20450:
                         result = so.Properties[20450].ToInt().ToString();
                         break;

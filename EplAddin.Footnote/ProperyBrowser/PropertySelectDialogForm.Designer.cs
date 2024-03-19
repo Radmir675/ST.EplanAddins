@@ -1,6 +1,6 @@
 ﻿namespace ST.EplAddin.Footnote.ProperyBrowser
 {
-    partial class PropertySelectDialog1
+    partial class PropertySelectDialogForm
     {
         /// <summary>
         /// Required designer variable.
@@ -154,7 +154,7 @@
             this.ClientSize = new System.Drawing.Size(1835, 1255);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "PropertySelectDialog1";
+            this.Name = "PropertySelectDialogForm";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Выбор свойства";
             this.splitContainer1.Panel1.ResumeLayout(false);

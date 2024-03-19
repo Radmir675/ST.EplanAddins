@@ -2,9 +2,9 @@
 
 namespace ST.EplAddin.Footnote.ProperyBrowser
 {
-    public partial class PropertySelectDialog1 : Form
+    public partial class PropertySelectDialogForm : Form
     {
-        public PropertySelectDialog1()
+        public PropertySelectDialogForm()
         {
             InitializeComponent();
         }

@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace ST.EplAddin.Footnote
 {
-    class SettingsDialog_Action : IEplAction
+    class CustomText_Action : IEplAction
     {
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
