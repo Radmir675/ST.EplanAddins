@@ -24,6 +24,7 @@ namespace ST.EplAddin.Footnote
     public partial class FootnoteItem
     {
         public static String FOOTNOTE_KEY = "FOOTNOTE_OBJID#";
+        public string userTextForm { get; set; }
 
         public Block block = null;
         public ViewPlacement viewPlacement = null; //текущий обзор модели с которым группируемся
@@ -466,7 +467,7 @@ namespace ST.EplAddin.Footnote
         /// <summary>
         /// Обновленеи Вложенных в блок элементов
         /// </summary>
-        public void UpdateSubItems()
+        public void UpdateSubItems(string oldText = null)
         {
 
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
@@ -507,7 +508,7 @@ namespace ST.EplAddin.Footnote
 
 
                 //update Text
-                Text = GetSourceObjectProperty();
+                Text = GetSourceObjectProperty(oldText);
                 MultiLangString mls = new MultiLangString();
                 mls.SetAsString(Text);
                 label.Contents = mls;
@@ -707,9 +708,9 @@ namespace ST.EplAddin.Footnote
         /// <summary>
         /// Получить значение свойства исходного объекта
         /// </summary>
-        public string GetSourceObjectProperty()
+        public string GetSourceObjectProperty(string oldtext = null)
         {
-            return GetSourceObjectProperty(sourceItem);
+            return GetSourceObjectProperty(sourceItem, oldtext);
         }
 
         /// <summary>
@@ -717,7 +718,7 @@ namespace ST.EplAddin.Footnote
         /// </summary>
         /// <param name="so">исходный объект</param>
         /// <returns></returns>
-        public string GetSourceObjectProperty(Placement3D so)
+        public string GetSourceObjectProperty(Placement3D so, string oldtext = null)
         {
 
             String result = "-1";
@@ -726,8 +727,24 @@ namespace ST.EplAddin.Footnote
             {
                 switch (PROPERTYID)
                 {
+                    //нужно получить текст блока
                     case PropertiesList.User_defined:
-                        result = new Footnote_CustomTextForm().GetUserText();
+                        if (oldtext != null)
+                        {
+                            result = userTextForm;
+                            break;
+                        }
+                        if (userTextForm == null)
+                        {
+                            Footnote_CustomTextForm form = new Footnote_CustomTextForm();
+                            form.ShowDialog();
+                            if (form.DialogResult == DialogResult.OK)
+                            {
+                                userTextForm = form.GetUserText();
+                            }
+                            form.Close();
+                        }
+                        result = userTextForm;
                         break;
                     case PropertiesList.P20450:
                         result = so.Properties[20450].ToInt().ToString();
@@ -835,7 +852,6 @@ namespace ST.EplAddin.Footnote
                     sourceItem = pl3d;
                     if (sourceItem != null)
                         Text = GetSourceObjectProperty(sourceItem);
-
                     //Text = vpart.Source.Properties[PROPERTYID].ToInt().ToString();
 
                     block.Name = FOOTNOTE_KEY + referenceID;

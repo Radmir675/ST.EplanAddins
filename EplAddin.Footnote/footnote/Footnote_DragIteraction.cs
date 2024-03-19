@@ -138,7 +138,7 @@ namespace ST.EplAddin.Footnote
             {
                 note.SetNotePoint(newposition);
                 note.UpdateBlock();
-                note.UpdateSubItems();
+                note.UpdateSubItems(note.Text);
                 note.Serialize();
 
                 note.GroupWithViewPlacement();

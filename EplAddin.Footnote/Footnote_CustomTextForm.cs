@@ -19,18 +19,7 @@ namespace ST.EplAddin.Footnote
 
         public string GetUserText()
         {
-            ShowForm();
-            if (AcceptButton.DialogResult == DialogResult.OK)
-            {
-                return CommentText.Text;
-            }
-            return null;
-
-        }
-
-        private void Ok_Button_Click(object sender, System.EventArgs e)
-        {
-
+            return CommentText.Text;
         }
     }
 }

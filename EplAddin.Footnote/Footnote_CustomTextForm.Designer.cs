@@ -44,6 +44,7 @@
             // 
             // Cancel_Button
             // 
+            this.Cancel_Button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Cancel_Button.Location = new System.Drawing.Point(349, 208);
             this.Cancel_Button.Margin = new System.Windows.Forms.Padding(2);
             this.Cancel_Button.Name = "Cancel_Button";
@@ -54,6 +55,7 @@
             // 
             // Ok_Button
             // 
+            this.Ok_Button.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Ok_Button.Location = new System.Drawing.Point(259, 208);
             this.Ok_Button.Margin = new System.Windows.Forms.Padding(2);
             this.Ok_Button.Name = "Ok_Button";
@@ -61,13 +63,13 @@
             this.Ok_Button.TabIndex = 5;
             this.Ok_Button.Text = "Вставить";
             this.Ok_Button.UseVisualStyleBackColor = true;
-            this.Ok_Button.Click += new System.EventHandler(this.Ok_Button_Click);
             // 
             // Footnote_CustomTextForm
             // 
             this.AcceptButton = this.Ok_Button;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.Cancel_Button;
             this.ClientSize = new System.Drawing.Size(431, 244);
             this.Controls.Add(this.CommentText);
             this.Controls.Add(this.Cancel_Button);
