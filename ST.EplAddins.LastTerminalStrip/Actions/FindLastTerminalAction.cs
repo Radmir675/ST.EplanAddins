@@ -137,7 +137,7 @@ namespace ST.EplAddins.LastTerminalStrip
         {
             TerminalStrip[] terminalStrips = terminalGroups.Select(x =>
             {
-                if (x.First().TerminalStrip == null)
+                if (x.First().TerminalStrip == null && x.First().Properties.FUNC_FULLDEVICETAG != "+")
                 {
                     Progress.BeginPart(100 / (terminalGroups.Count()), x.First().Name);
 
