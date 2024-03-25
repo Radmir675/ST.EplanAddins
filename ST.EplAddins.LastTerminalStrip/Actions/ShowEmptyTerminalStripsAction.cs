@@ -2,7 +2,6 @@
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.HEServices;
-using ST.EplAddin.LastTerminalStrip;
 using System.Linq;
 
 
@@ -48,13 +47,6 @@ namespace ST.EplAddins.LastTerminalStrip
         {
 
         }
-        public void ShowEmptyTerminalSrrips(string projectName, TerminalStrip[] terminalSrtip)
-        {
-            LoggerForm loggerForm = new LoggerForm(projectName);
-            loggerForm.Show();
-            var terminalStripsName = terminalSrtip.Select(x => x.Name).ToList();
-            loggerForm.ShowEmptyTerStips(terminalStripsName);
-        }
     }
     public class TerminalStripFilter : ICustomFilter
     {
@@ -62,12 +54,10 @@ namespace ST.EplAddins.LastTerminalStrip
         {
             if (objectToCheck is TerminalStrip terminalStrip)
             {
-
-                if (!terminalStrip.Terminals.Any())
+                if (!terminalStrip.Articles.Any())
                 {
                     return true;
                 }
-
             }
             return false;
         }
