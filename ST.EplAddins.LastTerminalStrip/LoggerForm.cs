@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eplan.EplApi.HEServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,6 +9,8 @@ namespace ST.EplAddin.LastTerminalStrip
     public partial class LoggerForm : Form
     {
         private readonly string projectName;
+
+        public static List<string> EmptyTerminalStripsName { get; set; }
         public LoggerForm(string projectName)
         {
             InitializeComponent();
@@ -58,6 +61,21 @@ namespace ST.EplAddin.LastTerminalStrip
         public void PressShowHistory()
         {
             button1.PerformClick();
+        }
+
+        private void back_plates_button_Click(object sender, EventArgs e)
+        {
+            richTextBox.Text = null;
+            richTextBox.Text = "В следующих клеммах отсуствует торцевая пластина:" + Environment.NewLine;
+            foreach (var text in EmptyTerminalStripsName)
+            {
+                richTextBox.AppendText(text + Environment.NewLine);
+            }
+
+            Search search = new Search();
+            search.ClearSearchDB(CurrentProject);
+            search.AddToSearchDB(result.ToArray());
+
         }
     }
 }

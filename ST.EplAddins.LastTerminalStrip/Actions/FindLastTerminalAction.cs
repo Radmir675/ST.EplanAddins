@@ -21,6 +21,7 @@ namespace ST.EplAddins.LastTerminalStrip
         public LoggerForm LoggerForm { get; set; }
         public Progress Progress { get; set; }
         public string ProjectName { get; set; }
+        public Project CurrentProject { get; set; }
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
             Name = ActionName;
@@ -38,22 +39,23 @@ namespace ST.EplAddins.LastTerminalStrip
                 Progress.SetNeededSteps(10);
 
                 SelectionSet selectionSet = new SelectionSet();
-                Project currentProject = selectionSet.GetCurrentProject(true);
-                ProjectName = currentProject.ProjectName;
+                CurrentProject = selectionSet.GetCurrentProject(true);
+                ProjectName = CurrentProject.ProjectName;
                 LoggerForm = new LoggerForm(ProjectName);
                 FileLoggger = new InternalLogger(ProjectName);
                 selectionSet.LockProjectByDefault = false;
                 selectionSet.LockSelectionByDefault = false;
                 using (SafetyPoint safetyPoint = SafetyPoint.Create())
                 {
-                    var lastTerminals = GetLastTerminals(currentProject);
+                    var lastTerminals = GetLastTerminals(CurrentProject);
                     StorableObject[] storable = lastTerminals.ToArray();
 
                     Search search = new Search();
-                    search.ClearSearchDB(currentProject);
+                    search.ClearSearchDB(CurrentProject);
                     search.AddToSearchDB(storable);
                     FileLoggger.WriteFileLog(WrittenLogs);
                     LoggerForm.ShowLogs(WrittenLogs);
+                    LoggerForm.EmptyTerminalStripsName = GetEpmtyTerminalStripsName(lastTerminals);
                     WrittenLogs.Clear();
                     ShowSearchNavigator();
                     safetyPoint.Commit();
@@ -160,6 +162,11 @@ namespace ST.EplAddins.LastTerminalStrip
             }).ToArray();
             return terminalStrips;
 
+        }
+        private List<string> GetEpmtyTerminalStripsName(List<Terminal> terminals)
+        {
+            var result = terminals.Where(x => x.Articles.Length < 2);
+            return result.Select(x => x.Name).ToList();
         }
         public void GetActionProperties(ref ActionProperties actionProperties) { }
     }
