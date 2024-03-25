@@ -28,6 +28,7 @@ namespace ST.EplAddins.LastTerminalStrip
                 loggerForm.Show();
                 loggerForm.PressShowHistory();
                 safetyPoint.Commit();
+
             }
             return true;
         }

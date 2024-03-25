@@ -22,11 +22,15 @@ namespace ST.EplAddins.LastTerminalStrip
         public Progress Progress { get; set; }
         public string ProjectName { get; set; }
         public Project CurrentProject { get; set; }
+        public Terminal[] EmptyTerminals { get; set; }
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
             Name = ActionName;
             Ordinal = 32;
             return true;
+        }
+        public FindLastTerminalAction()
+        {
         }
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
@@ -42,6 +46,7 @@ namespace ST.EplAddins.LastTerminalStrip
                 CurrentProject = selectionSet.GetCurrentProject(true);
                 ProjectName = CurrentProject.ProjectName;
                 LoggerForm = new LoggerForm(ProjectName);
+                LoggerForm.AccountHandler += ShowSearch;
                 FileLoggger = new InternalLogger(ProjectName);
                 selectionSet.LockProjectByDefault = false;
                 selectionSet.LockSelectionByDefault = false;
@@ -55,7 +60,8 @@ namespace ST.EplAddins.LastTerminalStrip
                     search.AddToSearchDB(storable);
                     FileLoggger.WriteFileLog(WrittenLogs);
                     LoggerForm.ShowLogs(WrittenLogs);
-                    LoggerForm.EmptyTerminalStripsName = GetEpmtyTerminalStripsName(lastTerminals);
+                    EmptyTerminals = GetEpmtyTerminalStrips(lastTerminals);
+                    LoggerForm.EmptyTerminalStrips = EmptyTerminals.ToList();
                     WrittenLogs.Clear();
                     ShowSearchNavigator();
                     safetyPoint.Commit();
@@ -163,11 +169,17 @@ namespace ST.EplAddins.LastTerminalStrip
             return terminalStrips;
 
         }
-        private List<string> GetEpmtyTerminalStripsName(List<Terminal> terminals)
+        private Terminal[] GetEpmtyTerminalStrips(List<Terminal> terminals)
         {
-            var result = terminals.Where(x => x.Articles.Length < 2);
-            return result.Select(x => x.Name).ToList();
+            var result = terminals.Where(x => x.Articles.Length < 2).ToArray();
+            return result;
         }
         public void GetActionProperties(ref ActionProperties actionProperties) { }
+        public void ShowSearch()
+        {
+            Search search = new Search();
+            search.ClearSearchDB(CurrentProject);
+            search.AddToSearchDB(EmptyTerminals);
+        }
     }
 }

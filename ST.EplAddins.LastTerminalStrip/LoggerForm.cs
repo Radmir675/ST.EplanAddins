@@ -1,4 +1,4 @@
-﻿using Eplan.EplApi.HEServices;
+﻿using Eplan.EplApi.DataModel.EObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,9 @@ namespace ST.EplAddin.LastTerminalStrip
     public partial class LoggerForm : Form
     {
         private readonly string projectName;
-
-        public static List<string> EmptyTerminalStripsName { get; set; }
+        public delegate void EventHandler();
+        public event EventHandler AccountHandler;
+        public static List<Terminal> EmptyTerminalStrips { get; set; }
         public LoggerForm(string projectName)
         {
             InitializeComponent();
@@ -57,6 +58,7 @@ namespace ST.EplAddin.LastTerminalStrip
                     richTextBox.AppendText(log + Environment.NewLine);
                 }
             }
+            back_plates_button.Enabled = false;
         }
         public void PressShowHistory()
         {
@@ -67,15 +69,14 @@ namespace ST.EplAddin.LastTerminalStrip
         {
             richTextBox.Text = null;
             richTextBox.Text = "В следующих клеммах отсуствует торцевая пластина:" + Environment.NewLine;
-            foreach (var text in EmptyTerminalStripsName)
+            foreach (var text in EmptyTerminalStrips)
             {
-                richTextBox.AppendText(text + Environment.NewLine);
+                richTextBox.AppendText(text.Name + Environment.NewLine);
             }
-
-            Search search = new Search();
-            search.ClearSearchDB(CurrentProject);
-            search.AddToSearchDB(result.ToArray());
-
+            if (EmptyTerminalStrips.Any())
+            {
+                AccountHandler?.Invoke();
+            }
         }
     }
 }
