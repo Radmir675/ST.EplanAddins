@@ -130,6 +130,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\ShowEmptyTerminalStripsAction.cs" />
     <Compile Include="AddinModule.cs" />
     <Compile Include="Actions\ShowHistoryAction.cs" />
     <Compile Include="Actions\FindLastTerminalAction.cs" />
