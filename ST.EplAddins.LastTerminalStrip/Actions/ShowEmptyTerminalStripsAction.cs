@@ -54,7 +54,7 @@ namespace ST.EplAddins.LastTerminalStrip
         {
             if (objectToCheck is TerminalStrip terminalStrip)
             {
-                if (!terminalStrip.Articles.Any())
+                if (!terminalStrip.Articles.Any() && terminalStrip.Properties.FUNC_TYPE == 1)
                 {
                     return true;
                 }
