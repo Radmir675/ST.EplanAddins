@@ -1,6 +1,7 @@
 ﻿using Eplan.EplApi.DataModel.EObjects;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -19,6 +20,8 @@ namespace ST.EplAddin.LastTerminalStrip
         }
         public void ShowLogs(List<string> logs)
         {
+            Process oCurrent = Process.GetCurrentProcess();
+            var eplanOwner = new WindowWrapper(oCurrent.MainWindowHandle);
             if (richTextBox.Text != string.Empty)
             {
                 richTextBox.AppendText(Environment.NewLine + "Следующие определения клеммников были добавлены:");
@@ -31,7 +34,7 @@ namespace ST.EplAddin.LastTerminalStrip
             {
                 richTextBox.AppendText(Environment.NewLine + DateTime.Now.ToString() + " | " + log.Remove(0, 2));
             }
-            this.Show();
+            this.Show(eplanOwner);
         }
 
         private void richTextBox_Click(object sender, EventArgs e)
@@ -48,11 +51,11 @@ namespace ST.EplAddin.LastTerminalStrip
 
         private void ShowHistory_Click(object sender, EventArgs e)
         {
+            richTextBox.Text = null;
             InternalLogger internalLogger = new InternalLogger(projectName);
             var oldLogs = internalLogger.ReadFileLog();
             if (oldLogs.Any())
             {
-                richTextBox.Text = null;
                 foreach (var log in oldLogs)
                 {
                     richTextBox.AppendText(log + Environment.NewLine);

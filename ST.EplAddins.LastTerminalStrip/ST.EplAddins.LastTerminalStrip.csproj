@@ -134,6 +134,7 @@
     <Compile Include="AddinModule.cs" />
     <Compile Include="Actions\ShowHistoryAction.cs" />
     <Compile Include="Actions\FindLastTerminalAction.cs" />
+    <Compile Include="WindowWrapper.cs" />
     <Compile Include="InternalLogger.cs" />
     <Compile Include="LoggerForm.cs">
       <SubType>Form</SubType>

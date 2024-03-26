@@ -2,6 +2,7 @@
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
 using ST.EplAddin.LastTerminalStrip;
+using System.Diagnostics;
 
 
 namespace ST.EplAddins.LastTerminalStrip
@@ -24,8 +25,10 @@ namespace ST.EplAddins.LastTerminalStrip
                 SelectionSet selectionSet = new SelectionSet();
                 Project currentProject = selectionSet.GetCurrentProject(true);
                 var projectName = currentProject.ProjectName;
+                Process oCurrent = Process.GetCurrentProcess();
+                var eplanOwner = new WindowWrapper(oCurrent.MainWindowHandle);
                 LoggerForm loggerForm = new LoggerForm(projectName);
-                loggerForm.Show();
+                loggerForm.Show(eplanOwner);
                 loggerForm.PressShowHistory();
                 safetyPoint.Commit();
 
