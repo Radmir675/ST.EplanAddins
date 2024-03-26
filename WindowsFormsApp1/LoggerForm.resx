@@ -199,7 +199,7 @@
     <value>NoControl</value>
   </data>
   <data name="roll_up_button.Location" type="System.Drawing.Point, System.Drawing">
-    <value>285, 0</value>
+    <value>271, 0</value>
   </data>
   <data name="roll_up_button.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 31</value>
@@ -235,7 +235,7 @@
     <value>NoControl</value>
   </data>
   <data name="hide_button.Location" type="System.Drawing.Point, System.Drawing">
-    <value>316, 0</value>
+    <value>302, 0</value>
   </data>
   <data name="hide_button.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 2</value>
@@ -261,42 +261,6 @@
   <data name="&gt;&gt;hide_button.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="button2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="button2.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="button2.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt</value>
-  </data>
-  <data name="button2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="button2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>316, 0</value>
-  </data>
-  <data name="button2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 31</value>
-  </data>
-  <data name="button2.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="button2.Text" xml:space="preserve">
-    <value>□</value>
-  </data>
-  <data name="&gt;&gt;button2.Name" xml:space="preserve">
-    <value>button2</value>
-  </data>
-  <data name="&gt;&gt;button2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;button2.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;button2.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <data name="close_button.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Right</value>
   </data>
@@ -310,7 +274,7 @@
     <value>NoControl</value>
   </data>
   <data name="close_button.Location" type="System.Drawing.Point, System.Drawing">
-    <value>347, 0</value>
+    <value>333, 0</value>
   </data>
   <data name="close_button.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 31</value>
@@ -331,13 +295,16 @@
     <value>panel1</value>
   </data>
   <data name="&gt;&gt;close_button.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
+  </data>
+  <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
   </data>
   <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+    <value>3, 3</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>378, 31</value>
+    <value>364, 31</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -354,11 +321,14 @@
   <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="gradientPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
   <data name="gradientPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+    <value>3, 3</value>
   </data>
   <data name="gradientPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>378, 342</value>
+    <value>364, 295</value>
   </data>
   <data name="gradientPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -385,7 +355,7 @@
     <value>True</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>378, 342</value>
+    <value>370, 301</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -4897,9 +4867,6 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
