@@ -43,13 +43,13 @@ namespace ST.EplAddins.LastTerminalStrip
                 Progress.SetNeededSteps(10);
 
                 SelectionSet selectionSet = new SelectionSet();
+                selectionSet.LockProjectByDefault = false;
+                selectionSet.LockSelectionByDefault = false;
                 CurrentProject = selectionSet.GetCurrentProject(true);
                 ProjectName = CurrentProject.ProjectName;
                 LoggerForm = new LoggerForm(ProjectName);
                 LoggerForm.AccountHandler += ShowSearch;
                 FileLoggger = new InternalLogger(ProjectName);
-                selectionSet.LockProjectByDefault = false;
-                selectionSet.LockSelectionByDefault = false;
                 using (SafetyPoint safetyPoint = SafetyPoint.Create())
                 {
                     var lastTerminals = GetLastTerminals(CurrentProject);
