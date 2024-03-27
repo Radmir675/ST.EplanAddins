@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.Runtime.InteropServices;
 
 namespace WindowsFormsApp1
 {
@@ -21,7 +23,16 @@ namespace WindowsFormsApp1
             }
             base.Dispose(disposing);
         }
-
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+        private static extern IntPtr CreateRoundRectRgn
+      (
+          int nLeftRect,     // x-coordinate of upper-left corner
+          int nTopRect,      // y-coordinate of upper-left corner
+          int nRightRect,    // x-coordinate of lower-right corner
+          int nBottomRect,   // y-coordinate of lower-right corner
+          int nWidthEllipse, // width of ellipse
+          int nHeightEllipse // height of ellipse
+      );
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -41,6 +52,7 @@ namespace WindowsFormsApp1
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
+
             // 
             // panel1
             // 
@@ -106,7 +118,6 @@ namespace WindowsFormsApp1
             this.gradientPanel1.ColorTop = System.Drawing.Color.Empty;
             resources.ApplyResources(this.gradientPanel1, "gradientPanel1");
             this.gradientPanel1.Name = "gradientPanel1";
-
             // 
             // LoggerForm
             // 
@@ -121,6 +132,8 @@ namespace WindowsFormsApp1
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+
+
 
         }
 

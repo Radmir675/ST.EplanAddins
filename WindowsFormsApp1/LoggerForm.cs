@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -17,16 +16,7 @@ namespace WindowsFormsApp1
             //gradientPanel1.ColorTop = Color.FromArgb(241, 239, 241);
             //gradientPanel1.ColorBottom = Color.FromArgb(234, 232, 234);
         }
-        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn
-      (
-          int nLeftRect,     // x-coordinate of upper-left corner
-          int nTopRect,      // y-coordinate of upper-left corner
-          int nRightRect,    // x-coordinate of lower-right corner
-          int nBottomRect,   // y-coordinate of lower-right corner
-          int nWidthEllipse, // width of ellipse
-          int nHeightEllipse // height of ellipse
-      );
+
         #region button_click_events
         private void button1_Click(object sender, EventArgs e)
         {
