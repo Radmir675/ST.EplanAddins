@@ -16,7 +16,7 @@ namespace WindowsFormsApp1
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 10, 10));
             panel1.BackColor = Color.FromArgb(249, 239, 240);
             gradientPanel1.ColorTop = Color.FromArgb(241, 239, 241);
-            gradientPanel1.ColorBottom = Color.FromArgb(212, 210, 212);
+            gradientPanel1.ColorBottom = Color.FromArgb(234, 232, 234);
 
         }
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
