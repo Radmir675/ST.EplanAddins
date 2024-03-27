@@ -14,22 +14,20 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 10, 10));
-            panel1.BackColor = Color.FromArgb(249, 239, 240);
-            gradientPanel1.ColorTop = Color.FromArgb(241, 239, 241);
-            gradientPanel1.ColorBottom = Color.FromArgb(234, 232, 234);
-
+            //gradientPanel1.ColorTop = Color.FromArgb(241, 239, 241);
+            //gradientPanel1.ColorBottom = Color.FromArgb(234, 232, 234);
         }
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn
-       (
-           int nLeftRect,     // x-coordinate of upper-left corner
-           int nTopRect,      // y-coordinate of upper-left corner
-           int nRightRect,    // x-coordinate of lower-right corner
-           int nBottomRect,   // y-coordinate of lower-right corner
-           int nWidthEllipse, // width of ellipse
-           int nHeightEllipse // height of ellipse
-       );
-
+      (
+          int nLeftRect,     // x-coordinate of upper-left corner
+          int nTopRect,      // y-coordinate of upper-left corner
+          int nRightRect,    // x-coordinate of lower-right corner
+          int nBottomRect,   // y-coordinate of lower-right corner
+          int nWidthEllipse, // width of ellipse
+          int nHeightEllipse // height of ellipse
+      );
+        #region button_click_events
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -68,6 +66,7 @@ namespace WindowsFormsApp1
         {
             drag = false;
         }
+        #endregion
     }
 
 

@@ -178,7 +178,7 @@
     <value>True</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>370, 301</value>
+    <value>356, 301</value>
   </data>
   <data name="gradientPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -187,7 +187,7 @@
     <value>3, 3</value>
   </data>
   <data name="gradientPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>364, 295</value>
+    <value>350, 295</value>
   </data>
   <data name="gradientPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -4715,9 +4715,6 @@
         AAAH/////////gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH////8=
 </value>
   </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
@@ -4758,7 +4755,7 @@
     <value>NoControl</value>
   </data>
   <data name="roll_up_button.Location" type="System.Drawing.Point, System.Drawing">
-    <value>271, 0</value>
+    <value>257, 0</value>
   </data>
   <data name="roll_up_button.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 31</value>
@@ -4794,7 +4791,7 @@
     <value>NoControl</value>
   </data>
   <data name="hide_button.Location" type="System.Drawing.Point, System.Drawing">
-    <value>302, 0</value>
+    <value>288, 0</value>
   </data>
   <data name="hide_button.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 2</value>
@@ -4833,7 +4830,7 @@
     <value>NoControl</value>
   </data>
   <data name="close_button.Location" type="System.Drawing.Point, System.Drawing">
-    <value>333, 0</value>
+    <value>319, 0</value>
   </data>
   <data name="close_button.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 31</value>
@@ -4863,7 +4860,7 @@
     <value>3, 3</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>364, 31</value>
+    <value>350, 31</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
