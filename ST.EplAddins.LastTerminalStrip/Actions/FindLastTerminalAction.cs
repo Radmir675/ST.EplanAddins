@@ -138,8 +138,7 @@ namespace ST.EplAddins.LastTerminalStrip
                     }
                     if (TerminalOff != null && TerminalOff.Count() >= 1)
                     {
-                        var s = TerminalOff.First().Articles.First().Properties.ARTICLE_PRODUCTSUBGROUP;
-                        record.Add(TerminalOff?.Last());
+                        record.Add(TerminalOff?.Where(x => x.ArticleReferences.First().Properties.ARTICLE_PRODUCTSUBGROUP == 4).Last());
                     }
                 }
             }
