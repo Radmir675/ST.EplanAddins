@@ -128,15 +128,19 @@ namespace ST.EplAddins.LastTerminalStrip
                     Progress.Step(1);
                     List<Terminal> TerminalOff = new List<Terminal>();
                     Progress.BeginPart(100 / (terminalStrips.Count()), terminalstrip.Name);
+                    //переписать и взять если главная клемма и есть изделие то посмотреть принадлежит ли она к подгруппе "клемма"
                     foreach (Terminal terminal in terminalstrip.Terminals)
                     {
-                        if (terminal.IsMainTerminal == true)
+                        if (terminal.IsMainTerminal == true && terminal.Articles.Any())
                         {
                             TerminalOff.Add(terminal);
                         }
                     }
                     if (TerminalOff != null && TerminalOff.Count() >= 1)
+                    {
+                        var s = TerminalOff.First().Articles.First().Properties.ARTICLE_PRODUCTSUBGROUP;
                         record.Add(TerminalOff?.Last());
+                    }
                 }
             }
             return record;

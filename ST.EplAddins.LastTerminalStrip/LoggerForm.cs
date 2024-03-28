@@ -32,7 +32,7 @@ namespace ST.EplAddin.LastTerminalStrip
             }
             foreach (string log in logs)
             {
-                richTextBox.AppendText(Environment.NewLine + DateTime.Now.ToString() + " | " + log.Remove(0, 2));
+                richTextBox.AppendText(Environment.NewLine + DateTime.Now.ToString() + " | " + log.Remove(0, 1));
             }
             this.Show(eplanOwner);
         }
