@@ -128,7 +128,6 @@ namespace ST.EplAddins.LastTerminalStrip
                     Progress.Step(1);
                     List<Terminal> TerminalOff = new List<Terminal>();
                     Progress.BeginPart(100 / (terminalStrips.Count()), terminalstrip.Name);
-                    //переписать и взять если главная клемма и есть изделие то посмотреть принадлежит ли она к подгруппе "клемма"
                     foreach (Terminal terminal in terminalstrip.Terminals)
                     {
                         if (terminal.IsMainTerminal == true && terminal.Articles.Any())
@@ -138,7 +137,12 @@ namespace ST.EplAddins.LastTerminalStrip
                     }
                     if (TerminalOff != null && TerminalOff.Count() >= 1)
                     {
-                        record.Add(TerminalOff?.Where(x => x.ArticleReferences.First().Properties.ARTICLE_PRODUCTSUBGROUP == 4).Last());
+                        var productSubGroup = TerminalOff.Last().ArticleReferences.First().Properties.ARTICLE_PRODUCTSUBGROUP.GetDisplayString();
+                        var displaySubGroupName = productSubGroup.GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                        if (displaySubGroupName == "Клемма")
+                        {
+                            record.Add(TerminalOff?.Last());
+                        }
                     }
                 }
             }
