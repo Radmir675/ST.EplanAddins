@@ -26,8 +26,8 @@ namespace ST.EplAddins.SymbolVariants
 
             Project currentProject = selectionSet.GetCurrentProject(true);
             var userSelection = selectionSet.Selection;
-          
-            if (userSelection.Any())
+
+            if (!userSelection.Any())
             {
                 MessageBox.Show("Пожалуйста выберите объекты", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
@@ -75,7 +75,6 @@ namespace ST.EplAddins.SymbolVariants
                 locked = symbolref.IsLocked;
                 try
                 {
-                    //symbolref.SymbolVariant = symbolVariantToReplace;//запилить
                     selectedSymbols.ToList().ForEach(symbol => (symbol as SymbolReference).SymbolVariant = symbolVariantToReplace);
                 }
                 catch (LockingException e)
