@@ -24,10 +24,9 @@ namespace ST.EplAddins.LastTerminalStrip
             {
                 SelectionSet selectionSet = new SelectionSet();
                 Project currentProject = selectionSet.GetCurrentProject(true);
-                var projectName = currentProject.ProjectName;
                 Process oCurrent = Process.GetCurrentProcess();
                 var eplanOwner = new WindowWrapper(oCurrent.MainWindowHandle);
-                LoggerForm loggerForm = new LoggerForm(projectName);
+                LoggerForm loggerForm = new LoggerForm(currentProject);
                 loggerForm.Show(eplanOwner);
                 loggerForm.PressShowHistory();
                 safetyPoint.Commit();

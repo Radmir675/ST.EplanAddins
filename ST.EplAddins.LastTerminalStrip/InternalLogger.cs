@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eplan.EplApi.DataModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,10 +11,19 @@ namespace ST.EplAddin.LastTerminalStrip
         public string Path { get; }
         public string ProjectName { get; }
         public List<string> LogsFromFile { get; set; }
-        public InternalLogger(string project)
+        public InternalLogger(Project project)
         {
-            ProjectName = project;
-            Path = System.IO.Path.Combine(@"C:\temp\EplanLogs", $"{ProjectName}.txt");
+            ProjectName = project.ProjectName;
+            Path = GetPath(project);
+        }
+        private string GetPath(Project project)
+        {
+            using (LockingStep lockingStep = new LockingStep())
+            {
+                string path = project.ProjectDirectoryPath;
+                string fullPath = System.IO.Path.Combine(path, $"{project.ProjectName}.txt");
+                return fullPath;
+            }
         }
         public List<string> ReadFileLog()
         {
@@ -24,7 +34,6 @@ namespace ST.EplAddin.LastTerminalStrip
                 while (!streamReader.EndOfStream)
                 {
                     var data = streamReader.ReadLine();
-
                     LogsFromFile.Add(data);
                 }
             }

@@ -1,4 +1,5 @@
-﻿using Eplan.EplApi.DataModel.EObjects;
+﻿using Eplan.EplApi.DataModel;
+using Eplan.EplApi.DataModel.EObjects;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,14 +10,14 @@ namespace ST.EplAddin.LastTerminalStrip
 {
     public partial class LoggerForm : Form
     {
-        private readonly string projectName;
+        private readonly Project project;
         public delegate void EventHandler();
         public event EventHandler AccountHandler;
         public static List<Terminal> EmptyTerminalStrips { get; set; }
-        public LoggerForm(string projectName)
+        public LoggerForm(Project project)
         {
             InitializeComponent();
-            this.projectName = projectName;
+            this.project = project;
         }
         public void ShowLogs(List<string> logs)
         {
@@ -52,7 +53,7 @@ namespace ST.EplAddin.LastTerminalStrip
         private void ShowHistory_Click(object sender, EventArgs e)
         {
             richTextBox.Text = null;
-            InternalLogger internalLogger = new InternalLogger(projectName);
+            InternalLogger internalLogger = new InternalLogger(project);
             var oldLogs = internalLogger.ReadFileLog();
             if (oldLogs.Any())
             {

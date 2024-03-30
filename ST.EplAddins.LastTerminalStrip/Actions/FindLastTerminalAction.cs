@@ -10,10 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-
 namespace ST.EplAddins.LastTerminalStrip
 {
-    public class FindLastTerminalAction : IEplAction
+    public partial class FindLastTerminalAction : IEplAction
     {
         public InternalLogger FileLoggger { get; set; }
         public List<string> WrittenLogs { get; set; } = new List<string>();
@@ -28,9 +27,6 @@ namespace ST.EplAddins.LastTerminalStrip
             Name = ActionName;
             Ordinal = 32;
             return true;
-        }
-        public FindLastTerminalAction()
-        {
         }
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
@@ -47,9 +43,9 @@ namespace ST.EplAddins.LastTerminalStrip
                 selectionSet.LockSelectionByDefault = false;
                 CurrentProject = selectionSet.GetCurrentProject(true);
                 ProjectName = CurrentProject.ProjectName;
-                LoggerForm = new LoggerForm(ProjectName);
+                LoggerForm = new LoggerForm(CurrentProject);
                 LoggerForm.AccountHandler += ShowSearch;
-                FileLoggger = new InternalLogger(ProjectName);
+                FileLoggger = new InternalLogger(CurrentProject);
                 using (SafetyPoint safetyPoint = SafetyPoint.Create())
                 {
                     var lastTerminals = GetLastTerminals(CurrentProject);
@@ -86,13 +82,7 @@ namespace ST.EplAddins.LastTerminalStrip
             ActionCallingContext ctx = new ActionCallingContext();
             bool result = baseAction.Execute(ctx);
         }
-        private void AddFunctionDifinition()
-        {
-            ActionManager oMng = new ActionManager();
-            Eplan.EplApi.ApplicationFramework.Action baseAction = oMng.FindAction("TerminalGuiIGfWindAddDefinition");
-            ActionCallingContext ctx = new ActionCallingContext();
-            bool result = baseAction.Execute(ctx);
-        }
+
         private List<Terminal> GetLastTerminals(Project currentProject)
         {
             FunctionsFilter terminalStripsFunctionsFilter = new FunctionsFilter();
@@ -148,11 +138,16 @@ namespace ST.EplAddins.LastTerminalStrip
             }
             return record;
         }
+
         private TerminalStrip[] FindTerminalStrips(ILookup<PropertyValue, Terminal> terminalGroups, Project currentProject)
         {
+            DMObjectsFinder DMObjectsFinder = new DMObjectsFinder(currentProject);
+            var existingTerminalStrips = DMObjectsFinder.GetTerminalStripsWithCF(new MultyLineTerminalStripFilter()).Select(x => x.Name).ToList();
             TerminalStrip[] terminalStrips = terminalGroups.Select(x =>
             {
-                if (x.First().TerminalStrip == null && x.First().Properties.FUNC_FULLDEVICETAG != "+")
+                if (!existingTerminalStrips.Contains(x.FirstOrDefault()?.TerminalStrip?.Name)//проверяем соедржится ли в данном клеммном ряду многополюсное определение клеммника
+                     && x.First().Properties.FUNC_FULLDEVICETAG != "+"
+                     && x.Any(z => z?.Articles?.Count() > 0))//есть ли у этих клемм хотя бы 1 изделие с артикулом
                 {
                     Progress.BeginPart(100 / (terminalGroups.Count()), x.First().Name);
 
