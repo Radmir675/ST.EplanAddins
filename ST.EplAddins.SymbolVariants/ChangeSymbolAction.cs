@@ -26,20 +26,25 @@ namespace ST.EplAddins.SymbolVariants
 
             Project currentProject = selectionSet.GetCurrentProject(true);
             var userSelection = selectionSet.Selection;
-            // TODO отсортировать объекты одного типа(символы)
-            //TODO если символы одного имени то для каждого применить операцию вращения
-
-            if (userSelection.Count() != 1)
+          
+            if (userSelection.Any())
             {
-                MessageBox.Show("Пожалуйста выберите лишь 1 объект");
+                MessageBox.Show("Пожалуйста выберите объекты", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
 
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-                StorableObject storableObject = userSelection.Single();
+                StorableObject[] selectedSymbols = userSelection;
                 SymbolLibrary symbolLibrary = new SymbolLibrary();
-                SymbolReference symbolref = storableObject as SymbolReference;
+                SymbolReference symbolref = selectedSymbols.First() as SymbolReference;//будем вести просмотр по первому объекту
+                string symbolName = symbolref.SymbolVariant.SymbolName;//название символа
+                bool isSymbolsNameEqual = selectedSymbols.All(symbol => (symbol as SymbolReference).SymbolVariant.SymbolName == symbolName);//проверка на одинаковый тип символов
+                if (isSymbolsNameEqual == false)
+                {
+                    MessageBox.Show("Объекты разных типов", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
 
                 Symbol parent = symbolref.SymbolVariant.Parent;
 
@@ -50,8 +55,6 @@ namespace ST.EplAddins.SymbolVariants
                 var currentVariant = symbolref.SymbolVariant;
 
                 string symbolLibraryName = symbolref.SymbolVariant.SymbolLibraryName;
-                string symbolName = symbolref.SymbolVariant.SymbolName;
-
 
                 var currentSymbol = currentProject.SymbolLibraries
                     .Where(x => x.Name == symbolLibraryName)
@@ -68,12 +71,12 @@ namespace ST.EplAddins.SymbolVariants
                     symbolVariantToReplace = currentSymbol.Select(c => c.Variants.Single(g => g.VariantNr == 0)).Single();
                 }
                 bool locked = symbolref.IsLocked;
-              
+
                 locked = symbolref.IsLocked;
                 try
                 {
-
-                    symbolref.SymbolVariant = symbolVariantToReplace;
+                    //symbolref.SymbolVariant = symbolVariantToReplace;//запилить
+                    selectedSymbols.ToList().ForEach(symbol => (symbol as SymbolReference).SymbolVariant = symbolVariantToReplace);
                 }
                 catch (LockingException e)
                 {
@@ -81,11 +84,9 @@ namespace ST.EplAddins.SymbolVariants
 
                 }
                 safetyPoint.Commit();
-
             }
             return true;
         }
-        //TODO: допилить множественное изменение если это один и тот же символ
 
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
