@@ -1,5 +1,5 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
-using System;
+using Eplan.EplApi.Gui;
 
 namespace ST.EplAddins.SymbolVariants
 {
@@ -7,7 +7,7 @@ namespace ST.EplAddins.SymbolVariants
     {
         public bool OnExit()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public bool OnInit()
@@ -18,8 +18,8 @@ namespace ST.EplAddins.SymbolVariants
         public bool OnInitGui()
         {
 
-            //Menu menu = new Menu();
-            //  menu.AddMainMenu("Scan ", Menu.MainMenuName.eMainMenuUtilities, "Change symbol", ChangeSymbolAction.actionName, "Статус", 1);
+            Menu menu = new Menu();
+            menu.AddMainMenu("Scan ", Menu.MainMenuName.eMainMenuUtilities, "Change symbol", ChangeSymbolAction.actionName, "Статус", 1);
             return true;
         }
 
