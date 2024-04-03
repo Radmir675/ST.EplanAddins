@@ -5,6 +5,7 @@
 // Assembly location: C:\Users\tembr\Desktop\AddIns\ST.EplAddin.ConnectionNumeration.dll
 
 using Eplan.EplApi.ApplicationFramework;
+using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
 using System;
@@ -32,14 +33,23 @@ namespace ST.EplAddin.ConnectionNumeration
                     LockProjectByDefault = false,
                     LockSelectionByDefault = false
                 }.GetCurrentProject(false);
+
                 string projectName = currentProject.ProjectName;
+
+                Progress progress = new Progress("SimpleProgress");
+                progress.SetTitle("Connection alignment");
+                progress.ShowImmediately();
                 Connection[] connectionsWithCf = new DMObjectsFinder(currentProject).GetConnectionsWithCF((ICustomFilter)new ConnectionFilter());
                 using (SafetyPoint safetyPoint = SafetyPoint.Create())
                 {
+                    progress.SetNeededSteps(connectionsWithCf.Count());
+                    var step = 0;
                     foreach (Connection connection in connectionsWithCf)
                     {
                         foreach (ConnectionDefinitionPoint connectionDefPoint in connection.ConnectionDefPoints)
                         {
+
+
                             PinBase[] connectionPoints = ((SymbolReference)connectionDefPoint).GraphicalConnectionPoints;
                             SymbolReference.GraphicalConnection graphicalConnection = ((IEnumerable<SymbolReference.GraphicalConnection>)((SymbolReference)connectionDefPoint).GraphicalConnections).FirstOrDefault<SymbolReference.GraphicalConnection>();
                             if (graphicalConnection?.StartConnectionPoint.Direction == Pin.Directions.Left | graphicalConnection?.StartConnectionPoint.Direction == Pin.Directions.Right)
@@ -56,8 +66,10 @@ namespace ST.EplAddin.ConnectionNumeration
                                 if (placementsSchema != null)
                                     ((SymbolReference)connectionDefPoint).PropertyPlacementsSchemas.Selected = placementsSchema;
                             }
+                            progress.Step(step++);
                         }
                     }
+                    progress.EndPart(true);
                     safetyPoint.Commit();
                 }
             }
