@@ -60,12 +60,6 @@ namespace ST.EplAddin.Footnote
             this.PromptForStatusLine = "Завершено.";
 
             ClearCursor();
-            /*
-            if (!STSettings.instance.LINECURSOR && cursor != null)
-            {
-                cursor.block.Remove();
-                cursor = null;
-            }*/
         }
 
         public bool isViewPartSelected()

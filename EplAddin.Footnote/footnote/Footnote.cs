@@ -30,6 +30,7 @@ namespace ST.EplAddin.Footnote
         public ViewPlacement viewPlacement = null; //текущий обзор модели с которым группируемся
         public Placement3D sourceItem = null; //объект пространства листа
         public List<Placement> subItems = null;
+        public PropertiesList PROPERTYID { get; set; } = STSettings.instance.PROPERTYID;
 
         private Page currentPage = null;
         private Line itemline = null;
@@ -39,6 +40,7 @@ namespace ST.EplAddin.Footnote
         private Text propid = null;
         private Arc startpoint = null;
 
+        #region Properties
         [Browsable(false)]
         public PointD itemPosition
         {
@@ -87,15 +89,11 @@ namespace ST.EplAddin.Footnote
         [CategoryAttribute("Line"), DefaultValueAttribute(0.25)]
         public double STARTPOINTRADIUS { get; set; } = STSettings.instance.STARTPOINTRADIUS;
 
-        [DataMember]
+        //[DataMember]
         [Description("Индекс размещаемого свойства")]
         [CategoryAttribute("Text"), DefaultValueAttribute(PropertiesList.P20450)]
-        public PropertiesList PROPERTYID { get; set; } = STSettings.instance.PROPERTYID;
+        #endregion
 
-        /* public FootnoteItem()
-         {
-             //Task.Run((System.Action) (() => this.OpenDataPortalSettings()));
-         }*/
 
         /// <summary>
         /// Сериазизует поля помеченные [DataMember] в строку и записываетсодержимое в скрытый элемент jsontext
@@ -147,7 +145,7 @@ namespace ST.EplAddin.Footnote
 
                 ms.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 String msg = $"Json desirialize error";
                 Eplan.EplApi.Base.BaseException exc = new Eplan.EplApi.Base.BaseException(msg, Eplan.EplApi.Base.MessageLevel.Message);
@@ -369,7 +367,7 @@ namespace ST.EplAddin.Footnote
         {
             ///
             /*
-             * При создании блока переданные элементы удаляются со старницы и объеденяются в блок 
+             * При создании блока переданные элементы удаляются со страницы и объеденяются в блок 
             */
             //Placement[] group = { label, itemline, noteline, startpoint, jsontext, propid };
 
@@ -387,17 +385,6 @@ namespace ST.EplAddin.Footnote
             }
         }
 
-        /*
-        public void lockBlock()
-        {
-            Placement[] group = { label, itemline, noteline, startpoint, jsontext };
-            block = new Block();
-            block.Create(currentPage, group);
-            block.Name = FOOTNOTE_KEY;
-
-            getSubPlacements();
-            //setReferencedObject()
-        }*/
 
         /// <summary>
         /// Обновление блока
@@ -445,7 +432,7 @@ namespace ST.EplAddin.Footnote
                 //Если блок создан ломаем его и пересобираем
                 if (block != null)
                 {
-                    //получить обзор модели на которм лежит блок
+                    //получить обзор модели на котором лежит блок
                     viewPlacement = block.Group as ViewPlacement;
                     Placement[] items = block.BreakUp();
                     GetSubItems(items); //получили существующие экземпляры после извлечения из блока
@@ -623,56 +610,6 @@ namespace ST.EplAddin.Footnote
 
         }
 
-        ///// <summary>
-        ///// Разбор блока на вложенные элементы
-        ///// </summary>
-        //public void GetSubItems()
-        //{
-        //    try
-        //    {
-        //        //Properties.Function.FUNC_COMMENT
-
-        //        label = block.SubPlacements.ElementAtOrDefault(0) as Text;
-        //        itemline = block.SubPlacements.ElementAtOrDefault(1) as Line;
-        //        noteline = block.SubPlacements.ElementAtOrDefault(2) as Line;
-        //        startpoint = block.SubPlacements.ElementAtOrDefault(3) as Arc;
-        //        jsontext = block.SubPlacements.ElementAtOrDefault(4) as Text;
-        //        propid = block.SubPlacements.ElementAtOrDefault(5) as Text;
-        //        subItems = new List<Placement> { label, itemline, noteline, startpoint, jsontext, propid };
-        //        //block.BreakUp();
-        //        /*if (
-        //            label == null ||
-        //            itemline == null ||
-        //            noteline == null ||
-        //            startpoint == null ||
-        //            jsontext == null ||
-        //            propid == null || true
-        //            )
-        //        {
-
-        //            //Placement[] bp = block.BreakUp();
-        //            //пересоздать блок, создав элементы недостающие
-        //            createSubItems();
-        //            //getSubPlacements();
-
-        //            updateBlock();
-        //            setReferencedObject(sourceItem);
-        //            GroupWithReferencedObject();
-        //            updateSubItems();
-        //        }*/
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        DialogResult result = MessageBox.Show(e.Message, "FootNote", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-        //        //создаем недостающие
-        //        //createSubItems();
-
-        //        if (result == DialogResult.Abort)
-        //        {
-
-        //        }
-        //    }
 
         //}
 
@@ -789,44 +726,7 @@ namespace ST.EplAddin.Footnote
             return result;
         }
 
-        /// <summary>
-        /// Присвоить исходный объект
-        /// </summary>
-        /// <param name="vpartID">ID объекта</param>
-        //public void setReferencedObject(String vpartID)
-        //{
 
-        //    using (SafetyPoint safetyPoint = SafetyPoint.Create())
-        //    {
-        //        string objectId = vpartID; //get object id
-        //        int idxOfSlash = objectId.IndexOf("/", 1, objectId.Length - 1, StringComparison.InvariantCultureIgnoreCase);    //get index of first separator
-        //        string objectIdWithoutProjectId = objectId.Substring(idxOfSlash + 1, (objectId.Length - idxOfSlash - 1));   //cut off value before first separator together with this separator
-        //        String referenceID = objectIdWithoutProjectId;
-
-        //        StorableObject obj = null;
-        //        StorableObject.TryParseIdentifier(vpartID, ref obj);
-
-        //        sourceItem = obj as Placement3D;
-
-        //        if (sourceItem != null)
-        //            Text = getObjectProperty(sourceItem);
-        //        else
-        //        {
-        //            MessageBox.Show("setReferencedObject Недействительная ссылка на объекта источника"); 
-        //        }
-
-        //        /*
-        //        if (sourceItem.Source.Properties.Exists(PROPERTYID))
-        //        {
-        //            Text = (sourceItem.Source as Eplan.EplApi.DataModel.E3D.Component).ArticleReferences.First().Properties[PROPERTYID].ToString();
-        //            //.Properties[PROPERTYID].ToString();
-        //            //Text = sourceItem.Source.Properties[PROPERTYID].ToInt().ToString();
-        //        }
-        //        */
-        //        block.Name = FOOTNOTE_KEY + referenceID;
-        //        safetyPoint.Commit();
-        //    }
-        //}
 
         /// <summary>
         /// Присвоить исходный объект

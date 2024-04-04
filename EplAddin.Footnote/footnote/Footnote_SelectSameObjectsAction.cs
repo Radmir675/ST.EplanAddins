@@ -39,12 +39,6 @@ namespace ST.EplAddin.Footnote.footnote
                     bool isFootnoteBlock = bl.Name.Contains(FootnoteItem.FOOTNOTE_KEY);
                     if (isFootnoteBlock)
                     {
-                        /* FootnoteItem note = new FootnoteItem();
-                         note.Create(bl);
-                         PropertiesDialog p = new PropertiesDialog();
-                         p.setItem(note);
-                         p.ShowDialog();
-                         */
                         return true;
                     }
                 }

@@ -15,12 +15,6 @@ namespace ST.EplAddin.Footnote
     [InteractionAttribute(Name = "XGedIaDuplicate", NameOfBaseInteraction = "XGedIaDuplicate", Ordinal = 50, Prio = 20)]
     class Footnote_DragInteraction : Interaction
     {
-        /*
-        [DllImport("user32.dll")]
-        public static extern short GetAsyncKeyState(UInt16 virtualKeyCode);*/
-
-        //public static System.Windows.Input.MouseButtonState LeftButton { get; }
-
         FootnoteItem note = null;
         PointD newposition;
         PointD oldposition;
@@ -57,9 +51,7 @@ namespace ST.EplAddin.Footnote
                         double x = note.itemPosition.X + note.block.Properties.INSTANCE_XCOORD.ToDouble();
                         double y = note.itemPosition.Y + note.block.Properties.INSTANCE_YCOORD.ToDouble();
                         StartPosition = new Position(new PointD(x, y));
-                        //StartPosition = new Position(note.itemPosition));
 
-                        //SetStaticCursor(bl, new PointD(0, 0));
                         if (STSettings.instance.LINECURSOR)
                             SetRubberlineCursor();
 
@@ -92,13 +84,6 @@ namespace ST.EplAddin.Footnote
 
             if (isFootnote && !STSettings.instance.LINECURSOR)
             {
-                //FootnoteItem cursor = new FootnoteItem();
-                //cursor.Create(note.block);
-                /*
-                double x1 = note.itemPosition.X + note.block.Properties.INSTANCE_XCOORD.ToDouble();
-                double y1 = note.itemPosition.Y + note.block.Properties.INSTANCE_YCOORD.ToDouble();
-                cursor.setItemPoint(new PointD(x1, y1));*/
-
                 double x2 = oPosition.FinalPosition.X - note.block.Properties.INSTANCE_XCOORD.ToDouble();
                 double y2 = oPosition.FinalPosition.Y - note.block.Properties.INSTANCE_YCOORD.ToDouble();
                 note.SetNotePoint(new PointD(x2, y2));
@@ -113,7 +98,6 @@ namespace ST.EplAddin.Footnote
         public override RequestCode OnStartDrag(Position oPosition)
         {
             return RequestCode.Nothing;
-            return base.OnStartDrag(oPosition);
         }
 
         public override RequestCode OnEndDrag(bool bSuccess, Position oPosition)
@@ -124,7 +108,6 @@ namespace ST.EplAddin.Footnote
                 double x = oPosition.FinalPosition.X - note.block.Properties.INSTANCE_XCOORD.ToDouble();
                 double y = oPosition.FinalPosition.Y - note.block.Properties.INSTANCE_YCOORD.ToDouble();
                 newposition = new Position(new PointD(x, y));
-                //newposition = oPosition.FinalPosition;
 
                 ClearCursor();
                 return RequestCode.Success;

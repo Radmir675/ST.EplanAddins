@@ -26,17 +26,6 @@ namespace ST.EplAddin.Footnote
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            /*
-            int count = oActionCallingContext.GetParameterCount();
-            string[] contextParams = oActionCallingContext.GetParameters();
-            string[] contextStrings 
-            = oActionCallingContext.GetStrings();*/
-            //string paramValue = null;
-
-            //MFOnCmdMsgManager.cpp(549) : mainmenu item call: Системные сообщения
-            //oActionCallingContext.SetParameter("_cmdline", ref paramValue);
-
-
             oActionCallingContext.AddParameter("Name", "MyInteraction");
             oActionCallingContext.AddParameter("_cmdline", "XGedStartInteractionAction2D /Name:MyInteraction");
 
@@ -62,17 +51,7 @@ namespace ST.EplAddin.Footnote
                 oContext.AddParameter("_cmdline", "XGedStartInteractionAction2D /Name:MyInteraction");
                 oAction.Execute(oContext);
             }
-            /*
-            new CommandLineInterpreter(true).Execute("XGedStartInteractionAction /Name:XGedFootnote");*/
             return true;
-            /*
-            string paramValue = "";
-            oActionCallingContext.GetParameter("_cmdline", ref paramValue);
-
-        
-            ActionManager oMng = new ActionManager();
-            Action oBaseAction = oMng.FindBaseAction(this, true);
-            return oBaseAction.Execute(oActionCallingContext);*/
         }
 
         public void GetActionProperties(ref ActionProperties actionProperties)

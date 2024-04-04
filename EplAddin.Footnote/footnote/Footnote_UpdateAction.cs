@@ -11,7 +11,6 @@ namespace ST.EplAddin.Footnote
     {
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-
             int count = oActionCallingContext.GetParameterCount();
             string[] contextParams = oActionCallingContext.GetParameters();
             string[] contextStrings = oActionCallingContext.GetStrings();
@@ -40,7 +39,6 @@ namespace ST.EplAddin.Footnote
                         note.UpdateBlockItems(block);
                         //note.updateSubItems();
                     }
-
                 }
             }
 
@@ -49,7 +47,6 @@ namespace ST.EplAddin.Footnote
 
             string props = oBaseAction.ActionProperties.ToString();
             return oBaseAction.Execute(oActionCallingContext);
-
         }
 
         public void GetActionProperties(ref ActionProperties actionProperties)

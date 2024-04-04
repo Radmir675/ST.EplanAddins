@@ -43,7 +43,6 @@ namespace ST.EplAddin.Footnote
                 string[] contextStrings = oActionCallingContext.GetStrings();
 
                 int a = 0;
-                //note.itemPosition;// = new PointPosition;
             }
             return result;
 

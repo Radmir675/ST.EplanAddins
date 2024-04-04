@@ -16,6 +16,5 @@ namespace ST.EplAddin.Footnote
         [EnumMember(Value = "Пользовательский текст")]
         User_defined = 0,
     }
-
 }
 
