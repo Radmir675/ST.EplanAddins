@@ -6,10 +6,8 @@ using Action = Eplan.EplApi.ApplicationFramework.Action;
 
 namespace ST.EplAddin.Footnote
 {
-
     class Footnote_PropertiesAction : IEplAction
     {
-
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
             string function = "", cmdline = "";
@@ -28,10 +26,10 @@ namespace ST.EplAddin.Footnote
                 Project CurrentProject = Set.GetCurrentProject(true);
                 StorableObject so = Set.GetSelectedObject(true);
 
-                bool isBlock = so is Block;
-                if (isBlock)
+                // bool isBlock = so is Block;
+                if (so is Block bl)
                 {
-                    Block bl = so as Block;
+                    //Block bl = so as Block;
                     bool isFootnoteBlock = bl.Name.Contains(FootnoteItem.FOOTNOTE_KEY);
                     if (isFootnoteBlock)
                     {

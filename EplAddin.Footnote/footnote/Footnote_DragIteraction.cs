@@ -16,8 +16,8 @@ namespace ST.EplAddin.Footnote
     class Footnote_DragInteraction : Interaction
     {
         FootnoteItem note = null;
-        PointD newposition;
-        PointD oldposition;
+        PointD newPosition;
+        PointD oldPosition;
         bool isFootnote = false;
 
         public override RequestCode OnStart(InteractionContext pContext)
@@ -45,7 +45,7 @@ namespace ST.EplAddin.Footnote
                     {
                         note = new FootnoteItem();
                         note.Create(block);
-                        oldposition = note.notePosition;
+                        oldPosition = note.notePosition;
                         isFootnote = true;
 
                         double x = note.itemPosition.X + note.block.Properties.INSTANCE_XCOORD.ToDouble();
@@ -107,7 +107,7 @@ namespace ST.EplAddin.Footnote
 
                 double x = oPosition.FinalPosition.X - note.block.Properties.INSTANCE_XCOORD.ToDouble();
                 double y = oPosition.FinalPosition.Y - note.block.Properties.INSTANCE_YCOORD.ToDouble();
-                newposition = new Position(new PointD(x, y));
+                newPosition = new Position(new PointD(x, y));
 
                 ClearCursor();
                 return RequestCode.Success;
@@ -119,7 +119,7 @@ namespace ST.EplAddin.Footnote
         {
             if (isFootnote)
             {
-                note.SetNotePoint(newposition);
+                note.SetNotePoint(newPosition);
                 note.UpdateBlock();
                 note.UpdateSubItems(note.Text);
                 note.Serialize();
@@ -139,7 +139,7 @@ namespace ST.EplAddin.Footnote
         {
             if (isFootnote)
             {
-                note.SetNotePoint(oldposition);
+                note.SetNotePoint(oldPosition);
                 note.GroupWithViewPlacement();
                 note.Deserialize();
                 return;

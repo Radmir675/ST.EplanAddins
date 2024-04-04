@@ -5,6 +5,9 @@ using System.Windows.Forms;
 
 namespace ST.EplAddin.Footnote
 {
+    /// <summary>
+    /// Перечень настроек
+    /// </summary>
     [RefreshProperties(RefreshProperties.All)]
     public class STSettings
     {

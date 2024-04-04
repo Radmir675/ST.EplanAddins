@@ -9,7 +9,6 @@ namespace ST.EplAddin.Footnote
 
     class Footnote_PropertiesActionXGed : IEplAction
     {
-
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
             string function = "", cmdline = "";

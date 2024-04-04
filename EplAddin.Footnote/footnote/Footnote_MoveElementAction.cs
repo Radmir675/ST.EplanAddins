@@ -1,5 +1,4 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
-using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
 using System;
@@ -10,7 +9,6 @@ namespace ST.EplAddin.Footnote
     class FootnoteMoveElementAction : IEplAction
     {
         FootnoteItem note = null;
-        PointD newposition;
         bool isFootnote = false;
 
         public bool Execute(ActionCallingContext oActionCallingContext)
@@ -41,8 +39,6 @@ namespace ST.EplAddin.Footnote
                 int count = oActionCallingContext.GetParameterCount();
                 string[] contextParams = oActionCallingContext.GetParameters();
                 string[] contextStrings = oActionCallingContext.GetStrings();
-
-                int a = 0;
             }
             return result;
 
