@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace ST.EplAddins.SymbolVariants
+namespace ST.EplAddin.PlcEdit
 {
     public class PlcAddinModule : IEplAddIn
     {

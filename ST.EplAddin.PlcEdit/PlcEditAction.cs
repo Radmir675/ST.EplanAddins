@@ -1,8 +1,8 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using System;
-using System.Windows.Forms;
+using System.Diagnostics;
 
-namespace ST.EplAddins.SymbolVariants
+namespace ST.EplAddin.PlcEdit
 {
     class PlcEditAction : IEplAction
     {
@@ -20,7 +20,11 @@ namespace ST.EplAddins.SymbolVariants
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            MessageBox.Show("Мы здесь");
+            Process oCurrent = Process.GetCurrentProcess();
+            var eplanOwner = new WindowWrapper(oCurrent.MainWindowHandle);
+
+            ManagePlcForm managePlcForm = new ManagePlcForm();
+            managePlcForm.Show(eplanOwner);
             return true;
         }
     }

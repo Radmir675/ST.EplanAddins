@@ -45,6 +45,7 @@
             this.exchange_button.Name = "exchange_button";
             this.exchange_button.Size = new System.Drawing.Size(25, 25);
             this.exchange_button.TabIndex = 2;
+            this.exchange_button.TabStop = false;
             this.exchange_button.UseVisualStyleBackColor = false;
             // 
             // up_button
@@ -58,18 +59,20 @@
             this.up_button.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.up_button.Size = new System.Drawing.Size(25, 25);
             this.up_button.TabIndex = 1;
+            this.up_button.TabStop = false;
             this.up_button.UseVisualStyleBackColor = false;
             this.up_button.Click += new System.EventHandler(this.up_button_Click);
             // 
             // dowm_button
             // 
             this.dowm_button.BackColor = System.Drawing.Color.Transparent;
-            this.dowm_button.BackgroundImage = global::ST.EplAddin.PlcEdit.Properties.Resources.png_transparent_down_arrow_logo_arrow_down_android_down_arrow_hand_triangle_internet;
+            this.dowm_button.BackgroundImage = global::ST.EplAddin.PlcEdit.Properties.Resources.down;
             this.dowm_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.dowm_button.Location = new System.Drawing.Point(575, 3);
             this.dowm_button.Name = "dowm_button";
             this.dowm_button.Size = new System.Drawing.Size(25, 25);
             this.dowm_button.TabIndex = 0;
+            this.dowm_button.TabStop = false;
             this.dowm_button.UseVisualStyleBackColor = false;
             this.dowm_button.Click += new System.EventHandler(this.dowm_button_Click);
             // 

@@ -63,10 +63,9 @@ namespace ST.EplAddin.PlcEdit.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap png_transparent_down_arrow_logo_arrow_down_android_down_arrow_hand_triangle_internet {
+        internal static System.Drawing.Bitmap down {
             get {
-                object obj = ResourceManager.GetObject("png-transparent-down-arrow-logo-arrow-down-android-down-arrow-hand-triangle-inter" +
-                        "net", resourceCulture);
+                object obj = ResourceManager.GetObject("down", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
