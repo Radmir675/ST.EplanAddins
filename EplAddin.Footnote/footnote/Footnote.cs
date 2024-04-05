@@ -363,17 +363,12 @@ namespace ST.EplAddin.Footnote
         {
             CreateBlock(subItems.ToArray());
         }
+        /// <summary>
+        /// При создании блока переданные элементы удаляются со страницы и объеденяются в блок
+        /// </summary>
+        /// <param name="items">элементы для создания блока</param>
         public void CreateBlock(Placement[] items)
         {
-            ///
-            /*
-             * При создании блока переданные элементы удаляются со страницы и объеденяются в блок 
-            */
-            //Placement[] group = { label, itemline, noteline, startpoint, jsontext, propid };
-
-            //subItems.AddRange(new List<Placement>{ label, itemline, noteline, startpoint, jsontext, propid });
-
-            ///TODO: Убрать создание блока в отдельную функцию
             if (block == null)
             {
                 block = new Block();
@@ -392,14 +387,12 @@ namespace ST.EplAddin.Footnote
         /// </summary>
         public void UpdateBlock()
         {
-
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
                 //Если блок создан ломаем его и пересобираем
                 if (block != null)
                 {
-
-                    //получить обзор модели на которм лежит блок
+                    //получить обзор модели на котором лежит блок
                     viewPlacement = block.Group as ViewPlacement;
                     Placement[] items = block.BreakUp();
                     GetSubItems(items); //получили существующие экземпляры после извлечения из блока
@@ -562,8 +555,6 @@ namespace ST.EplAddin.Footnote
         {
             try
             {
-                //Properties.Function.FUNC_COMMENT
-
                 label = array.ElementAtOrDefault(0) as Text;
                 itemline = array.ElementAtOrDefault(1) as Line;
                 noteline = array.ElementAtOrDefault(2) as Line;
@@ -609,9 +600,6 @@ namespace ST.EplAddin.Footnote
             }
 
         }
-
-
-        //}
 
         /// <summary>
         /// Получить исходный объект
@@ -744,7 +732,6 @@ namespace ST.EplAddin.Footnote
             if (pl3d != null)
                 using (SafetyPoint safetyPoint = SafetyPoint.Create())
                 {
-                    //string objectId = vpart.Properties.PROPUSER_DBOBJECTID; //get object id
                     string objectId = pl3d.Properties.PROPUSER_DBOBJECTID; //get object id
                     int idxOfSlash = objectId.IndexOf("/", 1, objectId.Length - 1, StringComparison.InvariantCultureIgnoreCase);    //get index of first separator
                     string objectIdWithoutProjectId = objectId.Substring(idxOfSlash + 1, (objectId.Length - idxOfSlash - 1));   //cut off value before first separator together with this separator

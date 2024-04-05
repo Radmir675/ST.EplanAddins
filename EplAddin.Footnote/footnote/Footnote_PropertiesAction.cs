@@ -25,11 +25,8 @@ namespace ST.EplAddin.Footnote
                 Set.LockSelectionByDefault = false;
                 Project CurrentProject = Set.GetCurrentProject(true);
                 StorableObject so = Set.GetSelectedObject(true);
-
-                // bool isBlock = so is Block;
                 if (so is Block bl)
                 {
-                    //Block bl = so as Block;
                     bool isFootnoteBlock = bl.Name.Contains(FootnoteItem.FOOTNOTE_KEY);
                     if (isFootnoteBlock)
                     {
