@@ -119,7 +119,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\png-transparent-down-arrow-logo-arrow-down-android-down-arrow-hand-triangle-internet.png" />
+    <None Include="Resources\down.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\up.png" />
