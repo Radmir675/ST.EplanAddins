@@ -112,7 +112,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataModelView.cs" />
+    <Compile Include="PlcDataModelView.cs" />
     <Compile Include="ManagePlcForm.cs">
       <SubType>Form</SubType>
     </Compile>

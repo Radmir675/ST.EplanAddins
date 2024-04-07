@@ -71,6 +71,7 @@
             this.exchange_button.TabIndex = 2;
             this.exchange_button.TabStop = false;
             this.exchange_button.UseVisualStyleBackColor = false;
+            this.exchange_button.Click += new System.EventHandler(this.exchange_button_Click);
             // 
             // dowm_button
             // 
@@ -83,6 +84,7 @@
             this.dowm_button.TabIndex = 0;
             this.dowm_button.TabStop = false;
             this.dowm_button.UseVisualStyleBackColor = false;
+            this.dowm_button.Click += new System.EventHandler(this.dowm_button_Click);
             // 
             // up_button
             // 
@@ -97,6 +99,7 @@
             this.up_button.TabIndex = 1;
             this.up_button.TabStop = false;
             this.up_button.UseVisualStyleBackColor = false;
+            this.up_button.Click += new System.EventHandler(this.up_button_Click);
             // 
             // Ok_button
             // 
