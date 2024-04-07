@@ -27,7 +27,7 @@ namespace ST.EplAddin.PlcEdit
             selectionSet.LockSelectionByDefault = false;
             var currentProject = selectionSet.GetCurrentProject(true);
 
-            var selectedPlcdata = selectionSet.Selection;
+            var selectedPlcdata = selectionSet.Selection;//отфильтровать надо именно selection
 
             FunctionsFilter PlcTerminalFilter = new FunctionsFilter();
             PlcTerminalFilter.Category = Function.Enums.Category.PLCTerminal;
