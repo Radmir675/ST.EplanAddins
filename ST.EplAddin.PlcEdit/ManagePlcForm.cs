@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -52,19 +53,23 @@ namespace ST.EplAddin.PlcEdit
         private void dowm_button_Click(object sender, EventArgs e)
         {
 
-            if (selectedRowsCount != 1)
+            if (SelectedRowsCount != 1)
                 return;
+
             InsertRowInEmptyPosition(Direction.Down);
         }
 
         private void InsertRowInEmptyPosition(Direction direction)
         {
-            var row = dataGridView?.SelectedRows[0];//выбранная строка
-            var currentIndex = row.Index;
-            var functionDefinition = row.Cells["Function definition"].Value.ToString();
-            var targerIndex = GetEmptyRow(currentIndex, direction, functionDefinition);// задать смещение 
-            dataGridView.Rows.Remove(row);
-            dataGridView.Rows.Insert(targerIndex, row);
+            var currentIndexRow = dataGridView.SelectedCells.Cast<DataGridViewCell>().First().RowIndex;
+            int columnIndex = dataGridView.CurrentCell.ColumnIndex;
+            string columnName = dataGridView.Columns[columnIndex].Name;
+
+            var currentRow = dataGridView.Rows[currentIndexRow];
+            var functionDefinition = currentRow.Cells["FunctionDefinition"].Value.ToString();
+            var targerIndex = GetEmptyRow(currentRow.Index, direction, functionDefinition);// задать смещение 
+            dataGridView.Rows.Remove(currentRow);
+            dataGridView.Rows.Insert(targerIndex, currentRow);
         }
         public bool IsModuleAssigned(string terminalName)
         {

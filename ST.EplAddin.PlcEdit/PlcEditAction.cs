@@ -56,6 +56,8 @@ namespace ST.EplAddin.PlcEdit
             //{
 
             //}
+            Function newFunction = new Function();
+            sourceFunction.Assign(newFunction);
             sourceFunction.Assign(targetFunction);
         }
     }
