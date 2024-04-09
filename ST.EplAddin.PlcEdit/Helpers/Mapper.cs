@@ -25,14 +25,28 @@ namespace ST.EplAddin.PlcEdit
                         DT = terminal.Properties.FUNC_IDENTDEVICETAG.ToString(ISOCode.Language.L_ru_RU),
                         DevicePointDesignation = terminal.Properties.FUNC_PLCAUTOPLUG_AND_CONNPTDESIGNATION.ToString(ISOCode.Language.L_ru_RU),
                         FunctionDefinition = terminal.Properties.FUNC_COMPONENTTYPE.ToString(ISOCode.Language.L_ru_RU),
-                        SymbolicAdressDefined = terminal.Properties.FUNC_PLCSYMBOLICADDRESS_CALCULATED.ToString(ISOCode.Language.L_ru_RU)
+                        SymbolicAdressDefined = terminal.Properties.FUNC_PLCSYMBOLICADDRESS_CALCULATED.ToString(ISOCode.Language.L_ru_RU),
+                        FunctionType = terminal.Properties.FUNC_TYPE.ToString(ISOCode.Language.L_ru_RU)
                     };
                     plcDataModelView.Add(mappedPlc);
                 }
             }
 
-            var output = plcDataModelView.GroupBy(f => f.DT).ToList();//тут происходит поиск гланой функции если ее нет берется обзор
-            return output;
+            var output = plcDataModelView.GroupBy(f => f.DevicePointDesignation);//тут происходит поиск гланой функции если ее нет берется обзор
+            var result = new List<PlcDataModelView>();
+            foreach (var entry in output)
+            {
+                foreach (var item in entry)
+                {
+                    if (item.FunctionType == "1")
+                    {
+                        result.Add(item);
+                        break;
+                    }
+                    result.Add(entry.First());
+                }
+            }
+            return result;
         }
     }
 

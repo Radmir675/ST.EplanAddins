@@ -13,6 +13,6 @@
         public string FunctionDefinition { get; set; }//Вывод устройства ПЛК, Дискретный вход
 
         public string SymbolicAdressDefined { get; set; }//сиволический адрес определен если он не пустой значит вывод куда-то присвоен
-        public bool IsMainFanction { get; set; }
+        public string FunctionType { get; set; }
     }
 }
