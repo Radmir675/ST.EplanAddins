@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ST.EplAddin.PlcEdit
 {
     public partial class ManagePlcForm : Form
     {
-        private DataTable dataTable;
+
+        public event EventHandler<EventArgs> OkEvent;
+        public event EventHandler<EventArgs> ApplyEvent;
         public List<PlcDataModelView> PlcDataModelView { get; set; }
         private int selectedRowsCount;
-
         public int SelectedRowsCount
         {
-            get { return dataGridView?.SelectedRows.Count ?? 0; }
+            get
+            {
+                return dataGridView.SelectedCells.Cast<DataGridViewCell>()
+                                       .Select(c => c.RowIndex).Distinct().Count();
+            }
             set { selectedRowsCount = value; }
         }
-
 
         public ManagePlcForm(List<PlcDataModelView> plcDataModelView)
         {
@@ -26,51 +30,72 @@ namespace ST.EplAddin.PlcEdit
 
         private void ManagePlcForm_Load(object sender, EventArgs e)
         {
-            CreateDataTable();
             AddData(PlcDataModelView);
+            exchange_button.Enabled = false;
         }
 
-        private void CreateDataTable()
-        {
-            dataTable = new DataTable();
-            dataTable.Columns.Add("Connection point description", typeof(string));
-            dataTable.Columns.Add("PLC adress", typeof(string));
-            dataTable.Columns.Add("Data type", typeof(string));
-            dataTable.Columns.Add("Symbolic address", typeof(string));
-            dataTable.Columns.Add("Functional text", typeof(string));
-            dataTable.Columns.Add("DT(identifying)", typeof(string));
-            dataTable.Columns.Add("Connection point designation", typeof(string));
-            dataTable.Columns.Add("Function definition", typeof(string));
-            dataGridView.DataSource = dataTable;
-        }
+
         private void AddData(List<PlcDataModelView> data)
         {
-            data.ForEach(x => dataTable.Rows.Add(x));
+            dataGridView.DataSource = data;
         }
 
         private void up_button_Click(object sender, EventArgs e)
         {
             if (selectedRowsCount != 1)
                 return;
+            InsertRowInEmptyPosition(Direction.Up);
 
         }
 
         private void dowm_button_Click(object sender, EventArgs e)
         {
+
             if (selectedRowsCount != 1)
                 return;
-            var s = dataGridView?.SelectedRows[0];
-            //          if (row.Index == 0 && offset == -1 || ((row.Index == dgv.NewRowIndex - 1) &&
-            //  offset == 1 || row.Index == dgv.NewRowIndex)
-            //return; // Ничего делать не надо => выходим
-            //        // Получаем текущий индекс строки
-            //          int currentIndex = row.Index;
-            //          // Удаляем ее из коллекции
-            //          dgv.Rows.Remove(row);
-            //          // А теперь добавляем со смещением
-            //          dgv.Rows.Insert(currentIndex + offset, row);
-            //offset=Так же у нас будет переменная offset,
-            //которая будет задавать смещение (-1 если двигаем строку вверх, 1 - если вниз)
+            InsertRowInEmptyPosition(Direction.Down);
+        }
+
+        private void InsertRowInEmptyPosition(Direction direction)
+        {
+            var row = dataGridView?.SelectedRows[0];//выбранная строка
+            var currentIndex = row.Index;
+            var functionDefinition = row.Cells["Function definition"].Value.ToString();
+            var targerIndex = GetEmptyRow(currentIndex, direction, functionDefinition);// задать смещение 
+            dataGridView.Rows.Remove(row);
+            dataGridView.Rows.Insert(targerIndex, row);
+        }
+        public bool IsModuleAssigned(string terminalName)
+        {
+            if (PlcDataModelView.Single(x => x.DT == terminalName).SymbolicAdressDefined == string.Empty)
+            {
+                return true;
+            }
+            return false;
+        }
+        private int GetEmptyRow(int currentPositionIndex, Direction direction, string functionDefinition)
+        {
+            DataGridViewRow firstProperlyRow = null;
+            switch (direction)
+            {
+                case Direction.Up:
+                    firstProperlyRow = dataGridView.Rows.OfType<DataGridViewRow>().First(x =>
+                 x.Cells["SymbolicAdress"].Value == null
+                && x.Cells["FunctionText"].Value == null
+                 && x.Index < currentPositionIndex
+                  && functionDefinition == x.Cells["FunctionDefinition"].Value.ToString());
+                    break;
+                case Direction.Down:
+                    firstProperlyRow = dataGridView.Rows.OfType<DataGridViewRow>().First(x =>
+               x.Cells["SymbolicAdress"].Value == null
+              && x.Cells["FunctionText"].Value == null
+               && x.Index > currentPositionIndex
+                && functionDefinition == x.Cells["FunctionDefinition"].Value.ToString());
+                    break;
+            }
+
+            var properlyRowIndex = firstProperlyRow.Index;
+            return properlyRowIndex;
         }
 
         private void exchange_button_Click(object sender, EventArgs e)
@@ -80,24 +105,50 @@ namespace ST.EplAddin.PlcEdit
 
 
         }
+
+        //недописано
+        public List<PlcDataModelView> ReadDataFromGrid()
+        {
+            List<PlcDataModelView> plcDataModelView = new List<PlcDataModelView>();
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    string value = cell.Value.ToString();
+                }
+            }
+            return plcDataModelView;
+
+        }
+
+        private void Ok_button_Click(object sender, EventArgs e)
+        {
+            OkEvent?.Invoke(this, EventArgs.Empty);
+            Application.Exit();
+        }
+        private void Cancel_button_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void Apply_button_Click(object sender, EventArgs e)
+        {
+            ApplyEvent?.Invoke(this, EventArgs.Empty);
+        }
+
+
+
+        private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            exchange_button.Enabled = false;
+            if (SelectedRowsCount == 2)
+            {
+                exchange_button.Enabled = true;
+
+            }
+
+        }
     }
 }
-//foreach (DataGridViewRow row in dataGridView.Rows)
-//{
-//    row.HeaderCell.Value = (row.Index + 1).ToString();
-//}
 
-//int selectedRows = dataGridView?.SelectedRows.Count??0;
-//bool isTableSelected=dataGridView.Sele
-//if (selectedRows == null)
-//{
-//    up_button.Enabled = false;
-//    dowm_button.Enabled = false;
-//    exchange_button.Enabled = false;
-//}
-//            Примерный алгоритм.
 
-//Получаем и сохраняем индекс выбранной строки.
-//Сохраняем данные строки.
-//Получаем данные из индекс -1 и заменяем их в нашей строке.
-//Вставляем наши сохранённые данные в индекс -1.

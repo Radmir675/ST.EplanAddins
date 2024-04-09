@@ -112,6 +112,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\DirectionEnum.cs" />
+    <Compile Include="Helpers\Mapper.cs" />
     <Compile Include="PlcDataModelView.cs" />
     <Compile Include="ManagePlcForm.cs">
       <SubType>Form</SubType>
@@ -127,7 +129,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="WindowWrapper.cs" />
+    <Compile Include="Helpers\WindowWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ManagePlcForm.resx">
@@ -141,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\PlcDataModelView.datasource" />
     <None Include="Resources\down.png" />
   </ItemGroup>
   <ItemGroup>

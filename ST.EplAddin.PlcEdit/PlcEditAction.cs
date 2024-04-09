@@ -1,16 +1,18 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
+using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.HEServices;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace ST.EplAddin.PlcEdit
 {
     class PlcEditAction : IEplAction
     {
         public static string actionName = "GfDlgMgrActionIGfWind";
-        public PLC[] PlcTerminals { get; set; }
+        public Terminal[] PlcTerminals { get; set; }
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
             Name = actionName;
@@ -28,23 +30,19 @@ namespace ST.EplAddin.PlcEdit
             var currentProject = selectionSet.GetCurrentProject(true);
 
             var selectedPlcdata = selectionSet.Selection;//отфильтровать надо именно selection
+            var PlcTerminals = selectedPlcdata.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
 
-            FunctionsFilter PlcTerminalFilter = new FunctionsFilter();
-            PlcTerminalFilter.Category = Function.Enums.Category.PLCTerminal;
+
 
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-                PlcTerminals = new DMObjectsFinder(currentProject).GetPLCs(PlcTerminalFilter);
-                var mappedPlcData = DataMapper(PlcTerminals);
+
+                var mappedPlcData = Mapper.GetPlcData(PlcTerminals);
                 ShowTableForm(mappedPlcData);
             }
             return true;
         }
 
-        public List<PlcDataModelView> DataMapper(PLC[] plcTerminals)
-        {
-            return new List<PlcDataModelView>();
-        }
         public void ShowTableForm(List<PlcDataModelView> plcDataModelView)
         {
             Process oCurrent = Process.GetCurrentProcess();
@@ -52,6 +50,16 @@ namespace ST.EplAddin.PlcEdit
 
             ManagePlcForm managePlcForm = new ManagePlcForm(plcDataModelView);
             managePlcForm.Show(eplanOwner);
+        }
+
+        public void AssignFinction(Function sourceFunction, Function targetFunction)
+        {
+            //если у этой функция пустая то надо делать замены
+            //if (sourceFunction)
+            //{
+
+            //}
+            sourceFunction.Assign(targetFunction);
         }
     }
 }
