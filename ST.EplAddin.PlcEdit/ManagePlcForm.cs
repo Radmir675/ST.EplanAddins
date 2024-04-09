@@ -32,6 +32,7 @@ namespace ST.EplAddin.PlcEdit
         {
             AddData(PlcDataModelView);
             exchange_button.Enabled = false;
+            // dataGridView.Columns["SymbolicAdressDefined"].Visible = false;
         }
 
 
@@ -102,8 +103,6 @@ namespace ST.EplAddin.PlcEdit
         {
             if (selectedRowsCount != 2)
                 return;
-
-
         }
 
         //недописано
@@ -136,15 +135,12 @@ namespace ST.EplAddin.PlcEdit
             ApplyEvent?.Invoke(this, EventArgs.Empty);
         }
 
-
-
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             exchange_button.Enabled = false;
             if (SelectedRowsCount == 2)
             {
                 exchange_button.Enabled = true;
-
             }
 
         }

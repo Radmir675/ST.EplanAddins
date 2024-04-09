@@ -32,11 +32,8 @@ namespace ST.EplAddin.PlcEdit
             var selectedPlcdata = selectionSet.Selection;//отфильтровать надо именно selection
             var PlcTerminals = selectedPlcdata.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
 
-
-
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-
                 var mappedPlcData = Mapper.GetPlcData(PlcTerminals);
                 ShowTableForm(mappedPlcData);
             }
