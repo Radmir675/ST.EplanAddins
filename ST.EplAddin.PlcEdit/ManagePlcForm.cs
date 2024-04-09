@@ -92,7 +92,7 @@ namespace ST.EplAddin.PlcEdit
                   && functionDefinition == x.Cells["FunctionDefinition"].Value.ToString());
                     break;
                 case Direction.Down:
-                    firstProperlyRow = dataGridView.Rows.OfType<DataGridViewRow>().First(x =>
+                    firstProperlyRow = dataGridView.Rows.Cast<DataGridViewRow>().First(x =>
                x.Cells["SymbolicAdress"].Value == null
               && x.Cells["FunctionText"].Value == null
                && x.Index > currentPositionIndex

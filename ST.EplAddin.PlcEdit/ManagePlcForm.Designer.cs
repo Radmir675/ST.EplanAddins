@@ -41,16 +41,16 @@
             this.Cancel_button = new System.Windows.Forms.Button();
             this.flowLayoutPanelDown = new System.Windows.Forms.FlowLayoutPanel();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.devicePointDescriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pLCAdressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.datatypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.symbolicAdressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.functionTextDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dTDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.devicePointDesignationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.functionDefinitionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.symbolicAdressDefinedDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.DevicePointDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Datatype = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SymbolicAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FunctionText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dTDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DevicePointDesignation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FunctionDefinition = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SymbolicAdressDefined = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.flowLayoutPanelUp.SuspendLayout();
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -168,15 +168,15 @@
             this.dataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.devicePointDescriptionDataGridViewTextBoxColumn,
-            this.pLCAdressDataGridViewTextBoxColumn,
-            this.datatypeDataGridViewTextBoxColumn,
-            this.symbolicAdressDataGridViewTextBoxColumn,
-            this.functionTextDataGridViewTextBoxColumn,
+            this.DevicePointDescription,
+            this.PLCAdress,
+            this.Datatype,
+            this.SymbolicAdress,
+            this.FunctionText,
             this.dTDataGridViewTextBoxColumn,
-            this.devicePointDesignationDataGridViewTextBoxColumn,
-            this.functionDefinitionDataGridViewTextBoxColumn,
-            this.symbolicAdressDefinedDataGridViewTextBoxColumn});
+            this.DevicePointDesignation,
+            this.FunctionDefinition,
+            this.SymbolicAdressDefined});
             this.dataGridView.DataSource = this.plcDataModelViewBindingSource;
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.Location = new System.Drawing.Point(0, 31);
@@ -197,40 +197,44 @@
             this.dataGridView.TabIndex = 6;
             this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellClick);
             // 
-            // devicePointDescriptionDataGridViewTextBoxColumn
+            // plcDataModelViewBindingSource
             // 
-            this.devicePointDescriptionDataGridViewTextBoxColumn.DataPropertyName = "DevicePointDescription";
-            this.devicePointDescriptionDataGridViewTextBoxColumn.HeaderText = "DevicePointDescription";
-            this.devicePointDescriptionDataGridViewTextBoxColumn.Name = "devicePointDescriptionDataGridViewTextBoxColumn";
-            this.devicePointDescriptionDataGridViewTextBoxColumn.Width = 143;
+            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
             // 
-            // pLCAdressDataGridViewTextBoxColumn
+            // DevicePointDescription
             // 
-            this.pLCAdressDataGridViewTextBoxColumn.DataPropertyName = "PLCAdress";
-            this.pLCAdressDataGridViewTextBoxColumn.HeaderText = "PLCAdress";
-            this.pLCAdressDataGridViewTextBoxColumn.Name = "pLCAdressDataGridViewTextBoxColumn";
-            this.pLCAdressDataGridViewTextBoxColumn.Width = 84;
+            this.DevicePointDescription.DataPropertyName = "DevicePointDescription";
+            this.DevicePointDescription.HeaderText = "DevicePointDescription";
+            this.DevicePointDescription.Name = "DevicePointDescription";
+            this.DevicePointDescription.Width = 143;
             // 
-            // datatypeDataGridViewTextBoxColumn
+            // PLCAdress
             // 
-            this.datatypeDataGridViewTextBoxColumn.DataPropertyName = "Datatype";
-            this.datatypeDataGridViewTextBoxColumn.HeaderText = "Datatype";
-            this.datatypeDataGridViewTextBoxColumn.Name = "datatypeDataGridViewTextBoxColumn";
-            this.datatypeDataGridViewTextBoxColumn.Width = 75;
+            this.PLCAdress.DataPropertyName = "PLCAdress";
+            this.PLCAdress.HeaderText = "PLCAdress";
+            this.PLCAdress.Name = "PLCAdress";
+            this.PLCAdress.Width = 84;
             // 
-            // symbolicAdressDataGridViewTextBoxColumn
+            // Datatype
             // 
-            this.symbolicAdressDataGridViewTextBoxColumn.DataPropertyName = "SymbolicAdress";
-            this.symbolicAdressDataGridViewTextBoxColumn.HeaderText = "SymbolicAdress";
-            this.symbolicAdressDataGridViewTextBoxColumn.Name = "symbolicAdressDataGridViewTextBoxColumn";
-            this.symbolicAdressDataGridViewTextBoxColumn.Width = 106;
+            this.Datatype.DataPropertyName = "Datatype";
+            this.Datatype.HeaderText = "Datatype";
+            this.Datatype.Name = "Datatype";
+            this.Datatype.Width = 75;
             // 
-            // functionTextDataGridViewTextBoxColumn
+            // SymbolicAdress
             // 
-            this.functionTextDataGridViewTextBoxColumn.DataPropertyName = "FunctionText";
-            this.functionTextDataGridViewTextBoxColumn.HeaderText = "FunctionText";
-            this.functionTextDataGridViewTextBoxColumn.Name = "functionTextDataGridViewTextBoxColumn";
-            this.functionTextDataGridViewTextBoxColumn.Width = 94;
+            this.SymbolicAdress.DataPropertyName = "SymbolicAdress";
+            this.SymbolicAdress.HeaderText = "SymbolicAdress";
+            this.SymbolicAdress.Name = "SymbolicAdress";
+            this.SymbolicAdress.Width = 106;
+            // 
+            // FunctionText
+            // 
+            this.FunctionText.DataPropertyName = "FunctionText";
+            this.FunctionText.HeaderText = "FunctionText";
+            this.FunctionText.Name = "FunctionText";
+            this.FunctionText.Width = 94;
             // 
             // dTDataGridViewTextBoxColumn
             // 
@@ -239,30 +243,26 @@
             this.dTDataGridViewTextBoxColumn.Name = "dTDataGridViewTextBoxColumn";
             this.dTDataGridViewTextBoxColumn.Width = 47;
             // 
-            // devicePointDesignationDataGridViewTextBoxColumn
+            // DevicePointDesignation
             // 
-            this.devicePointDesignationDataGridViewTextBoxColumn.DataPropertyName = "DevicePointDesignation";
-            this.devicePointDesignationDataGridViewTextBoxColumn.HeaderText = "DevicePointDesignation";
-            this.devicePointDesignationDataGridViewTextBoxColumn.Name = "devicePointDesignationDataGridViewTextBoxColumn";
-            this.devicePointDesignationDataGridViewTextBoxColumn.Width = 146;
+            this.DevicePointDesignation.DataPropertyName = "DevicePointDesignation";
+            this.DevicePointDesignation.HeaderText = "DevicePointDesignation";
+            this.DevicePointDesignation.Name = "DevicePointDesignation";
+            this.DevicePointDesignation.Width = 146;
             // 
-            // functionDefinitionDataGridViewTextBoxColumn
+            // FunctionDefinition
             // 
-            this.functionDefinitionDataGridViewTextBoxColumn.DataPropertyName = "FunctionDefinition";
-            this.functionDefinitionDataGridViewTextBoxColumn.HeaderText = "FunctionDefinition";
-            this.functionDefinitionDataGridViewTextBoxColumn.Name = "functionDefinitionDataGridViewTextBoxColumn";
-            this.functionDefinitionDataGridViewTextBoxColumn.Width = 117;
+            this.FunctionDefinition.DataPropertyName = "FunctionDefinition";
+            this.FunctionDefinition.HeaderText = "FunctionDefinition";
+            this.FunctionDefinition.Name = "FunctionDefinition";
+            this.FunctionDefinition.Width = 117;
             // 
-            // symbolicAdressDefinedDataGridViewTextBoxColumn
+            // SymbolicAdressDefined
             // 
-            this.symbolicAdressDefinedDataGridViewTextBoxColumn.DataPropertyName = "SymbolicAdressDefined";
-            this.symbolicAdressDefinedDataGridViewTextBoxColumn.HeaderText = "SymbolicAdressDefined";
-            this.symbolicAdressDefinedDataGridViewTextBoxColumn.Name = "symbolicAdressDefinedDataGridViewTextBoxColumn";
-            this.symbolicAdressDefinedDataGridViewTextBoxColumn.Width = 143;
-            // 
-            // plcDataModelViewBindingSource
-            // 
-            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
+            this.SymbolicAdressDefined.DataPropertyName = "SymbolicAdressDefined";
+            this.SymbolicAdressDefined.HeaderText = "SymbolicAdressDefined";
+            this.SymbolicAdressDefined.Name = "SymbolicAdressDefined";
+            this.SymbolicAdressDefined.Width = 143;
             // 
             // ManagePlcForm
             // 
@@ -297,15 +297,15 @@
         private System.Windows.Forms.Button Cancel_button;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelDown;
         private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn devicePointDescriptionDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn pLCAdressDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn datatypeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn symbolicAdressDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn functionTextDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dTDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn devicePointDesignationDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn functionDefinitionDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn symbolicAdressDefinedDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource plcDataModelViewBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DevicePointDescription;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PLCAdress;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Datatype;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SymbolicAdress;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FunctionText;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dTDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DevicePointDesignation;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FunctionDefinition;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SymbolicAdressDefined;
     }
 }
