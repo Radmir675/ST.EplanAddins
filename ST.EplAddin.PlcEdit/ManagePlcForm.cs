@@ -53,14 +53,27 @@ namespace ST.EplAddin.PlcEdit
 
             if (SelectedRowsCount != 1)
                 return;
-
             InsertRowInEmptyPosition(Direction.Down);
+        }
+        private void exchange_button_Click(object sender, EventArgs e)
+        {
+            if (SelectedRowsCount != 2)
+                return;
+            ExchangePositions();
         }
 
         private void HighlightRow(int rowIndex)
         {
             dataGridView.ClearSelection();
             dataGridView.Rows[rowIndex].Selected = true;
+            dataGridView.Refresh();
+        }
+        private void HighlightRow(int rowIndex1, int rowIndex2)
+        {
+            dataGridView.ClearSelection();
+            dataGridView.Rows[rowIndex1].Selected = true;
+            dataGridView.Rows[rowIndex2].Selected = true;
+
             dataGridView.Refresh();
         }
         private void InsertRowInEmptyPosition(Direction direction)
@@ -76,6 +89,17 @@ namespace ST.EplAddin.PlcEdit
             }
             AssignDataToTargetRow(currentIndexRow, targetIndexRow.Value);
             HighlightRow(targetIndexRow.Value);
+        }
+        private void ExchangePositions()
+        {
+            var rowsIndex = dataGridView.SelectedCells.Cast<DataGridViewCell>().Select(c => c.RowIndex).Distinct().ToArray();
+            var currentIndexRow = rowsIndex[0];
+            var targetIndexRow = rowsIndex[1];
+            if (currentIndexRow != targetIndexRow)
+            {
+                AssignDataToTargetRow(currentIndexRow, targetIndexRow);
+                HighlightRow(currentIndexRow, targetIndexRow);
+            }
         }
 
         private void AssignDataToTargetRow(int sourceIndexRow, int targetIndexRow)
@@ -136,11 +160,7 @@ namespace ST.EplAddin.PlcEdit
             return properlyRowIndex;
         }
 
-        private void exchange_button_Click(object sender, EventArgs e)
-        {
-            if (SelectedRowsCount != 2)
-                return;
-        }
+
 
         public List<PlcDataModelView> ReadDataFromGrid()
         {
@@ -170,6 +190,12 @@ namespace ST.EplAddin.PlcEdit
                 exchange_button.Enabled = true;
             }
 
+        }
+
+        private void ManagePlcForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                Ok_button.PerformClick();
         }
     }
 }
