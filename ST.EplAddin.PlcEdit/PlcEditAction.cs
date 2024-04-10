@@ -13,6 +13,7 @@ namespace ST.EplAddin.PlcEdit
     {
         public static string actionName = "GfDlgMgrActionIGfWind";
         public Terminal[] PlcTerminals { get; set; }
+        public List<PlcDataModelView> mappedPlcData { get; set; }
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
             Name = actionName;
@@ -34,8 +35,8 @@ namespace ST.EplAddin.PlcEdit
 
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-                var mappedPlcData = Mapper.GetPlcData(PlcTerminals);
-                ShowTableForm(mappedPlcData);
+                mappedPlcData = Mapper.GetPlcData(PlcTerminals);
+                ShowTableForm(mappedPlcData.Select(x => x.Clone() as PlcDataModelView).ToList());
             }
             return true;
         }
@@ -47,18 +48,22 @@ namespace ST.EplAddin.PlcEdit
 
             ManagePlcForm managePlcForm = new ManagePlcForm(plcDataModelView);
             managePlcForm.Show(eplanOwner);
+            managePlcForm.ApplyEvent += ManagePlcForm_ApplyEvent;
+        }
+
+        private void ManagePlcForm_ApplyEvent(object sender, CustomEventArgs e)
+        {
+            var newDataPlc = e.PlcDataModelView;//по итогу должны получить две разные таблицы
+            var Data = mappedPlcData;
+
         }
 
         public void AssignFinction(Function sourceFunction, Function targetFunction)
         {
-            //если у этой функция пустая то надо делать замены
-            //if (sourceFunction)
-            //{
-
-            //}
             Function newFunction = new Function();
-            sourceFunction.Assign(newFunction);
+            targetFunction.Assign(newFunction);
             sourceFunction.Assign(targetFunction);
+            newFunction.Assign(sourceFunction);
         }
     }
 }

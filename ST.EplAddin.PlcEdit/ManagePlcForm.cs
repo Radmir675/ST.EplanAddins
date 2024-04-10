@@ -10,8 +10,8 @@ namespace ST.EplAddin.PlcEdit
     {
 
         public event EventHandler<EventArgs> OkEvent;
-        public event EventHandler<EventArgs> ApplyEvent;
-        public List<PlcDataModelView> PlcDataModelView { get; set; }
+        public event EventHandler<CustomEventArgs> ApplyEvent;
+        private List<PlcDataModelView> PlcDataModelView { get; set; }
 
         public int SelectedRowsCount
         {
@@ -32,7 +32,6 @@ namespace ST.EplAddin.PlcEdit
         {
             AddData(PlcDataModelView);
             exchange_button.Enabled = false;
-            // dataGridView.Columns["SymbolicAdressDefined"].Visible = false;
         }
 
 
@@ -72,7 +71,7 @@ namespace ST.EplAddin.PlcEdit
             var targetIndexRow = TryGetEmptyIndexRow(currentRow.Index, direction, functionDefinition);// задать смещение 
             if (targetIndexRow == null)
             {
-                MessageBox.Show("Не удалось");
+                //  MessageBox.Show("Не удалось");
                 return;
             }
             AssignDataToTargetRow(currentIndexRow, targetIndexRow.Value);
@@ -143,19 +142,9 @@ namespace ST.EplAddin.PlcEdit
                 return;
         }
 
-        //недописано
         public List<PlcDataModelView> ReadDataFromGrid()
         {
-            List<PlcDataModelView> plcDataModelView = new List<PlcDataModelView>();
-            foreach (DataGridViewRow row in dataGridView.Rows)
-            {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    string value = cell.Value.ToString();
-                }
-            }
-            return plcDataModelView;
-
+            return PlcDataModelView;
         }
 
         private void Ok_button_Click(object sender, EventArgs e)
@@ -170,7 +159,7 @@ namespace ST.EplAddin.PlcEdit
 
         private void Apply_button_Click(object sender, EventArgs e)
         {
-            ApplyEvent?.Invoke(this, EventArgs.Empty);
+            ApplyEvent?.Invoke(this, new CustomEventArgs(PlcDataModelView));
         }
 
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
