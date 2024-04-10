@@ -14,6 +14,7 @@ namespace ST.EplAddin.PlcEdit
         public static string actionName = "GfDlgMgrActionIGfWind";
         public Terminal[] PlcTerminals { get; set; }
         public List<PlcDataModelView> mappedPlcData { get; set; }
+
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
             Name = actionName;
@@ -31,7 +32,7 @@ namespace ST.EplAddin.PlcEdit
             var currentProject = selectionSet.GetCurrentProject(true);
 
             var selectedPlcdata = selectionSet.Selection;//отфильтровать надо именно selection
-            var PlcTerminals = selectedPlcdata.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
+            PlcTerminals = selectedPlcdata.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
 
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
@@ -53,17 +54,39 @@ namespace ST.EplAddin.PlcEdit
 
         private void ManagePlcForm_ApplyEvent(object sender, CustomEventArgs e)
         {
+            var functionsInProgram = PlcTerminals.Cast<Function>();
             var newDataPlc = e.PlcDataModelView;//по итогу должны получить две разные таблицы
-            var Data = mappedPlcData;
-
+            var oldDataPlc = mappedPlcData;
+            var correlationTable = GetСorrelationTable(oldDataPlc, newDataPlc);
+            foreach (var item in correlationTable)
+            {
+                var sourceFunction = functionsInProgram.Single(x => x.Name == item.Key);//найдем его
+                var targetFunction = functionsInProgram.Single(x => x.Name == item.Value);//найдем его
+                bool IsAssigned = AssignFinction(sourceFunction, targetFunction);
+            }
         }
 
-        public void AssignFinction(Function sourceFunction, Function targetFunction)
+        private List<> GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)
+        {
+            var result = oldData.Join(newDataPlc,
+                data1 => data1.DT,
+                data2 => data2.DT,
+                (data1, data2) => new
+                {
+                    oldData = data1.DevicePointDescription,
+                    newData = data2.DevicePointDescription
+                }
+                ).ToList();
+            return result;
+        }
+
+        public bool AssignFinction(Function sourceFunction, Function targetFunction)
         {
             Function newFunction = new Function();
             targetFunction.Assign(newFunction);
             sourceFunction.Assign(targetFunction);
             newFunction.Assign(sourceFunction);
+            return true;
         }
     }
 }
