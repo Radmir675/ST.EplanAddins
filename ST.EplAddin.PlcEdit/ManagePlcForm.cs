@@ -12,7 +12,7 @@ namespace ST.EplAddin.PlcEdit
         public event EventHandler<EventArgs> OkEvent;
         public event EventHandler<EventArgs> ApplyEvent;
         public List<PlcDataModelView> PlcDataModelView { get; set; }
-        private int selectedRowsCount;
+
         public int SelectedRowsCount
         {
             get
@@ -20,7 +20,6 @@ namespace ST.EplAddin.PlcEdit
                 return dataGridView.SelectedCells.Cast<DataGridViewCell>()
                                        .Select(c => c.RowIndex).Distinct().Count();
             }
-            set { selectedRowsCount = value; }
         }
 
         public ManagePlcForm(List<PlcDataModelView> plcDataModelView)
@@ -44,7 +43,7 @@ namespace ST.EplAddin.PlcEdit
 
         private void up_button_Click(object sender, EventArgs e)
         {
-            if (selectedRowsCount != 1)
+            if (SelectedRowsCount != 1)
                 return;
             InsertRowInEmptyPosition(Direction.Up);
 
@@ -59,18 +58,47 @@ namespace ST.EplAddin.PlcEdit
             InsertRowInEmptyPosition(Direction.Down);
         }
 
+        private void HighlightRow(int rowIndex)
+        {
+            dataGridView.ClearSelection();
+            dataGridView.Rows[rowIndex].Selected = true;
+            dataGridView.Refresh();
+        }
         private void InsertRowInEmptyPosition(Direction direction)
         {
             var currentIndexRow = dataGridView.SelectedCells.Cast<DataGridViewCell>().First().RowIndex;
-            int columnIndex = dataGridView.CurrentCell.ColumnIndex;
-            string columnName = dataGridView.Columns[columnIndex].Name;
-
             var currentRow = dataGridView.Rows[currentIndexRow];
             var functionDefinition = currentRow.Cells["FunctionDefinition"].Value.ToString();
-            var targerIndex = GetEmptyRow(currentRow.Index, direction, functionDefinition);// задать смещение 
-            dataGridView.Rows.Remove(currentRow);
-            dataGridView.Rows.Insert(targerIndex, currentRow);
+            var targetIndexRow = TryGetEmptyIndexRow(currentRow.Index, direction, functionDefinition);// задать смещение 
+            if (targetIndexRow == null)
+            {
+                MessageBox.Show("Не удалось");
+                return;
+            }
+            AssignDataToTargetRow(currentIndexRow, targetIndexRow.Value);
+            HighlightRow(targetIndexRow.Value);
         }
+
+        private void AssignDataToTargetRow(int sourceIndexRow, int targetIndexRow)
+        {
+            var sourceObject = PlcDataModelView[sourceIndexRow];
+            var targetObject = PlcDataModelView[targetIndexRow];
+            var targetObjectClone = targetObject.Clone() as PlcDataModelView;
+
+
+            targetObject.SymbolicAdressDefined = string.Copy(sourceObject?.SymbolicAdressDefined ?? String.Empty);
+            targetObject.FunctionText = string.Copy(sourceObject?.FunctionText ?? String.Empty);
+            targetObject.SymbolicAdress = string.Copy(sourceObject?.SymbolicAdress ?? String.Empty);
+            targetObject.Datatype = string.Copy(sourceObject?.Datatype ?? String.Empty);
+            targetObject.PLCAdress = string.Copy(sourceObject?.PLCAdress ?? String.Empty);
+
+            sourceObject.SymbolicAdressDefined = string.Copy(targetObjectClone?.SymbolicAdressDefined ?? String.Empty);
+            sourceObject.FunctionText = string.Copy(targetObjectClone?.FunctionText ?? String.Empty);
+            sourceObject.SymbolicAdress = string.Copy(targetObjectClone?.SymbolicAdress ?? String.Empty);
+            sourceObject.Datatype = string.Copy(targetObjectClone?.Datatype ?? String.Empty);
+            sourceObject.PLCAdress = string.Copy(targetObjectClone?.PLCAdress ?? String.Empty);
+        }
+
         public bool IsModuleAssigned(string terminalName)
         {
             if (PlcDataModelView.Single(x => x.DT == terminalName).SymbolicAdressDefined == string.Empty)
@@ -79,34 +107,39 @@ namespace ST.EplAddin.PlcEdit
             }
             return false;
         }
-        private int GetEmptyRow(int currentPositionIndex, Direction direction, string functionDefinition)
+        private int? TryGetEmptyIndexRow(int currentPositionIndex, Direction direction, string functionDefinition)
         {
             DataGridViewRow firstProperlyRow = null;
             switch (direction)
             {
                 case Direction.Up:
-                    firstProperlyRow = dataGridView.Rows.OfType<DataGridViewRow>().First(x =>
-                 x.Cells["SymbolicAdress"].Value == null
-                && x.Cells["FunctionText"].Value == null
-                 && x.Index < currentPositionIndex
-                  && functionDefinition == x.Cells["FunctionDefinition"].Value.ToString());
+
+                    firstProperlyRow = dataGridView.Rows
+                        .Cast<DataGridViewRow>()
+                        .Where(z => z.Index < currentPositionIndex)
+                        .Reverse()
+                        .FirstOrDefault(x =>
+                  x.Cells["SymbolicAdress"].Value.ToString() == string.Empty
+                 && x.Cells["FunctionText"].Value.ToString() == string.Empty
+                  && x.Index < currentPositionIndex
+                 && functionDefinition == x.Cells["FunctionDefinition"].Value.ToString());
                     break;
                 case Direction.Down:
-                    firstProperlyRow = dataGridView.Rows.Cast<DataGridViewRow>().First(x =>
-               x.Cells["SymbolicAdress"].Value == null
-              && x.Cells["FunctionText"].Value == null
-               && x.Index > currentPositionIndex
-                && functionDefinition == x.Cells["FunctionDefinition"].Value.ToString());
+                    firstProperlyRow = dataGridView.Rows.Cast<DataGridViewRow>().FirstOrDefault(x =>
+                  x.Cells["SymbolicAdress"].Value.ToString() == string.Empty
+                 && x.Cells["FunctionText"].Value.ToString() == string.Empty
+                 && x.Index > currentPositionIndex
+                 && functionDefinition == x.Cells["FunctionDefinition"].Value.ToString());
                     break;
             }
 
-            var properlyRowIndex = firstProperlyRow.Index;
+            var properlyRowIndex = firstProperlyRow?.Index;
             return properlyRowIndex;
         }
 
         private void exchange_button_Click(object sender, EventArgs e)
         {
-            if (selectedRowsCount != 2)
+            if (SelectedRowsCount != 2)
                 return;
         }
 

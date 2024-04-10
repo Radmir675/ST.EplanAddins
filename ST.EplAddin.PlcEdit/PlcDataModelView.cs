@@ -1,6 +1,8 @@
-﻿namespace ST.EplAddin.PlcEdit
+﻿using System;
+
+namespace ST.EplAddin.PlcEdit
 {
-    public class PlcDataModelView
+    public class PlcDataModelView : ICloneable
     {
 
         public string DevicePointDescription { get; set; }//DI3
@@ -13,5 +15,10 @@
         public string FunctionDefinition { get; set; }//Вывод устройства ПЛК, Дискретный вход
         public string SymbolicAdressDefined { get; set; }//сиволический адрес определен если он не пустой значит вывод куда-то присвоен
         public string FunctionType { get; set; }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }
