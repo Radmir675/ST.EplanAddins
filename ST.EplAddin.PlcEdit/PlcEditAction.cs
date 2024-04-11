@@ -13,9 +13,8 @@ namespace ST.EplAddin.PlcEdit
     {
         public static string actionName = "PlcGuiIGfWindRackConfiguration";
         public Terminal[] PlcTerminals { get; set; }
-        public List<PlcDataModelView> mappedPlcData { get; set; }
+        private static List<PlcDataModelView> InitialPlcData { get; set; }
         public Project CurrentProject { get; set; }
-
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
             Name = actionName;
@@ -37,8 +36,8 @@ namespace ST.EplAddin.PlcEdit
 
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-                mappedPlcData = Mapper.GetPlcData(PlcTerminals);
-                ShowTableForm(mappedPlcData.Select(x => x.Clone() as PlcDataModelView).ToList());
+                InitialPlcData = Mapper.GetPlcData(PlcTerminals);
+                ShowTableForm(InitialPlcData.Select(x => x.Clone() as PlcDataModelView).ToList());
             }
             return true;
         }
@@ -56,15 +55,15 @@ namespace ST.EplAddin.PlcEdit
         {
             var functionsInProgram = PlcTerminals.Cast<Function>();
             var newDataPlc = e.PlcDataModelView;//по итогу должны получить две разные таблицы
-            var oldDataPlc = mappedPlcData;//тут нужно получить новые данные
-            var correlationTable = GetСorrelationTable(oldDataPlc, newDataPlc);
+            var correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
             foreach (var item in correlationTable)
             {
                 var sourceFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionOldName);//найдем его
                 var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
                 bool IsAssigned = AssignFinction(sourceFunction, targetFunction);
             }
-            mappedPlcData = newDataPlc;//тут я хочу обновить данные
+            InitialPlcData = new List<PlcDataModelView>();//тут я хочу обновить данные
+            newDataPlc.ForEach(x => InitialPlcData.Add(x.Clone() as PlcDataModelView));
         }
 
         //сделать через tuple без создания нового класса
