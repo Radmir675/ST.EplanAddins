@@ -12,7 +12,6 @@ namespace ST.EplAddin.PlcEdit
     class PlcEditAction : IEplAction
     {
         public static string actionName = "PlcGuiIGfWindRackConfiguration";
-        public Terminal[] PlcTerminals { get; set; }
         private static List<PlcDataModelView> InitialPlcData { get; set; }
         public Project CurrentProject { get; set; }
         public bool OnRegister(ref string Name, ref int Ordinal)
@@ -26,20 +25,24 @@ namespace ST.EplAddin.PlcEdit
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            SelectionSet selectionSet = new SelectionSet();
-            selectionSet.LockProjectByDefault = false;
-            selectionSet.LockSelectionByDefault = false;
-            CurrentProject = selectionSet.GetCurrentProject(true);
-
-            var selectedPlcdata = selectionSet.Selection;//отфильтровать надо именно selection
-            PlcTerminals = selectedPlcdata.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
-
+            var PlcTerminals = GetPlcTerminals();
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
                 InitialPlcData = Mapper.GetPlcData(PlcTerminals);
                 ShowTableForm(InitialPlcData.Select(x => x.Clone() as PlcDataModelView).ToList());
             }
             return true;
+        }
+        public Terminal[] GetPlcTerminals()
+        {
+            SelectionSet selectionSet = new SelectionSet();
+            selectionSet.LockProjectByDefault = false;
+            selectionSet.LockSelectionByDefault = false;
+            CurrentProject = selectionSet.GetCurrentProject(true);
+
+            var selectedPlcdata = selectionSet.Selection;//отфильтровать надо именно selection
+            var result = selectedPlcdata.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
+            return result;
         }
         public void ShowTableForm(List<PlcDataModelView> plcDataModelView)
         {
@@ -53,8 +56,10 @@ namespace ST.EplAddin.PlcEdit
 
         private void ManagePlcForm_ApplyEvent(object sender, CustomEventArgs e)
         {
-            var functionsInProgram = PlcTerminals.Cast<Function>();
+            var plcTerminals = GetPlcTerminals();
+            var functionsInProgram = plcTerminals.Cast<Function>();
             var newDataPlc = e.PlcDataModelView;//по итогу должны получить две разные таблицы
+            InitialPlcData = Mapper.GetPlcData(plcTerminals);
             var correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
             foreach (var item in correlationTable)
             {
@@ -62,8 +67,6 @@ namespace ST.EplAddin.PlcEdit
                 var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
                 bool IsAssigned = AssignFinction(sourceFunction, targetFunction);
             }
-            InitialPlcData = new List<PlcDataModelView>();//тут я хочу обновить данные
-            newDataPlc.ForEach(x => InitialPlcData.Add(x.Clone() as PlcDataModelView));
         }
 
         //сделать через tuple без создания нового класса
