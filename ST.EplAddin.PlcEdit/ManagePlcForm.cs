@@ -82,7 +82,6 @@ namespace ST.EplAddin.PlcEdit
             var targetIndexRow = TryGetEmptyIndexRow(currentRow.Index, direction, functionDefinition);// задать смещение 
             if (targetIndexRow == null)
             {
-                //  MessageBox.Show("Не удалось");
                 return;
             }
             AssignDataToTargetRow(currentIndexRow, targetIndexRow.Value);
@@ -105,7 +104,6 @@ namespace ST.EplAddin.PlcEdit
             var sourceObject = PlcDataModelView[sourceIndexRow];
             var targetObject = PlcDataModelView[targetIndexRow];
             var targetObjectClone = targetObject.Clone() as PlcDataModelView;
-
 
             targetObject.SymbolicAdressDefined = string.Copy(sourceObject?.SymbolicAdressDefined ?? String.Empty);
             targetObject.FunctionText = string.Copy(sourceObject?.FunctionText ?? String.Empty);
@@ -157,9 +155,6 @@ namespace ST.EplAddin.PlcEdit
             var properlyRowIndex = firstProperlyRow?.Index;
             return properlyRowIndex;
         }
-
-
-
         public List<PlcDataModelView> ReadDataFromGrid()
         {
             return PlcDataModelView;
@@ -188,7 +183,6 @@ namespace ST.EplAddin.PlcEdit
             {
                 exchange_button.Enabled = true;
             }
-
         }
         private void ManagePlcForm_KeyDown(object sender, KeyEventArgs e)
         {

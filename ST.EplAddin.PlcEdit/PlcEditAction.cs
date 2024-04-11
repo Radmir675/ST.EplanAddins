@@ -64,6 +64,7 @@ namespace ST.EplAddin.PlcEdit
                 var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
                 bool IsAssigned = AssignFinction(sourceFunction, targetFunction);
             }
+            mappedPlcData = newDataPlc;//тут я хочу обновить данные
         }
 
         //сделать через tuple без создания нового класса
