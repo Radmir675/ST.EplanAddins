@@ -14,6 +14,7 @@ namespace ST.EplAddin.PlcEdit
         public static string actionName = "GfDlgMgrActionIGfWind";
         public Terminal[] PlcTerminals { get; set; }
         public List<PlcDataModelView> mappedPlcData { get; set; }
+        public Project CurrentProject { get; set; }
 
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
@@ -29,7 +30,7 @@ namespace ST.EplAddin.PlcEdit
             SelectionSet selectionSet = new SelectionSet();
             selectionSet.LockProjectByDefault = false;
             selectionSet.LockSelectionByDefault = false;
-            var currentProject = selectionSet.GetCurrentProject(true);
+            CurrentProject = selectionSet.GetCurrentProject(true);
 
             var selectedPlcdata = selectionSet.Selection;//отфильтровать надо именно selection
             PlcTerminals = selectedPlcdata.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
@@ -60,32 +61,30 @@ namespace ST.EplAddin.PlcEdit
             var correlationTable = GetСorrelationTable(oldDataPlc, newDataPlc);
             foreach (var item in correlationTable)
             {
-                var sourceFunction = functionsInProgram.Single(x => x.Name == item.Key);//найдем его
-                var targetFunction = functionsInProgram.Single(x => x.Name == item.Value);//найдем его
+                var sourceFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionOldName);//найдем его
+                var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
                 bool IsAssigned = AssignFinction(sourceFunction, targetFunction);
             }
         }
 
-        private List<> GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)
+        //сделать через tuple без создания нового класса
+        private List<Intermediate> GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)
         {
             var result = oldData.Join(newDataPlc,
                 data1 => data1.DT,
                 data2 => data2.DT,
-                (data1, data2) => new
-                {
-                    oldData = data1.DevicePointDescription,
-                    newData = data2.DevicePointDescription
-                }
-                ).ToList();
+                (data1, data2) => new Intermediate(data1.DT, data2.DT)).ToList();
             return result;
         }
 
         public bool AssignFinction(Function sourceFunction, Function targetFunction)
         {
             Function newFunction = new Function();
+            newFunction.CreateTransient(CurrentProject, null);//не знаю где он может появиться но его надо как то удалить
             targetFunction.Assign(newFunction);
             sourceFunction.Assign(targetFunction);
             newFunction.Assign(sourceFunction);
+            newFunction.Remove();
             return true;
         }
     }
