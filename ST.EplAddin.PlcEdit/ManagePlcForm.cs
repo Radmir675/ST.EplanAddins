@@ -8,8 +8,6 @@ namespace ST.EplAddin.PlcEdit
 {
     public partial class ManagePlcForm : Form
     {
-
-        public event EventHandler<EventArgs> OkEvent;
         public event EventHandler<CustomEventArgs> ApplyEvent;
         private List<PlcDataModelView> PlcDataModelView { get; set; }
 
