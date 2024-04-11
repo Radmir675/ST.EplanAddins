@@ -42,7 +42,7 @@
             this.Cancel_button = new System.Windows.Forms.Button();
             this.flowLayoutPanelDown = new System.Windows.Forms.FlowLayoutPanel();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DevicePointDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Datatype = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,7 +52,7 @@
             this.DevicePointDesignation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FunctionDefinition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SymbolicAdressDefined = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.flowLayoutPanelUp.SuspendLayout();
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -137,6 +137,7 @@
             // 
             // Cancel_button
             // 
+            this.Cancel_button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Cancel_button.Location = new System.Drawing.Point(927, 3);
             this.Cancel_button.Name = "Cancel_button";
             this.Cancel_button.Size = new System.Drawing.Size(75, 23);
@@ -212,9 +213,13 @@
             this.dataGridView.TabIndex = 6;
             this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellClick);
             // 
-            // plcDataModelViewBindingSource
+            // FunctionType
             // 
-            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
+            this.FunctionType.DataPropertyName = "FunctionType";
+            this.FunctionType.HeaderText = "FunctionType";
+            this.FunctionType.Name = "FunctionType";
+            this.FunctionType.ReadOnly = true;
+            this.FunctionType.Width = 97;
             // 
             // DevicePointDescription
             // 
@@ -288,13 +293,9 @@
             this.SymbolicAdressDefined.ReadOnly = true;
             this.SymbolicAdressDefined.Width = 143;
             // 
-            // FunctionType
+            // plcDataModelViewBindingSource
             // 
-            this.FunctionType.DataPropertyName = "FunctionType";
-            this.FunctionType.HeaderText = "FunctionType";
-            this.FunctionType.Name = "FunctionType";
-            this.FunctionType.ReadOnly = true;
-            this.FunctionType.Width = 97;
+            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
             // 
             // ManagePlcForm
             // 
@@ -302,15 +303,17 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.CancelButton = this.Cancel_button;
             this.ClientSize = new System.Drawing.Size(1086, 591);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.flowLayoutPanelDown);
             this.Controls.Add(this.flowLayoutPanelUp);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "ManagePlcForm";
             this.Text = "ManagePlcForm";
             this.Load += new System.EventHandler(this.ManagePlcForm_Load);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ManagePlcForm_KeyUp);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ManagePlcForm_KeyDown);
             this.flowLayoutPanelUp.ResumeLayout(false);
             this.flowLayoutPanelDown.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();

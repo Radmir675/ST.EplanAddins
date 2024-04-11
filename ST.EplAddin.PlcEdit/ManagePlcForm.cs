@@ -192,11 +192,16 @@ namespace ST.EplAddin.PlcEdit
             }
 
         }
-
-        private void ManagePlcForm_KeyUp(object sender, KeyEventArgs e)
+        private void ManagePlcForm_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Cancel_button.PerformClick();
+            }
             if (e.KeyCode == Keys.Enter)
+            {
                 Ok_button.PerformClick();
+            }
         }
     }
 }
