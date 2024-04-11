@@ -11,7 +11,7 @@ namespace ST.EplAddin.PlcEdit
 {
     class PlcEditAction : IEplAction
     {
-        public static string actionName = "GfDlgMgrActionIGfWind";
+        public static string actionName = "PlcGuiIGfWindRackConfiguration";
         public Terminal[] PlcTerminals { get; set; }
         public List<PlcDataModelView> mappedPlcData { get; set; }
         public Project CurrentProject { get; set; }
@@ -42,7 +42,6 @@ namespace ST.EplAddin.PlcEdit
             }
             return true;
         }
-
         public void ShowTableForm(List<PlcDataModelView> plcDataModelView)
         {
             Process oCurrent = Process.GetCurrentProcess();
@@ -57,7 +56,7 @@ namespace ST.EplAddin.PlcEdit
         {
             var functionsInProgram = PlcTerminals.Cast<Function>();
             var newDataPlc = e.PlcDataModelView;//по итогу должны получить две разные таблицы
-            var oldDataPlc = mappedPlcData;
+            var oldDataPlc = mappedPlcData;//тут нужно получить новые данные
             var correlationTable = GetСorrelationTable(oldDataPlc, newDataPlc);
             foreach (var item in correlationTable)
             {
@@ -71,20 +70,27 @@ namespace ST.EplAddin.PlcEdit
         private List<Intermediate> GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)
         {
             var result = oldData.Join(newDataPlc,
-                data1 => data1.DT,
-                data2 => data2.DT,
-                (data1, data2) => new Intermediate(data1.DT, data2.DT)).ToList();
-            return result;
+                data1 => data1.FunctionText,//проверяем и формируем группу по функциональному тексту
+                data2 => data2.FunctionText,
+                (data1, data2) =>
+                {
+                    if (data1.FunctionText != string.Empty)
+                    {
+                        return new Intermediate(data1.DT, data2.DT);
+                    }
+                    return null;
+                }).Where(x => x != null).ToList();
+
+            return FindDifferences(result);
+        }
+        private List<Intermediate> FindDifferences(List<Intermediate> table)
+        {
+            return table.Where(x => x.FunctionNewName != x.FunctionOldName).ToList();
         }
 
-        public bool AssignFinction(Function sourceFunction, Function targetFunction)
+        private bool AssignFinction(Function sourceFunction, Function targetFunction)
         {
-            Function newFunction = new Function();
-            newFunction.CreateTransient(CurrentProject, null);//не знаю где он может появиться но его надо как то удалить
-            targetFunction.Assign(newFunction);
-            sourceFunction.Assign(targetFunction);
-            newFunction.Assign(sourceFunction);
-            newFunction.Remove();
+            targetFunction.Assign(sourceFunction);
             return true;
         }
     }

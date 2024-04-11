@@ -169,7 +169,7 @@ namespace ST.EplAddin.PlcEdit
 
         private void Ok_button_Click(object sender, EventArgs e)
         {
-            OkEvent?.Invoke(this, EventArgs.Empty);
+            Apply_button.PerformClick();
             Application.Exit();
         }
         private void Cancel_button_Click(object sender, EventArgs e)
@@ -180,6 +180,7 @@ namespace ST.EplAddin.PlcEdit
         private void Apply_button_Click(object sender, EventArgs e)
         {
             ApplyEvent?.Invoke(this, new CustomEventArgs(PlcDataModelView));
+            //здесь наверное надо считать данные
         }
 
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
