@@ -195,6 +195,11 @@ namespace ST.EplAddin.PlcEdit
                 Ok_button.PerformClick();
             }
         }
+
+        internal void Exit()
+        {
+            CancelButton.PerformClick();
+        }
     }
 }
 

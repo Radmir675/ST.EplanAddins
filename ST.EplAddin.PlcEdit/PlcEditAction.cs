@@ -6,6 +6,7 @@ using Eplan.EplApi.HEServices;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows;
 
 namespace ST.EplAddin.PlcEdit
 {
@@ -16,6 +17,7 @@ namespace ST.EplAddin.PlcEdit
         // GfDlgMgrActionIGfWind /function:RackConfiguration
         public static string actionName = "PlcGuiIGfWindRackConfiguration";
         private static List<PlcDataModelView> InitialPlcData { get; set; }
+        public ManagePlcForm ManagePlcForm { get; private set; }
         public Project CurrentProject { get; set; }
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
@@ -52,9 +54,9 @@ namespace ST.EplAddin.PlcEdit
             Process oCurrent = Process.GetCurrentProcess();
             var eplanOwner = new WindowWrapper(oCurrent.MainWindowHandle);
 
-            ManagePlcForm managePlcForm = new ManagePlcForm(plcDataModelView);
-            managePlcForm.Show(eplanOwner);
-            managePlcForm.ApplyEvent += ManagePlcForm_ApplyEvent;
+            ManagePlcForm = new ManagePlcForm(plcDataModelView);
+            ManagePlcForm.Show(eplanOwner);
+            ManagePlcForm.ApplyEvent += ManagePlcForm_ApplyEvent;
         }
 
         private void ManagePlcForm_ApplyEvent(object sender, CustomEventArgs e)
@@ -96,8 +98,19 @@ namespace ST.EplAddin.PlcEdit
 
         private bool AssignFinction(Function sourceFunction, Function targetFunction)
         {
-            targetFunction.Assign(sourceFunction);
-            return true;
+            try
+            {
+
+                targetFunction.Assign(sourceFunction);
+                return true;
+            }
+            catch (System.Exception e)
+            {
+
+                MessageBox.Show(e.Message);
+                ManagePlcForm.Exit();
+            }
+            return false;
         }
     }
 }

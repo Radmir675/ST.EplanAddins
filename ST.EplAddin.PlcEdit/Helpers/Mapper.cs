@@ -38,7 +38,7 @@ namespace ST.EplAddin.PlcEdit
             {
                 foreach (var item in entry)
                 {
-                    if (item.FunctionType == "1")
+                    if (item.FunctionType == "Многополюсный")
                     {
                         result.Add(item);
                         break;
