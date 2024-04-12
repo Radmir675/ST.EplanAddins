@@ -3,10 +3,10 @@ using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.HEServices;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Windows;
 
 namespace ST.EplAddin.PlcEdit
 {
@@ -61,21 +61,27 @@ namespace ST.EplAddin.PlcEdit
 
         private void ManagePlcForm_ApplyEvent(object sender, CustomEventArgs e)
         {
-            var plcTerminals = GetPlcTerminals();
+            var plcTerminals = GetPlcTerminals();//тут получаем обновленные данные после "Apply"
             var functionsInProgram = plcTerminals.Cast<Function>();
             var newDataPlc = e.PlcDataModelView;//по итогу должны получить две разные таблицы
             InitialPlcData = Mapper.GetPlcData(plcTerminals);
             var correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
-            foreach (var item in correlationTable)
+            foreach (var item in correlationTable.tableWithoutReverse)
             {
                 var sourceFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionOldName);//найдем его
                 var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
                 bool IsAssigned = AssignFinction(sourceFunction, targetFunction);
             }
+
+            foreach (var item in correlationTable.tableWithReverse)
+            {
+                var sourceFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionOldName);//найдем его
+                var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
+                bool IsAssigned = AssignFinction(sourceFunction, targetFunction, true);
+            }
         }
 
-        //сделать через tuple без создания нового класса
-        private List<Intermediate> GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)
+        private (List<Intermediate> tableWithoutReverse, List<Intermediate> tableWithReverse) GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)
         {
             var result = oldData.Join(newDataPlc,
                 data1 => data1.FunctionText,//проверяем и формируем группу по функциональному тексту
@@ -91,23 +97,39 @@ namespace ST.EplAddin.PlcEdit
 
             return FindDifferences(result);
         }
-        private List<Intermediate> FindDifferences(List<Intermediate> table)
+        private (List<Intermediate> tableWithoutReverse, List<Intermediate> tableWithReverse) FindDifferences(List<Intermediate> table)
         {
-            return table.Where(x => x.FunctionNewName != x.FunctionOldName).ToList();
+            table.Where(x => x.FunctionNewName != x.FunctionOldName).ToList();
+            var oldNames = table.Select(x => x.FunctionOldName);
+            var newNames = table.Select(x => x.FunctionNewName);
+            var namesInFirstAndSecondSequence = oldNames.Intersect(newNames);
+
+            var tableWithReverse = table.Where(x => namesInFirstAndSecondSequence.Contains(x.FunctionOldName)).ToList();
+            var tableWithoutReverse = table.Where(x => !namesInFirstAndSecondSequence.Contains(x.FunctionOldName)).ToList();
+            return (tableWithoutReverse, tableWithReverse);
         }
 
-        private bool AssignFinction(Function sourceFunction, Function targetFunction)
+        private bool AssignFinction(Function sourceFunction, Function targetFunction, bool reverse = false)
         {
             try
             {
-
-                targetFunction.Assign(sourceFunction);
-                return true;
+                if (reverse == false)
+                {
+                    targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
+                    return true;
+                }
+                else//если есть реверс то применяем вот эту схему "с реверсом"
+                {
+                    Function function = new Function();//а тут все наоборот, потому что это вытекает из пользовательской работы в программе
+                    function.CreateTransient(CurrentProject, sourceFunction.SymbolVariant);
+                    targetFunction.Assign(function);
+                    sourceFunction.Assign(targetFunction);
+                    function.Assign(sourceFunction);
+                    return true;
+                }
             }
-            catch (System.Exception e)
+            catch (Exception)
             {
-
-                MessageBox.Show(e.Message);
                 ManagePlcForm.Exit();
             }
             return false;
