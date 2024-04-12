@@ -11,6 +11,9 @@ namespace ST.EplAddin.PlcEdit
 {
     class PlcEditAction : IEplAction
     {
+        //https://www.eplan.help/en-us/Infoportal/Content/api/2024/Actions.html
+        //https://www.eplan.help/en-us/Infoportal/Content/api/2024/Events.html
+        // GfDlgMgrActionIGfWind /function:RackConfiguration
         public static string actionName = "PlcGuiIGfWindRackConfiguration";
         private static List<PlcDataModelView> InitialPlcData { get; set; }
         public Project CurrentProject { get; set; }

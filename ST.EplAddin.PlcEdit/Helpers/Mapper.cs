@@ -21,12 +21,12 @@ namespace ST.EplAddin.PlcEdit
                         PLCAdress = terminal.Properties.FUNC_PLCADDRESS.ToString(ISOCode.Language.L_ru_RU),
                         Datatype = terminal.Properties.FUNC_PLCDATATYPE.ToString(ISOCode.Language.L_ru_RU),
                         SymbolicAdress = terminal.Properties.FUNC_PLCSYMBOLICADDRESS_AUTOMATIC.ToString(ISOCode.Language.L_ru_RU),
-                        FunctionText = terminal.Properties.FUNC_TEXT_AUTOMATIC.ToString(),
+                        FunctionText = terminal.Properties.FUNC_TEXT_AUTOMATIC.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU),
                         DT = terminal.Properties.FUNC_FULLNAME.ToString(ISOCode.Language.L_ru_RU),
                         DevicePointDesignation = terminal.Properties.FUNC_PLCAUTOPLUG_AND_CONNPTDESIGNATION.ToString(ISOCode.Language.L_ru_RU),
                         FunctionDefinition = terminal.Properties.FUNC_COMPONENTTYPE.ToString(ISOCode.Language.L_ru_RU),
                         SymbolicAdressDefined = terminal.Properties.FUNC_PLCSYMBOLICADDRESS_CALCULATED.ToString(ISOCode.Language.L_ru_RU),
-                        FunctionType = terminal.Properties.FUNC_TYPE.ToString(ISOCode.Language.L_ru_RU)//подумать как вернуть текстом
+                        FunctionType = (terminal.Properties.FUNC_TYPE).GetDisplayString().GetString(ISOCode.Language.L_ru_RU)
                     };
                     plcDataModelView.Add(mappedPlc);
                 }
