@@ -125,6 +125,7 @@ namespace ST.EplAddin.PlcEdit
                     targetFunction.Assign(function);
                     sourceFunction.Assign(targetFunction);
                     function.Assign(sourceFunction);
+                    function.Remove();
                     return true;
                 }
             }

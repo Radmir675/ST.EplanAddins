@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ST.EplAddin.PlcEdit
 {
@@ -12,7 +11,7 @@ namespace ST.EplAddin.PlcEdit
 
         public int GetHashCode(NameCorrelation obj)
         {
-            return HashCode.Combine(obj.FunctionNewName, obj.FunctionNewName);
+            return 0;
         }
     }
 }
