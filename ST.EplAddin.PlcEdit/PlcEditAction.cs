@@ -81,7 +81,7 @@ namespace ST.EplAddin.PlcEdit
             }
         }
 
-        private (List<Intermediate> tableWithoutReverse, List<Intermediate> tableWithReverse) GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)
+        private (List<NameCorrelation> tableWithoutReverse, List<NameCorrelation> tableWithReverse) GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)
         {
             var result = oldData.Join(newDataPlc,
                 data1 => data1.FunctionText,//проверяем и формируем группу по функциональному тексту
@@ -90,21 +90,21 @@ namespace ST.EplAddin.PlcEdit
                 {
                     if (data1.FunctionText != string.Empty)
                     {
-                        return new Intermediate(data1.DT, data2.DT);
+                        return new NameCorrelation(data1.DT, data2.DT);
                     }
                     return null;
                 }).Where(x => x != null).ToList();
 
             return FindDifferences(result);
         }
-        private (List<Intermediate> tableWithoutReverse, List<Intermediate> tableWithReverse) FindDifferences(List<Intermediate> table)
+        private (List<NameCorrelation> tableWithoutReverse, List<NameCorrelation> tableWithReverse) FindDifferences(List<NameCorrelation> table)
         {
             table.Where(x => x.FunctionNewName != x.FunctionOldName).ToList();
             var oldNames = table.Select(x => x.FunctionOldName);
             var newNames = table.Select(x => x.FunctionNewName);
             var namesInFirstAndSecondSequence = oldNames.Intersect(newNames);
 
-            var tableWithReverse = table.Where(x => namesInFirstAndSecondSequence.Contains(x.FunctionOldName)).ToList();
+            var tableWithReverse = table.Where(x => namesInFirstAndSecondSequence.Contains(x.FunctionOldName)).Distinct(new EqualityComparer()).ToList();
             var tableWithoutReverse = table.Where(x => !namesInFirstAndSecondSequence.Contains(x.FunctionOldName)).ToList();
             return (tableWithoutReverse, tableWithReverse);
         }

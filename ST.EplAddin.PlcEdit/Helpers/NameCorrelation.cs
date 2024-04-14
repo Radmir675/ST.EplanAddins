@@ -1,8 +1,8 @@
 ﻿namespace ST.EplAddin.PlcEdit
 {
-    public class Intermediate
+    public class NameCorrelation
     {
-        public Intermediate(string functionOldName, string functionNewName)
+        public NameCorrelation(string functionOldName, string functionNewName)
         {
             FunctionOldName = functionOldName;
             FunctionNewName = functionNewName;
