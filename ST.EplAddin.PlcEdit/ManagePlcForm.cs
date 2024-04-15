@@ -11,7 +11,7 @@ namespace ST.EplAddin.PlcEdit
         public event EventHandler<CustomEventArgs> ApplyEvent;
         private List<PlcDataModelView> PlcDataModelView { get; set; }
 
-        public int SelectedRowsCount
+        public int SelectedRowsCount//тут хочется сделать selectedRow
         {
             get
             {
@@ -205,9 +205,9 @@ namespace ST.EplAddin.PlcEdit
         {
             var currentRow = dataGridView.Rows[e.RowIndex];
             var functionDefinition = currentRow.Cells["FunctionDefinition"].Value.ToString();
+
             var emptyUpRow = TryGetEmptyIndexRow(e.RowIndex, Direction.Up, functionDefinition);
-            var emptyDownRow = TryGetEmptyIndexRow(e.RowIndex, Direction.Down, functionDefinition);
-            if (!emptyUpRow.HasValue)
+            if (!emptyUpRow.HasValue || SelectedRowsCount != 1)
             {
                 up_button.Enabled = false;
             }
@@ -215,7 +215,8 @@ namespace ST.EplAddin.PlcEdit
             {
                 up_button.Enabled = true;
             }
-            if (!emptyDownRow.HasValue)
+            var emptyDownRow = TryGetEmptyIndexRow(e.RowIndex, Direction.Down, functionDefinition);
+            if (!emptyDownRow.HasValue || SelectedRowsCount != 1)
             {
                 dowm_button.Enabled = false;
             }

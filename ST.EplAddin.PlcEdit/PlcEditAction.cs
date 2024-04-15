@@ -14,7 +14,6 @@ namespace ST.EplAddin.PlcEdit
     {
         //https://www.eplan.help/en-us/Infoportal/Content/api/2024/Actions.html
         //https://www.eplan.help/en-us/Infoportal/Content/api/2024/Events.html
-        // GfDlgMgrActionIGfWind /function:RackConfiguration
         public static string actionName = "PlcGuiIGfWindRackConfiguration";
         private static List<PlcDataModelView> InitialPlcData { get; set; }
         public ManagePlcForm ManagePlcForm { get; private set; }
@@ -96,7 +95,7 @@ namespace ST.EplAddin.PlcEdit
         private (List<NameCorrelation> tableWithoutReverse, List<NameCorrelation> tableWithReverse) GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)
         {
             var result = oldData.Join(newDataPlc,
-                data1 => data1.FunctionText,//проверяем и формируем группу по функциональному тексту
+                data1 => data1.FunctionText,//проверяем и формируем группу по функциональному тексту // А ЧТО ЕСЛИ ОНИ ОДИНАКОВЫЕ?????
                 data2 => data2.FunctionText,
                 (data1, data2) =>
                 {

@@ -152,7 +152,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\WindowWrapper.cs" />
-    <Compile Include="Helpers\TerminalFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ManagePlcForm.resx">
