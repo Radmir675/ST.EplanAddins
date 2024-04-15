@@ -35,6 +35,7 @@ namespace ST.EplAddin.PlcEdit
             {
                 InitialPlcData = Mapper.GetPlcData(PlcTerminals);
                 ShowTableForm(InitialPlcData.Select(x => x.Clone() as PlcDataModelView).ToList());
+                safetyPoint.Commit();
             }
             return true;
         }
@@ -46,6 +47,17 @@ namespace ST.EplAddin.PlcEdit
             CurrentProject = selectionSet.GetCurrentProject(true);
 
             var selectedPlcdata = selectionSet.Selection;//отфильтровать надо именно selection
+            FunctionsFilter functionsFilter = new FunctionsFilter();
+            functionsFilter.Category = Function.Enums.Category.PLCTerminal;
+            if (selectedPlcdata.Length == 1)
+            {
+                var terminal = selectedPlcdata[0] as Terminal;
+                selectedPlcdata = new DMObjectsFinder(CurrentProject)
+                    .GetTerminals(functionsFilter)
+                    .Where(x => x.Properties.FUNC_FULLDEVICETAG.ToString() == terminal.Properties.FUNC_FULLDEVICETAG.ToString())
+                    .OrderBy(x => int.Parse(x.Properties.FUNC_GEDNAMEWITHCONNECTIONDESIGNATION.ToString().Split(':').Last()))
+                    .ToArray();
+            }
             var result = selectedPlcdata.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
             return result;
         }
@@ -70,14 +82,14 @@ namespace ST.EplAddin.PlcEdit
             {
                 var sourceFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionOldName);//найдем его
                 var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
-                bool IsAssigned = AssignFinction(sourceFunction, targetFunction);
+                AssignFinction(sourceFunction, targetFunction);
             }
 
             foreach (var item in correlationTable.tableWithReverse)
             {
                 var sourceFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionOldName);//найдем его
                 var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
-                bool IsAssigned = AssignFinction(sourceFunction, targetFunction, true);
+                AssignFinction(sourceFunction, targetFunction, true);
             }
         }
 
@@ -99,7 +111,7 @@ namespace ST.EplAddin.PlcEdit
         }
         private (List<NameCorrelation> tableWithoutReverse, List<NameCorrelation> tableWithReverse) FindDifferences(List<NameCorrelation> table)
         {
-            table.Where(x => x.FunctionNewName != x.FunctionOldName).ToList();
+            table = table.Where(x => x.FunctionNewName != x.FunctionOldName).ToList();
             var oldNames = table.Select(x => x.FunctionOldName);
             var newNames = table.Select(x => x.FunctionNewName);
             var namesInFirstAndSecondSequence = oldNames.Intersect(newNames);
@@ -109,31 +121,35 @@ namespace ST.EplAddin.PlcEdit
             return (tableWithoutReverse, tableWithReverse);
         }
 
-        private bool AssignFinction(Function sourceFunction, Function targetFunction, bool reverse = false)
+        private void AssignFinction(Function sourceFunction, Function targetFunction, bool reverse = false)
         {
-            try
+            using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-                if (reverse == false)
+                try
                 {
-                    targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
-                    return true;
+                    if (reverse == false)
+                    {
+                        targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
+                    }
+                    else//если есть реверс то применяем вот эту схему "с реверсом"
+                    {
+                        Function function = new Function();//а тут все наоборот, потому что это вытекает из пользовательской работы в программе
+                        function.CreateTransient(CurrentProject, sourceFunction.SymbolVariant);
+                        function = targetFunction;
+                        targetFunction = null;
+                        sourceFunction = null;
+                        //function.Assign(targetFunction);
+                        //targetFunction.Assign(sourceFunction);
+                        //sourceFunction.Assign(function);
+                    }
                 }
-                else//если есть реверс то применяем вот эту схему "с реверсом"
+                catch (Exception)
                 {
-                    Function function = new Function();//а тут все наоборот, потому что это вытекает из пользовательской работы в программе
-                    function.CreateTransient(CurrentProject, sourceFunction.SymbolVariant);
-                    targetFunction.Assign(function);
-                    sourceFunction.Assign(targetFunction);
-                    function.Assign(sourceFunction);
-                    function.Remove();
-                    return true;
+                    ManagePlcForm.Exit();
                 }
+                safetyPoint.Commit();
+
             }
-            catch (Exception)
-            {
-                ManagePlcForm.Exit();
-            }
-            return false;
         }
     }
 }

@@ -39,7 +39,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>10.0</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <Optimize>false</Optimize>
   </PropertyGroup>
@@ -153,6 +152,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\WindowWrapper.cs" />
+    <Compile Include="Helpers\TerminalFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ManagePlcForm.resx">

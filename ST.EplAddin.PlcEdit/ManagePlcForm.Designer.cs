@@ -34,12 +34,14 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManagePlcForm));
             this.flowLayoutPanelUp = new System.Windows.Forms.FlowLayoutPanel();
+            this.exchange_button = new System.Windows.Forms.Button();
+            this.dowm_button = new System.Windows.Forms.Button();
+            this.up_button = new System.Windows.Forms.Button();
             this.Ok_button = new System.Windows.Forms.Button();
             this.Apply_button = new System.Windows.Forms.Button();
             this.Cancel_button = new System.Windows.Forms.Button();
             this.flowLayoutPanelDown = new System.Windows.Forms.FlowLayoutPanel();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DevicePointDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Datatype = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,10 +51,8 @@
             this.DevicePointDesignation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FunctionDefinition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SymbolicAdressDefined = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.exchange_button = new System.Windows.Forms.Button();
-            this.dowm_button = new System.Windows.Forms.Button();
-            this.up_button = new System.Windows.Forms.Button();
             this.flowLayoutPanelUp.SuspendLayout();
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -73,6 +73,47 @@
             this.flowLayoutPanelUp.Size = new System.Drawing.Size(1086, 29);
             this.flowLayoutPanelUp.TabIndex = 3;
             this.flowLayoutPanelUp.WrapContents = false;
+            // 
+            // exchange_button
+            // 
+            this.exchange_button.BackColor = System.Drawing.Color.Transparent;
+            this.exchange_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.exchange_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.downup;
+            this.exchange_button.Location = new System.Drawing.Point(1052, 3);
+            this.exchange_button.Name = "exchange_button";
+            this.exchange_button.Size = new System.Drawing.Size(23, 23);
+            this.exchange_button.TabIndex = 2;
+            this.exchange_button.TabStop = false;
+            this.exchange_button.UseVisualStyleBackColor = false;
+            this.exchange_button.Click += new System.EventHandler(this.exchange_button_Click);
+            // 
+            // dowm_button
+            // 
+            this.dowm_button.BackColor = System.Drawing.Color.Transparent;
+            this.dowm_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.dowm_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.arrowDown1;
+            this.dowm_button.Location = new System.Drawing.Point(1023, 3);
+            this.dowm_button.Name = "dowm_button";
+            this.dowm_button.Size = new System.Drawing.Size(23, 23);
+            this.dowm_button.TabIndex = 0;
+            this.dowm_button.TabStop = false;
+            this.dowm_button.UseVisualStyleBackColor = false;
+            this.dowm_button.Click += new System.EventHandler(this.dowm_button_Click);
+            // 
+            // up_button
+            // 
+            this.up_button.BackColor = System.Drawing.Color.Transparent;
+            this.up_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.up_button.ForeColor = System.Drawing.Color.Transparent;
+            this.up_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.arrowUp;
+            this.up_button.Location = new System.Drawing.Point(994, 3);
+            this.up_button.Name = "up_button";
+            this.up_button.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.up_button.Size = new System.Drawing.Size(23, 23);
+            this.up_button.TabIndex = 1;
+            this.up_button.TabStop = false;
+            this.up_button.UseVisualStyleBackColor = false;
+            this.up_button.Click += new System.EventHandler(this.up_button_Click);
             // 
             // Ok_button
             // 
@@ -171,14 +212,7 @@
             this.dataGridView.Size = new System.Drawing.Size(1086, 533);
             this.dataGridView.TabIndex = 6;
             this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellClick);
-            // 
-            // FunctionType
-            // 
-            this.FunctionType.DataPropertyName = "FunctionType";
-            this.FunctionType.HeaderText = "FunctionType";
-            this.FunctionType.Name = "FunctionType";
-            this.FunctionType.ReadOnly = true;
-            this.FunctionType.Width = 97;
+            this.dataGridView.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellEnter);
             // 
             // DevicePointDescription
             // 
@@ -252,50 +286,17 @@
             this.SymbolicAdressDefined.ReadOnly = true;
             this.SymbolicAdressDefined.Width = 143;
             // 
+            // FunctionType
+            // 
+            this.FunctionType.DataPropertyName = "FunctionType";
+            this.FunctionType.HeaderText = "FunctionType";
+            this.FunctionType.Name = "FunctionType";
+            this.FunctionType.ReadOnly = true;
+            this.FunctionType.Width = 97;
+            // 
             // plcDataModelViewBindingSource
             // 
             this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
-            // 
-            // exchange_button
-            // 
-            this.exchange_button.BackColor = System.Drawing.Color.Transparent;
-            this.exchange_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.exchange_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.downup;
-            this.exchange_button.Location = new System.Drawing.Point(1052, 3);
-            this.exchange_button.Name = "exchange_button";
-            this.exchange_button.Size = new System.Drawing.Size(23, 23);
-            this.exchange_button.TabIndex = 2;
-            this.exchange_button.TabStop = false;
-            this.exchange_button.UseVisualStyleBackColor = false;
-            this.exchange_button.Click += new System.EventHandler(this.exchange_button_Click);
-            // 
-            // dowm_button
-            // 
-            this.dowm_button.BackColor = System.Drawing.Color.Transparent;
-            this.dowm_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.dowm_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.arrowDown1;
-            this.dowm_button.Location = new System.Drawing.Point(1023, 3);
-            this.dowm_button.Name = "dowm_button";
-            this.dowm_button.Size = new System.Drawing.Size(23, 23);
-            this.dowm_button.TabIndex = 0;
-            this.dowm_button.TabStop = false;
-            this.dowm_button.UseVisualStyleBackColor = false;
-            this.dowm_button.Click += new System.EventHandler(this.dowm_button_Click);
-            // 
-            // up_button
-            // 
-            this.up_button.BackColor = System.Drawing.Color.Transparent;
-            this.up_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.up_button.ForeColor = System.Drawing.Color.Transparent;
-            this.up_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.arrowUp;
-            this.up_button.Location = new System.Drawing.Point(994, 3);
-            this.up_button.Name = "up_button";
-            this.up_button.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.up_button.Size = new System.Drawing.Size(23, 23);
-            this.up_button.TabIndex = 1;
-            this.up_button.TabStop = false;
-            this.up_button.UseVisualStyleBackColor = false;
-            this.up_button.Click += new System.EventHandler(this.up_button_Click);
             // 
             // ManagePlcForm
             // 

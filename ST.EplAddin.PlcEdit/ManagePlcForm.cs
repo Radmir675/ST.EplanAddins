@@ -128,12 +128,12 @@ namespace ST.EplAddin.PlcEdit
         }
         private int? TryGetEmptyIndexRow(int currentPositionIndex, Direction direction, string functionDefinition)
         {
-            DataGridViewRow firstProperlyRow = null;
+            DataGridViewRow properlyRow = null;
             switch (direction)
             {
                 case Direction.Up:
 
-                    firstProperlyRow = dataGridView.Rows
+                    properlyRow = dataGridView.Rows
                         .Cast<DataGridViewRow>()
                         .Where(z => z.Index < currentPositionIndex)
                         .Reverse()
@@ -144,7 +144,7 @@ namespace ST.EplAddin.PlcEdit
                  && functionDefinition == x.Cells["FunctionDefinition"].Value.ToString());
                     break;
                 case Direction.Down:
-                    firstProperlyRow = dataGridView.Rows.Cast<DataGridViewRow>().FirstOrDefault(x =>
+                    properlyRow = dataGridView.Rows.Cast<DataGridViewRow>().FirstOrDefault(x =>
                   x.Cells["SymbolicAdress"].Value.ToString() == string.Empty
                  && x.Cells["FunctionText"].Value.ToString() == string.Empty
                  && x.Index > currentPositionIndex
@@ -152,7 +152,7 @@ namespace ST.EplAddin.PlcEdit
                     break;
             }
 
-            var properlyRowIndex = firstProperlyRow?.Index;
+            var properlyRowIndex = properlyRow?.Index;
             return properlyRowIndex;
         }
         public List<PlcDataModelView> ReadDataFromGrid()
@@ -199,6 +199,30 @@ namespace ST.EplAddin.PlcEdit
         internal void Exit()
         {
             CancelButton.PerformClick();
+        }
+
+        private void dataGridView_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            var currentRow = dataGridView.Rows[e.RowIndex];
+            var functionDefinition = currentRow.Cells["FunctionDefinition"].Value.ToString();
+            var emptyUpRow = TryGetEmptyIndexRow(e.RowIndex, Direction.Up, functionDefinition);
+            var emptyDownRow = TryGetEmptyIndexRow(e.RowIndex, Direction.Down, functionDefinition);
+            if (!emptyUpRow.HasValue)
+            {
+                up_button.Enabled = false;
+            }
+            else
+            {
+                up_button.Enabled = true;
+            }
+            if (!emptyDownRow.HasValue)
+            {
+                dowm_button.Enabled = false;
+            }
+            else
+            {
+                dowm_button.Enabled = true;
+            }
         }
     }
 }
