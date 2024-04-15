@@ -90,6 +90,7 @@ namespace ST.EplAddin.PlcEdit
                 var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
                 AssignFinction(sourceFunction, targetFunction, true);
             }
+            ManagePlcForm.UpdateTable(Mapper.GetPlcData(GetPlcTerminals()));//туть передать данные для обновления формы
         }
 
         private (List<NameCorrelation> tableWithoutReverse, List<NameCorrelation> tableWithReverse) GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)

@@ -15,6 +15,7 @@ namespace ST.EplAddin.PlcEdit
         public string FunctionDefinition { get; set; }//Вывод устройства ПЛК, Дискретный вход
         public string SymbolicAdressDefined { get; set; }//сиволический адрес определен если он не пустой значит вывод куда-то присвоен
         public string FunctionType { get; set; }//многополюсный или обзор
+                                                //    public int TerminalHashCode { get; set; }//хэш функции
 
         public object Clone()
         {
