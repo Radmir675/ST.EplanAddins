@@ -267,10 +267,14 @@ namespace ST.EplAddin.PlcEdit
 
         private void ManagePlcForm_ResizeEnd(object sender, EventArgs e)
         {
-            var currentWidth = (sender as Form).Width;
-            if (currentWidth > InitialFormWidth)
+            var currentFormWidth = (sender as Form).Width;
+            if (currentFormWidth > InitialFormWidth)
             {
                 dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
+            else
+            {
+                dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
             }
 
         }
