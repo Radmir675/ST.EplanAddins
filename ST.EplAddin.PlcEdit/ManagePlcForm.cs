@@ -11,12 +11,12 @@ namespace ST.EplAddin.PlcEdit
         public event EventHandler<CustomEventArgs> ApplyEvent;
         private List<PlcDataModelView> PlcDataModelView { get; set; }
 
-        public int SelectedRowsCount//тут хочется сделать selectedRow
+        public DataGridViewRow[] SelectedRows
         {
             get
             {
                 return dataGridView.SelectedCells.Cast<DataGridViewCell>()
-                                       .Select(c => c.RowIndex).Distinct().Count();
+                                       .Select(c => c.OwningRow).Distinct().ToArray();
             }
         }
 
@@ -40,7 +40,7 @@ namespace ST.EplAddin.PlcEdit
 
         private void up_button_Click(object sender, EventArgs e)
         {
-            if (SelectedRowsCount != 1)
+            if (SelectedRows.Count() != 1)
                 return;
             InsertRowInEmptyPosition(Direction.Up);
 
@@ -48,14 +48,15 @@ namespace ST.EplAddin.PlcEdit
 
         private void dowm_button_Click(object sender, EventArgs e)
         {
-
-            if (SelectedRowsCount != 1)
+            var s = dataGridView.SelectedCells.Cast<DataGridViewCell>()
+                                       .Select(c => c.OwningRow).Distinct().ToArray();
+            if (SelectedRows.Count() != 1)
                 return;
             InsertRowInEmptyPosition(Direction.Down);
         }
         private void exchange_button_Click(object sender, EventArgs e)
         {
-            if (SelectedRowsCount != 2)
+            if (SelectedRows.Count() != 2)
                 return;
             ExchangePositions();
         }
@@ -178,7 +179,7 @@ namespace ST.EplAddin.PlcEdit
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             exchange_button.Enabled = false;
-            if (SelectedRowsCount == 2)
+            if (SelectedRows.Count() == 2)
             {
                 exchange_button.Enabled = true;
             }
@@ -200,13 +201,25 @@ namespace ST.EplAddin.PlcEdit
             CancelButton.PerformClick();
         }
 
-        private void dataGridView_CellEnter(object sender, DataGridViewCellEventArgs e)
+        public void UpdateTable(List<PlcDataModelView> plcDataModelView)
         {
-            var currentRow = dataGridView.Rows[e.RowIndex];
+            dataGridView.DataSource = plcDataModelView;
+            dataGridView.Update();
+        }
+
+        private void dataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            if (SelectedRows.Count() > 1)
+            {
+                up_button.Enabled = false;
+                dowm_button.Enabled = false;
+                return;
+            }
+            var currentRow = SelectedRows.Single();
             var functionDefinition = currentRow.Cells["FunctionDefinition"].Value.ToString();
 
-            var emptyUpRow = TryGetEmptyIndexRow(e.RowIndex, Direction.Up, functionDefinition);
-            if (!emptyUpRow.HasValue || SelectedRowsCount != 1)
+            var emptyUpRow = TryGetEmptyIndexRow(currentRow.Index, Direction.Up, functionDefinition);
+            if (!emptyUpRow.HasValue || SelectedRows.Count() != 1)
             {
                 up_button.Enabled = false;
             }
@@ -214,8 +227,8 @@ namespace ST.EplAddin.PlcEdit
             {
                 up_button.Enabled = true;
             }
-            var emptyDownRow = TryGetEmptyIndexRow(e.RowIndex, Direction.Down, functionDefinition);
-            if (!emptyDownRow.HasValue || SelectedRowsCount != 1)
+            var emptyDownRow = TryGetEmptyIndexRow(currentRow.Index, Direction.Down, functionDefinition);
+            if (!emptyDownRow.HasValue || SelectedRows.Count() != 1)
             {
                 dowm_button.Enabled = false;
             }
@@ -224,13 +237,6 @@ namespace ST.EplAddin.PlcEdit
                 dowm_button.Enabled = true;
             }
         }
-        public void UpdateTable(List<PlcDataModelView> plcDataModelView)
-        {
-            dataGridView.DataSource = plcDataModelView;
-            dataGridView.Update();
-        }
-
-
     }
 }
 
