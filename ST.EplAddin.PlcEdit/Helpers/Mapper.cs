@@ -27,8 +27,8 @@ namespace ST.EplAddin.PlcEdit
                         FunctionDefinition = terminal.Properties.FUNC_COMPONENTTYPE.ToString(ISOCode.Language.L_ru_RU),
                         SymbolicAdressDefined = terminal.Properties.FUNC_PLCSYMBOLICADDRESS_CALCULATED.ToString(ISOCode.Language.L_ru_RU),
                         FunctionType = (terminal.Properties.FUNC_TYPE).GetDisplayString().GetString(ISOCode.Language.L_ru_RU),
-                        //TerminalHashCode = GetHash(terminal.Properties.FUNC_TEXT_AUTOMATIC.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU),
-                        //terminal.Properties.FUNC_PLCSYMBOLICADDRESS_CALCULATED.ToString(ISOCode.Language.L_ru_RU))
+                        TerminalHashCode = GetHash(terminal.Properties.FUNC_TEXT_AUTOMATIC.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU),
+                        terminal.Properties.FUNC_PLCSYMBOLICADDRESS_CALCULATED.ToString(ISOCode.Language.L_ru_RU))
                     };
                     plcDataModelView.Add(mappedPlc);
                 }
@@ -51,14 +51,19 @@ namespace ST.EplAddin.PlcEdit
             return result;
         }
 
-        //private static int GetHash(string functionText, string dT)
-        //{
+        internal static List<PlcDataModelView> UpdateHash(List<PlcDataModelView> plcDataModelView)
+        {
+            foreach (var item in plcDataModelView)
+            {
+                item.TerminalHashCode = GetHash(item.FunctionText, item.SymbolicAdressDefined);
+            }
+            return plcDataModelView;
+        }
 
-        //    var firstByte = Encoding.UTF8.GetBytes($"{functionText}");
-        //    var secondByte = Encoding.UTF8.GetBytes($"{dT}");
-        //    return firstByte.GetHashCode() ^ secondByte.GetHashCode();
-
-        //}
+        private static int GetHash(string functionText, string symbolicAdressDefined)
+        {
+            return (functionText, symbolicAdressDefined).GetHashCode();
+        }
     }
 
 }

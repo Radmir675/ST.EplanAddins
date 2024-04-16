@@ -74,7 +74,7 @@ namespace ST.EplAddin.PlcEdit
         {
             var plcTerminals = GetPlcTerminals();//тут получаем обновленные данные после "Apply"
             var functionsInProgram = plcTerminals.Cast<Function>();
-            var newDataPlc = e.PlcDataModelView;//по итогу должны получить две разные таблицы
+            var newDataPlc = Mapper.UpdateHash(e.PlcDataModelView); //по итогу должны получить две разные таблицы и обновить hash
             InitialPlcData = Mapper.GetPlcData(plcTerminals);
             var correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
             foreach (var item in correlationTable.tableWithoutReverse)
@@ -96,11 +96,11 @@ namespace ST.EplAddin.PlcEdit
         private (List<NameCorrelation> tableWithoutReverse, List<NameCorrelation> tableWithReverse) GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)
         {
             var result = oldData.Join(newDataPlc,
-                data1 => data1.FunctionText,//проверяем и формируем группу по функциональному тексту // А ЧТО ЕСЛИ ОНИ ОДИНАКОВЫЕ?????
-                data2 => data2.FunctionText,
+                data1 => data1.TerminalHashCode,//проверяем и формируем группу по функциональному тексту // А ЧТО ЕСЛИ ОНИ ОДИНАКОВЫЕ?????
+                data2 => data2.TerminalHashCode,
                 (data1, data2) =>
                 {
-                    if (data1.FunctionText != string.Empty)
+                    if (data1.FunctionText != string.Empty || data1.SymbolicAdressDefined != string.Empty)
                     {
                         return new NameCorrelation(data1.DT, data2.DT);
                     }
@@ -133,11 +133,11 @@ namespace ST.EplAddin.PlcEdit
                     }
                     else//если есть реверс то применяем вот эту схему "с реверсом"
                     {
-                        Function function = new Function();//а тут все наоборот, потому что это вытекает из пользовательской работы в программе
-                        function.CreateTransient(CurrentProject, sourceFunction.SymbolVariant);
-                        function = targetFunction;
-                        targetFunction = null;
-                        sourceFunction = null;
+                        //Function function = new Function();//а тут все наоборот, потому что это вытекает из пользовательской работы в программе
+                        //function.CreateTransient(CurrentProject, sourceFunction.SymbolVariant);
+                        //function = targetFunction;
+                        //targetFunction = null;
+                        //sourceFunction = null;
                         //function.Assign(targetFunction);
                         //targetFunction.Assign(sourceFunction);
                         //sourceFunction.Assign(function);

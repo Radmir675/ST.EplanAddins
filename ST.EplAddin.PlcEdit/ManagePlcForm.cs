@@ -28,8 +28,8 @@ namespace ST.EplAddin.PlcEdit
 
         private void ManagePlcForm_Load(object sender, EventArgs e)
         {
-            AddData(PlcDataModelView);
             exchange_button.Enabled = false;
+            AddData(PlcDataModelView);
         }
 
 
@@ -209,13 +209,18 @@ namespace ST.EplAddin.PlcEdit
 
         private void dataGridView_SelectionChanged(object sender, EventArgs e)
         {
-            if (SelectedRows.Count() > 1)
+            var ss = dataGridView.RowCount;
+            if (SelectedRows.Count() > 1 || SelectedRows.Count() == 0)
             {
                 up_button.Enabled = false;
                 dowm_button.Enabled = false;
                 return;
             }
-            var currentRow = SelectedRows.Single();
+            var currentRow = SelectedRows.FirstOrDefault();//туть null
+            if (currentRow == null)
+            {
+                return;
+            }
             var functionDefinition = currentRow.Cells["FunctionDefinition"].Value.ToString();
 
             var emptyUpRow = TryGetEmptyIndexRow(currentRow.Index, Direction.Up, functionDefinition);
