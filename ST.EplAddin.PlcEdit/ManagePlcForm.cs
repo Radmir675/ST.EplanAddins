@@ -115,12 +115,15 @@ namespace ST.EplAddin.PlcEdit
             targetObject.SymbolicAdress = string.Copy(sourceObject?.SymbolicAdress ?? String.Empty);
             targetObject.Datatype = string.Copy(sourceObject?.Datatype ?? String.Empty);
             targetObject.PLCAdress = string.Copy(sourceObject?.PLCAdress ?? String.Empty);
+            targetObject.TerminalHashCode = sourceObject.TerminalHashCode;
 
             sourceObject.SymbolicAdressDefined = string.Copy(targetObjectClone?.SymbolicAdressDefined ?? String.Empty);
             sourceObject.FunctionText = string.Copy(targetObjectClone?.FunctionText ?? String.Empty);
             sourceObject.SymbolicAdress = string.Copy(targetObjectClone?.SymbolicAdress ?? String.Empty);
             sourceObject.Datatype = string.Copy(targetObjectClone?.Datatype ?? String.Empty);
             sourceObject.PLCAdress = string.Copy(targetObjectClone?.PLCAdress ?? String.Empty);
+            sourceObject.TerminalHashCode = targetObjectClone.TerminalHashCode;
+
         }
 
         public bool IsModuleAssigned(string terminalName)
