@@ -135,12 +135,13 @@ namespace ST.EplAddin.PlcEdit
                     {
                         //Function function = new Function();//а тут все наоборот, потому что это вытекает из пользовательской работы в программе
                         //function.CreateTransient(CurrentProject, sourceFunction.SymbolVariant);
-                        //function = targetFunction;
-                        //targetFunction = null;
-                        //sourceFunction = null;
-                        //function.Assign(targetFunction);
-                        //targetFunction.Assign(sourceFunction);
+                        //// Group g = new Group();
+                        //// g.Create(new Placement[] { });
+                        ////targetFunction.CopyTo(g);
                         //sourceFunction.Assign(function);
+
+                        //targetFunction.Assign(sourceFunction);
+                        //sourceFunction.Assign(g.)
                     }
                 }
                 catch (Exception)
