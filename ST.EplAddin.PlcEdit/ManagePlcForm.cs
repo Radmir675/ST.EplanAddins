@@ -10,6 +10,7 @@ namespace ST.EplAddin.PlcEdit
     {
         public event EventHandler<CustomEventArgs> ApplyEvent;
         private List<PlcDataModelView> PlcDataModelView { get; set; }
+        public int InitialFormWidth { get; set; }
 
         public DataGridViewRow[] SelectedRows
         {
@@ -27,6 +28,15 @@ namespace ST.EplAddin.PlcEdit
             AddData(PlcDataModelView);
         }
 
+        public int GetCurrentColumnsHeaderWidth()
+        {
+            double sum = 0;
+            foreach (DataGridViewColumn item in dataGridView.Columns)
+            {
+                sum += item.Width;
+            }
+            return (int)Math.Round(sum);
+        }
         private void ManagePlcForm_Load(object sender, EventArgs e)
         {
             exchange_button.Enabled = false;
@@ -34,6 +44,8 @@ namespace ST.EplAddin.PlcEdit
             {
                 dataGridView.Rows[0].Selected = true;
             }
+            (sender as Form).Width = GetCurrentColumnsHeaderWidth() + 58;
+            InitialFormWidth = GetCurrentColumnsHeaderWidth() + 58;
         }
 
 
@@ -247,6 +259,20 @@ namespace ST.EplAddin.PlcEdit
             {
                 dowm_button.Enabled = true;
             }
+        }
+
+        private void ManagePlcForm_Resize(object sender, EventArgs e)
+        {
+        }
+
+        private void ManagePlcForm_ResizeEnd(object sender, EventArgs e)
+        {
+            var currentWidth = (sender as Form).Width;
+            if (currentWidth > InitialFormWidth)
+            {
+                dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
+
         }
     }
 }
