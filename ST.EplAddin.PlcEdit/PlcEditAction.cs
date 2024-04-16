@@ -53,7 +53,7 @@ namespace ST.EplAddin.PlcEdit
                 var terminal = selectedPlcdata[0] as Terminal;
                 selectedPlcdata = new DMObjectsFinder(CurrentProject)
                     .GetTerminals(functionsFilter)
-                    .Where(x => x.Properties.FUNC_FULLDEVICETAG.ToString() == terminal.Properties.FUNC_FULLDEVICETAG.ToString())
+                    .Where(x => x.Properties.FUNC_FULLDEVICETAG.ToString() == terminal?.Properties.FUNC_FULLDEVICETAG.ToString())
                     .OrderBy(x => int.Parse(x.Properties.FUNC_GEDNAMEWITHCONNECTIONDESIGNATION.ToString().Split(':').Last()))
                     .ToArray();
             }
@@ -81,14 +81,14 @@ namespace ST.EplAddin.PlcEdit
             {
                 var sourceFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionOldName);//найдем его
                 var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
-                AssignFinction(sourceFunction, targetFunction);
+                AssignFunction(sourceFunction, targetFunction);
             }
 
             foreach (var item in correlationTable.tableWithReverse)
             {
                 var sourceFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionOldName);//найдем его
                 var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
-                AssignFinction(sourceFunction, targetFunction, true);
+                AssignFunction(sourceFunction, targetFunction, true);
             }
             ManagePlcForm.UpdateTable(Mapper.GetPlcData(GetPlcTerminals()));//туть передать данные для обновления формы
         }
@@ -121,7 +121,7 @@ namespace ST.EplAddin.PlcEdit
             return (tableWithoutReverse, tableWithReverse);
         }
 
-        private void AssignFinction(Function sourceFunction, Function targetFunction, bool reverse = false)
+        private void AssignFunction(Function sourceFunction, Function targetFunction, bool reverse = false)
         {
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {

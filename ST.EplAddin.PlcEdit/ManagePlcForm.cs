@@ -24,12 +24,16 @@ namespace ST.EplAddin.PlcEdit
         {
             InitializeComponent();
             PlcDataModelView = plcDataModelView;
+            AddData(PlcDataModelView);
         }
 
         private void ManagePlcForm_Load(object sender, EventArgs e)
         {
             exchange_button.Enabled = false;
-            AddData(PlcDataModelView);
+            if (dataGridView.Rows.Count > 0)
+            {
+                dataGridView.Rows[0].Selected = true;
+            }
         }
 
 
@@ -209,7 +213,6 @@ namespace ST.EplAddin.PlcEdit
 
         private void dataGridView_SelectionChanged(object sender, EventArgs e)
         {
-            var ss = dataGridView.RowCount;
             if (SelectedRows.Count() > 1 || SelectedRows.Count() == 0)
             {
                 up_button.Enabled = false;
