@@ -43,7 +43,7 @@
             this.Cancel_button = new System.Windows.Forms.Button();
             this.flowLayoutPanelDown = new System.Windows.Forms.FlowLayoutPanel();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.DevicePointDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Datatype = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,7 +53,7 @@
             this.DevicePointDesignation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FunctionDefinition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SymbolicAdressDefined = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.flowLayoutPanelUp.SuspendLayout();
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -204,7 +204,6 @@
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.Location = new System.Drawing.Point(0, 29);
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.ReadOnly = true;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -222,13 +221,9 @@
             this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellClick);
             this.dataGridView.SelectionChanged += new System.EventHandler(this.dataGridView_SelectionChanged);
             // 
-            // FunctionType
+            // plcDataModelViewBindingSource
             // 
-            this.FunctionType.DataPropertyName = "FunctionType";
-            this.FunctionType.HeaderText = "FunctionType";
-            this.FunctionType.Name = "FunctionType";
-            this.FunctionType.ReadOnly = true;
-            this.FunctionType.Width = 97;
+            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
             // 
             // DevicePointDescription
             // 
@@ -243,7 +238,6 @@
             this.PLCAdress.DataPropertyName = "PLCAdress";
             this.PLCAdress.HeaderText = "PLCAdress";
             this.PLCAdress.Name = "PLCAdress";
-            this.PLCAdress.ReadOnly = true;
             this.PLCAdress.Width = 84;
             // 
             // Datatype
@@ -302,9 +296,13 @@
             this.SymbolicAdressDefined.ReadOnly = true;
             this.SymbolicAdressDefined.Width = 143;
             // 
-            // plcDataModelViewBindingSource
+            // FunctionType
             // 
-            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
+            this.FunctionType.DataPropertyName = "FunctionType";
+            this.FunctionType.HeaderText = "FunctionType";
+            this.FunctionType.Name = "FunctionType";
+            this.FunctionType.ReadOnly = true;
+            this.FunctionType.Width = 97;
             // 
             // ManagePlcForm
             // 

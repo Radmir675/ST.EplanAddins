@@ -46,8 +46,20 @@ namespace ST.EplAddin.PlcEdit
             }
             (sender as Form).Width = GetCurrentColumnsHeaderWidth() + 58;
             InitialFormWidth = GetCurrentColumnsHeaderWidth() + 58;
+            ChangeColorDisableColumns();
         }
 
+        private void ChangeColorDisableColumns()
+        {
+            foreach (DataGridViewColumn column in dataGridView.Columns)
+            {
+                if (column.ReadOnly == true)
+                {
+                    //    dataGridView.Columns[$"{column.Name}"].DefaultCellStyle.BackColor = Color.DarkRed;
+
+                }
+            }
+        }
 
         private void AddData(List<PlcDataModelView> data)
         {
