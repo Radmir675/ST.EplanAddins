@@ -54,7 +54,7 @@ namespace ST.EplAddin.PlcEdit
                 selectedPlcdata = new DMObjectsFinder(CurrentProject)
                     .GetTerminals(functionsFilter)
                     .Where(x => x.Properties.FUNC_FULLDEVICETAG.ToString() == terminal?.Properties.FUNC_FULLDEVICETAG.ToString())
-                    .OrderBy(x => int.Parse(x.Properties.FUNC_GEDNAMEWITHCONNECTIONDESIGNATION.ToString().Split(':').Last()))
+                    //.OrderBy(x => int.Parse(x.Properties.FUNC_GEDNAMEWITHCONNECTIONDESIGNATION.ToString().Split(':').Last()))
                     .ToArray();
             }
             var result = selectedPlcdata.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
@@ -90,13 +90,15 @@ namespace ST.EplAddin.PlcEdit
                 var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
                 AssignFunction(sourceFunction, targetFunction, true);
             }
-            ManagePlcForm.UpdateTable(Mapper.GetPlcData(GetPlcTerminals()));//туть передать данные для обновления формы
+            var s = GetPlcTerminals();
+            var ss = Mapper.GetPlcData(s);
+            ManagePlcForm.UpdateTable(ss);//туть передать данные для обновления формы
         }
 
         private (List<NameCorrelation> tableWithoutReverse, List<NameCorrelation> tableWithReverse) GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)
         {
             var result = oldData.Join(newDataPlc,
-                data1 => data1.TerminalHashCode,//проверяем и формируем группу по функциональному тексту // А ЧТО ЕСЛИ ОНИ ОДИНАКОВЫЕ?????
+                data1 => data1.TerminalHashCode,//проверяем и формируем группу по Hash
                 data2 => data2.TerminalHashCode,
                 (data1, data2) =>
                 {

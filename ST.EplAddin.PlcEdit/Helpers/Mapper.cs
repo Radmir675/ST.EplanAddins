@@ -48,7 +48,7 @@ namespace ST.EplAddin.PlcEdit
                     result.Add(entry.First());
                 }
             }
-            return result;
+            return result.OrderBy(x => int.Parse(x.DevicePointDesignation.Split(':').Last())).ToList();
         }
 
         internal static List<PlcDataModelView> UpdateHash(List<PlcDataModelView> plcDataModelView)

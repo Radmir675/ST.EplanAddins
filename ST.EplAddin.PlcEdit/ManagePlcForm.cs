@@ -55,7 +55,7 @@ namespace ST.EplAddin.PlcEdit
             {
                 if (column.ReadOnly == true)
                 {
-                    //    dataGridView.Columns[$"{column.Name}"].DefaultCellStyle.BackColor = Color.DarkRed;
+                    //dataGridView.Columns[$"{column.Name}"].DefaultCellStyle.BackColor = Color.DarkRed;
 
                 }
             }
