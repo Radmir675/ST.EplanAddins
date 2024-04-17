@@ -270,9 +270,6 @@ namespace ST.EplAddin.PlcEdit
             }
         }
 
-        private void ManagePlcForm_Resize(object sender, EventArgs e)
-        {
-        }
 
         private void ManagePlcForm_ResizeEnd(object sender, EventArgs e)
         {

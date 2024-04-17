@@ -7,14 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Windows;
+using System.Windows.Forms;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace ST.EplAddin.PlcEdit
 {
     class PlcEditAction : IEplAction
     {
-        //https://www.eplan.help/en-us/Infoportal/Content/api/2024/Actions.html
-        //https://www.eplan.help/en-us/Infoportal/Content/api/2024/Events.html
         public static string actionName = "PlcGuiIGfWindRackConfiguration";
         private static List<PlcDataModelView> InitialPlcData { get; set; }
         public ManagePlcForm ManagePlcForm { get; private set; }
@@ -55,7 +54,6 @@ namespace ST.EplAddin.PlcEdit
                 selectedPlcdata = new DMObjectsFinder(CurrentProject)
                     .GetTerminals(functionsFilter)
                     .Where(x => x.Properties.FUNC_FULLDEVICETAG.ToString() == terminal?.Properties.FUNC_FULLDEVICETAG.ToString())
-                    //.OrderBy(x => int.Parse(x.Properties.FUNC_GEDNAMEWITHCONNECTIONDESIGNATION.ToString().Split(':').Last()))
                     .ToArray();
             }
             var result = selectedPlcdata.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
@@ -91,15 +89,25 @@ namespace ST.EplAddin.PlcEdit
                 var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
                 AssignFunction(sourceFunction, targetFunction, true);
             }
-            var s = GetPlcTerminals();
-            var name = s.Select(x => x.ToStringIdentifier());
+            UpdateFormData();
+        }
+        private void CheckToIdenticalTerminal(Terminal[] terminal)
+        {
+            var name = terminal.Select(x => x.ToStringIdentifier());
             bool isUnique = name.Distinct().Count() == name.Count();
             if (isUnique == false)
             {
-                MessageBox.Show("Found ununique values");
+                MessageBox.Show("An ID match was found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ManagePlcForm.Exit();
             }
-            var ss = Mapper.GetPlcData(s);
-            ManagePlcForm.UpdateTable(ss);//туть передать данные после присовения для обновления формы
+
+        }
+        private void UpdateFormData()
+        {
+            var terminals = GetPlcTerminals();
+            CheckToIdenticalTerminal(terminals);
+            var mappedPlcTerminals = Mapper.GetPlcData(terminals);
+            ManagePlcForm.UpdateTable(mappedPlcTerminals);//туть передать данные после присвоения для обновления формы
         }
 
         private (List<NameCorrelation> tableWithoutReverse, List<NameCorrelation> tableWithReverse) GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)

@@ -322,7 +322,6 @@
             this.Load += new System.EventHandler(this.ManagePlcForm_Load);
             this.ResizeEnd += new System.EventHandler(this.ManagePlcForm_ResizeEnd);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ManagePlcForm_KeyDown);
-            this.Resize += new System.EventHandler(this.ManagePlcForm_Resize);
             this.flowLayoutPanelUp.ResumeLayout(false);
             this.flowLayoutPanelDown.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
