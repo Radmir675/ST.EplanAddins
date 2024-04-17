@@ -43,7 +43,7 @@
             this.Cancel_button = new System.Windows.Forms.Button();
             this.flowLayoutPanelDown = new System.Windows.Forms.FlowLayoutPanel();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DevicePointDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Datatype = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,7 +53,7 @@
             this.DevicePointDesignation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FunctionDefinition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SymbolicAdressDefined = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.flowLayoutPanelUp.SuspendLayout();
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -71,7 +71,7 @@
             this.flowLayoutPanelUp.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanelUp.Name = "flowLayoutPanelUp";
             this.flowLayoutPanelUp.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.flowLayoutPanelUp.Size = new System.Drawing.Size(915, 29);
+            this.flowLayoutPanelUp.Size = new System.Drawing.Size(1034, 29);
             this.flowLayoutPanelUp.TabIndex = 3;
             this.flowLayoutPanelUp.WrapContents = false;
             // 
@@ -80,7 +80,7 @@
             this.exchange_button.BackColor = System.Drawing.Color.Transparent;
             this.exchange_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.exchange_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.downup;
-            this.exchange_button.Location = new System.Drawing.Point(881, 3);
+            this.exchange_button.Location = new System.Drawing.Point(1000, 3);
             this.exchange_button.Name = "exchange_button";
             this.exchange_button.Size = new System.Drawing.Size(23, 23);
             this.exchange_button.TabIndex = 2;
@@ -93,7 +93,7 @@
             this.dowm_button.BackColor = System.Drawing.Color.Transparent;
             this.dowm_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.dowm_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.arrowDown1;
-            this.dowm_button.Location = new System.Drawing.Point(852, 3);
+            this.dowm_button.Location = new System.Drawing.Point(971, 3);
             this.dowm_button.Name = "dowm_button";
             this.dowm_button.Size = new System.Drawing.Size(23, 23);
             this.dowm_button.TabIndex = 0;
@@ -107,7 +107,7 @@
             this.up_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.up_button.ForeColor = System.Drawing.Color.Transparent;
             this.up_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.arrowUp;
-            this.up_button.Location = new System.Drawing.Point(823, 3);
+            this.up_button.Location = new System.Drawing.Point(942, 3);
             this.up_button.Name = "up_button";
             this.up_button.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.up_button.Size = new System.Drawing.Size(23, 23);
@@ -118,7 +118,7 @@
             // 
             // Ok_button
             // 
-            this.Ok_button.Location = new System.Drawing.Point(675, 3);
+            this.Ok_button.Location = new System.Drawing.Point(794, 3);
             this.Ok_button.Name = "Ok_button";
             this.Ok_button.Size = new System.Drawing.Size(75, 23);
             this.Ok_button.TabIndex = 1;
@@ -128,7 +128,7 @@
             // 
             // Apply_button
             // 
-            this.Apply_button.Location = new System.Drawing.Point(837, 3);
+            this.Apply_button.Location = new System.Drawing.Point(956, 3);
             this.Apply_button.Name = "Apply_button";
             this.Apply_button.Size = new System.Drawing.Size(75, 23);
             this.Apply_button.TabIndex = 4;
@@ -139,7 +139,7 @@
             // Cancel_button
             // 
             this.Cancel_button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.Cancel_button.Location = new System.Drawing.Point(756, 3);
+            this.Cancel_button.Location = new System.Drawing.Point(875, 3);
             this.Cancel_button.Name = "Cancel_button";
             this.Cancel_button.Size = new System.Drawing.Size(75, 23);
             this.Cancel_button.TabIndex = 4;
@@ -157,7 +157,7 @@
             this.flowLayoutPanelDown.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanelDown.Location = new System.Drawing.Point(0, 562);
             this.flowLayoutPanelDown.Name = "flowLayoutPanelDown";
-            this.flowLayoutPanelDown.Size = new System.Drawing.Size(915, 29);
+            this.flowLayoutPanelDown.Size = new System.Drawing.Size(1034, 29);
             this.flowLayoutPanelDown.TabIndex = 5;
             this.flowLayoutPanelDown.WrapContents = false;
             // 
@@ -204,6 +204,7 @@
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.Location = new System.Drawing.Point(0, 29);
             this.dataGridView.Name = "dataGridView";
+            this.dataGridView.ReadOnly = true;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -216,14 +217,18 @@
             this.dataGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dataGridView.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView.RowTemplate.Height = 17;
-            this.dataGridView.Size = new System.Drawing.Size(915, 533);
+            this.dataGridView.Size = new System.Drawing.Size(1034, 533);
             this.dataGridView.TabIndex = 6;
             this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellClick);
             this.dataGridView.SelectionChanged += new System.EventHandler(this.dataGridView_SelectionChanged);
             // 
-            // plcDataModelViewBindingSource
+            // FunctionType
             // 
-            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
+            this.FunctionType.DataPropertyName = "FunctionType";
+            this.FunctionType.HeaderText = "FunctionType";
+            this.FunctionType.Name = "FunctionType";
+            this.FunctionType.ReadOnly = true;
+            this.FunctionType.Width = 97;
             // 
             // DevicePointDescription
             // 
@@ -238,6 +243,7 @@
             this.PLCAdress.DataPropertyName = "PLCAdress";
             this.PLCAdress.HeaderText = "PLCAdress";
             this.PLCAdress.Name = "PLCAdress";
+            this.PLCAdress.ReadOnly = true;
             this.PLCAdress.Width = 84;
             // 
             // Datatype
@@ -284,9 +290,10 @@
             // 
             this.FunctionDefinition.DataPropertyName = "FunctionDefinition";
             this.FunctionDefinition.HeaderText = "FunctionDefinition";
+            this.FunctionDefinition.MinimumWidth = 150;
             this.FunctionDefinition.Name = "FunctionDefinition";
             this.FunctionDefinition.ReadOnly = true;
-            this.FunctionDefinition.Width = 117;
+            this.FunctionDefinition.Width = 150;
             // 
             // SymbolicAdressDefined
             // 
@@ -296,13 +303,9 @@
             this.SymbolicAdressDefined.ReadOnly = true;
             this.SymbolicAdressDefined.Width = 143;
             // 
-            // FunctionType
+            // plcDataModelViewBindingSource
             // 
-            this.FunctionType.DataPropertyName = "FunctionType";
-            this.FunctionType.HeaderText = "FunctionType";
-            this.FunctionType.Name = "FunctionType";
-            this.FunctionType.ReadOnly = true;
-            this.FunctionType.Width = 97;
+            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
             // 
             // ManagePlcForm
             // 
@@ -311,7 +314,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.CancelButton = this.Cancel_button;
-            this.ClientSize = new System.Drawing.Size(915, 591);
+            this.ClientSize = new System.Drawing.Size(1034, 591);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.flowLayoutPanelDown);
             this.Controls.Add(this.flowLayoutPanelUp);
