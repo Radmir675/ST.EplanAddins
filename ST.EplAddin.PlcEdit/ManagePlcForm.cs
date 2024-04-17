@@ -11,6 +11,7 @@ namespace ST.EplAddin.PlcEdit
         public event EventHandler<CustomEventArgs> ApplyEvent;
         private List<PlcDataModelView> PlcDataModelView { get; set; }
         public int InitialFormWidth { get; set; }
+        private int LastSelectedRow { get; set; }
 
         public DataGridViewRow[] SelectedRows
         {
@@ -76,8 +77,6 @@ namespace ST.EplAddin.PlcEdit
 
         private void dowm_button_Click(object sender, EventArgs e)
         {
-            var s = dataGridView.SelectedCells.Cast<DataGridViewCell>()
-                                       .Select(c => c.OwningRow).Distinct().ToArray();
             if (SelectedRows.Count() != 1)
                 return;
             InsertRowInEmptyPosition(Direction.Down);
@@ -93,6 +92,7 @@ namespace ST.EplAddin.PlcEdit
         {
             dataGridView.ClearSelection();
             dataGridView.Rows[rowIndex].Selected = true;
+            LastSelectedRow = rowIndex;
             dataGridView.Refresh();
         }
         private void HighlightRow(int rowIndex1, int rowIndex2)
@@ -139,15 +139,14 @@ namespace ST.EplAddin.PlcEdit
             targetObject.SymbolicAdress = string.Copy(sourceObject?.SymbolicAdress ?? String.Empty);
             targetObject.Datatype = string.Copy(sourceObject?.Datatype ?? String.Empty);
             targetObject.PLCAdress = string.Copy(sourceObject?.PLCAdress ?? String.Empty);
-            targetObject.TerminalHashCode = sourceObject.TerminalHashCode;
+            targetObject.TerminalId = string.Copy(sourceObject?.TerminalId ?? String.Empty);
 
             sourceObject.SymbolicAdressDefined = string.Copy(targetObjectClone?.SymbolicAdressDefined ?? String.Empty);
             sourceObject.FunctionText = string.Copy(targetObjectClone?.FunctionText ?? String.Empty);
             sourceObject.SymbolicAdress = string.Copy(targetObjectClone?.SymbolicAdress ?? String.Empty);
             sourceObject.Datatype = string.Copy(targetObjectClone?.Datatype ?? String.Empty);
             sourceObject.PLCAdress = string.Copy(targetObjectClone?.PLCAdress ?? String.Empty);
-            sourceObject.TerminalHashCode = targetObjectClone.TerminalHashCode;
-
+            sourceObject.TerminalId = string.Copy(targetObjectClone?.TerminalId ?? String.Empty);
         }
 
         public bool IsModuleAssigned(string terminalName)
@@ -187,10 +186,6 @@ namespace ST.EplAddin.PlcEdit
             var properlyRowIndex = properlyRow?.Index;
             return properlyRowIndex;
         }
-        public List<PlcDataModelView> ReadDataFromGrid()
-        {
-            return PlcDataModelView;
-        }
 
         private void Ok_button_Click(object sender, EventArgs e)
         {
@@ -205,6 +200,7 @@ namespace ST.EplAddin.PlcEdit
         private void Apply_button_Click(object sender, EventArgs e)
         {
             ApplyEvent?.Invoke(this, new CustomEventArgs(PlcDataModelView));
+            HighlightRow(LastSelectedRow);
         }
 
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -214,6 +210,7 @@ namespace ST.EplAddin.PlcEdit
             {
                 exchange_button.Enabled = true;
             }
+            LastSelectedRow = e.RowIndex;
         }
         private void ManagePlcForm_KeyDown(object sender, KeyEventArgs e)
         {
@@ -234,8 +231,8 @@ namespace ST.EplAddin.PlcEdit
 
         public void UpdateTable(List<PlcDataModelView> plcDataModelView)
         {
+            PlcDataModelView = plcDataModelView;
             dataGridView.DataSource = plcDataModelView;
-            dataGridView.Update();
         }
 
         private void dataGridView_SelectionChanged(object sender, EventArgs e)

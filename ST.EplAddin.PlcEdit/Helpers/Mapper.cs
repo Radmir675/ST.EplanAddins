@@ -27,42 +27,20 @@ namespace ST.EplAddin.PlcEdit
                         FunctionDefinition = terminal.Properties.FUNC_COMPONENTTYPE.ToString(ISOCode.Language.L_ru_RU),
                         SymbolicAdressDefined = terminal.Properties.FUNC_PLCSYMBOLICADDRESS_CALCULATED.ToString(ISOCode.Language.L_ru_RU),
                         FunctionType = (terminal.Properties.FUNC_TYPE).GetDisplayString().GetString(ISOCode.Language.L_ru_RU),
-                        TerminalHashCode = GetHash(terminal.Properties.FUNC_TEXT_AUTOMATIC.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU),
-                        terminal.Properties.FUNC_PLCSYMBOLICADDRESS_CALCULATED.ToString(ISOCode.Language.L_ru_RU))
+                        TerminalId = terminal.ToStringIdentifier()
                     };
                     plcDataModelView.Add(mappedPlc);
                 }
             }
 
-            var output = plcDataModelView.GroupBy(f => f.DevicePointDesignation);//тут происходит поиск гланой функции если ее нет берется обзор
+            var output = plcDataModelView.GroupBy(f => f.DevicePointDesignation);//тут происходит поиск главной функции если ее нет берется обзор
             var result = new List<PlcDataModelView>();
             foreach (var entry in output)
             {
-                foreach (var item in entry)
-                {
-                    if (item.FunctionType == "Многополюсный")
-                    {
-                        result.Add(item);
-                        break;
-                    }
-                    result.Add(entry.First());
-                }
+                var terminal = entry.FirstOrDefault(item => item.FunctionType == "Многополюсный") ?? entry.First();
+                result.Add(terminal);
             }
             return result.OrderBy(x => int.Parse(x.DevicePointDesignation.Split(':').Last())).ToList();
-        }
-
-        internal static List<PlcDataModelView> UpdateHash(List<PlcDataModelView> plcDataModelView)
-        {
-            foreach (var item in plcDataModelView)
-            {
-                item.TerminalHashCode = GetHash(item.FunctionText, item.SymbolicAdressDefined);
-            }
-            return plcDataModelView;
-        }
-
-        private static int GetHash(string functionText, string symbolicAdressDefined)
-        {
-            return (functionText, symbolicAdressDefined).GetHashCode();
         }
     }
 

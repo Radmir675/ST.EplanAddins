@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows;
 
 namespace ST.EplAddin.PlcEdit
 {
@@ -29,9 +30,9 @@ namespace ST.EplAddin.PlcEdit
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            var PlcTerminals = GetPlcTerminals();
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
+                var PlcTerminals = GetPlcTerminals();
                 InitialPlcData = Mapper.GetPlcData(PlcTerminals);
                 ShowTableForm(InitialPlcData.Select(x => x.Clone() as PlcDataModelView).ToList());
                 safetyPoint.Commit();
@@ -72,9 +73,9 @@ namespace ST.EplAddin.PlcEdit
 
         private void ManagePlcForm_ApplyEvent(object sender, CustomEventArgs e)
         {
-            var plcTerminals = GetPlcTerminals();//тут получаем обновленные данные после "Apply"
+            var plcTerminals = GetPlcTerminals();//тут получаем данные, которые могли быть изменены за время нашего изменения в форме
             var functionsInProgram = plcTerminals.Cast<Function>();
-            var newDataPlc = Mapper.UpdateHash(e.PlcDataModelView); //по итогу должны получить две разные таблицы и обновить hash
+            var newDataPlc = e.PlcDataModelView; //тут получаем данные из формы
             InitialPlcData = Mapper.GetPlcData(plcTerminals);
             var correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
             foreach (var item in correlationTable.tableWithoutReverse)
@@ -91,15 +92,21 @@ namespace ST.EplAddin.PlcEdit
                 AssignFunction(sourceFunction, targetFunction, true);
             }
             var s = GetPlcTerminals();
+            var name = s.Select(x => x.ToStringIdentifier());
+            bool isUnique = name.Distinct().Count() == name.Count();
+            if (isUnique == false)
+            {
+                MessageBox.Show("Found ununique values");
+            }
             var ss = Mapper.GetPlcData(s);
-            ManagePlcForm.UpdateTable(ss);//туть передать данные для обновления формы
+            ManagePlcForm.UpdateTable(ss);//туть передать данные после присовения для обновления формы
         }
 
         private (List<NameCorrelation> tableWithoutReverse, List<NameCorrelation> tableWithReverse) GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)
         {
             var result = oldData.Join(newDataPlc,
-                data1 => data1.TerminalHashCode,//проверяем и формируем группу по Hash
-                data2 => data2.TerminalHashCode,
+                data1 => data1.TerminalId,//проверяем и формируем группу по клеммы
+                data2 => data2.TerminalId,
                 (data1, data2) =>
                 {
                     if (data1.FunctionText != string.Empty || data1.SymbolicAdressDefined != string.Empty)
@@ -125,50 +132,28 @@ namespace ST.EplAddin.PlcEdit
 
         private void AssignFunction(Function sourceFunction, Function targetFunction, bool reverse = false)
         {
-            SelectionSet selectionSet = new SelectionSet();
-            selectionSet.LockProjectByDefault = false;
-            selectionSet.LockSelectionByDefault = false;
-            var s = targetFunction.Page;
-
             try
             {
-                if (reverse == false)
+
+                using (SafetyPoint safetyPoint = SafetyPoint.Create())
                 {
-                    targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
-                }
-                else//если есть реверс то применяем вот эту схему "с реверсом"
-                {
-
-                    Function function = new Function();//а тут все наоборот, потому что это вытекает из пользовательской работы в программе
-
-
-
-                    using (SafetyPoint safetyPoint = SafetyPoint.Create())
+                    if (reverse == false)
                     {
-                        //function.Create(CurrentProject, sourceFunction.FunctionDefinition);
-                        var page = selectionSet.OpenedPages.First();
-
-                        function.Create(page, targetFunction.SymbolVariant);
-                        function.Properties.FUNC_TYPE = 1;
-                        sourceFunction.VisibleName = targetFunction.VisibleName;
-
-                        sourceFunction.Assign(function);
-                        function.VisibleName = "SS";
-                        //targetFunction.Assign(sourceFunction);
-                        //targetFunction.VisibleName = "-2A61";
-                        //function.Assign(targetFunction);
-                        //  function.Remove();
-
-                        safetyPoint.Commit();
+                        targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
                     }
+                    else//если есть реверс то применяем вот эту схему "с реверсом"
+                    {
+
+
+
+                    }
+                    safetyPoint.Commit();
                 }
             }
             catch (Exception)
             {
                 ManagePlcForm.Exit();
             }
-
-
         }
     }
 }
