@@ -38,12 +38,12 @@
             this.exchange_button = new System.Windows.Forms.Button();
             this.dowm_button = new System.Windows.Forms.Button();
             this.up_button = new System.Windows.Forms.Button();
+            this.properties_button = new System.Windows.Forms.Button();
             this.Ok_button = new System.Windows.Forms.Button();
             this.Apply_button = new System.Windows.Forms.Button();
             this.Cancel_button = new System.Windows.Forms.Button();
             this.flowLayoutPanelDown = new System.Windows.Forms.FlowLayoutPanel();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DevicePointDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Datatype = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,6 +53,7 @@
             this.DevicePointDesignation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FunctionDefinition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SymbolicAdressDefined = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.flowLayoutPanelUp.SuspendLayout();
             this.flowLayoutPanelDown.SuspendLayout();
@@ -66,6 +67,7 @@
             this.flowLayoutPanelUp.Controls.Add(this.exchange_button);
             this.flowLayoutPanelUp.Controls.Add(this.dowm_button);
             this.flowLayoutPanelUp.Controls.Add(this.up_button);
+            this.flowLayoutPanelUp.Controls.Add(this.properties_button);
             this.flowLayoutPanelUp.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanelUp.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanelUp.Location = new System.Drawing.Point(0, 0);
@@ -115,6 +117,21 @@
             this.up_button.TabStop = false;
             this.up_button.UseVisualStyleBackColor = false;
             this.up_button.Click += new System.EventHandler(this.up_button_Click);
+            // 
+            // properties_button
+            // 
+            this.properties_button.BackColor = System.Drawing.Color.Transparent;
+            this.properties_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.properties_button.ForeColor = System.Drawing.Color.Transparent;
+            this.properties_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.image_psd;
+            this.properties_button.Location = new System.Drawing.Point(913, 3);
+            this.properties_button.Name = "properties_button";
+            this.properties_button.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.properties_button.Size = new System.Drawing.Size(23, 23);
+            this.properties_button.TabIndex = 1;
+            this.properties_button.TabStop = false;
+            this.properties_button.UseVisualStyleBackColor = false;
+            this.properties_button.Click += new System.EventHandler(this.properties_button_Click);
             // 
             // Ok_button
             // 
@@ -222,14 +239,6 @@
             this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellClick);
             this.dataGridView.SelectionChanged += new System.EventHandler(this.dataGridView_SelectionChanged);
             // 
-            // FunctionType
-            // 
-            this.FunctionType.DataPropertyName = "FunctionType";
-            this.FunctionType.HeaderText = "FunctionType";
-            this.FunctionType.Name = "FunctionType";
-            this.FunctionType.ReadOnly = true;
-            this.FunctionType.Width = 97;
-            // 
             // DevicePointDescription
             // 
             this.DevicePointDescription.DataPropertyName = "DevicePointDescription";
@@ -303,6 +312,14 @@
             this.SymbolicAdressDefined.ReadOnly = true;
             this.SymbolicAdressDefined.Width = 143;
             // 
+            // FunctionType
+            // 
+            this.FunctionType.DataPropertyName = "FunctionType";
+            this.FunctionType.HeaderText = "FunctionType";
+            this.FunctionType.Name = "FunctionType";
+            this.FunctionType.ReadOnly = true;
+            this.FunctionType.Width = 97;
+            // 
             // plcDataModelViewBindingSource
             // 
             this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
@@ -356,5 +373,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FunctionDefinition;
         private System.Windows.Forms.DataGridViewTextBoxColumn SymbolicAdressDefined;
         private System.Windows.Forms.DataGridViewTextBoxColumn FunctionType;
+        private System.Windows.Forms.Button properties_button;
     }
 }

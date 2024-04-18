@@ -50,11 +50,14 @@ namespace ST.EplAddin.PlcEdit
             functionsFilter.Category = Function.Enums.Category.PLCTerminal;
             if (selectedPlcdata.Length == 1)
             {
-                var terminal = selectedPlcdata[0] as Terminal;
-                selectedPlcdata = new DMObjectsFinder(CurrentProject)
-                    .GetTerminals(functionsFilter)
-                    .Where(x => x.Properties.FUNC_FULLDEVICETAG.ToString() == terminal?.Properties.FUNC_FULLDEVICETAG.ToString())
-                    .ToArray();
+                var terminal = selectedPlcdata[0] as Function;
+                if (terminal != null)
+                {
+                    selectedPlcdata = new DMObjectsFinder(CurrentProject)
+                        .GetTerminals(functionsFilter)
+                        .Where(x => x.Properties.FUNC_FULLDEVICETAG.ToString() == terminal?.Properties.FUNC_FULLDEVICETAG.ToString())
+                        .ToArray();
+                }
             }
             var result = selectedPlcdata.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
             return result;
@@ -151,9 +154,7 @@ namespace ST.EplAddin.PlcEdit
                     }
                     else//если есть реверс то применяем вот эту схему "с реверсом"
                     {
-
-
-
+                        MessageBox.Show($"You use reverse. It cannot be operated {sourceFunction.Name}---{targetFunction.Name}");
                     }
                     safetyPoint.Commit();
                 }

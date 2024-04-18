@@ -27,6 +27,7 @@ namespace ST.EplAddin.PlcEdit
             InitializeComponent();
             PlcDataModelView = plcDataModelView;
             AddData(PlcDataModelView);
+            PropertiesForm.SettingsChanged += PropertiesForm_SettingsChanged;
         }
 
         public int GetCurrentColumnsHeaderWidth()
@@ -48,6 +49,37 @@ namespace ST.EplAddin.PlcEdit
             (sender as Form).Width = GetCurrentColumnsHeaderWidth() + 58;
             InitialFormWidth = GetCurrentColumnsHeaderWidth() + 58;
             ChangeColorDisableColumns();
+            GetDefaultColumnSetting();
+        }
+
+        private void PropertiesForm_SettingsChanged(object sender, List<string> columnsToView)
+        {
+            SetVisibleColumns(columnsToView);
+        }
+
+        private void SetVisibleColumns(List<string> columnsToView)
+        {
+            foreach (DataGridViewColumn column in dataGridView.Columns)
+            {
+                if (columnsToView.Contains(column.Name))
+                {
+                    dataGridView.Columns[column.Name].Visible = true;
+                }
+                else
+                {
+                    dataGridView.Columns[column.Name].Visible = false;
+                }
+            }
+        }
+
+        private void GetDefaultColumnSetting()
+        {
+            EplanSettings eplanSettings = new EplanSettings();
+            var columnsToView = eplanSettings.TryGetSelectedColumns();
+            if (columnsToView.Any())
+            {
+                SetVisibleColumns(columnsToView);
+            }
         }
 
         private void ChangeColorDisableColumns()
@@ -284,6 +316,23 @@ namespace ST.EplAddin.PlcEdit
             }
 
         }
+
+        private void properties_button_Click(object sender, EventArgs e)
+        {
+            var columnsName = new List<string>();
+            var visibleColumnsName = new List<string>();
+            foreach (DataGridViewColumn column in dataGridView.Columns)
+            {
+                columnsName.Add(column.Name);
+                if (column.Visible)
+                {
+                    visibleColumnsName.Add(column.Name);
+                }
+            }
+            PropertiesForm propertiesForm = new PropertiesForm(columnsName, visibleColumnsName);
+            propertiesForm.ShowDialog();
+        }
+
     }
 }
 
