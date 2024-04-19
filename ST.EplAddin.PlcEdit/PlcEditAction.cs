@@ -11,6 +11,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MessageBox = System.Windows.Forms.MessageBox;
 
+
 namespace ST.EplAddin.PlcEdit
 {
     class PlcEditAction : IEplAction
@@ -103,6 +104,13 @@ namespace ST.EplAddin.PlcEdit
                 MessageBox.Show("Reverse cannot be operated");
                 return;
             }
+            AsssignNewFunctions(functionsInProgram, correlationTable);
+            RewritePlcProperties(plcTerminals, newDataPlc);
+            UpdateFormData();
+        }
+
+        private void AsssignNewFunctions(IEnumerable<Function> functionsInProgram, (List<NameCorrelation> tableWithoutReverse, List<NameCorrelation> tableWithReverse) correlationTable)
+        {
             foreach (var item in correlationTable.tableWithoutReverse)
             {
                 var sourceFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionOldName);//найдем его
@@ -116,8 +124,26 @@ namespace ST.EplAddin.PlcEdit
                 var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
                 AssignFunction(sourceFunction, targetFunction, true);
             }
-            UpdateFormData();
         }
+
+        private void RewritePlcProperties(Terminal[] plcTerminals, List<PlcDataModelView> newDataPlc)
+        {
+            foreach (var item in newDataPlc)    //тут будет применение всех измененных текстов для всех типов представлений
+            {
+                var terminals = plcTerminals.Where(x => x.Properties.FUNC_FULLNAME == item.DT);
+
+                if (terminals != null)
+                {
+                    foreach (var terminal in terminals)
+                    {
+                        terminal.Properties.FUNC_TEXT = item.FunctionText;
+                        terminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
+                        terminal.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL = item.SymbolicAdress;
+                    }
+                }
+            }
+        }
+
         private void CheckToIdenticalTerminal(Terminal[] terminal)
         {
             var name = terminal.Select(x => x.ToStringIdentifier());
@@ -169,7 +195,6 @@ namespace ST.EplAddin.PlcEdit
         {
             try
             {
-
                 using (SafetyPoint safetyPoint = SafetyPoint.Create())
                 {
                     if (reverse == false)

@@ -37,7 +37,7 @@ namespace ST.EplAddin.PlcEdit
             var result = new List<PlcDataModelView>();
             foreach (var entry in output)
             {
-                var terminal = entry.FirstOrDefault(item => item.FunctionType == "Многополюсный") ?? entry.First();
+                var terminal = entry.FirstOrDefault(item => item.FunctionType == "Многополюсный") ?? entry.First();//IsMainFunction
                 result.Add(terminal);
             }
             return result.OrderBy(x => int.Parse(x.DevicePointDesignation.Split(':').Last())).ToList();
