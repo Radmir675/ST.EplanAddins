@@ -79,6 +79,11 @@ namespace ST.EplAddin.PlcEdit
             var newDataPlc = e.PlcDataModelView; //тут получаем данные из формы
             InitialPlcData = Mapper.GetPlcData(plcTerminals);
             var correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
+            if (correlationTable.tableWithReverse.Any())
+            {
+                MessageBox.Show("Reverse cannot be operated");
+                return;
+            }
             foreach (var item in correlationTable.tableWithoutReverse)
             {
                 var sourceFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionOldName);//найдем его
