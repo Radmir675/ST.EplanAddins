@@ -1,6 +1,7 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
+using Eplan.EplApi.DataModel.E3D;
 using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.HEServices;
 using System;
@@ -50,7 +51,9 @@ namespace ST.EplAddin.PlcEdit
             functionsFilter.Category = Function.Enums.Category.PLCTerminal;
             if (selectedPlcdata.Length == 1)
             {
+
                 var terminal = selectedPlcdata[0] as Function;
+                var d = selectedPlcdata[0] as Placement3D;
                 if (terminal != null)
                 {
                     selectedPlcdata = new DMObjectsFinder(CurrentProject)

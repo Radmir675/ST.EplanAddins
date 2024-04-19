@@ -44,11 +44,11 @@
             this.Cancel_button = new System.Windows.Forms.Button();
             this.flowLayoutPanelDown = new System.Windows.Forms.FlowLayoutPanel();
             this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.DevicePointDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Datatype = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -62,9 +62,9 @@
             this.flowLayoutPanelUp.SuspendLayout();
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource)).BeginInit();
             this.tableLayoutPanel.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // flowLayoutPanelUp
@@ -228,7 +228,6 @@
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.Location = new System.Drawing.Point(0, 29);
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.ReadOnly = true;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -245,6 +244,10 @@
             this.dataGridView.TabIndex = 6;
             this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellClick);
             this.dataGridView.SelectionChanged += new System.EventHandler(this.dataGridView_SelectionChanged);
+            // 
+            // plcDataModelViewBindingSource
+            // 
+            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
             // 
             // tableLayoutPanel
             // 
@@ -294,10 +297,6 @@
             this.button5.Text = "Import";
             this.button5.UseVisualStyleBackColor = true;
             // 
-            // plcDataModelViewBindingSource
-            // 
-            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
-            // 
             // DevicePointDescription
             // 
             this.DevicePointDescription.DataPropertyName = "DevicePointDescription";
@@ -312,7 +311,6 @@
             this.PLCAdress.FillWeight = 86.17369F;
             this.PLCAdress.HeaderText = "PLCAdress";
             this.PLCAdress.Name = "PLCAdress";
-            this.PLCAdress.ReadOnly = true;
             // 
             // Datatype
             // 
@@ -328,7 +326,6 @@
             this.SymbolicAdress.FillWeight = 114.2454F;
             this.SymbolicAdress.HeaderText = "SymbolicAdress";
             this.SymbolicAdress.Name = "SymbolicAdress";
-            this.SymbolicAdress.ReadOnly = true;
             // 
             // FunctionText
             // 
@@ -337,7 +334,6 @@
             this.FunctionText.HeaderText = "FunctionText";
             this.FunctionText.MinimumWidth = 140;
             this.FunctionText.Name = "FunctionText";
-            this.FunctionText.ReadOnly = true;
             // 
             // DT
             // 
@@ -402,10 +398,10 @@
             this.flowLayoutPanelUp.ResumeLayout(false);
             this.flowLayoutPanelDown.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource)).EndInit();
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
