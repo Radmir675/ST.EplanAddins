@@ -51,20 +51,36 @@ namespace ST.EplAddin.PlcEdit
             functionsFilter.Category = Function.Enums.Category.PLCTerminal;
             if (selectedPlcdata.Length == 1)
             {
-
-                var terminal = selectedPlcdata[0] as Function;
-                var d = selectedPlcdata[0] as Placement3D;
-                if (terminal != null)
+                string fullDeviceTag = GetPlcFullName(selectedPlcdata);
+                if (fullDeviceTag != string.Empty)
                 {
                     selectedPlcdata = new DMObjectsFinder(CurrentProject)
                         .GetTerminals(functionsFilter)
-                        .Where(x => x.Properties.FUNC_FULLDEVICETAG.ToString() == terminal?.Properties.FUNC_FULLDEVICETAG.ToString())
+                        .Where(x => x.Properties.FUNC_FULLDEVICETAG.ToString() == fullDeviceTag)
                         .ToArray();
                 }
             }
             var result = selectedPlcdata.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
             return result;
         }
+
+        private string GetPlcFullName(StorableObject[] selectedPlcdata)
+        {
+            var fullDeviceTag = string.Empty;
+
+            var plcTerminal = selectedPlcdata[0] as Function;
+            if (plcTerminal == null)
+            {
+                var placement = selectedPlcdata[0] as Placement3D;
+                fullDeviceTag = placement?.Properties.FUNC_FULLDEVICETAG.ToString();
+            }
+            else
+            {
+                fullDeviceTag = plcTerminal?.Properties.FUNC_FULLDEVICETAG.ToString();
+            }
+            return fullDeviceTag;
+        }
+
         public void ShowTableForm(List<PlcDataModelView> plcDataModelView)
         {
             Process oCurrent = Process.GetCurrentProcess();
