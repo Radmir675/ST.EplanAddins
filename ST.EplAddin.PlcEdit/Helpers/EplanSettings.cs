@@ -25,7 +25,6 @@ namespace ST.EplAddin.PlcEdit
         public void SetCheckedColumns(List<string> columnsName)
         {
             settings.AddStringSetting("columnNames.p", columnsName.ToArray(), new string[columnsName.Count], ISettings.CreationFlag.Overwrite);
-
         }
     }
 }

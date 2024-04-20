@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ST.EplAddin.PlcEdit
 {
-    public class CsvFileDataView
+    public class CsvFileDataModelView
     {
         public string DevicePointDescription { get; set; }//DI3
         public string PLCAdress { get; set; }//I131.7

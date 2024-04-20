@@ -154,15 +154,15 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CsvConverter.cs" />
-    <Compile Include="CsvFileDataView.cs" />
-    <Compile Include="EplanSettings.cs" />
-    <Compile Include="Helpers\EqualityComparer.cs" />
-    <Compile Include="Helpers\NameCorrelation.cs" />
-    <Compile Include="Helpers\CustomEventArgs.cs" />
-    <Compile Include="Helpers\DirectionEnum.cs" />
+    <Compile Include="Helpers\CsvConverter.cs" />
+    <Compile Include="ModelView\CsvFileDataModelView.cs" />
+    <Compile Include="Helpers\EplanSettings.cs" />
+    <Compile Include="Model\EqualityComparer.cs" />
+    <Compile Include="Model\NameCorrelation.cs" />
+    <Compile Include="Model\CustomEventArgs.cs" />
+    <Compile Include="Model\DirectionEnum.cs" />
     <Compile Include="Helpers\Mapper.cs" />
-    <Compile Include="PlcDataModelView.cs" />
+    <Compile Include="ModelView\PlcDataModelView.cs" />
     <Compile Include="Forms\ManagePlcForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -333,6 +333,35 @@ namespace ST.EplAddin.PlcEdit
             propertiesForm.ShowDialog();
         }
 
+        private void export_button_Click(object sender, EventArgs e)
+        {
+            var path = TryGetSavePath();
+        }
+
+        private void import_button_Click(object sender, EventArgs e)
+        {
+            var path = TyrGetReadPath();
+        }
+        public string TryGetSavePath()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "(*.csv) | *.csv";
+            if (saveFileDialog.ShowDialog() == DialogResult.Cancel)
+                return null;
+            // получаем выбранный файл
+            string filename = saveFileDialog.FileName;
+            return filename;
+        }
+        public string TyrGetReadPath()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "(*.csv) | *.csv";
+            if (openFileDialog.ShowDialog() == DialogResult.Cancel)
+                return null;
+            // получаем выбранный файл
+            string filename = openFileDialog.FileName;
+            return filename;
+        }
     }
 }
 
