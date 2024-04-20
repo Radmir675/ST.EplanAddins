@@ -169,7 +169,7 @@
     <Compile Include="Forms\ManagePlcForm.Designer.cs">
       <DependentUpon>ManagePlcForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PlcEditAction.cs" />
+    <Compile Include="PlcAddinEditAction.cs" />
     <Compile Include="Forms\PropertiesForm.cs">
       <SubType>Form</SubType>
     </Compile>

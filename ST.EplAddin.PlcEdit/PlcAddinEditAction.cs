@@ -14,7 +14,7 @@ using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace ST.EplAddin.PlcEdit
 {
-    class PlcEditAction : IEplAction
+    class PlcAddinEditAction : IEplAction
     {
         public static string actionName = "PlcGuiIGfWindRackConfiguration";
         private static List<PlcDataModelView> InitialPlcData { get; set; }
