@@ -1,5 +1,6 @@
 ﻿using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel.EObjects;
+using ST.EplAddin.PlcEdit.ModelView;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,7 +28,8 @@ namespace ST.EplAddin.PlcEdit
                         FunctionDefinition = terminal.Properties.FUNC_COMPONENTTYPE.ToString(ISOCode.Language.L_ru_RU),
                         SymbolicAdressDefined = terminal.Properties.FUNC_PLCSYMBOLICADDRESS_CALCULATED.ToString(ISOCode.Language.L_ru_RU),
                         FunctionType = (terminal.Properties.FUNC_TYPE).GetDisplayString().GetString(ISOCode.Language.L_ru_RU),
-                        TerminalId = terminal.ToStringIdentifier()
+                        TerminalId = terminal.ToStringIdentifier(),
+                        DeviceNameShort = terminal.Properties.FUNC_IDENTDEVICETAGWITHOUTSTRUCTURES.ToString(ISOCode.Language.L_ru_RU)
                     };
                     plcDataModelView.Add(mappedPlc);
                 }
@@ -37,10 +39,47 @@ namespace ST.EplAddin.PlcEdit
             var result = new List<PlcDataModelView>();
             foreach (var entry in output)
             {
-                var terminal = entry.FirstOrDefault(item => item.FunctionType == "Многополюсный") ?? entry.First();//IsMainFunction
+                var terminal = entry.FirstOrDefault(item => item.FunctionType == "Многополюсный") ?? entry.First();
                 result.Add(terminal);
             }
             return result.OrderBy(x => int.Parse(x.DevicePointDesignation.Split(':').Last())).ToList();
+        }
+        public static List<FromCsvModelView> ConvertDataFromCsvModel(List<CsvFileDataModelView> csvFiles)
+        {
+            List<FromCsvModelView> result = new List<FromCsvModelView>(csvFiles.Count);
+            foreach (var csvFile in csvFiles)
+            {
+                FromCsvModelView CsvModelView = new FromCsvModelView()
+                {
+                    SymbolicAdress = csvFile.SymbolicAdress,
+                    FunctionText = csvFile.FunctionText,
+                    PLCAdress = csvFile.PLCAdress,
+                    DeviceNameShort = csvFile.DeviceNameShort,//подумать
+                };
+                result.Add(CsvModelView);
+            }
+            return result;
+        }
+        public static List<CsvFileDataModelView> ConvertDataToCsvModel(List<PlcDataModelView> plcDataModelViews)
+        {
+            List<CsvFileDataModelView> result = new List<CsvFileDataModelView>(plcDataModelViews.Count);
+            int bitNumber = 0;
+            foreach (var plcDataModelView in plcDataModelViews)
+            {
+                CsvFileDataModelView csvFileDataModelView = new()
+                {
+                    SymbolicAdress = plcDataModelView.SymbolicAdress,
+                    BitNumber = string.Join("", "Bit", $"{bitNumber.ToString()}"),
+                    Unit = string.Empty,
+                    FunctionText = plcDataModelView.FunctionText,
+                    PLCAdress = plcDataModelView.PLCAdress,
+                    DeviceNameShort = plcDataModelView.DeviceNameShort,
+                };
+                bitNumber++;
+
+                result.Add(csvFileDataModelView);
+            }
+            return result;
         }
     }
 

@@ -1,16 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ST.EplAddin.PlcEdit
+﻿namespace ST.EplAddin.PlcEdit
 {
     public class CsvFileDataModelView
     {
-        public string DevicePointDescription { get; set; }//DI3
-        public string PLCAdress { get; set; }//I131.7
         public string SymbolicAdress { get; set; }//DO_xLinAct2CP
+        public string BitNumber { get; set; }//Bit0
+        public string Unit { get; set; }//empty
+
         public string FunctionText { get; set; }//Линейный актуатор 2 в позицию калибровки
+        public string PLCAdress { get; set; }//I131.7
+        public string DeviceNameShort { get; set; }//A5
+        public CsvFileDataModelView()
+        {
+
+        }
+        public CsvFileDataModelView(string symbolicAdress)
+        {
+            SymbolicAdress = symbolicAdress;
+        }
     }
+
 }

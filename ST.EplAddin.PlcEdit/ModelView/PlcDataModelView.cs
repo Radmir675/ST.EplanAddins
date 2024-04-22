@@ -16,6 +16,7 @@ namespace ST.EplAddin.PlcEdit
         public string SymbolicAdressDefined { get; set; }//сиволический адрес определен если он не пустой значит вывод куда-то присвоен
         public string FunctionType { get; set; }//многополюсный или обзор
         public string TerminalId { get; set; }//id вывода ПЛК
+        public string DeviceNameShort { get; set; }//A5
 
         public object Clone()
         {

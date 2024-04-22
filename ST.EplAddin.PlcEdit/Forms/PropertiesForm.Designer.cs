@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PropertiesForm));
             this.checkedListBox = new System.Windows.Forms.CheckedListBox();
             this.OK_button = new System.Windows.Forms.Button();
             this.cancel_button = new System.Windows.Forms.Button();
@@ -36,6 +37,7 @@
             // 
             // checkedListBox
             // 
+            this.checkedListBox.CheckOnClick = true;
             this.checkedListBox.FormattingEnabled = true;
             this.checkedListBox.Location = new System.Drawing.Point(12, 30);
             this.checkedListBox.Name = "checkedListBox";
@@ -82,6 +84,7 @@
             this.Controls.Add(this.OK_button);
             this.Controls.Add(this.checkedListBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PropertiesForm";
             this.Text = "PropertiesForm";
             this.Load += new System.EventHandler(this.PropertiesForm_Load);

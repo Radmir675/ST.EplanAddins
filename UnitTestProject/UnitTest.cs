@@ -1,0 +1,39 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ST.EplAddin.PlcEdit;
+using System.Collections.Generic;
+
+namespace UnitTestProject
+{
+    [TestClass]
+    public class UnitTest
+    {
+        [TestMethod]
+        public void LoadCsv()
+        {
+            var path = @"C:\Users\biktimirov.rr\Desktop\Фаил конфигурации.csv";
+            CsvConverter csvConverter = new CsvConverter(path);
+            var result = csvConverter.ReadFile();
+            Assert.IsNotNull(result);
+        }
+        [TestMethod]
+        public void SaveCsv()
+        {
+            var path = @"C:\Users\biktimirov.rr\Desktop\Фаил.csv";
+            CsvConverter csvConverter = new CsvConverter(path);
+
+            List<CsvFileDataModelView> lines = new List<CsvFileDataModelView>(2);
+            CsvFileDataModelView csvFileDataModelView = new CsvFileDataModelView();
+            csvFileDataModelView.FunctionText = "Test";
+            csvFileDataModelView.PLCAdress = "Bit1";
+            CsvFileDataModelView csvFileDataModelView1 = new CsvFileDataModelView();
+            csvFileDataModelView1.FunctionText = "Test1";
+            csvFileDataModelView1.PLCAdress = "Bit2";
+
+
+            lines.Add(csvFileDataModelView);
+            lines.Add(csvFileDataModelView1);
+            csvConverter.SaveFile(lines);
+            Assert.IsNotNull(lines);
+        }
+    }
+}

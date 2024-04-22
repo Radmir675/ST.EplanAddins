@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ST.EplAddin.PlcEdit.ModelView;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -336,13 +337,33 @@ namespace ST.EplAddin.PlcEdit
         private void export_button_Click(object sender, EventArgs e)
         {
             var path = TryGetSavePath();
+            CsvConverter csvConverter = new CsvConverter(path);
+            var data = Mapper.ConvertDataToCsvModel(PlcDataModelView);
+            csvConverter.SaveFile(data);
         }
 
         private void import_button_Click(object sender, EventArgs e)
         {
-            var path = TyrGetReadPath();
+            var path = TryGetReadPath();
+            CsvConverter csvConverter = new CsvConverter(path);
+            var importedData = csvConverter.ReadFile();
+            var plcData = Mapper.ConvertDataFromCsvModel(importedData);
+            UpdateDataTable(plcData);
         }
-        public string TryGetSavePath()
+
+        private void UpdateDataTable(List<FromCsvModelView> csvPlcData)
+        {
+            if (csvPlcData == null) { return; }
+            if (csvPlcData.First().DeviceNameShort != PlcDataModelView.First().DeviceNameShort)
+            {
+                MessageBox.Show("Выбран неверный модуль для импорта");
+                return;
+            }
+            //тут надо написать перезапись
+            PlcDataModelView = csvPlcData;
+        }
+
+        private string TryGetSavePath()
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "(*.csv) | *.csv";
@@ -352,7 +373,7 @@ namespace ST.EplAddin.PlcEdit
             string filename = saveFileDialog.FileName;
             return filename;
         }
-        public string TyrGetReadPath()
+        public string TryGetReadPath()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "(*.csv) | *.csv";

@@ -24,7 +24,7 @@ namespace ST.EplAddin.PlcEdit
 
         private void cancel_button_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void OK_button_Click(object sender, EventArgs e)
