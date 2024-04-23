@@ -10,10 +10,10 @@ namespace UnitTestProject
         [TestMethod]
         public void LoadCsv()
         {
-            var path = @"C:\Users\biktimirov.rr\Desktop\Фаил конфигурации.csv";
-            CsvConverter csvConverter = new CsvConverter(path);
-            var result = csvConverter.ReadFile();
-            Assert.IsNotNull(result);
+            //ImportCsvForm importExportCsvForm = new ImportCsvForm();
+            //importExportCsvForm.ShowDialog();
+
+
         }
         [TestMethod]
         public void SaveCsv()

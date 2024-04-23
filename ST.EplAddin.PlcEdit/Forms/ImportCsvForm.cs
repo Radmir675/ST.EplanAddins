@@ -1,18 +1,50 @@
-﻿using System;
+﻿using ST.EplAddin.PlcEdit.Helpers;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ST.EplAddin.PlcEdit.Forms
 {
-    public partial class ImportCsvForm : Form
+    public partial class ExportCsvForm : Form
     {
-        public ImportCsvForm()
+        public static event EventHandler<List<CsvFileDataModelView>> ImportCsvData;
+        private DataGridViewRow[] SelectedRows
+        {
+            get
+            {
+                return dataGridView.SelectedRows.Cast<DataGridViewRow>().ToArray();
+            }
+        }
+        public ExportCsvForm()
         {
             InitializeComponent();
         }
 
         private void Ok_button_Click(object sender, EventArgs e)
         {
+            List<CsvFileDataModelView> csvFileDataModelViews = new List<CsvFileDataModelView>();
+            var dataInTable = ((IEnumerable)dataGridView.DataSource).Cast<CsvFileDataModelView>().ToList();
+            var indexFirstRow = SelectedRows.OrderBy(x => x.Index).First().Index;
+            var indexLastRow = SelectedRows.OrderBy(x => x.Index).Last().Index;
+            var selectedData = dataInTable.Skip(indexFirstRow + 1)//прибавил плюс один так как индекс начинается с нуля
+                                          .Take(indexLastRow - indexFirstRow + 1)
+                                          .ToList();
+            ImportCsvData?.Invoke(this, selectedData);
+        }
 
+        private void Cancel_button_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void Load_button_Click(object sender, EventArgs e)
+        {
+            var path = PathDialog.TryGetReadPath();
+            CsvConverter csvConverter = new CsvConverter(path);
+            var dataFromFile = csvConverter.ReadFile();
+            dataGridView.DataSource = dataFromFile;
         }
     }
 }

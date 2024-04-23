@@ -237,9 +237,10 @@
             this.dataGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dataGridView.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView.RowTemplate.Height = 17;
-            this.dataGridView.Size = new System.Drawing.Size(1107, 736);
+            this.dataGridView.Size = new System.Drawing.Size(1107, 701);
             this.dataGridView.TabIndex = 6;
             this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellClick);
+            this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellValueChanged);
             this.dataGridView.SelectionChanged += new System.EventHandler(this.dataGridView_SelectionChanged);
             // 
             // PLCAdress
@@ -375,8 +376,8 @@
             this.AutoSize = true;
             this.CancelButton = this.Cancel_button;
             this.ClientSize = new System.Drawing.Size(1107, 765);
-            this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.dataGridView);
+            this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.flowLayoutPanelUp);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
@@ -384,7 +385,6 @@
             this.Name = "ManagePlcForm";
             this.Text = "ManagePlcForm";
             this.Load += new System.EventHandler(this.ManagePlcForm_Load);
-            this.ResizeEnd += new System.EventHandler(this.ManagePlcForm_ResizeEnd);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ManagePlcForm_KeyDown);
             this.flowLayoutPanelUp.ResumeLayout(false);
             this.flowLayoutPanelDown.ResumeLayout(false);

@@ -1,15 +1,20 @@
-﻿using ST.EplAddin.PlcEdit.ModelView;
+﻿using ST.EplAddin.PlcEdit.Forms;
+using ST.EplAddin.PlcEdit.Helpers;
+using ST.EplAddin.PlcEdit.ModelView;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Application = System.Windows.Forms.Application;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace ST.EplAddin.PlcEdit
 {
     public partial class ManagePlcForm : Form
     {
-        public event EventHandler<CustomEventArgs> ApplyEvent;
+        public static event EventHandler<CustomEventArgs> ApplyEvent;
         private List<PlcDataModelView> PlcDataModelView { get; set; }
         public int InitialFormWidth { get; set; }
         private int LastSelectedRow { get; set; }
@@ -29,6 +34,13 @@ namespace ST.EplAddin.PlcEdit
             PlcDataModelView = plcDataModelView;
             AddData(PlcDataModelView);
             PropertiesForm.SettingsChanged += PropertiesForm_SettingsChanged;
+            ExportCsvForm.ImportCsvData += ImportCsvForm_ImportCsvData;
+        }
+
+        private void ImportCsvForm_ImportCsvData(object sender, List<CsvFileDataModelView> e)
+        {
+            var convertedData = Mapper.ConvertDataFromCsvModel(e);
+            UpdateDataTable(convertedData);
         }
 
         public int GetCurrentColumnsHeaderWidth()
@@ -89,8 +101,7 @@ namespace ST.EplAddin.PlcEdit
             {
                 if (column.ReadOnly == true)
                 {
-                    //dataGridView.Columns[$"{column.Name}"].DefaultCellStyle.BackColor = Color.DarkRed;
-
+                    dataGridView.Columns[$"{column.Name}"].DefaultCellStyle.BackColor = Color.FromArgb(169, 169, 169);
                 }
             }
         }
@@ -303,21 +314,6 @@ namespace ST.EplAddin.PlcEdit
             }
         }
 
-
-        private void ManagePlcForm_ResizeEnd(object sender, EventArgs e)
-        {
-            var currentFormWidth = (sender as Form).Width;
-            //if (currentFormWidth > InitialFormWidth)
-            //{
-            //    dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            //}
-            //else
-            //{
-            //    dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
-            //}
-
-        }
-
         private void properties_button_Click(object sender, EventArgs e)
         {
             var columnsName = new List<string>();
@@ -336,52 +332,70 @@ namespace ST.EplAddin.PlcEdit
 
         private void export_button_Click(object sender, EventArgs e)
         {
-            var path = TryGetSavePath();
+            ExportCsvForm importExportCsvForm = new();
+            importExportCsvForm.ShowDialog();
+
+            var path = PathDialog.TryGetSavePath();
             CsvConverter csvConverter = new CsvConverter(path);
+            //сначала надо подгрузить шаблон
             var data = Mapper.ConvertDataToCsvModel(PlcDataModelView);
-            csvConverter.SaveFile(data);
+            csvConverter.SaveFile(data);//его надо переписать исходя из полученнго шаблона
         }
 
         private void import_button_Click(object sender, EventArgs e)
         {
-            var path = TryGetReadPath();
-            CsvConverter csvConverter = new CsvConverter(path);
-            var importedData = csvConverter.ReadFile();
-            var plcData = Mapper.ConvertDataFromCsvModel(importedData);
-            UpdateDataTable(plcData);
+            ExportCsvForm importExportCsvForm = new();
+            importExportCsvForm.ShowDialog();
         }
 
         private void UpdateDataTable(List<FromCsvModelView> csvPlcData)
         {
-            if (csvPlcData == null) { return; }
+            if (csvPlcData == null)
+            {
+                throw new NullReferenceException("Нет данных для обновления");
+
+            }
             if (csvPlcData.First().DeviceNameShort != PlcDataModelView.First().DeviceNameShort)
             {
                 MessageBox.Show("Выбран неверный модуль для импорта");
                 return;
             }
-            //тут надо написать перезапись
-            PlcDataModelView = csvPlcData;
+            var properlyDataInDataGrid = GetProperlyRowsToImportData(PlcDataModelView);
+
+            if (csvPlcData.Count() != properlyDataInDataGrid.Count())//тут должно получиться 32 штуки
+            {
+                MessageBox.Show("Не найдено взаимооднозначное соответсвие данных для импорта");
+                return;
+            }
+            for (int i = 0; i < properlyDataInDataGrid.Count(); i++)
+            {
+                properlyDataInDataGrid[i].FunctionText = csvPlcData[i].FunctionText;  //тут надо написать перезаписать datagrid и все!
+                properlyDataInDataGrid[i].SymbolicAdress = csvPlcData[i].SymbolicAdress;
+                properlyDataInDataGrid[i].PLCAdress = csvPlcData[i].PLCAdress;
+            }
         }
 
-        private string TryGetSavePath()
+        private List<PlcDataModelView> GetProperlyRowsToImportData(List<PlcDataModelView> plcDataModelView)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "(*.csv) | *.csv";
-            if (saveFileDialog.ShowDialog() == DialogResult.Cancel)
-                return null;
-            // получаем выбранный файл
-            string filename = saveFileDialog.FileName;
-            return filename;
+            List<PlcDataModelView> result = new();
+            foreach (var item in plcDataModelView)
+            {
+                var splittedFunctionDifinition = item.FunctionDefinition.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                if (splittedFunctionDifinition.Contains("Источник") || splittedFunctionDifinition.Contains("Питание"))
+                {
+                    break;
+                }
+                else
+                {
+                    result.Add(item);
+                }
+            }
+            return result;
         }
-        public string TryGetReadPath()
+
+        private void dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "(*.csv) | *.csv";
-            if (openFileDialog.ShowDialog() == DialogResult.Cancel)
-                return null;
-            // получаем выбранный файл
-            string filename = openFileDialog.FileName;
-            return filename;
+            dataGridView[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Yellow;
         }
     }
 }

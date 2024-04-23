@@ -1,10 +1,8 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using ST.EplAddin.PlcEdit.Helpers;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace ST.EplAddin.PlcEdit
@@ -22,7 +20,7 @@ namespace ST.EplAddin.PlcEdit
         {
             CsvConfiguration config = GetConfig();
             List<CsvFileDataModelView> lines = new List<CsvFileDataModelView>(50);
-            using (var reader = new StreamReader(filePath, Encoding.Default))
+            using (var reader = new StreamReader(filePath))
             using (var csvReader = new CsvReader(reader, config))
             {
                 var encoding = reader.CurrentEncoding;
@@ -33,14 +31,14 @@ namespace ST.EplAddin.PlcEdit
                     {
                         SymbolicAdress = csvReader.GetField(0),
                         BitNumber = csvReader.GetField(1),
-                        FunctionText = ReadStringAsUtf8(csvReader.GetField(3)),
-                        PLCAdress = csvReader.GetField(4),
+                        FunctionText = csvReader?.GetField(3),
+                        PLCAdress = csvReader?.GetField(4),
                         DeviceNameShort = csvReader.GetField(5),
                     };
                     lines.Add(module);
                 }
             }
-            return lines.Skip(4).SkipLast(1).ToList();
+            return lines;
         }
 
         public void SaveFile(List<CsvFileDataModelView> fileToWrite)
@@ -76,13 +74,7 @@ namespace ST.EplAddin.PlcEdit
                 }
             }
         }
-        private string ReadStringAsUtf8(string original)
-        {
-            Encoding encoding = Encoding.GetEncoding("windows-1251");
-            byte[] encBytes = encoding.GetBytes(original);
-            byte[] utf8Bytes = Encoding.Convert(encoding, Encoding.UTF8, encBytes);
-            return Encoding.UTF8.GetString(utf8Bytes);
-        }
+
         private string SaveStringAsANSI(string ending, Encoding encoding)
         {
             Encoding wishEncoding = Encoding.GetEncoding("windows-1251");
@@ -96,7 +88,8 @@ namespace ST.EplAddin.PlcEdit
             return new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 Delimiter = ";",
-                BadDataFound = null
+                BadDataFound = null,
+                MissingFieldFound = null
             };
         }
     }
