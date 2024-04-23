@@ -1,6 +1,6 @@
 ﻿namespace ST.EplAddin.PlcEdit.Forms
 {
-    partial class ImportCsvForm
+    partial class ExportCsvForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImportCsvForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExportCsvForm));
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.symbolicAdressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bitNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -42,8 +42,9 @@
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanelDown = new System.Windows.Forms.FlowLayoutPanel();
             this.Cancel_button = new System.Windows.Forms.Button();
-            this.import_button = new System.Windows.Forms.Button();
+            this.export_button = new System.Windows.Forms.Button();
             this.Load_button = new System.Windows.Forms.Button();
+            this.replaceSelectedRows_button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewBindingSource)).BeginInit();
             this.tableLayoutPanel.SuspendLayout();
@@ -124,9 +125,9 @@
             this.label.AutoSize = true;
             this.label.Location = new System.Drawing.Point(3, 6);
             this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(137, 13);
+            this.label.Size = new System.Drawing.Size(144, 13);
             this.label.TabIndex = 1;
-            this.label.Text = "Please select data to import";
+            this.label.Text = "Please select data to replace";
             this.label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tableLayoutPanel
@@ -150,8 +151,9 @@
             // 
             this.flowLayoutPanelDown.AutoSize = true;
             this.flowLayoutPanelDown.Controls.Add(this.Cancel_button);
-            this.flowLayoutPanelDown.Controls.Add(this.import_button);
+            this.flowLayoutPanelDown.Controls.Add(this.export_button);
             this.flowLayoutPanelDown.Controls.Add(this.Load_button);
+            this.flowLayoutPanelDown.Controls.Add(this.replaceSelectedRows_button);
             this.flowLayoutPanelDown.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.flowLayoutPanelDown.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanelDown.Location = new System.Drawing.Point(3, 618);
@@ -173,37 +175,48 @@
             this.Cancel_button.UseVisualStyleBackColor = true;
             this.Cancel_button.Click += new System.EventHandler(this.Cancel_button_Click);
             // 
-            // import_button
+            // export_button
             // 
-            this.import_button.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.import_button.Location = new System.Drawing.Point(762, 3);
-            this.import_button.Name = "import_button";
-            this.import_button.Size = new System.Drawing.Size(75, 23);
-            this.import_button.TabIndex = 1;
-            this.import_button.Text = "Import";
-            this.import_button.UseVisualStyleBackColor = true;
-            this.import_button.Click += new System.EventHandler(this.Import_button_Click);
+            this.export_button.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.export_button.Location = new System.Drawing.Point(762, 3);
+            this.export_button.Name = "export_button";
+            this.export_button.Size = new System.Drawing.Size(75, 23);
+            this.export_button.TabIndex = 1;
+            this.export_button.Text = "Export";
+            this.export_button.UseVisualStyleBackColor = true;
+            this.export_button.Click += new System.EventHandler(this.Export_button_Click);
             // 
             // Load_button
             // 
             this.Load_button.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Load_button.Location = new System.Drawing.Point(681, 3);
+            this.Load_button.Location = new System.Drawing.Point(661, 3);
             this.Load_button.Name = "Load_button";
-            this.Load_button.Size = new System.Drawing.Size(75, 23);
+            this.Load_button.Size = new System.Drawing.Size(95, 23);
             this.Load_button.TabIndex = 1;
-            this.Load_button.Text = "Load file";
+            this.Load_button.Text = "Load template";
             this.Load_button.UseVisualStyleBackColor = true;
             this.Load_button.Click += new System.EventHandler(this.Load_button_Click);
             // 
-            // ImportCsvForm
+            // replaceSelectedRows_button
+            // 
+            this.replaceSelectedRows_button.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.replaceSelectedRows_button.Location = new System.Drawing.Point(525, 3);
+            this.replaceSelectedRows_button.Name = "replaceSelectedRows_button";
+            this.replaceSelectedRows_button.Size = new System.Drawing.Size(130, 23);
+            this.replaceSelectedRows_button.TabIndex = 1;
+            this.replaceSelectedRows_button.Text = "Replace SelectedRows";
+            this.replaceSelectedRows_button.UseVisualStyleBackColor = true;
+            this.replaceSelectedRows_button.Click += new System.EventHandler(this.ReplaceSelectedRows_button_Click);
+            // 
+            // ExportCsvForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(927, 650);
             this.Controls.Add(this.tableLayoutPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "ImportCsvForm";
-            this.Text = "ImportCsvForm";
+            this.Name = "ExportCsvForm";
+            this.Text = "ExportCsvForm";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewBindingSource)).EndInit();
             this.tableLayoutPanel.ResumeLayout(false);
@@ -216,10 +229,11 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView;
+        private System.Windows.Forms.Label label;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelDown;
         private System.Windows.Forms.Button Cancel_button;
-        private System.Windows.Forms.Button import_button;
+        private System.Windows.Forms.Button export_button;
         private System.Windows.Forms.Button Load_button;
         private System.Windows.Forms.DataGridViewTextBoxColumn symbolicAdressDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn bitNumberDataGridViewTextBoxColumn;
@@ -228,6 +242,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn pLCAdressDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn deviceNameShortDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource csvFileDataModelViewBindingSource;
-        public System.Windows.Forms.Label label;
+        private System.Windows.Forms.Button replaceSelectedRows_button;
     }
 }

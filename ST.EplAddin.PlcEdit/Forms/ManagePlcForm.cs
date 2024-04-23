@@ -1,5 +1,4 @@
 ﻿using ST.EplAddin.PlcEdit.Forms;
-using ST.EplAddin.PlcEdit.Helpers;
 using ST.EplAddin.PlcEdit.ModelView;
 using System;
 using System.Collections.Generic;
@@ -34,7 +33,7 @@ namespace ST.EplAddin.PlcEdit
             PlcDataModelView = plcDataModelView;
             AddData(PlcDataModelView);
             PropertiesForm.SettingsChanged += PropertiesForm_SettingsChanged;
-            ExportCsvForm.ImportCsvData += ImportCsvForm_ImportCsvData;
+            ImportCsvForm.ImportCsvData += ImportCsvForm_ImportCsvData;
         }
 
         private void ImportCsvForm_ImportCsvData(object sender, List<CsvFileDataModelView> e)
@@ -332,19 +331,14 @@ namespace ST.EplAddin.PlcEdit
 
         private void export_button_Click(object sender, EventArgs e)
         {
-            ExportCsvForm importExportCsvForm = new();
-            importExportCsvForm.ShowDialog();
-
-            var path = PathDialog.TryGetSavePath();
-            CsvConverter csvConverter = new CsvConverter(path);
-            //сначала надо подгрузить шаблон
-            var data = Mapper.ConvertDataToCsvModel(PlcDataModelView);
-            csvConverter.SaveFile(data);//его надо переписать исходя из полученнго шаблона
+            var dataToExport = GetProperlyRowsToImportData(PlcDataModelView);
+            ExportCsvForm exportExportCsvForm = new ExportCsvForm(dataToExport);
+            exportExportCsvForm.ShowDialog();
         }
 
         private void import_button_Click(object sender, EventArgs e)
         {
-            ExportCsvForm importExportCsvForm = new();
+            ImportCsvForm importExportCsvForm = new();
             importExportCsvForm.ShowDialog();
         }
 
@@ -364,7 +358,7 @@ namespace ST.EplAddin.PlcEdit
 
             if (csvPlcData.Count() != properlyDataInDataGrid.Count())//тут должно получиться 32 штуки
             {
-                MessageBox.Show("Не найдено взаимооднозначное соответсвие данных для импорта");
+                MessageBox.Show("Не найдено взаимооднозначное соответствие данных для импорта");
                 return;
             }
             for (int i = 0; i < properlyDataInDataGrid.Count(); i++)

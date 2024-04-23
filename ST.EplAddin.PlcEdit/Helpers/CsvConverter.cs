@@ -41,38 +41,41 @@ namespace ST.EplAddin.PlcEdit
             return lines;
         }
 
+        //тут надо тупо записать фаил в нужной нам кодировке
         public void SaveFile(List<CsvFileDataModelView> fileToWrite)
         {
-            CsvConfiguration config = GetConfig();
-            config.HasHeaderRecord = false;
 
-            Encoding wishEncoding = Encoding.GetEncoding("windows-1251");
-            using (var writer = new StreamWriter(filePath, false, wishEncoding)) //поменять тип шифрования
 
-            using (var csvWriter = new CsvWriter(writer, config))
-            {
-                var headerTable = new CsvFileDataModelView()
-                {
-                    SymbolicAdress = "//Mapped variable",
-                    BitNumber = "//Parameter name @ counter in device",
-                    Unit = "//Unit",
-                    FunctionText = "//Description",
-                    PLCAdress = "PLCAdress",
-                    DeviceNameShort = "//Device name"
-                };
+            //CsvConfiguration config = GetConfig();
+            //config.HasHeaderRecord = false;
 
-                csvWriter.WriteRecord(new CsvFileDataModelView("CoDeSys Mapping Export V1.2"));
-                csvWriter.NextRecord();
-                csvWriter.WriteRecord(headerTable);
-                csvWriter.NextRecord();
-                csvWriter.WriteRecord(new CsvFileDataModelView("//Important: change only first, third or fourth column in Excel or add variable name before first"));
-                csvWriter.NextRecord();//что тут пока не понял
-                foreach (var file in fileToWrite)
-                {
-                    csvWriter.WriteRecord(file);
-                    csvWriter.NextRecord();
-                }
-            }
+            //Encoding wishEncoding = Encoding.GetEncoding("windows-1251");
+            //using (var writer = new StreamWriter(filePath, false, wishEncoding)) //поменять тип шифрования
+
+            //using (var csvWriter = new CsvWriter(writer, config))
+            //{
+            //    var headerTable = new CsvFileDataModelView()
+            //    {
+            //        SymbolicAdress = "//Mapped variable",
+            //        BitNumber = "//Parameter name @ counter in device",
+            //        Unit = "//Unit",
+            //        FunctionText = "//Description",
+            //        PLCAdress = "PLCAdress",
+            //        DeviceNameShort = "//Device name"
+            //    };
+
+            //    csvWriter.WriteRecord(new CsvFileDataModelView("CoDeSys Mapping Export V1.2"));
+            //    csvWriter.NextRecord();
+            //    csvWriter.WriteRecord(headerTable);
+            //    csvWriter.NextRecord();
+            //    csvWriter.WriteRecord(new CsvFileDataModelView("//Important: change only first, third or fourth column in Excel or add variable name before first"));
+            //    csvWriter.NextRecord();//что тут пока не понял
+            //    foreach (var file in fileToWrite)
+            //    {
+            //        csvWriter.WriteRecord(file);
+            //        csvWriter.NextRecord();
+            //    }
+            //}
         }
 
         private string SaveStringAsANSI(string ending, Encoding encoding)

@@ -7,9 +7,10 @@ using System.Windows.Forms;
 
 namespace ST.EplAddin.PlcEdit.Forms
 {
-    public partial class ExportCsvForm : Form
+    public partial class ImportCsvForm : Form
     {
         public static event EventHandler<List<CsvFileDataModelView>> ImportCsvData;
+        public static event EventHandler<List<CsvFileDataModelView>> ExportCsvData;
         private DataGridViewRow[] SelectedRows
         {
             get
@@ -17,12 +18,12 @@ namespace ST.EplAddin.PlcEdit.Forms
                 return dataGridView.SelectedRows.Cast<DataGridViewRow>().ToArray();
             }
         }
-        public ExportCsvForm()
+        public ImportCsvForm()
         {
             InitializeComponent();
         }
 
-        private void Ok_button_Click(object sender, EventArgs e)
+        private void Import_button_Click(object sender, EventArgs e)
         {
             List<CsvFileDataModelView> csvFileDataModelViews = new List<CsvFileDataModelView>();
             var dataInTable = ((IEnumerable)dataGridView.DataSource).Cast<CsvFileDataModelView>().ToList();

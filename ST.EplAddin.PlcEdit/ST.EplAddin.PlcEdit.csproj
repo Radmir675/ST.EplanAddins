@@ -154,6 +154,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\ExportCsvForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ExportCsvForm.Designer.cs">
+      <DependentUpon>ExportCsvForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ImportCsvForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -195,6 +201,9 @@
     <Compile Include="Helpers\WindowWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\ExportCsvForm.resx">
+      <DependentUpon>ExportCsvForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ImportCsvForm.resx">
       <DependentUpon>ImportCsvForm.cs</DependentUpon>
     </EmbeddedResource>
