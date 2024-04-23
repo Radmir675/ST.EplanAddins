@@ -140,9 +140,9 @@ namespace ST.EplAddin.PlcEdit
         }
         private void HighlightRow(int rowIndex1, int rowIndex2)
         {
-            dataGridView.ClearSelection();
-            dataGridView.Rows[rowIndex1].Selected = true;
-            dataGridView.Rows[rowIndex2].Selected = true;
+            //dataGridView.ClearSelection();
+            //dataGridView.Rows[rowIndex1].Selected = true;
+            //dataGridView.Rows[rowIndex2].Selected = true;
 
             dataGridView.Refresh();
         }
@@ -157,7 +157,7 @@ namespace ST.EplAddin.PlcEdit
                 return;
             }
             AssignDataToTargetRow(currentIndexRow, targetIndexRow.Value);
-            HighlightRow(targetIndexRow.Value);
+            // HighlightRow(targetIndexRow.Value);
         }
         private void ExchangePositions()
         {
@@ -167,7 +167,7 @@ namespace ST.EplAddin.PlcEdit
             if (currentIndexRow != targetIndexRow)
             {
                 AssignDataToTargetRow(currentIndexRow, targetIndexRow);
-                HighlightRow(currentIndexRow, targetIndexRow);
+                //  HighlightRow(currentIndexRow, targetIndexRow);
             }
         }
 
@@ -212,17 +212,17 @@ namespace ST.EplAddin.PlcEdit
                         .Where(z => z.Index < currentPositionIndex)
                         .Reverse()
                         .FirstOrDefault(x =>
-                  x.Cells["SymbolicAdress"].Value.ToString() == string.Empty
-                 && x.Cells["FunctionText"].Value.ToString() == string.Empty
+                  x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                 && x.Cells["FunctionText"].Value?.ToString() == string.Empty
                   && x.Index < currentPositionIndex
-                 && functionDefinition == x.Cells["FunctionDefinition"].Value.ToString());
+                 && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
                     break;
                 case Direction.Down:
                     properlyRow = dataGridView.Rows.Cast<DataGridViewRow>().FirstOrDefault(x =>
-                  x.Cells["SymbolicAdress"].Value.ToString() == string.Empty
-                 && x.Cells["FunctionText"].Value.ToString() == string.Empty
+                  x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                 && x.Cells["FunctionText"].Value?.ToString() == string.Empty
                  && x.Index > currentPositionIndex
-                 && functionDefinition == x.Cells["FunctionDefinition"].Value.ToString());
+                 && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
                     break;
             }
 
@@ -291,7 +291,7 @@ namespace ST.EplAddin.PlcEdit
             {
                 return;
             }
-            var functionDefinition = currentRow.Cells["FunctionDefinition"].Value.ToString();
+            var functionDefinition = currentRow?.Cells["FunctionDefinition"]?.Value?.ToString();
 
             var emptyUpRow = TryGetEmptyIndexRow(currentRow.Index, Direction.Up, functionDefinition);
             if (!emptyUpRow.HasValue || SelectedRows.Count() != 1)
@@ -389,7 +389,7 @@ namespace ST.EplAddin.PlcEdit
 
         private void dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            dataGridView[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Yellow;
+            //    dataGridView[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Yellow;
         }
     }
 }

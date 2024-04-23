@@ -35,5 +35,19 @@ namespace UnitTestProject
             csvConverter.SaveFile(lines);
             Assert.IsNotNull(lines);
         }
+        [TestMethod]
+        public void StartMainWindows()
+        {
+            List<PlcDataModelView> list = new List<PlcDataModelView>();
+            PlcDataModelView plcDataModelView = new PlcDataModelView();
+            plcDataModelView.FunctionText = "Test";
+            PlcDataModelView plcDataModelView1 = new PlcDataModelView();
+            plcDataModelView.FunctionText = "Test1";
+            list.Add(plcDataModelView);
+            list.Add(plcDataModelView1);
+
+            ManagePlcForm managePlcForm = new ManagePlcForm(list);
+            managePlcForm.ShowDialog();
+        }
     }
 }

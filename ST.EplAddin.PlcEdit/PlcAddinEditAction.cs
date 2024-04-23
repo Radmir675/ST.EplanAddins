@@ -101,8 +101,8 @@ namespace ST.EplAddin.PlcEdit
             var correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
             if (correlationTable.tableWithReverse.Any())
             {
-                MessageBox.Show("Reverse cannot be operated");
-                return;
+                //MessageBox.Show("Reverse cannot be operated");
+                //return;
             }
             AsssignNewFunctions(functionsInProgram, correlationTable);
             RewritePlcProperties(plcTerminals, newDataPlc);
@@ -203,7 +203,9 @@ namespace ST.EplAddin.PlcEdit
                     }
                     else//если есть реверс то применяем вот эту схему "с реверсом"
                     {
-                        MessageBox.Show($"You use reverse. It cannot be operated {sourceFunction.Name}---{targetFunction.Name}");
+                        // MessageBox.Show($"You use reverse. It cannot be operated {sourceFunction.Name}---{targetFunction.Name}");
+                        targetFunction.Name = "1";
+                        sourceFunction.Assign(targetFunction);
                     }
                     safetyPoint.Commit();
                 }
