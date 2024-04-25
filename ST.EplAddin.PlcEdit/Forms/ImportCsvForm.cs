@@ -44,6 +44,10 @@ namespace ST.EplAddin.PlcEdit.Forms
         private void Load_button_Click(object sender, EventArgs e)
         {
             var path = PathDialog.TryGetReadPath();
+            if (path == null)
+            {
+                return;
+            }
             CsvConverter csvConverter = new CsvConverter(path);
             var dataFromFile = csvConverter.ReadFile();
             dataGridView.DataSource = dataFromFile;

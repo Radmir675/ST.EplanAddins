@@ -195,7 +195,7 @@
             this.Load_button.TabIndex = 1;
             this.Load_button.Text = "Load template";
             this.Load_button.UseVisualStyleBackColor = true;
-            this.Load_button.Click += new System.EventHandler(this.Load_button_Click);
+            this.Load_button.Click += new System.EventHandler(this.LoadTemplate_button_Click);
             // 
             // replaceSelectedRows_button
             // 

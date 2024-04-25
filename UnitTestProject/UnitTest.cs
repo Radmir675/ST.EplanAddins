@@ -17,6 +17,7 @@ namespace UnitTestProject
         [TestMethod]
         public void SaveCsv()
         {
+
             var path = @"C:\Users\biktimirov.rr\Desktop\Фаил.csv";
             CsvConverter csvConverter = new CsvConverter(path);
 
@@ -64,6 +65,13 @@ namespace UnitTestProject
         }
         [TestMethod]
         public void TryReplaceDataInMainViewForm()
+        {
+            ManagePlcForm managePlcForm = new ManagePlcForm(Init());
+            managePlcForm.ShowDialog();
+
+        }
+        [TestMethod]
+        public void ExportCsv()
         {
             ManagePlcForm managePlcForm = new ManagePlcForm(Init());
             managePlcForm.ShowDialog();

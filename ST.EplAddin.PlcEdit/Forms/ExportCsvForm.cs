@@ -10,7 +10,8 @@ namespace ST.EplAddin.PlcEdit.Forms
     public partial class ExportCsvForm : Form
     {
 
-        List<CsvFileDataModelView> dataFromTemplate = new List<CsvFileDataModelView>();
+        List<CsvFileDataModelView> dataFromEplan = new List<CsvFileDataModelView>();
+        List<CsvFileDataModelView> dataToExport = new List<CsvFileDataModelView>();
         private DataGridViewRow[] SelectedRows
         {
             get
@@ -18,17 +19,22 @@ namespace ST.EplAddin.PlcEdit.Forms
                 return dataGridView.SelectedRows.Cast<DataGridViewRow>().ToArray();
             }
         }
-        public ExportCsvForm(List<PlcDataModelView> dataToExport)
+        public ExportCsvForm(List<PlcDataModelView> dataFromEplan)
         {
             InitializeComponent();
-            dataFromTemplate = Mapper.ConvertDataToCsvModel(dataToExport);
+            this.dataFromEplan = Mapper.ConvertDataToCsvModel(dataFromEplan);
         }
 
         private void Export_button_Click(object sender, EventArgs e)
         {
             var path = PathDialog.TryGetSavePath();
+            if (path == null)
+            {
+                return;
+            }
             CsvConverter csvConverter = new CsvConverter(path);
-            csvConverter.SaveFile(dataFromTemplate);//его надо переписать исходя из полученнго шаблона
+            csvConverter.SaveFile(dataToExport);//его надо переписать исходя из полученнго шаблона
+            this.Close();
         }
 
         private void Cancel_button_Click(object sender, EventArgs e)
@@ -36,30 +42,34 @@ namespace ST.EplAddin.PlcEdit.Forms
             Close();
         }
 
-        private void Load_button_Click(object sender, EventArgs e)
+        private void LoadTemplate_button_Click(object sender, EventArgs e)
         {
             var path = PathDialog.TryGetReadPath();
+            if (path == null)
+            {
+                return;
+            }
             CsvConverter csvConverter = new CsvConverter(path);
-            dataFromTemplate = csvConverter.ReadFile();
-            dataGridView.DataSource = dataFromTemplate;
+            dataToExport = csvConverter.ReadFile();
+            dataGridView.DataSource = dataToExport;
         }
 
         private void ReplaceSelectedRows_button_Click(object sender, EventArgs e)
         {
-            List<CsvFileDataModelView> dataToReplace = new List<CsvFileDataModelView>();
             var dataInTable = ((IEnumerable)dataGridView.DataSource).Cast<CsvFileDataModelView>().ToList();
             var indexFirstRow = SelectedRows.OrderBy(x => x.Index).First().Index;
             var indexLastRow = SelectedRows.OrderBy(x => x.Index).Last().Index;
 
             int j = 0;
-            for (int i = 0; i < dataFromTemplate.Count; i++)
+            for (int i = 0; i < dataToExport.Count; i++)
             {
-                if (i >= indexFirstRow || i <= indexLastRow)
+                if (i >= indexFirstRow && i <= indexLastRow)
                 {
-                    dataFromTemplate[i] = dataFromTemplate[j];
+                    dataToExport[i] = dataFromEplan[j];
                     j++;
                 }
             }
+            dataGridView.Refresh();
         }
     }
 }

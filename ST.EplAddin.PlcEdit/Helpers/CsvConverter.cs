@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using System.Windows;
+using System.Windows.Forms;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace ST.EplAddin.PlcEdit
 {
@@ -46,18 +47,14 @@ namespace ST.EplAddin.PlcEdit
             }
             catch (System.Exception e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return lines;
         }
         public void SaveFile(List<CsvFileDataModelView> fileToWrite)
         {
-
-
             CsvConfiguration config = GetConfig();
-
             using (var writer = new StreamWriter(filePath, true, Encoding.UTF8)) //поменять тип шифрования
-
             using (var csvWriter = new CsvWriter(writer, config))
             {
                 foreach (var file in fileToWrite)
@@ -66,14 +63,7 @@ namespace ST.EplAddin.PlcEdit
                     csvWriter.NextRecord();
                 }
             }
-        }
-
-        private string SaveStringAsANSI(string ending, Encoding encoding)
-        {
-            Encoding wishEncoding = Encoding.GetEncoding("windows-1251");
-            byte[] encBytes = encoding.GetBytes(ending);
-            byte[] utf8Bytes = Encoding.Convert(Encoding.UTF8, wishEncoding, encBytes);
-            return Encoding.UTF8.GetString(utf8Bytes);
+            MessageBox.Show("Files are recorded!", "Mesage", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private CsvConfiguration GetConfig()
