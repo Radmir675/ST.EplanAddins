@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Windows;
 
 namespace ST.EplAddin.PlcEdit
 {
@@ -20,23 +21,32 @@ namespace ST.EplAddin.PlcEdit
         {
             CsvConfiguration config = GetConfig();
             List<CsvFileDataModelView> lines = new List<CsvFileDataModelView>(50);
-            using (var reader = new StreamReader(filePath))
-            using (var csvReader = new CsvReader(reader, config))
+            try
             {
-                var encoding = reader.CurrentEncoding;
-                csvReader.Read();
-                while (csvReader.Read())
+                using (var reader = new StreamReader(filePath))
+                using (var csvReader = new CsvReader(reader, config))
                 {
-                    var module = new CsvFileDataModelView()
+                    var encoding = reader.CurrentEncoding;
+                    csvReader.Read();
+                    while (csvReader.Read())
                     {
-                        SymbolicAdress = csvReader.GetField(0),
-                        BitNumber = csvReader.GetField(1),
-                        FunctionText = csvReader?.GetField(3),
-                        PLCAdress = csvReader?.GetField(4),
-                        DeviceNameShort = csvReader.GetField(5),
-                    };
-                    lines.Add(module);
+                        var module = new CsvFileDataModelView()
+                        {
+                            SymbolicAdress = csvReader.GetField(0),
+                            BitNumber = csvReader.GetField(1),
+                            FunctionText = csvReader?.GetField(3),
+                            PLCAdress = csvReader?.GetField(4),
+                            DeviceNameShort = csvReader.GetField(5),
+                        };
+                        lines.Add(module);
+                    }
                 }
+                return lines;
+
+            }
+            catch (System.Exception e)
+            {
+                MessageBox.Show(e.Message);
             }
             return lines;
         }

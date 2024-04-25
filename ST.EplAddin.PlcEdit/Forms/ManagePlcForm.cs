@@ -86,12 +86,12 @@ namespace ST.EplAddin.PlcEdit
 
         private void GetDefaultColumnSetting()
         {
-            EplanSettings eplanSettings = new EplanSettings();
-            var columnsToView = eplanSettings.TryGetSelectedColumns();
-            if (columnsToView.Any())
-            {
-                SetVisibleColumns(columnsToView);
-            }
+            //EplanSettings eplanSettings = new EplanSettings();
+            //var columnsToView = eplanSettings.TryGetSelectedColumns();
+            //if (columnsToView.Any())
+            //{
+            //    SetVisibleColumns(columnsToView);
+            //}
         }
 
         private void ChangeColorDisableColumns()
@@ -367,6 +367,7 @@ namespace ST.EplAddin.PlcEdit
                 properlyDataInDataGrid[i].SymbolicAdress = csvPlcData[i].SymbolicAdress;
                 properlyDataInDataGrid[i].PLCAdress = csvPlcData[i].PLCAdress;
             }
+            dataGridView.Refresh();
         }
 
         private List<PlcDataModelView> GetProperlyRowsToImportData(List<PlcDataModelView> plcDataModelView)
@@ -374,10 +375,15 @@ namespace ST.EplAddin.PlcEdit
             List<PlcDataModelView> result = new();
             foreach (var item in plcDataModelView)
             {
-                var splittedFunctionDifinition = item.FunctionDefinition.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                var splittedFunctionDifinition = item?.FunctionDefinition?.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                if (splittedFunctionDifinition == null)//а вот тут надо подумать
+                {
+                    result.Add(item);
+                    continue;
+                }
                 if (splittedFunctionDifinition.Contains("Источник") || splittedFunctionDifinition.Contains("Питание"))
                 {
-                    break;
+                    continue;
                 }
                 else
                 {
@@ -389,7 +395,11 @@ namespace ST.EplAddin.PlcEdit
 
         private void dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            //    dataGridView[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Yellow;
+            if (e == null || e.RowIndex == -1)
+            {
+                return;
+            }
+            dataGridView[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Yellow;
         }
     }
 }

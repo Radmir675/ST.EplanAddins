@@ -29,10 +29,11 @@ namespace ST.EplAddin.PlcEdit.Forms
             var dataInTable = ((IEnumerable)dataGridView.DataSource).Cast<CsvFileDataModelView>().ToList();
             var indexFirstRow = SelectedRows.OrderBy(x => x.Index).First().Index;
             var indexLastRow = SelectedRows.OrderBy(x => x.Index).Last().Index;
-            var selectedData = dataInTable.Skip(indexFirstRow + 1)//прибавил плюс один так как индекс начинается с нуля
+            var selectedData = dataInTable.Skip(indexFirstRow)//прибавил плюс один так как индекс начинается с нуля
                                           .Take(indexLastRow - indexFirstRow + 1)
                                           .ToList();
             ImportCsvData?.Invoke(this, selectedData);
+            this.Close();
         }
 
         private void Cancel_button_Click(object sender, EventArgs e)
