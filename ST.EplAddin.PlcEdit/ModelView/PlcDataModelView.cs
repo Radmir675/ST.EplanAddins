@@ -17,6 +17,7 @@ namespace ST.EplAddin.PlcEdit
         public string FunctionType { get; set; }//многополюсный или обзор
         public string TerminalId { get; set; }//id вывода ПЛК
         public string DeviceNameShort { get; set; }//A5
+        public string DevicePinNumber { get; set; }//5 
 
         public object Clone()
         {

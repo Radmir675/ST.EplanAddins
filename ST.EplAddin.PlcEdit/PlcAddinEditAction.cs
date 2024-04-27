@@ -108,7 +108,6 @@ namespace ST.EplAddin.PlcEdit
             RewritePlcProperties(plcTerminals, newDataPlc);
             UpdateFormData();
         }
-
         private void AsssignNewFunctions(IEnumerable<Function> functionsInProgram, (List<NameCorrelation> tableWithoutReverse, List<NameCorrelation> tableWithReverse) correlationTable)
         {
             foreach (var item in correlationTable.tableWithoutReverse)
@@ -125,7 +124,6 @@ namespace ST.EplAddin.PlcEdit
                 AssignFunction(sourceFunction, targetFunction, true);
             }
         }
-
         private void RewritePlcProperties(Terminal[] plcTerminals, List<PlcDataModelView> newDataPlc)
         {
             foreach (var item in newDataPlc)    //тут будет применение всех измененных текстов для всех типов представлений
@@ -139,6 +137,8 @@ namespace ST.EplAddin.PlcEdit
                         terminal.Properties.FUNC_TEXT = item.FunctionText;
                         terminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
                         terminal.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL = item.SymbolicAdress;
+                        //terminal.Properties.FUNC_ALLCONNECTIONDESCRIPTIONS = item.DevicePointDescription;//DI3
+                        //terminal.Properties.FUNC_ALLCONNECTIONDESIGNATIONS = item.DevicePinNumber;//6
                     }
                 }
             }
@@ -153,7 +153,6 @@ namespace ST.EplAddin.PlcEdit
                 MessageBox.Show("An ID match was found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ManagePlcForm.Exit();
             }
-
         }
         private void UpdateFormData()
         {
@@ -215,5 +214,7 @@ namespace ST.EplAddin.PlcEdit
                 ManagePlcForm.Exit();
             }
         }
+
+
     }
 }

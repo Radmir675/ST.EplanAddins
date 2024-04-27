@@ -9,7 +9,7 @@ namespace ST.EplAddin.PlcEdit
     public static class Mapper
     {
 
-        public static List<PlcDataModelView> GetPlcData(Terminal[] plcTerminals)
+        public static List<PlcDataModelView> GetPlcData(Terminal[] plcTerminals, bool getFullData = false)
         {
             List<PlcDataModelView> plcDataModelView = new List<PlcDataModelView>();
             foreach (var terminal in plcTerminals)
@@ -29,12 +29,16 @@ namespace ST.EplAddin.PlcEdit
                         SymbolicAdressDefined = terminal.Properties.FUNC_PLCSYMBOLICADDRESS_CALCULATED.ToString(ISOCode.Language.L_ru_RU),
                         FunctionType = (terminal.Properties.FUNC_TYPE).GetDisplayString().GetString(ISOCode.Language.L_ru_RU),
                         TerminalId = terminal.ToStringIdentifier(),
-                        DeviceNameShort = terminal.Properties.FUNC_IDENTDEVICETAGWITHOUTSTRUCTURES.ToString(ISOCode.Language.L_ru_RU)
+                        DeviceNameShort = terminal.Properties.FUNC_IDENTDEVICETAGWITHOUTSTRUCTURES.ToString(ISOCode.Language.L_ru_RU),
+                        DevicePinNumber = terminal.Properties.FUNC_ALLCONNECTIONDESIGNATIONS.ToString(ISOCode.Language.L_ru_RU)
                     };
                     plcDataModelView.Add(mappedPlc);
                 }
             }
-
+            if (getFullData == true)
+            {
+                return plcDataModelView;
+            }
             var output = plcDataModelView.GroupBy(f => f.DevicePointDesignation);//тут происходит поиск главной функции если ее нет берется обзор
             var result = new List<PlcDataModelView>();
             foreach (var entry in output)
@@ -44,6 +48,8 @@ namespace ST.EplAddin.PlcEdit
             }
             return result.OrderBy(x => int.Parse(x.DevicePointDesignation.Split(':').Last())).ToList();
         }
+
+
         public static List<FromCsvModelView> ConvertDataFromCsvModel(List<CsvFileDataModelView> csvFiles)
         {
             List<FromCsvModelView> result = new List<FromCsvModelView>(csvFiles.Count);

@@ -45,6 +45,7 @@
             this.flowLayoutPanelDown = new System.Windows.Forms.FlowLayoutPanel();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeviceDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Datatype = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SymbolicAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FunctionText = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,6 +59,8 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.export_button = new System.Windows.Forms.Button();
             this.import_button = new System.Windows.Forms.Button();
+            this.loadTemplate_button = new System.Windows.Forms.Button();
+            this.dropDownList = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanelUp.SuspendLayout();
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -205,6 +208,7 @@
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.PLCAdress,
+            this.DeviceDescription,
             this.Datatype,
             this.SymbolicAdress,
             this.FunctionText,
@@ -249,6 +253,13 @@
             this.PLCAdress.FillWeight = 86.17369F;
             this.PLCAdress.HeaderText = "PLCAdress";
             this.PLCAdress.Name = "PLCAdress";
+            // 
+            // DeviceDescription
+            // 
+            this.DeviceDescription.DataPropertyName = "DevicePointDescription";
+            this.DeviceDescription.HeaderText = "DevicePointDescription";
+            this.DeviceDescription.Name = "DeviceDescription";
+            this.DeviceDescription.ReadOnly = true;
             // 
             // Datatype
             // 
@@ -338,13 +349,15 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoSize = true;
+            this.flowLayoutPanel1.Controls.Add(this.loadTemplate_button);
+            this.flowLayoutPanel1.Controls.Add(this.dropDownList);
             this.flowLayoutPanel1.Controls.Add(this.export_button);
             this.flowLayoutPanel1.Controls.Add(this.import_button);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(175, 29);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(396, 29);
             this.flowLayoutPanel1.TabIndex = 5;
             this.flowLayoutPanel1.WrapContents = false;
             // 
@@ -367,6 +380,26 @@
             this.import_button.Text = "Import";
             this.import_button.UseVisualStyleBackColor = true;
             this.import_button.Click += new System.EventHandler(this.import_button_Click);
+            // 
+            // loadTemplate_button
+            // 
+            this.loadTemplate_button.Location = new System.Drawing.Point(305, 3);
+            this.loadTemplate_button.Name = "loadTemplate_button";
+            this.loadTemplate_button.Size = new System.Drawing.Size(88, 23);
+            this.loadTemplate_button.TabIndex = 5;
+            this.loadTemplate_button.Text = "Load Template";
+            this.loadTemplate_button.UseVisualStyleBackColor = true;
+            this.loadTemplate_button.Click += new System.EventHandler(this.loadTemplate_button_Click);
+            // 
+            // dropDownList
+            // 
+            this.dropDownList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.dropDownList.FormattingEnabled = true;
+            this.dropDownList.Location = new System.Drawing.Point(178, 3);
+            this.dropDownList.Name = "dropDownList";
+            this.dropDownList.Size = new System.Drawing.Size(121, 21);
+            this.dropDownList.TabIndex = 6;
+            this.dropDownList.SelectedIndexChanged += new System.EventHandler(this.dropDownList_SelectedIndexChanged);
             // 
             // ManagePlcForm
             // 
@@ -417,6 +450,7 @@
         private System.Windows.Forms.Button import_button;
         private System.Windows.Forms.DataGridViewTextBoxColumn DevicePointDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn PLCAdress;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DeviceDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn Datatype;
         private System.Windows.Forms.DataGridViewTextBoxColumn SymbolicAdress;
         private System.Windows.Forms.DataGridViewTextBoxColumn FunctionText;
@@ -425,5 +459,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FunctionDefinition;
         private System.Windows.Forms.DataGridViewTextBoxColumn SymbolicAdressDefined;
         private System.Windows.Forms.DataGridViewTextBoxColumn FunctionType;
+        private System.Windows.Forms.Button loadTemplate_button;
+        private System.Windows.Forms.ComboBox dropDownList;
     }
 }

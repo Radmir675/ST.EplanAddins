@@ -1,4 +1,5 @@
 ﻿using ST.EplAddin.PlcEdit.Forms;
+using ST.EplAddin.PlcEdit.Helpers;
 using ST.EplAddin.PlcEdit.ModelView;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace ST.EplAddin.PlcEdit
         private List<PlcDataModelView> PlcDataModelView { get; set; }
         public int InitialFormWidth { get; set; }
         private int LastSelectedRow { get; set; }
+        public string TemplateName { get; set; }
 
         public DataGridViewRow[] SelectedRows
         {
@@ -34,7 +36,10 @@ namespace ST.EplAddin.PlcEdit
             AddData(PlcDataModelView);
             PropertiesForm.SettingsChanged += PropertiesForm_SettingsChanged;
             ImportCsvForm.ImportCsvData += ImportCsvForm_ImportCsvData;
+            LoadTemplateForm.TemplateActioon += LoadTemplateForm_TemplateActioon;
         }
+
+
 
         private void ImportCsvForm_ImportCsvData(object sender, List<CsvFileDataModelView> e)
         {
@@ -86,12 +91,12 @@ namespace ST.EplAddin.PlcEdit
 
         private void GetDefaultColumnSetting()
         {
-            //EplanSettings eplanSettings = new EplanSettings();
-            //var columnsToView = eplanSettings.TryGetSelectedColumns();
-            //if (columnsToView.Any())
-            //{
-            //    SetVisibleColumns(columnsToView);
-            //}
+            EplanSettings eplanSettings = new EplanSettings();
+            var columnsToView = eplanSettings.TryGetSelectedColumns();
+            if (columnsToView.Any())
+            {
+                SetVisibleColumns(columnsToView);
+            }
         }
 
         private void ChangeColorDisableColumns()
@@ -140,9 +145,9 @@ namespace ST.EplAddin.PlcEdit
         }
         private void HighlightRow(int rowIndex1, int rowIndex2)
         {
-            //dataGridView.ClearSelection();
-            //dataGridView.Rows[rowIndex1].Selected = true;
-            //dataGridView.Rows[rowIndex2].Selected = true;
+            dataGridView.ClearSelection();
+            dataGridView.Rows[rowIndex1].Selected = true;
+            dataGridView.Rows[rowIndex2].Selected = true;
 
             dataGridView.Refresh();
         }
@@ -157,7 +162,7 @@ namespace ST.EplAddin.PlcEdit
                 return;
             }
             AssignDataToTargetRow(currentIndexRow, targetIndexRow.Value);
-            // HighlightRow(targetIndexRow.Value);
+            HighlightRow(targetIndexRow.Value);
         }
         private void ExchangePositions()
         {
@@ -167,7 +172,7 @@ namespace ST.EplAddin.PlcEdit
             if (currentIndexRow != targetIndexRow)
             {
                 AssignDataToTargetRow(currentIndexRow, targetIndexRow);
-                //  HighlightRow(currentIndexRow, targetIndexRow);
+                HighlightRow(currentIndexRow, targetIndexRow);
             }
         }
 
@@ -401,6 +406,25 @@ namespace ST.EplAddin.PlcEdit
             }
             dataGridView[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Yellow;
         }
+
+        private void dropDownList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TemplateName = dropDownList.SelectedText;
+        }
+
+        private void loadTemplate_button_Click(object sender, EventArgs e)
+        {
+            var path = PathDialog.TryGetReadPath();
+            if (path == null) return;
+            var fileName = PathDialog.TryGetFileName(path);
+            LoadTemplateForm loadTemplateForm = new LoadTemplateForm(path);
+            loadTemplateForm.ShowDialog();
+        }
+        private void LoadTemplateForm_TemplateActioon(object sender, Model.TemplateMembers e)
+        {
+            dropDownList.Items.Add(e.FileName);
+        }
+
     }
 }
 

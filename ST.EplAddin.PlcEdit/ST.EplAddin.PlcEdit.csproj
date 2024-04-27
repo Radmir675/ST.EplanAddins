@@ -160,6 +160,12 @@
     <Compile Include="Forms\ExportCsvForm.Designer.cs">
       <DependentUpon>ExportCsvForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LoadTemplateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LoadTemplateForm.Designer.cs">
+      <DependentUpon>LoadTemplateForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ImportCsvForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -184,6 +190,7 @@
     <Compile Include="Forms\ManagePlcForm.Designer.cs">
       <DependentUpon>ManagePlcForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\TemplateMembers.cs" />
     <Compile Include="PlcAddinEditAction.cs" />
     <Compile Include="Forms\PropertiesForm.cs">
       <SubType>Form</SubType>
@@ -203,6 +210,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\ExportCsvForm.resx">
       <DependentUpon>ExportCsvForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LoadTemplateForm.resx">
+      <DependentUpon>LoadTemplateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ImportCsvForm.resx">
       <DependentUpon>ImportCsvForm.cs</DependentUpon>

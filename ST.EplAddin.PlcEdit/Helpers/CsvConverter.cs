@@ -54,7 +54,7 @@ namespace ST.EplAddin.PlcEdit
         public void SaveFile(List<CsvFileDataModelView> fileToWrite)
         {
             CsvConfiguration config = GetConfig();
-            using (var writer = new StreamWriter(filePath, true, Encoding.UTF8)) //поменять тип шифрования
+            using (var writer = new StreamWriter(filePath, false, Encoding.UTF8)) //поменять тип шифрования
             using (var csvWriter = new CsvWriter(writer, config))
             {
                 foreach (var file in fileToWrite)

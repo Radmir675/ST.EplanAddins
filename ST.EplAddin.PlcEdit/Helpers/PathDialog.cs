@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.IO;
+using System.Windows.Forms;
 
 namespace ST.EplAddin.PlcEdit.Helpers
 {
@@ -23,6 +24,10 @@ namespace ST.EplAddin.PlcEdit.Helpers
             // получаем путь выбранного файла
             string filename = openFileDialog.FileName;
             return filename;
+        }
+        public static string TryGetFileName(string path)
+        {
+            return Path.GetFileNameWithoutExtension(path);
         }
     }
 }
