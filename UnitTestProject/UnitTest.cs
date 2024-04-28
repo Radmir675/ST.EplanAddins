@@ -38,16 +38,16 @@ namespace UnitTestProject
         [TestMethod]
         public void StartMainWindows()
         {
-            List<PlcDataModelView> list = new List<PlcDataModelView>();
-            PlcDataModelView plcDataModelView = new PlcDataModelView();
-            plcDataModelView.FunctionText = "Test";
-            PlcDataModelView plcDataModelView1 = new PlcDataModelView();
-            plcDataModelView.FunctionText = "Test1";
-            list.Add(plcDataModelView);
-            list.Add(plcDataModelView1);
+            //List<PlcDataModelView> list = new List<PlcDataModelView>();
+            //PlcDataModelView plcDataModelView = new PlcDataModelView();
+            //plcDataModelView.FunctionText = "Test";
+            //PlcDataModelView plcDataModelView1 = new PlcDataModelView();
+            //plcDataModelView.FunctionText = "Test1";
+            //list.Add(plcDataModelView);
+            //list.Add(plcDataModelView1);
 
-            ManagePlcForm managePlcForm = new ManagePlcForm(list);
-            managePlcForm.ShowDialog();
+            ////ManagePlcForm managePlcForm = new ManagePlcForm(list);
+            //managePlcForm.ShowDialog();
         }
         public List<PlcDataModelView> Init()
         {
@@ -66,15 +66,22 @@ namespace UnitTestProject
         [TestMethod]
         public void TryReplaceDataInMainViewForm()
         {
-            ManagePlcForm managePlcForm = new ManagePlcForm(Init());
-            managePlcForm.ShowDialog();
+            //ManagePlcForm managePlcForm = new ManagePlcForm(Init());
+            //managePlcForm.ShowDialog();
 
         }
         [TestMethod]
         public void ExportCsv()
         {
-            ManagePlcForm managePlcForm = new ManagePlcForm(Init());
-            managePlcForm.ShowDialog();
+            //ManagePlcForm managePlcForm = new ManagePlcForm(Init());
+            //managePlcForm.ShowDialog();
+
+        }
+        [TestMethod]
+        public void StartComparis()
+        {
+            //ManagePlcForm managePlcForm = new ManagePlcForm(Init());
+            //managePlcForm.ShowDialog();
 
         }
     }

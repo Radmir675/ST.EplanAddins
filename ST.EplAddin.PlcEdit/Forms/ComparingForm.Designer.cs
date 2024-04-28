@@ -46,16 +46,16 @@
             this.sourceDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sourceDataGridView.Location = new System.Drawing.Point(3, 3);
             this.sourceDataGridView.Name = "sourceDataGridView";
-            this.sourceDataGridView.Size = new System.Drawing.Size(526, 607);
+            this.sourceDataGridView.Size = new System.Drawing.Size(525, 607);
             this.sourceDataGridView.TabIndex = 0;
             // 
             // targetDataGridView
             // 
             this.targetDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.targetDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.targetDataGridView.Location = new System.Drawing.Point(535, 3);
+            this.targetDataGridView.Location = new System.Drawing.Point(534, 3);
             this.targetDataGridView.Name = "targetDataGridView";
-            this.targetDataGridView.Size = new System.Drawing.Size(537, 607);
+            this.targetDataGridView.Size = new System.Drawing.Size(538, 607);
             this.targetDataGridView.TabIndex = 1;
             // 
             // tableLayoutPanel
@@ -104,6 +104,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 1;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // ComparingForm
             // 
@@ -114,6 +115,7 @@
             this.Controls.Add(this.tableLayoutPanel);
             this.Name = "ComparingForm";
             this.Text = "ComparingForm";
+            this.Load += new System.EventHandler(this.ComparingForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.sourceDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.targetDataGridView)).EndInit();
             this.tableLayoutPanel.ResumeLayout(false);
