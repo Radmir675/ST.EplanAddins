@@ -1,4 +1,4 @@
-﻿namespace ST.EplAddin.PlcEdit.ModelView
+﻿namespace ST.EplAddin.PlcEdit
 {
     public class FromCsvModelView
     {

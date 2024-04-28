@@ -1,6 +1,5 @@
 ﻿using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel.EObjects;
-using ST.EplAddin.PlcEdit.ModelView;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -4,7 +4,6 @@ namespace ST.EplAddin.PlcEdit
 {
     public class PlcDataModelView : ICloneable
     {
-
         public string DevicePointDescription { get; set; }//DI3
         public string PLCAdress { get; set; }//I131.7
         public string Datatype { get; set; }//BOOL

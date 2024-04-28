@@ -87,7 +87,7 @@ namespace ST.EplAddin.PlcEdit
             Process oCurrent = Process.GetCurrentProcess();
             var eplanOwner = new WindowWrapper(oCurrent.MainWindowHandle);
 
-            ManagePlcForm = new ManagePlcForm(plcDataModelView);
+            ManagePlcForm = new ManagePlcForm(plcDataModelView, GetPath(CurrentProject));
             ManagePlcForm.Show(eplanOwner);
             ManagePlcForm.ApplyEvent += ManagePlcForm_ApplyEvent;
         }
@@ -143,7 +143,15 @@ namespace ST.EplAddin.PlcEdit
                 }
             }
         }
-
+        private string GetPath(Project project)
+        {
+            using (LockingStep lockingStep = new LockingStep())
+            {
+                string path = project.ProjectDirectoryPath;
+                //  string fullPath = System.IO.Path.Combine(path, $"{project.ProjectName}.txt");
+                return path;
+            }
+        }
         private void CheckToIdenticalTerminal(Terminal[] terminal)
         {
             var name = terminal.Select(x => x.ToStringIdentifier());

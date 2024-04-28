@@ -1,6 +1,5 @@
 ﻿using ST.EplAddin.PlcEdit.Forms;
 using ST.EplAddin.PlcEdit.Helpers;
-using ST.EplAddin.PlcEdit.ModelView;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,6 +13,8 @@ namespace ST.EplAddin.PlcEdit
 {
     public partial class ManagePlcForm : Form
     {
+        private readonly string pathToSaveTemplate;
+
         public static event EventHandler<CustomEventArgs> ApplyEvent;
         private List<PlcDataModelView> PlcDataModelView { get; set; }
         public int InitialFormWidth { get; set; }
@@ -29,10 +30,11 @@ namespace ST.EplAddin.PlcEdit
             }
         }
 
-        public ManagePlcForm(List<PlcDataModelView> plcDataModelView)
+        public ManagePlcForm(List<PlcDataModelView> plcDataModelView, string pathToSaveTemplate)
         {
             InitializeComponent();
             PlcDataModelView = plcDataModelView;
+            this.pathToSaveTemplate = pathToSaveTemplate;
             AddData(PlcDataModelView);
             PropertiesForm.SettingsChanged += PropertiesForm_SettingsChanged;
             ImportCsvForm.ImportCsvData += ImportCsvForm_ImportCsvData;
@@ -336,15 +338,23 @@ namespace ST.EplAddin.PlcEdit
 
         private void export_button_Click(object sender, EventArgs e)
         {
-            var dataToExport = GetProperlyRowsToImportData(PlcDataModelView);
-            ExportCsvForm exportExportCsvForm = new ExportCsvForm(dataToExport);
-            exportExportCsvForm.ShowDialog();
+            if (TemplateName == null)
+            {
+                MessageBox.Show("Please select template", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            //ComparingForm comparingForm = new ComparingForm(PlcDataModelView);
+            //comparingForm.ShowDialog();
+            //var dataToExport = GetProperlyRowsToImportData(PlcDataModelView);
+            //ExportCsvForm exportExportCsvForm = new ExportCsvForm(dataToExport, TemplateName);
+            //exportExportCsvForm.ShowDialog();
         }
 
         private void import_button_Click(object sender, EventArgs e)
         {
-            ImportCsvForm importExportCsvForm = new();
-            importExportCsvForm.ShowDialog();
+            //ComparingForm comparingForm = new ComparingForm(PlcDataModelView);
+            //comparingForm.ShowDialog();
+            //ImportCsvForm importExportCsvForm = new ImportCsvForm(TemplateName);
+            //importExportCsvForm.ShowDialog();
         }
 
         private void UpdateDataTable(List<FromCsvModelView> csvPlcData)
@@ -414,16 +424,17 @@ namespace ST.EplAddin.PlcEdit
 
         private void loadTemplate_button_Click(object sender, EventArgs e)
         {
-            var path = PathDialog.TryGetReadPath();
-            if (path == null) return;
-            var fileName = PathDialog.TryGetFileName(path);
-            LoadTemplateForm loadTemplateForm = new LoadTemplateForm(path);
+            var pathFromRead = PathDialog.TryGetReadPath();
+            if (pathFromRead == null) return;
+            var fileName = PathDialog.TryGetFileName(pathFromRead);
+            LoadTemplateForm loadTemplateForm = new LoadTemplateForm(pathFromRead, pathToSaveTemplate);
             loadTemplateForm.ShowDialog();
         }
         private void LoadTemplateForm_TemplateActioon(object sender, Model.TemplateMembers e)
         {
             dropDownList.Items.Add(e.FileName);
         }
+
 
     }
 }
