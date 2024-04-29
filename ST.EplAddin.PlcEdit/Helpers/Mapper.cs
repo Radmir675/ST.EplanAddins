@@ -1,5 +1,6 @@
 ﻿using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel.EObjects;
+using ST.EplAddin.PlcEdit.View;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -85,6 +86,10 @@ namespace ST.EplAddin.PlcEdit
                 result.Add(csvFileDataModelView);
             }
             return result;
+        }
+        public static List<CsvFileDataModelViews> ConvertDataToCsvCompare(List<CsvFileDataModelView> csvFileDataModelView)
+        {
+            return csvFileDataModelView.Select(p => new CsvFileDataModelViews(p, false)).ToList();
         }
     }
 

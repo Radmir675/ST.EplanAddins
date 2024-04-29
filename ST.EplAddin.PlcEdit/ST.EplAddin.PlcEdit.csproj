@@ -10,7 +10,7 @@
     <RootNamespace>ST.EplAddin.PlcEdit</RootNamespace>
     <AssemblyName>ST.EplAddin.PlcEdit</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-	    <LangVersion>9.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-	    <LangVersion>9.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -215,6 +215,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\WindowWrapper.cs" />
+    <Compile Include="View\CsvFileDataModelViews.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\ComparingForm.resx">

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Application = System.Windows.Forms.Application;
@@ -38,7 +39,8 @@ namespace ST.EplAddin.PlcEdit
             AddData(PlcDataModelView);
             PropertiesForm.SettingsChanged += PropertiesForm_SettingsChanged;
             ImportCsvForm.ImportCsvData += ImportCsvForm_ImportCsvData;
-            LoadTemplateForm.TemplateActioon += LoadTemplateForm_TemplateActioon;
+            LoadTemplateForm.TemplateAction += LoadTemplateForm_TemplateAction;
+            TryDowmLoadTemplates(pathToSaveTemplate);
         }
 
 
@@ -93,12 +95,12 @@ namespace ST.EplAddin.PlcEdit
 
         private void GetDefaultColumnSetting()
         {
-            EplanSettings eplanSettings = new EplanSettings();
-            var columnsToView = eplanSettings.TryGetSelectedColumns();
-            if (columnsToView.Any())
-            {
-                SetVisibleColumns(columnsToView);
-            }
+            //EplanSettings eplanSettings = new EplanSettings();
+            //var columnsToView = eplanSettings.TryGetSelectedColumns();
+            //if (columnsToView.Any())
+            //{
+            //    SetVisibleColumns(columnsToView);
+            //}
         }
 
         private void ChangeColorDisableColumns()
@@ -351,8 +353,8 @@ namespace ST.EplAddin.PlcEdit
 
         private void import_button_Click(object sender, EventArgs e)
         {
-            //ComparingForm comparingForm = new ComparingForm(PlcDataModelView);
-            //comparingForm.ShowDialog();
+            ComparingForm comparingForm = new ComparingForm(PlcDataModelView);
+            comparingForm.ShowDialog();
             //ImportCsvForm importExportCsvForm = new ImportCsvForm(TemplateName);
             //importExportCsvForm.ShowDialog();
         }
@@ -430,12 +432,21 @@ namespace ST.EplAddin.PlcEdit
             LoadTemplateForm loadTemplateForm = new LoadTemplateForm(pathFromRead, pathToSaveTemplate);
             loadTemplateForm.ShowDialog();
         }
-        private void LoadTemplateForm_TemplateActioon(object sender, Model.TemplateMembers e)
+        private void LoadTemplateForm_TemplateAction(object sender, Model.TemplateMembers e)
         {
             dropDownList.Items.Add(e.FileName);
+            dropDownList.SelectedText = e.FileName;
         }
+        private void TryDowmLoadTemplates(string pathToSaveTemplate)
+        {
+            var fileNames = Directory.GetFiles(pathToSaveTemplate).ToList().Select(x => Path.GetFileNameWithoutExtension(x));
 
-
+            foreach (var filename in fileNames)
+            {
+                if (!dropDownList.Items.Contains(filename))
+                    dropDownList.Items.Add(filename);
+            }
+        }
     }
 }
 

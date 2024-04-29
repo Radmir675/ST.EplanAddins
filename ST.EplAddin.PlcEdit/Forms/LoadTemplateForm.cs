@@ -11,9 +11,10 @@ namespace ST.EplAddin.PlcEdit.Forms
 {
     public partial class LoadTemplateForm : Form
     {
+        private readonly string path;
         private readonly string pathToSaveTemplate;
 
-        public static event EventHandler<TemplateMembers> TemplateActioon;
+        public static event EventHandler<TemplateMembers> TemplateAction;
         private DataGridViewRow[] SelectedRows
         {
             get
@@ -24,7 +25,8 @@ namespace ST.EplAddin.PlcEdit.Forms
         public LoadTemplateForm(string path, string pathToSaveTemplate)
         {
             InitializeComponent();
-            this.pathToSaveTemplate = path;
+            this.path = path;
+            this.pathToSaveTemplate = pathToSaveTemplate;
         }
 
         private void Cancel_button_Click(object sender, EventArgs e)
@@ -34,24 +36,25 @@ namespace ST.EplAddin.PlcEdit.Forms
         private void Select_button_Click(object sender, EventArgs e)
         {
             List<CsvFileDataModelView> csvFileDataModelViews = new List<CsvFileDataModelView>();
-            var dataInTable = ((IEnumerable)dataGridView.DataSource).Cast<CsvFileDataModelView>().ToList();
             var indexFirstRow = SelectedRows.OrderBy(x => x.Index).First().Index;
             var indexLastRow = SelectedRows.OrderBy(x => x.Index).Last().Index;
             var changableRows = (indexFirstRow, indexLastRow - indexFirstRow + 1);
-            var fileName = PathDialog.TryGetFileName(pathToSaveTemplate);
+            var fileName = PathDialog.TryGetFileName(path);
+            var fileNameWithType = PathDialog.TryGetFileNameWithType(path);
+            var dataInTable = ((IEnumerable)dataGridView.DataSource).Cast<CsvFileDataModelView>().ToList();
+            dataInTable.Add(new CsvFileDataModelView(string.Join(";", indexFirstRow, indexLastRow)));// информацию по поводу строчек перезаписываемых
 
-            TemplateActioon?.Invoke(this, new TemplateMembers(indexFirstRow, indexLastRow, fileName));
-
-            string fullpath = Path.Combine(pathToSaveTemplate, fileName);
-            CsvConverter csvConverter = new CsvConverter(fullpath);
-            csvConverter.SaveFile(dataInTable);//куда то надо записать информацию по поводу строчек перезаписываемых
+            TemplateAction?.Invoke(this, new TemplateMembers(indexFirstRow, indexLastRow, fileName));
+            var fullPath = Path.Combine(pathToSaveTemplate, fileNameWithType);
+            CsvConverter csvConverter = new CsvConverter(fullPath);
+            csvConverter.SaveFile(dataInTable);
 
             this.Close();
         }
 
         private void LoadTemplateForm_Load(object sender, EventArgs e)
         {
-            CsvConverter csvConverter = new CsvConverter(pathToSaveTemplate);
+            CsvConverter csvConverter = new CsvConverter(path);
             var dataFromFile = csvConverter.ReadFile();
             dataGridView.DataSource = dataFromFile;
         }

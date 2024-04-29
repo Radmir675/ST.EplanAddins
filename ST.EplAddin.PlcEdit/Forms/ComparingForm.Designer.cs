@@ -32,7 +32,7 @@
             this.targetDataGridView = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.Upload_doc_button = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.sourceDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.targetDataGridView)).BeginInit();
@@ -42,19 +42,25 @@
             // 
             // sourceDataGridView
             // 
+            this.sourceDataGridView.AllowUserToAddRows = false;
+            this.sourceDataGridView.AllowUserToDeleteRows = false;
             this.sourceDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.sourceDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sourceDataGridView.Location = new System.Drawing.Point(3, 3);
             this.sourceDataGridView.Name = "sourceDataGridView";
+            this.sourceDataGridView.ReadOnly = true;
             this.sourceDataGridView.Size = new System.Drawing.Size(525, 607);
             this.sourceDataGridView.TabIndex = 0;
             // 
             // targetDataGridView
             // 
+            this.targetDataGridView.AllowUserToAddRows = false;
+            this.targetDataGridView.AllowUserToDeleteRows = false;
             this.targetDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.targetDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.targetDataGridView.Location = new System.Drawing.Point(534, 3);
             this.targetDataGridView.Name = "targetDataGridView";
+            this.targetDataGridView.ReadOnly = true;
             this.targetDataGridView.Size = new System.Drawing.Size(538, 607);
             this.targetDataGridView.TabIndex = 1;
             // 
@@ -78,7 +84,7 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.button1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.Upload_doc_button, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.comboBox1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 581);
@@ -88,14 +94,15 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1075, 32);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
-            // button1
+            // Upload_doc_button
             // 
-            this.button1.Location = new System.Drawing.Point(540, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.Upload_doc_button.Location = new System.Drawing.Point(540, 3);
+            this.Upload_doc_button.Name = "Upload_doc_button";
+            this.Upload_doc_button.Size = new System.Drawing.Size(137, 23);
+            this.Upload_doc_button.TabIndex = 0;
+            this.Upload_doc_button.Text = "Upload doc to compare";
+            this.Upload_doc_button.UseVisualStyleBackColor = true;
+            this.Upload_doc_button.Click += new System.EventHandler(this.Upload_doc_button_Click);
             // 
             // comboBox1
             // 
@@ -130,7 +137,7 @@
         private System.Windows.Forms.DataGridView targetDataGridView;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button Upload_doc_button;
         private System.Windows.Forms.ComboBox comboBox1;
     }
 }

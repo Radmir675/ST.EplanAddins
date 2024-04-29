@@ -29,5 +29,9 @@ namespace ST.EplAddin.PlcEdit.Helpers
         {
             return Path.GetFileNameWithoutExtension(path);
         }
+        public static string TryGetFileNameWithType(string path)
+        {
+            return Path.GetFileName(path);
+        }
     }
 }
