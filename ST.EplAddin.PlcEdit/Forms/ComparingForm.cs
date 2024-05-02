@@ -69,5 +69,10 @@ namespace ST.EplAddin.PlcEdit.Forms
             CsvFileDataModelViews = Mapper.ConvertDataToCsvCompare(dataFromFile);
             targetDataGridView.DataSource = CsvFileDataModelViews;
         }
+
+        private void ok_button_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
