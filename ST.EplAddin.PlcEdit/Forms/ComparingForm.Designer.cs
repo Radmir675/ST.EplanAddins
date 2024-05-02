@@ -28,16 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.sourceDataGridView = new System.Windows.Forms.DataGridView();
             this.targetDataGridView = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.Upload_doc_button = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.csvFileDataModelViewsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.isCheckedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.symbolicAdressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bitNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.functionTextDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pLCAdressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.deviceNameShortDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.sourceDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.targetDataGridView)).BeginInit();
             this.tableLayoutPanel.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // sourceDataGridView
@@ -49,19 +59,29 @@
             this.sourceDataGridView.Location = new System.Drawing.Point(3, 3);
             this.sourceDataGridView.Name = "sourceDataGridView";
             this.sourceDataGridView.ReadOnly = true;
-            this.sourceDataGridView.Size = new System.Drawing.Size(525, 607);
+            this.sourceDataGridView.Size = new System.Drawing.Size(628, 607);
             this.sourceDataGridView.TabIndex = 0;
             // 
             // targetDataGridView
             // 
             this.targetDataGridView.AllowUserToAddRows = false;
             this.targetDataGridView.AllowUserToDeleteRows = false;
+            this.targetDataGridView.AutoGenerateColumns = false;
             this.targetDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.targetDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.isCheckedDataGridViewCheckBoxColumn,
+            this.symbolicAdressDataGridViewTextBoxColumn,
+            this.bitNumberDataGridViewTextBoxColumn,
+            this.unitDataGridViewTextBoxColumn,
+            this.functionTextDataGridViewTextBoxColumn,
+            this.pLCAdressDataGridViewTextBoxColumn,
+            this.deviceNameShortDataGridViewTextBoxColumn});
+            this.targetDataGridView.DataSource = this.csvFileDataModelViewsBindingSource;
             this.targetDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.targetDataGridView.Location = new System.Drawing.Point(534, 3);
+            this.targetDataGridView.Location = new System.Drawing.Point(637, 3);
             this.targetDataGridView.Name = "targetDataGridView";
             this.targetDataGridView.ReadOnly = true;
-            this.targetDataGridView.Size = new System.Drawing.Size(538, 607);
+            this.targetDataGridView.Size = new System.Drawing.Size(643, 607);
             this.targetDataGridView.TabIndex = 1;
             // 
             // tableLayoutPanel
@@ -76,7 +96,7 @@
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 1;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(1075, 613);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(1283, 613);
             this.tableLayoutPanel.TabIndex = 2;
             // 
             // tableLayoutPanel1
@@ -91,16 +111,16 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1075, 32);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1283, 32);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // Upload_doc_button
             // 
-            this.Upload_doc_button.Location = new System.Drawing.Point(540, 3);
+            this.Upload_doc_button.Location = new System.Drawing.Point(644, 3);
             this.Upload_doc_button.Name = "Upload_doc_button";
-            this.Upload_doc_button.Size = new System.Drawing.Size(137, 23);
+            this.Upload_doc_button.Size = new System.Drawing.Size(194, 23);
             this.Upload_doc_button.TabIndex = 0;
-            this.Upload_doc_button.Text = "Upload doc to compare";
+            this.Upload_doc_button.Text = "Upload document to compare";
             this.Upload_doc_button.UseVisualStyleBackColor = true;
             this.Upload_doc_button.Click += new System.EventHandler(this.Upload_doc_button_Click);
             // 
@@ -113,11 +133,64 @@
             this.comboBox1.TabIndex = 1;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
+            // csvFileDataModelViewsBindingSource
+            // 
+            this.csvFileDataModelViewsBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.View.CsvFileDataModelViews);
+            // 
+            // isCheckedDataGridViewCheckBoxColumn
+            // 
+            this.isCheckedDataGridViewCheckBoxColumn.DataPropertyName = "IsChecked";
+            this.isCheckedDataGridViewCheckBoxColumn.HeaderText = "IsChecked";
+            this.isCheckedDataGridViewCheckBoxColumn.Name = "isCheckedDataGridViewCheckBoxColumn";
+            this.isCheckedDataGridViewCheckBoxColumn.ReadOnly = true;
+            // 
+            // symbolicAdressDataGridViewTextBoxColumn
+            // 
+            this.symbolicAdressDataGridViewTextBoxColumn.DataPropertyName = "SymbolicAdress";
+            this.symbolicAdressDataGridViewTextBoxColumn.HeaderText = "SymbolicAdress";
+            this.symbolicAdressDataGridViewTextBoxColumn.Name = "symbolicAdressDataGridViewTextBoxColumn";
+            this.symbolicAdressDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // bitNumberDataGridViewTextBoxColumn
+            // 
+            this.bitNumberDataGridViewTextBoxColumn.DataPropertyName = "BitNumber";
+            this.bitNumberDataGridViewTextBoxColumn.HeaderText = "BitNumber";
+            this.bitNumberDataGridViewTextBoxColumn.Name = "bitNumberDataGridViewTextBoxColumn";
+            this.bitNumberDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // unitDataGridViewTextBoxColumn
+            // 
+            this.unitDataGridViewTextBoxColumn.DataPropertyName = "Unit";
+            this.unitDataGridViewTextBoxColumn.HeaderText = "Unit";
+            this.unitDataGridViewTextBoxColumn.Name = "unitDataGridViewTextBoxColumn";
+            this.unitDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // functionTextDataGridViewTextBoxColumn
+            // 
+            this.functionTextDataGridViewTextBoxColumn.DataPropertyName = "FunctionText";
+            this.functionTextDataGridViewTextBoxColumn.HeaderText = "FunctionText";
+            this.functionTextDataGridViewTextBoxColumn.Name = "functionTextDataGridViewTextBoxColumn";
+            this.functionTextDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // pLCAdressDataGridViewTextBoxColumn
+            // 
+            this.pLCAdressDataGridViewTextBoxColumn.DataPropertyName = "PLCAdress";
+            this.pLCAdressDataGridViewTextBoxColumn.HeaderText = "PLCAdress";
+            this.pLCAdressDataGridViewTextBoxColumn.Name = "pLCAdressDataGridViewTextBoxColumn";
+            this.pLCAdressDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // deviceNameShortDataGridViewTextBoxColumn
+            // 
+            this.deviceNameShortDataGridViewTextBoxColumn.DataPropertyName = "DeviceNameShort";
+            this.deviceNameShortDataGridViewTextBoxColumn.HeaderText = "DeviceNameShort";
+            this.deviceNameShortDataGridViewTextBoxColumn.Name = "deviceNameShortDataGridViewTextBoxColumn";
+            this.deviceNameShortDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
             // ComparingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1075, 613);
+            this.ClientSize = new System.Drawing.Size(1283, 613);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.tableLayoutPanel);
             this.Name = "ComparingForm";
@@ -127,6 +200,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.targetDataGridView)).EndInit();
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewsBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -139,5 +213,13 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button Upload_doc_button;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.BindingSource csvFileDataModelViewsBindingSource;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn isCheckedDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn symbolicAdressDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn bitNumberDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn unitDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn functionTextDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pLCAdressDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn deviceNameShortDataGridViewTextBoxColumn;
     }
 }

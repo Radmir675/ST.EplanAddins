@@ -1,13 +1,16 @@
 ﻿namespace ST.EplAddin.PlcEdit.View
 {
-    public class CsvFileDataModelViews
+    public class CsvFileDataModelViews : CsvFileDataModelView
     {
-
-        public CsvFileDataModelView CsvFileDataModelView { get; set; }
         public bool IsChecked { get; set; }
         public CsvFileDataModelViews(CsvFileDataModelView csvFileDataModelView, bool isChecked)
         {
-            CsvFileDataModelView = csvFileDataModelView;
+            SymbolicAdress = csvFileDataModelView.SymbolicAdress;
+            BitNumber = csvFileDataModelView.BitNumber;
+            Unit = csvFileDataModelView.Unit;
+            FunctionText = csvFileDataModelView.FunctionText;
+            PLCAdress = csvFileDataModelView.PLCAdress;
+            DeviceNameShort = csvFileDataModelView.DeviceNameShort;
             IsChecked = isChecked;
         }
     }

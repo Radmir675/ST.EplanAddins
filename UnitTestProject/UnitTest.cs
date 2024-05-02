@@ -81,8 +81,8 @@ namespace UnitTestProject
         [TestMethod]
         public void StartComparis()
         {
-            //ManagePlcForm managePlcForm = new ManagePlcForm(Init());
-            //managePlcForm.ShowDialog();
+            ComparingForm comparingForm = new ComparingForm(Init());
+            comparingForm.ShowDialog();
 
         }
     }

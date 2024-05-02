@@ -22,12 +22,14 @@ namespace ST.EplAddin.PlcEdit.Forms
             InitializeComponent();
             PlcDataModelView = plcDataModelView;
             CsvFileDataModelViews = csvFileDataModelViews;
+            sourceDataGridView.DataSource = PlcDataModelView;
         }
 
         private void ComparingForm_Load(object sender, EventArgs e)
         {
             comboBox1.DataSource = Enum.GetValues(typeof(ComparisonState));
             comboBox1.SelectedIndex = 0;
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

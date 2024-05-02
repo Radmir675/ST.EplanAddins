@@ -247,6 +247,7 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\CsvFileDataModelView.datasource" />
     <None Include="Properties\DataSources\PlcDataModelView.datasource" />
+    <None Include="Properties\DataSources\ST.EplAddin.PlcEdit.View.CsvFileDataModelViews.datasource" />
     <None Include="Resources\down.png" />
   </ItemGroup>
   <ItemGroup>
