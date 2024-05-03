@@ -106,6 +106,7 @@ namespace ST.EplAddins.LastTerminalStrip
         {
             DeviceService deviceService = new DeviceService();
             deviceService.SortTerminalStrips(terminalStrips, DeviceService.TerminalStripSortMethods.Numeric);
+            deviceService.SortTerminalStrips(terminalStrips, DeviceService.TerminalStripSortMethods.Default);
         }
         private List<Terminal> FindLastTerminals(ref TerminalStrip[] terminalStrips)
         {
