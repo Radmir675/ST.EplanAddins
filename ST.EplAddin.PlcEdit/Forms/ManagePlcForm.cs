@@ -40,10 +40,14 @@ namespace ST.EplAddin.PlcEdit
             PropertiesForm.SettingsChanged += PropertiesForm_SettingsChanged;
             ImportCsvForm.ImportCsvData += ImportCsvForm_ImportCsvData;
             LoadTemplateForm.TemplateAction += LoadTemplateForm_TemplateAction;
+            ComparingForm.OkEvent += ComparingForm_OkEvent;
             TryDowmLoadTemplates(pathToSaveTemplate);
         }
 
-
+        private void ComparingForm_OkEvent(object sender, EventArgs e)
+        {
+            dataGridView.Refresh();
+        }
 
         private void ImportCsvForm_ImportCsvData(object sender, List<CsvFileDataModelView> e)
         {

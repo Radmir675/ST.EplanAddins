@@ -12,6 +12,7 @@ namespace ST.EplAddin.PlcEdit.Forms
         public ComparisonState ComparisonSelection { get; set; }
         public List<PlcDataModelView> PlcDataModelView { get; }
         public List<CsvFileDataModelViews> CsvFileDataModelViews { get; set; }
+        public static event EventHandler OkEvent;
 
         /// <summary>
         /// Использовать для импорта и экспорта (при экспорте csvFileDataModelViews может быть null)
@@ -154,6 +155,7 @@ namespace ST.EplAddin.PlcEdit.Forms
                 ReWriteProperties(elementPosition, checkedRow);
             }
             Close();
+            OkEvent?.Invoke(this, EventArgs.Empty);
         }
 
         private void ReWriteProperties(int elementPosition, CsvFileDataModelViews checkedRow)
