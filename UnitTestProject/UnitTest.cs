@@ -74,8 +74,9 @@ namespace UnitTestProject
         [TestMethod]
         public void ExportCsv()
         {
-            //ManagePlcForm managePlcForm = new ManagePlcForm(Init());
-            //managePlcForm.ShowDialog();
+            var path = @"C:\Users\biktimirov.rr\Desktop\PathToTemplate";
+            ManagePlcForm managePlcForm = new ManagePlcForm(Init(), path);
+            managePlcForm.ShowDialog();
 
         }
         [TestMethod]

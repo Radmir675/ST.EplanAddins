@@ -344,9 +344,9 @@ namespace ST.EplAddin.PlcEdit
             {
                 MessageBox.Show("Please select template", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            //ComparingForm comparingForm = new ComparingForm(PlcDataModelView);
-            //comparingForm.ShowDialog();
-            //var dataToExport = GetProperlyRowsToImportData(PlcDataModelView);
+            ComparingForm comparingForm = new ComparingForm(PlcDataModelView);
+            comparingForm.ShowDialog();
+            var dataToExport = GetProperlyRowsToImportData(PlcDataModelView);
             //ExportCsvForm exportExportCsvForm = new ExportCsvForm(dataToExport, TemplateName);
             //exportExportCsvForm.ShowDialog();
         }

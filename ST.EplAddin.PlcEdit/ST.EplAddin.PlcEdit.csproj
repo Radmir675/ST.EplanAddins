@@ -184,6 +184,7 @@
     <Compile Include="Helpers\CsvConverter.cs" />
     <Compile Include="Helpers\Linq.cs" />
     <Compile Include="Helpers\PathDialog.cs" />
+    <Compile Include="ModelView\CompareList.cs" />
     <Compile Include="ModelView\CsvFileDataModelView.cs" />
     <Compile Include="Helpers\EplanSettings.cs" />
     <Compile Include="ModelView\FromCsvModelView.cs" />
@@ -216,6 +217,7 @@
     </Compile>
     <Compile Include="Helpers\WindowWrapper.cs" />
     <Compile Include="View\CsvFileDataModelViews.cs" />
+    <Compile Include="View\PlcDataView.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\ComparingForm.resx">
