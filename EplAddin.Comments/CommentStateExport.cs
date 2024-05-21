@@ -1,16 +1,13 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
-using Eplan.EplApi.DataModel.Graphics;
 using Eplan.EplApi.DataModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Eplan.EplApi.DataModel.Graphics;
 using Eplan.EplApi.HEServices;
-using static Eplan.EplApi.DataModel.Graphics.Comment;
+using System;
+using System.Linq;
 using System.Windows.Forms;
-using static Eplan.EplApi.DataModel.Placement;
 using System.Xml;
+using static Eplan.EplApi.DataModel.Graphics.Comment;
+using static Eplan.EplApi.DataModel.Placement;
 
 namespace ST.EplAddin.Comments
 {
@@ -48,10 +45,10 @@ namespace ST.EplAddin.Comments
                 xw.WriteAttributeString("Id", DBOBJECTID);
                 xw.WriteAttributeString("State", ((int)State).ToString());
                 xw.WriteAttributeString("visibility", ((int)visibility).ToString());
- 
+
                 xw.WriteEndElement();
                 count++;
-               
+
             }
             xw.WriteEndElement();
             xw.WriteEndDocument();
@@ -63,7 +60,7 @@ namespace ST.EplAddin.Comments
 
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
-            
+
         }
 
         public bool OnRegister(ref string Name, ref int Ordinal)

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Eplan.EplApi.ApplicationFramework;
-using Eplan.EplApi.DataModel.Graphics;
+﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.DataModel;
-using System.Windows.Forms;
+using Eplan.EplApi.DataModel.Graphics;
 using Eplan.EplApi.HEServices;
-using System.Collections;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace ST.EplAddin.Comments
 {
@@ -44,14 +39,14 @@ namespace ST.EplAddin.Comments
             switch (action)
             {
                 case "/hide":
-                   return CommentSetVisibility(reviewState, false);
-                   
+                    return CommentSetVisibility(reviewState, false);
+
                 case "/show":
                     return CommentSetVisibility(reviewState, true);
-                    
+
                 case "/remove":
                     return CommentRemove(reviewState);
-             }
+            }
 
             return false;
         }

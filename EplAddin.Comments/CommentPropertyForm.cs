@@ -1,24 +1,16 @@
-﻿using Eplan.EplApi.ApplicationFramework;
-using Eplan.EplApi.Base;
+﻿using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.Graphics;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ST.EplAddin.Comments
 {
-
-    public partial class CommentInsertForm2 : Form
+    public partial class CommentPropertyForm : Form
     {
-
         public static ISOCode.Language GuiLanguage
         {
             get
@@ -29,7 +21,7 @@ namespace ST.EplAddin.Comments
 
         Comment cc;
 
-        public CommentInsertForm2()
+        public CommentPropertyForm()
         {
             InitializeComponent();
 
@@ -39,12 +31,10 @@ namespace ST.EplAddin.Comments
 
             tabControl1.DrawMode = TabDrawMode.OwnerDrawFixed;
             tabControl1.DrawItem += tabControl1_DrawItem;
-
         }
 
         private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
         {
-
             TabControl tabControl = sender as TabControl;
             TabPage tabPage = tabControl.TabPages[e.Index];
             Brush foreBrush = tabControl.Focused && tabControl.SelectedIndex == e.Index ? Brushes.Black : Brushes.Black;
@@ -57,7 +47,7 @@ namespace ST.EplAddin.Comments
             }
         }
 
-        
+
         public void SetComment(ref Comment c)
         {
             cc = c;
@@ -69,13 +59,6 @@ namespace ST.EplAddin.Comments
 
             StatusComboBox.SelectedIndex = (int)c.ReviewState;
         }
-
-
-        private void CommentInsertForm2_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void RejectButton_Click(object sender, EventArgs e)
         {
             Close();
@@ -121,7 +104,7 @@ namespace ST.EplAddin.Comments
 
                 if (ico != null)
                 {
-  
+
                     ico.Contents = mls_i;
                     ico.TextColorId = iconColor;
                     ico.Height = iconHeight;
@@ -137,9 +120,8 @@ namespace ST.EplAddin.Comments
                     t.Location = new Eplan.EplApi.Base.PointD(cc.Location.X + 3, cc.Location.Y + 3);
                     t.Justification = Eplan.EplApi.DataModel.Graphics.TextBase.JustificationType.MiddleCenter;
                     t.Layer = cc.Project.LayerTable["EPLAN519"];
-                 
-                }
 
+                }
 
                 var itex = cc.Group.SubPlacements.Where(p => p is Text && !(p is Comment)).ToList().Cast<Text>().Where(t => t.HasBox == true).FirstOrDefault();
 
@@ -149,20 +131,8 @@ namespace ST.EplAddin.Comments
                 }
                 safetyPoint.Commit();
             }
-
             ///update answers recreate
-
             Close();
-        }
-
-        private void UserNameLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

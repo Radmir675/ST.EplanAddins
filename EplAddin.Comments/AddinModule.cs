@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Eplan.EplApi.ApplicationFramework;
+﻿using Eplan.EplApi.ApplicationFramework;
 
 namespace ST.EplAddin.Comments
 {
@@ -25,7 +19,7 @@ namespace ST.EplAddin.Comments
         {
             Eplan.EplApi.Gui.Menu oMenu = new Eplan.EplApi.Gui.Menu();
             uint MenuIDPopupComments = oMenu.AddPopupMenuItem(
-                "Комментарии", "Встарить комментарий", "CommentInsertDialog", "CommentInsertDialog", 35381, 0, false, false );
+                "Комментарии", "Встарить комментарий", "CommentInsertDialog", "CommentInsertDialog", 35381, 0, false, false);
 
             uint MenuIDPopupComments2 = oMenu.AddPopupMenuItem(
                "Комментарии", "Встарить комментарий", "CommentInsertDialog", "CommentInsertDialog", 35381, 0, false, false);
@@ -52,7 +46,7 @@ namespace ST.EplAddin.Comments
             oMenu.AddMenuItem("Скрыть комментарии \"Completed\"", "CommentManager /hide Completed", "", MenuIDPopupCommentsHide, 1, false, false);
 
             uint MenuIDPopupCommentsRemove = oMenu.AddPopupMenuItem(
-                "Удалить", "Удалить комментарий", "EMPTY", "", MenuIDPopupComments, 1, false, false );
+                "Удалить", "Удалить комментарий", "EMPTY", "", MenuIDPopupComments, 1, false, false);
 
             oMenu.AddMenuItem("Удалить комментарии \"ReviewNone\"", "CommentManager /remove ReviewNone", "", MenuIDPopupCommentsRemove, 1, false, false);
             oMenu.AddMenuItem("Удалить комментарии \"Accepted\"", "CommentManager /remove Accepted", "", MenuIDPopupCommentsRemove, 1, false, false);
