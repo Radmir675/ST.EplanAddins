@@ -28,5 +28,13 @@ namespace ST.EplAddin.Comments
             CommentInsert.InsertCommentNew(CommentText.Text, UserNameTextBox.Text, StatusComboBox.SelectedIndex);
             Close();
         }
+
+        private void CommentInsertForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
+        }
     }
 }
