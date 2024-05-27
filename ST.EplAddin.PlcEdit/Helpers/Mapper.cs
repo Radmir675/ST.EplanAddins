@@ -1,6 +1,7 @@
 ﻿using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel.EObjects;
 using ST.EplAddin.PlcEdit.ModelView;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,7 +30,8 @@ namespace ST.EplAddin.PlcEdit
                         SymbolicAdressDefined = terminal.Properties.FUNC_PLCSYMBOLICADDRESS_CALCULATED.ToString(ISOCode.Language.L_ru_RU),
                         FunctionType = (terminal.Properties.FUNC_TYPE).GetDisplayString().GetString(ISOCode.Language.L_ru_RU),
                         TerminalId = terminal.ToStringIdentifier(),
-                        DeviceNameShort = terminal.Properties.FUNC_IDENTDEVICETAGWITHOUTSTRUCTURES.ToString(ISOCode.Language.L_ru_RU)
+                        DeviceNameShort = terminal.Properties.FUNC_IDENTDEVICETAGWITHOUTSTRUCTURES.ToString(ISOCode.Language.L_ru_RU),
+                        ConnectionPointDesignition = terminal.Properties.FUNC_TERMINALDESIGNATION[1].ToString()
                     };
                     plcDataModelView.Add(mappedPlc);
                 }
@@ -42,7 +44,8 @@ namespace ST.EplAddin.PlcEdit
                 var terminal = entry.FirstOrDefault(item => item.FunctionType == "Многополюсный") ?? entry.First();
                 result.Add(terminal);
             }
-            return result.OrderBy(x => int.Parse(x.DevicePointDesignation.Split(':').Last())).ToList();
+
+            return result.OrderBy(x => Convert.ToInt32(x.ConnectionPointDesignition == "" ? "0" : x.ConnectionPointDesignition)).ToList();
         }
         public static List<FromCsvModelView> ConvertDataFromCsvModel(List<CsvFileDataModelView> csvFiles)
         {

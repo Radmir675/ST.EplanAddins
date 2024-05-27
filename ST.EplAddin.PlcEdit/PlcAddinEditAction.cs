@@ -3,6 +3,7 @@ using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.E3D;
 using Eplan.EplApi.DataModel.EObjects;
+using Eplan.EplApi.DataModel.MasterData;
 using Eplan.EplApi.HEServices;
 using System;
 using System.Collections.Generic;
@@ -204,8 +205,11 @@ namespace ST.EplAddin.PlcEdit
                     else//если есть реверс то применяем вот эту схему "с реверсом"
                     {
                         // MessageBox.Show($"You use reverse. It cannot be operated {sourceFunction.Name}---{targetFunction.Name}");
-                        targetFunction.Name = "1";
-                        sourceFunction.Assign(targetFunction);
+
+                        //Function function = CreateTransientFunction();
+
+                        var data = sourceFunction.CrossReferencedObjectsAll.FirstOrDefault(item => item.FunctionType == "Многополюсный");
+
                     }
                     safetyPoint.Commit();
                 }
@@ -214,6 +218,17 @@ namespace ST.EplAddin.PlcEdit
             {
                 ManagePlcForm.Exit();
             }
+        }
+
+        private Function CreateTransientFunction()
+        {
+            Function function = new Function();
+            SymbolVariant symbolVariant = new SymbolVariant();
+            Symbol symbol = new Symbol();
+            symbol.Initialize(new SymbolLibrary(CurrentProject, "IEC_symbol"), 350);
+            symbolVariant.Initialize(symbol, 1);
+            function.CreateTransient(CurrentProject, symbolVariant);
+            return function;
         }
     }
 }

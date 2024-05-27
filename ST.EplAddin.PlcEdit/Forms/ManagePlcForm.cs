@@ -86,12 +86,12 @@ namespace ST.EplAddin.PlcEdit
 
         private void GetDefaultColumnSetting()
         {
-            //EplanSettings eplanSettings = new EplanSettings();
-            //var columnsToView = eplanSettings.TryGetSelectedColumns();
-            //if (columnsToView.Any())
-            //{
-            //    SetVisibleColumns(columnsToView);
-            //}
+            EplanSettings eplanSettings = new EplanSettings();
+            var columnsToView = eplanSettings.TryGetSelectedColumns();
+            if (columnsToView.Any())
+            {
+                SetVisibleColumns(columnsToView);
+            }
         }
 
         private void ChangeColorDisableColumns()
@@ -134,15 +134,15 @@ namespace ST.EplAddin.PlcEdit
         private void HighlightRow(int rowIndex)
         {
             dataGridView.ClearSelection();
-            dataGridView.Rows[rowIndex].Selected = true;
-            LastSelectedRow = rowIndex;
+            //dataGridView.Rows[rowIndex].Selected = true;
+            //LastSelectedRow = rowIndex;
             dataGridView.Refresh();
         }
         private void HighlightRow(int rowIndex1, int rowIndex2)
         {
-            //dataGridView.ClearSelection();
-            //dataGridView.Rows[rowIndex1].Selected = true;
-            //dataGridView.Rows[rowIndex2].Selected = true;
+            dataGridView.ClearSelection();
+            dataGridView.Rows[rowIndex1].Selected = true;
+            dataGridView.Rows[rowIndex2].Selected = true;
 
             dataGridView.Refresh();
         }
@@ -157,7 +157,7 @@ namespace ST.EplAddin.PlcEdit
                 return;
             }
             AssignDataToTargetRow(currentIndexRow, targetIndexRow.Value);
-            // HighlightRow(targetIndexRow.Value);
+            HighlightRow(targetIndexRow.Value);
         }
         private void ExchangePositions()
         {
@@ -167,7 +167,7 @@ namespace ST.EplAddin.PlcEdit
             if (currentIndexRow != targetIndexRow)
             {
                 AssignDataToTargetRow(currentIndexRow, targetIndexRow);
-                //  HighlightRow(currentIndexRow, targetIndexRow);
+                HighlightRow(currentIndexRow, targetIndexRow);
             }
         }
 
