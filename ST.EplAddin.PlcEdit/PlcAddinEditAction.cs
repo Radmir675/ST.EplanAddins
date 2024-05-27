@@ -88,7 +88,7 @@ namespace ST.EplAddin.PlcEdit
             Process oCurrent = Process.GetCurrentProcess();
             var eplanOwner = new WindowWrapper(oCurrent.MainWindowHandle);
 
-            ManagePlcForm = new ManagePlcForm(plcDataModelView);
+            ManagePlcForm = new ManagePlcForm(plcDataModelView, GetPath(CurrentProject));
             ManagePlcForm.Show(eplanOwner);
             ManagePlcForm.ApplyEvent += ManagePlcForm_ApplyEvent;
         }
@@ -109,7 +109,6 @@ namespace ST.EplAddin.PlcEdit
             RewritePlcProperties(plcTerminals, newDataPlc);
             UpdateFormData();
         }
-
         private void AsssignNewFunctions(IEnumerable<Function> functionsInProgram, (List<NameCorrelation> tableWithoutReverse, List<NameCorrelation> tableWithReverse) correlationTable)
         {
             foreach (var item in correlationTable.tableWithoutReverse)
@@ -126,7 +125,6 @@ namespace ST.EplAddin.PlcEdit
                 AssignFunction(sourceFunction, targetFunction, true);
             }
         }
-
         private void RewritePlcProperties(Terminal[] plcTerminals, List<PlcDataModelView> newDataPlc)
         {
             foreach (var item in newDataPlc)    //тут будет применение всех измененных текстов для всех типов представлений
@@ -140,11 +138,21 @@ namespace ST.EplAddin.PlcEdit
                         terminal.Properties.FUNC_TEXT = item.FunctionText;
                         terminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
                         terminal.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL = item.SymbolicAdress;
+                        //terminal.Properties.FUNC_ALLCONNECTIONDESCRIPTIONS = item.DevicePointDescription;//DI3
+                        //terminal.Properties.FUNC_ALLCONNECTIONDESIGNATIONS = item.DevicePinNumber;//6
                     }
                 }
             }
         }
-
+        private string GetPath(Project project)
+        {
+            using (LockingStep lockingStep = new LockingStep())
+            {
+                string path = project.ProjectDirectoryPath;
+                //  string fullPath = System.IO.Path.Combine(path, $"{project.ProjectName}.txt");
+                return path;
+            }
+        }
         private void CheckToIdenticalTerminal(Terminal[] terminal)
         {
             var name = terminal.Select(x => x.ToStringIdentifier());
@@ -154,7 +162,6 @@ namespace ST.EplAddin.PlcEdit
                 MessageBox.Show("An ID match was found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ManagePlcForm.Exit();
             }
-
         }
         private void UpdateFormData()
         {

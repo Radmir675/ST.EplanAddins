@@ -1,7 +1,6 @@
 ﻿using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel.EObjects;
 using ST.EplAddin.PlcEdit.ModelView;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +9,7 @@ namespace ST.EplAddin.PlcEdit
     public static class Mapper
     {
 
-        public static List<PlcDataModelView> GetPlcData(Terminal[] plcTerminals)
+        public static List<PlcDataModelView> GetPlcData(Terminal[] plcTerminals, bool getFullData = false)
         {
             List<PlcDataModelView> plcDataModelView = new List<PlcDataModelView>();
             foreach (var terminal in plcTerminals)
@@ -31,12 +30,15 @@ namespace ST.EplAddin.PlcEdit
                         FunctionType = (terminal.Properties.FUNC_TYPE).GetDisplayString().GetString(ISOCode.Language.L_ru_RU),
                         TerminalId = terminal.ToStringIdentifier(),
                         DeviceNameShort = terminal.Properties.FUNC_IDENTDEVICETAGWITHOUTSTRUCTURES.ToString(ISOCode.Language.L_ru_RU),
-                        ConnectionPointDesignition = terminal.Properties.FUNC_TERMINALDESIGNATION[1].ToString()
+                        DevicePinNumber = terminal.Properties.FUNC_ALLCONNECTIONDESIGNATIONS.ToString(ISOCode.Language.L_ru_RU)
                     };
                     plcDataModelView.Add(mappedPlc);
                 }
             }
-
+            if (getFullData == true)
+            {
+                return plcDataModelView;
+            }
             var output = plcDataModelView.GroupBy(f => f.DevicePointDesignation);//тут происходит поиск главной функции если ее нет берется обзор
             var result = new List<PlcDataModelView>();
             foreach (var entry in output)
@@ -47,6 +49,8 @@ namespace ST.EplAddin.PlcEdit
 
             return result.OrderBy(x => Convert.ToInt32(x.ConnectionPointDesignition == "" ? "0" : x.ConnectionPointDesignition)).ToList();
         }
+
+
         public static List<FromCsvModelView> ConvertDataFromCsvModel(List<CsvFileDataModelView> csvFiles)
         {
             List<FromCsvModelView> result = new List<FromCsvModelView>(csvFiles.Count);
@@ -83,6 +87,10 @@ namespace ST.EplAddin.PlcEdit
                 result.Add(csvFileDataModelView);
             }
             return result;
+        }
+        public static List<CsvFileDataModelViews> ConvertDataToCsvCompare(List<CsvFileDataModelView> csvFileDataModelView)
+        {
+            return csvFileDataModelView.Select(p => new CsvFileDataModelViews(p, false)).ToList();
         }
     }
 
