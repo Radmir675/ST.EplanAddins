@@ -1,6 +1,7 @@
 ﻿using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel.EObjects;
-using ST.EplAddin.PlcEdit.ModelView;
+using ST.EplAddin.PlcEdit.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -47,7 +48,7 @@ namespace ST.EplAddin.PlcEdit
                 result.Add(terminal);
             }
 
-            return result.OrderBy(x => Convert.ToInt32(x.ConnectionPointDesignition == "" ? "0" : x.ConnectionPointDesignition)).ToList();
+            return result.OrderBy(x => Convert.ToInt32(x.DevicePinNumber == "" ? "0" : x.DevicePinNumber)).ToList();
         }
 
 

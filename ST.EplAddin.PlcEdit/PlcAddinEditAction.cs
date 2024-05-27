@@ -215,7 +215,8 @@ namespace ST.EplAddin.PlcEdit
 
                         //Function function = CreateTransientFunction();
 
-                        var data = sourceFunction.CrossReferencedObjectsAll.FirstOrDefault(item => item.FunctionType == "Многополюсный");
+                        var data = sourceFunction..First(z => z.Properties.FUNC_TYPE == 3
+                        && z.Properties. == sourceFunction.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
 
                     }
                     safetyPoint.Commit();
