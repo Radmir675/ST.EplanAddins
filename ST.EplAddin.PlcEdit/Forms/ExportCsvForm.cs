@@ -59,17 +59,25 @@ namespace ST.EplAddin.PlcEdit.Forms
             var dataInTable = ((IEnumerable)dataGridView.DataSource).Cast<CsvFileDataModelView>().ToList();
             var indexFirstRow = SelectedRows.OrderBy(x => x.Index).First().Index;
             var indexLastRow = SelectedRows.OrderBy(x => x.Index).Last().Index;
-
-            int j = 0;
-            for (int i = 0; i < dataToExport.Count; i++)
+            try
             {
-                if (i >= indexFirstRow && i <= indexLastRow)
+                int j = 0;
+                for (int i = 0; i < dataToExport.Count; i++)
                 {
-                    dataToExport[i] = dataFromEplan[j];
-                    j++;
+                    if (i >= indexFirstRow && i <= indexLastRow)
+                    {
+                        dataFromEplan[j].SymbolicAdress = dataFromEplan[j].SymbolicAdress
+                            .Replace("+", "_").Replace("-", "_").Replace(":", "_").Replace("/", "_");
+                        dataToExport[i] = dataFromEplan[j];
+                        j++;
+                    }
                 }
+                dataGridView.Refresh();
             }
-            dataGridView.Refresh();
+            catch (Exception)
+            {
+
+            }
         }
     }
 }

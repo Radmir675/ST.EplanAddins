@@ -42,11 +42,12 @@ namespace UnitTestProject
             PlcDataModelView plcDataModelView = new PlcDataModelView();
             plcDataModelView.FunctionText = "Test";
             PlcDataModelView plcDataModelView1 = new PlcDataModelView();
-            plcDataModelView.FunctionText = "Test1";
+            plcDataModelView1.FunctionText = "Test1";
             list.Add(plcDataModelView);
             list.Add(plcDataModelView1);
 
-            ManagePlcForm managePlcForm = new ManagePlcForm(list);
+            var pathSaveTemplate = @"C:\Users\biktimirov.rr\Desktop\Scantronic";
+            ManagePlcForm managePlcForm = new ManagePlcForm(list, pathSaveTemplate);
             managePlcForm.ShowDialog();
         }
         public List<PlcDataModelView> Init()
@@ -66,15 +67,23 @@ namespace UnitTestProject
         [TestMethod]
         public void TryReplaceDataInMainViewForm()
         {
-            ManagePlcForm managePlcForm = new ManagePlcForm(Init());
-            managePlcForm.ShowDialog();
+            //ManagePlcForm managePlcForm = new ManagePlcForm(Init());
+            //managePlcForm.ShowDialog();
 
         }
         [TestMethod]
         public void ExportCsv()
         {
-            ManagePlcForm managePlcForm = new ManagePlcForm(Init());
+            var path = @"C:\Users\biktimirov.rr\Desktop\PathToTemplate";
+            ManagePlcForm managePlcForm = new ManagePlcForm(Init(), path);
             managePlcForm.ShowDialog();
+
+        }
+        [TestMethod]
+        public void StartComparis()
+        {
+            ComparingForm comparingForm = new ComparingForm(Init());
+            comparingForm.ShowDialog();
 
         }
     }

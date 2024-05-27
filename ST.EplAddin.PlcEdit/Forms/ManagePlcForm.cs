@@ -1,9 +1,10 @@
 ﻿using ST.EplAddin.PlcEdit.Forms;
-using ST.EplAddin.PlcEdit.ModelView;
+using ST.EplAddin.PlcEdit.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Application = System.Windows.Forms.Application;
@@ -13,10 +14,13 @@ namespace ST.EplAddin.PlcEdit
 {
     public partial class ManagePlcForm : Form
     {
+        private readonly string pathToSaveTemplate;
+
         public static event EventHandler<CustomEventArgs> ApplyEvent;
         private List<PlcDataModelView> PlcDataModelView { get; set; }
         public int InitialFormWidth { get; set; }
         private int LastSelectedRow { get; set; }
+        public string TemplateName { get; set; }
 
         public DataGridViewRow[] SelectedRows
         {
@@ -27,13 +31,22 @@ namespace ST.EplAddin.PlcEdit
             }
         }
 
-        public ManagePlcForm(List<PlcDataModelView> plcDataModelView)
+        public ManagePlcForm(List<PlcDataModelView> plcDataModelView, string pathToSaveTemplate)
         {
             InitializeComponent();
             PlcDataModelView = plcDataModelView;
+            this.pathToSaveTemplate = pathToSaveTemplate;
             AddData(PlcDataModelView);
             PropertiesForm.SettingsChanged += PropertiesForm_SettingsChanged;
             ImportCsvForm.ImportCsvData += ImportCsvForm_ImportCsvData;
+            LoadTemplateForm.TemplateAction += LoadTemplateForm_TemplateAction;
+            ComparingForm.OkEvent += ComparingForm_OkEvent;
+            TryDowmLoadTemplates(pathToSaveTemplate);
+        }
+
+        private void ComparingForm_OkEvent(object sender, EventArgs e)
+        {
+            dataGridView.Refresh();
         }
 
         private void ImportCsvForm_ImportCsvData(object sender, List<CsvFileDataModelView> e)
@@ -331,15 +344,23 @@ namespace ST.EplAddin.PlcEdit
 
         private void export_button_Click(object sender, EventArgs e)
         {
+            if (TemplateName == null)
+            {
+                MessageBox.Show("Please select template", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            ComparingForm comparingForm = new ComparingForm(PlcDataModelView);
+            comparingForm.ShowDialog();
             var dataToExport = GetProperlyRowsToImportData(PlcDataModelView);
-            ExportCsvForm exportExportCsvForm = new ExportCsvForm(dataToExport);
-            exportExportCsvForm.ShowDialog();
+            //ExportCsvForm exportExportCsvForm = new ExportCsvForm(dataToExport, TemplateName);
+            //exportExportCsvForm.ShowDialog();
         }
 
         private void import_button_Click(object sender, EventArgs e)
         {
-            ImportCsvForm importExportCsvForm = new();
-            importExportCsvForm.ShowDialog();
+            ComparingForm comparingForm = new ComparingForm(PlcDataModelView);
+            comparingForm.ShowDialog();
+            //ImportCsvForm importExportCsvForm = new ImportCsvForm(TemplateName);
+            //importExportCsvForm.ShowDialog();
         }
 
         private void UpdateDataTable(List<FromCsvModelView> csvPlcData)
@@ -400,6 +421,35 @@ namespace ST.EplAddin.PlcEdit
                 return;
             }
             dataGridView[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Yellow;
+        }
+
+        private void dropDownList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TemplateName = dropDownList.SelectedText;
+        }
+
+        private void loadTemplate_button_Click(object sender, EventArgs e)
+        {
+            var pathFromRead = PathDialog.TryGetReadPath();
+            if (pathFromRead == null) return;
+            var fileName = PathDialog.TryGetFileName(pathFromRead);
+            LoadTemplateForm loadTemplateForm = new LoadTemplateForm(pathFromRead, pathToSaveTemplate);
+            loadTemplateForm.ShowDialog();
+        }
+        private void LoadTemplateForm_TemplateAction(object sender, Model.TemplateMembers e)
+        {
+            dropDownList.Items.Add(e.FileName);
+            dropDownList.SelectedText = e.FileName;
+        }
+        private void TryDowmLoadTemplates(string pathToSaveTemplate)
+        {
+            var fileNames = Directory.GetFiles(pathToSaveTemplate).ToList().Select(x => Path.GetFileNameWithoutExtension(x));
+
+            foreach (var filename in fileNames)
+            {
+                if (!dropDownList.Items.Contains(filename))
+                    dropDownList.Items.Add(filename);
+            }
         }
     }
 }
