@@ -2,6 +2,7 @@
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.E3D;
 using Eplan.EplApi.DataModel.Graphics;
+using ST.EplAddin.Footnote.ProperyBrowser;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -654,22 +655,24 @@ namespace ST.EplAddin.Footnote
                 {
                     //нужно получить текст блока
                     case PropertiesList.User_defined:
-                        if (oldtext != null)
-                        {
-                            result = userTextForm;
-                            break;
-                        }
-                        if (userTextForm == null)
-                        {
-                            Footnote_CustomTextForm form = new Footnote_CustomTextForm();
-                            form.ShowDialog();
-                            if (form.DialogResult == DialogResult.OK)
-                            {
-                                userTextForm = form.GetUserText();
-                            }
-                            form.Close();
-                        }
-                        result = userTextForm;
+                        PropertySelectDialogForm propertySelectDialogForm = new PropertySelectDialogForm(so);
+                        //propertySelectDialogForm.ShowDialog();
+                        //if (oldtext != null)
+                        //{
+                        //    result = userTextForm;
+                        //    break;
+                        //}
+                        //if (userTextForm == null)
+                        //{
+                        //    Footnote_CustomTextForm form = new Footnote_CustomTextForm();
+                        //    form.ShowDialog();
+                        //    if (form.DialogResult == DialogResult.OK)
+                        //    {
+                        //        userTextForm = form.GetUserText();
+                        //    }
+                        //    form.Close();
+                        //}
+                        //result = userTextForm;
                         break;
                     case PropertiesList.P20450:
                         result = so.Properties[20450].ToInt().ToString();
