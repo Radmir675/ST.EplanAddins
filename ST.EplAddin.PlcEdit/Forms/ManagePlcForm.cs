@@ -282,7 +282,7 @@ namespace ST.EplAddin.PlcEdit
 
         internal void Exit()
         {
-            CancelButton.PerformClick();
+            CancelButton?.PerformClick();
         }
 
         public void UpdateTable(List<PlcDataModelView> plcDataModelView)

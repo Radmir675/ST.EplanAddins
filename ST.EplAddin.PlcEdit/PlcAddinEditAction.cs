@@ -205,21 +205,25 @@ namespace ST.EplAddin.PlcEdit
             {
                 using (SafetyPoint safetyPoint = SafetyPoint.Create())
                 {
-                    if (reverse == false)
+                    using (UndoStep oUndo = new UndoManager().CreateUndoStep())
                     {
-                        targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
+                        if (reverse == false)
+                        {
+                            targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
+                        }
+                        else//если есть реверс то применяем вот эту схему "с реверсом"
+                        {
+                            var allCrossreferencedFunctions = sourceFunction.CrossReferencedObjectsAll.OfType<Terminal>();
+                            var sourceOverviewFunction = allCrossreferencedFunctions.First(z => z.Properties.FUNC_TYPE == 3
+                            && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == sourceFunction.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
+                            var targetOverviewFunction = allCrossreferencedFunctions.First(z => z.Properties.FUNC_TYPE == 3
+                            && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == targetFunction.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
+                            sourceOverviewFunction.Assign(targetFunction);
+                            targetOverviewFunction.Assign(sourceFunction);
+                        }
+                        safetyPoint.Commit();
+
                     }
-                    else//если есть реверс то применяем вот эту схему "с реверсом"
-                    {
-                        // MessageBox.Show($"You use reverse. It cannot be operated {sourceFunction.Name}---{targetFunction.Name}");
-
-                        //Function function = CreateTransientFunction();
-
-                        var data = sourceFunction..First(z => z.Properties.FUNC_TYPE == 3
-                        && z.Properties. == sourceFunction.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
-
-                    }
-                    safetyPoint.Commit();
                 }
             }
             catch (Exception)
