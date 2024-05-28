@@ -203,33 +203,39 @@ namespace ST.EplAddin.PlcEdit
         {
             try
             {
+                using (UndoStep oUndo = new UndoManager().CreateUndoStep())
                 using (SafetyPoint safetyPoint = SafetyPoint.Create())
                 {
-                    using (UndoStep oUndo = new UndoManager().CreateUndoStep())
+
+                    if (reverse == false)
                     {
-                        if (reverse == false)
-                        {
-                            targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
-                        }
-                        else//если есть реверс то применяем вот эту схему "с реверсом"
-                        {
-                            var allCrossreferencedFunctions = sourceFunction.CrossReferencedObjectsAll.OfType<Terminal>();
-                            var sourceOverviewFunction = allCrossreferencedFunctions.First(z => z.Properties.FUNC_TYPE == 3
-                            && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == sourceFunction.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
-                            var targetOverviewFunction = allCrossreferencedFunctions.First(z => z.Properties.FUNC_TYPE == 3
-                            && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == targetFunction.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
-                            sourceOverviewFunction.Assign(targetFunction);
-                            targetOverviewFunction.Assign(sourceFunction);
-                        }
-                        safetyPoint.Commit();
+                        targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
+                    }
+                    else//если есть реверс то применяем вот эту схему "с реверсом"
+                    {
 
                     }
+                    safetyPoint.Commit();
+                    //oUndo.CloseOpenUndo();
                 }
+
+
             }
             catch (Exception)
             {
                 ManagePlcForm.Exit();
             }
+        }
+
+        private void ReverseOutputPins(Function sourceFunction, Function targetFunction)
+        {
+            var allCrossreferencedFunctions = sourceFunction.CrossReferencedObjectsAll.OfType<Terminal>();
+            var sourceOverviewFunction = allCrossreferencedFunctions.First(z => z.Properties.FUNC_TYPE == 3
+            && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == sourceFunction.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
+            var targetOverviewFunction = allCrossreferencedFunctions.First(z => z.Properties.FUNC_TYPE == 3
+            && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == targetFunction.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
+            sourceOverviewFunction.Assign(targetFunction);
+            targetOverviewFunction.Assign(sourceFunction);
         }
 
         private Function CreateTransientFunction()
