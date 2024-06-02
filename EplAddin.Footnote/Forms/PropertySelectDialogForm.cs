@@ -16,20 +16,26 @@ namespace ST.EplAddin.Footnote.ProperyBrowser
         }
         public void GetProperties()
         {
-            var properties = Placement3D.Properties.GetType().GetProperties();
+            var properties = Placement3D.FunctionDefinition.Properties.ExistingValues;
+
+
+
             List<string> s = new List<string>();
-            foreach (var property in Eplan.EplApi.DataModel.Properties.AllPropertyPlacementPropIDs)
+            foreach (var property in Eplan.EplApi.DataModel.Properties.AllPlacement3DPropIDs)
             {
                 try
                 {
-                    if (!Placement3D.Properties[property].IsEmpty)
+                    PropertyDefinition propertyDefinition = new PropertyDefinition(property);
+                    bool IsIndexed = propertyDefinition.IsIndexed;
+                    var fff = property.Definition.Name;
+                    var ss = property.Definition.Id;
+                    if (IsIndexed /*&& !Placement3D.Properties[property].IsEmpty*/)
                     {
-                        if (Placement3D.Properties[property].Definition.Type == PropertyDefinition.PropertyType.String)
-                        {
-                            var value = Placement3D.Properties[property];
-                            var name = property.Definition.Name;
-                            s.Add(value);
-                        }
+
+                        var value = Placement3D.Properties[property];
+                        var name = property.Definition.Name;
+                        s.Add(value);
+
                     }
 
                 }
