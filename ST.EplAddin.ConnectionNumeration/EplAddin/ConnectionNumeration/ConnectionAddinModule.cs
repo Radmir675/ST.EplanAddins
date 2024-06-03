@@ -5,9 +5,6 @@
 // Assembly location: C:\Users\tembr\Desktop\AddIns\ST.EplAddin.ConnectionNumeration.dll
 
 using Eplan.EplApi.ApplicationFramework;
-using Eplan.EplApi.Base;
-using ST.EplAddin.Base;
-using System.Diagnostics;
 using Eplan.EplApi.Gui;
 using ST.EplAddin.ConnectionNumeration;
 
@@ -15,16 +12,16 @@ namespace EplAddin.ConnectionNumeration
 {
     public class ConnectionAddinModule : IEplAddIn
     {
-    public static uint numberOfPosition;
+        public static uint numberOfPosition;
 
-        
+
         public virtual string Description => "DEscriptoiion";
 
         public virtual string MenuPath => nameof(MenuPath);
 
         public virtual string MenuIcon => "DEscriptoiion.ico";
 
-       
+
         public bool OnExit() => true;
 
         public bool OnInit()
@@ -35,9 +32,11 @@ namespace EplAddin.ConnectionNumeration
 
         public bool OnInitGui()
         {
-            string actionName = ConnectionPlacementSchemaAction.actionName;
+            string connectionNumeration = ConnectionPlacementSchemaAction.actionName;
+            string cableNumeration = CableConnectionPlacementSchemaAction.actionName;
             Menu menu = new Menu();
-            numberOfPosition= menu.AddMainMenu("ST Add-ins", Menu.MainMenuName.eMainMenuUtilities,"Выравнивание соединений", actionName, "Статус",1);
+            numberOfPosition = menu.AddMainMenu("ST Add-ins", Menu.MainMenuName.eMainMenuUtilities, "Выравнивание соединений", connectionNumeration, "Статус", 1);
+            menu.AddMenuItem("Жилы кабеля", cableNumeration, "Статус", numberOfPosition, 0, false, false);
             return true;
         }
 

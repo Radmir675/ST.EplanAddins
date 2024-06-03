@@ -120,6 +120,8 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CableConnectionFilter.cs" />
+    <Compile Include="CableConnectionPlacementSchemaAction.cs" />
     <Compile Include="EplAddin\ConnectionNumeration\ConnectionAddinModule.cs" />
     <Compile Include="EplAddin\ConnectionNumeration\EsGenerateConnectionsAction.cs" />
     <Compile Include="ConnectionFilter.cs" />
