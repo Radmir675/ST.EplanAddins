@@ -213,7 +213,7 @@ namespace ST.EplAddin.PlcEdit
                     }
                     else//если есть реверс то применяем вот эту схему "с реверсом"
                     {
-
+                        ReverseOutputPins(sourceFunction, targetFunction);
                     }
                     safetyPoint.Commit();
                     //oUndo.CloseOpenUndo();
