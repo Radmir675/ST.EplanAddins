@@ -36,7 +36,7 @@ namespace EplAddin.ConnectionNumeration
             string cableNumeration = CableConnectionPlacementSchemaAction.actionName;
             Menu menu = new Menu();
             numberOfPosition = menu.AddMainMenu("ST Add-ins", Menu.MainMenuName.eMainMenuUtilities, "Выравнивание соединений", connectionNumeration, "Статус", 1);
-            menu.AddMenuItem("Жилы кабеля", cableNumeration, "Статус", numberOfPosition, 0, false, false);
+            menu.AddMenuItem("Жилы кабеля", cableNumeration, "Статус", numberOfPosition, 1, false, false);
             return true;
         }
 
