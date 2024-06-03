@@ -203,20 +203,21 @@ namespace ST.EplAddin.PlcEdit
         {
             try
             {
-                using (UndoStep oUndo = new UndoManager().CreateUndoStep())
-                using (SafetyPoint safetyPoint = SafetyPoint.Create())
+                using (UndoStep undo = new UndoManager().CreateUndoStep())
                 {
-
-                    if (reverse == false)
+                    using (SafetyPoint safetyPoint = SafetyPoint.Create())
                     {
-                        targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
+                        if (reverse == false)
+                        {
+                            targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
+                        }
+                        else//если есть реверс то применяем вот эту схему "с реверсом"
+                        {
+                            ReverseOutputPins(sourceFunction, targetFunction);
+                        }
+                        safetyPoint.Commit();
+                        undo.SetUndoDescription($"Удалить присвоение");
                     }
-                    else//если есть реверс то применяем вот эту схему "с реверсом"
-                    {
-                        ReverseOutputPins(sourceFunction, targetFunction);
-                    }
-                    safetyPoint.Commit();
-                    //oUndo.CloseOpenUndo();
                 }
 
 
