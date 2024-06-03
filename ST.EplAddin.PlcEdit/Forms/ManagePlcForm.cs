@@ -278,6 +278,10 @@ namespace ST.EplAddin.PlcEdit
             {
                 Ok_button.PerformClick();
             }
+            if (e.KeyCode == Keys.S && e.Control)
+            {
+                Apply_button.PerformClick();
+            }
         }
 
         internal void Exit()
