@@ -159,12 +159,12 @@ namespace ST.EplAddin.PlcEdit
 
             dataGridView.Refresh();
         }
-        private void InsertRowInEmptyPosition(Direction direction)
+        private void InsertRowInEmptyPosition(Direction direction, bool jumpThroughAll = false)
         {
             var currentIndexRow = dataGridView.SelectedCells.Cast<DataGridViewCell>().First().RowIndex;
             var currentRow = dataGridView.Rows[currentIndexRow];
             var functionDefinition = currentRow.Cells["FunctionDefinition"].Value.ToString();
-            var targetIndexRow = TryGetEmptyIndexRow(currentRow.Index, direction, functionDefinition);// задать смещение 
+            var targetIndexRow = TryGetEmptyIndexRow(currentRow.Index, direction, functionDefinition, jumpThroughAll);// задать смещение 
             if (targetIndexRow == null)
             {
                 return;
@@ -213,32 +213,59 @@ namespace ST.EplAddin.PlcEdit
             }
             return false;
         }
-        private int? TryGetEmptyIndexRow(int currentPositionIndex, Direction direction, string functionDefinition)
+        private int? TryGetEmptyIndexRow(int currentPositionIndex, Direction direction, string functionDefinition, bool jumpThroughAll = false)
         {
             DataGridViewRow properlyRow = null;
-            switch (direction)
+            if (jumpThroughAll == true)
             {
-                case Direction.Up:
+                switch (direction)
+                {
+                    case Direction.Up:
+                        properlyRow = dataGridView.Rows.Cast<DataGridViewRow>().FirstOrDefault(x =>
+                      x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                     && x.Cells["FunctionText"].Value?.ToString() == string.Empty
+                     && x.Index < currentPositionIndex
+                     && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
+                        break;
 
-                    properlyRow = dataGridView.Rows
-                        .Cast<DataGridViewRow>()
-                        .Where(z => z.Index < currentPositionIndex)
-                        .Reverse()
-                        .FirstOrDefault(x =>
-                  x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
-                 && x.Cells["FunctionText"].Value?.ToString() == string.Empty
-                  && x.Index < currentPositionIndex
-                 && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
-                    break;
-                case Direction.Down:
-                    properlyRow = dataGridView.Rows.Cast<DataGridViewRow>().FirstOrDefault(x =>
-                  x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
-                 && x.Cells["FunctionText"].Value?.ToString() == string.Empty
-                 && x.Index > currentPositionIndex
-                 && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
-                    break;
+                    case Direction.Down:
+                        properlyRow = dataGridView.Rows
+                            .Cast<DataGridViewRow>()
+                            .Where(z => z.Index > currentPositionIndex)
+                            .Reverse()
+                            .FirstOrDefault(x =>
+                      x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                     && x.Cells["FunctionText"].Value?.ToString() == string.Empty
+                      && x.Index > currentPositionIndex
+                     && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
+                        break;
+                }
             }
+            else
+            {
+                switch (direction)
+                {
+                    case Direction.Up:
+                        properlyRow = dataGridView.Rows
+                            .Cast<DataGridViewRow>()
+                            .Where(z => z.Index < currentPositionIndex)
+                            .Reverse()
+                            .FirstOrDefault(x =>
+                      x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                     && x.Cells["FunctionText"].Value?.ToString() == string.Empty
+                      && x.Index < currentPositionIndex
+                     && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
+                        break;
 
+                    case Direction.Down:
+                        properlyRow = dataGridView.Rows.Cast<DataGridViewRow>().FirstOrDefault(x =>
+                      x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                     && x.Cells["FunctionText"].Value?.ToString() == string.Empty
+                     && x.Index > currentPositionIndex
+                     && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
+                        break;
+                }
+            }
             var properlyRowIndex = properlyRow?.Index;
             return properlyRowIndex;
         }
@@ -301,6 +328,8 @@ namespace ST.EplAddin.PlcEdit
             {
                 up_button.Enabled = false;
                 dowm_button.Enabled = false;
+                upper_button.Enabled = false;
+                lower_button.Enabled = false;
                 return;
             }
             var currentRow = SelectedRows.FirstOrDefault();//туть null
@@ -314,19 +343,23 @@ namespace ST.EplAddin.PlcEdit
             if (!emptyUpRow.HasValue || SelectedRows.Count() != 1)
             {
                 up_button.Enabled = false;
+                upper_button.Enabled = false;
             }
             else
             {
                 up_button.Enabled = true;
+                upper_button.Enabled = true;
             }
             var emptyDownRow = TryGetEmptyIndexRow(currentRow.Index, Direction.Down, functionDefinition);
             if (!emptyDownRow.HasValue || SelectedRows.Count() != 1)
             {
                 dowm_button.Enabled = false;
+                lower_button.Enabled = false;
             }
             else
             {
                 dowm_button.Enabled = true;
+                lower_button.Enabled = true;
             }
         }
 
@@ -454,6 +487,20 @@ namespace ST.EplAddin.PlcEdit
                 if (!dropDownList.Items.Contains(filename))
                     dropDownList.Items.Add(filename);
             }
+        }
+
+        private void upper_button_Click(object sender, EventArgs e)
+        {
+            if (SelectedRows.Count() != 1)
+                return;
+            InsertRowInEmptyPosition(Direction.Up, jumpThroughAll: true);
+        }
+
+        private void lower_button_Click(object sender, EventArgs e)
+        {
+            if (SelectedRows.Count() != 1)
+                return;
+            InsertRowInEmptyPosition(Direction.Down, jumpThroughAll: true);
         }
     }
 }

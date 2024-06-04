@@ -103,6 +103,16 @@ namespace ST.EplAddin.PlcEdit.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Down1 {
+            get {
+                object obj = ResourceManager.GetObject("Down1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap downup {
             get {
                 object obj = ResourceManager.GetObject("downup", resourceCulture);
@@ -176,6 +186,16 @@ namespace ST.EplAddin.PlcEdit.Properties {
         internal static System.Drawing.Bitmap up {
             get {
                 object obj = ResourceManager.GetObject("up", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Upper {
+            get {
+                object obj = ResourceManager.GetObject("Upper", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
