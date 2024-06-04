@@ -1,7 +1,6 @@
 ﻿using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel.EObjects;
 using ST.EplAddin.PlcEdit.View;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +8,6 @@ namespace ST.EplAddin.PlcEdit
 {
     public static class Mapper
     {
-
         public static List<PlcDataModelView> GetPlcData(Terminal[] plcTerminals, bool getFullData = false)
         {
             List<PlcDataModelView> plcDataModelView = new List<PlcDataModelView>();
@@ -48,7 +46,16 @@ namespace ST.EplAddin.PlcEdit
                 result.Add(terminal);
             }
 
-            return result.OrderBy(x => Convert.ToInt32(x.DevicePinNumber == "" ? "0" : x.DevicePinNumber)).ToList();
+            //return result.OrderBy(x => Convert.ToInt32(int.TryParse(x.DevicePinNumber, out int ss) ? 0 : x.DevicePinNumber)).ToList();
+            return result
+                  .OrderBy(s =>
+                  {
+                      int i = 0;
+                      return int.TryParse(s.DevicePinNumber, out i) ? i : int.MaxValue;
+                  })
+                  .ThenBy(s => s.DevicePinNumber)
+                  .ToList();
+
         }
 
 
