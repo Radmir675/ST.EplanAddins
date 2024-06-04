@@ -147,8 +147,8 @@ namespace ST.EplAddin.PlcEdit
         private void HighlightRow(int rowIndex)
         {
             dataGridView.ClearSelection();
-            //dataGridView.Rows[rowIndex].Selected = true;
-            //LastSelectedRow = rowIndex;
+            dataGridView.Rows[rowIndex].Selected = true;
+            LastSelectedRow = rowIndex;
             dataGridView.Refresh();
         }
         private void HighlightRow(int rowIndex1, int rowIndex2)
