@@ -45,11 +45,11 @@ namespace ST.EplAddin.Footnote
                     {
                         note = new FootnoteItem();
                         note.Create(block);
-                        oldPosition = note.notePosition;
+                        oldPosition = note.finishPosition;
                         isFootnote = true;
 
-                        double x = note.itemPosition.X + note.block.Properties.INSTANCE_XCOORD.ToDouble();
-                        double y = note.itemPosition.Y + note.block.Properties.INSTANCE_YCOORD.ToDouble();
+                        double x = note.startPosition.X + note.block.Properties.INSTANCE_XCOORD.ToDouble();
+                        double y = note.startPosition.Y + note.block.Properties.INSTANCE_YCOORD.ToDouble();
                         StartPosition = new Position(new PointD(x, y));
 
                         if (STSettings.instance.LINECURSOR)

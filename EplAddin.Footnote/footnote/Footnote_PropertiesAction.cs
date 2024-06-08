@@ -20,21 +20,21 @@ namespace ST.EplAddin.Footnote
 
             if (function == "PropertiesRedundant")
             {
-                SelectionSet Set = new SelectionSet();
-                Set.LockProjectByDefault = false;
-                Set.LockSelectionByDefault = false;
-                Project CurrentProject = Set.GetCurrentProject(true);
-                StorableObject so = Set.GetSelectedObject(true);
-                if (so is Block bl)
+                SelectionSet selectionSet = new SelectionSet();
+                selectionSet.LockProjectByDefault = false;
+                selectionSet.LockSelectionByDefault = false;
+                Project CurrentProject = selectionSet.GetCurrentProject(true);
+                StorableObject storableObject = selectionSet.GetSelectedObject(true);
+                if (storableObject is Block block)
                 {
-                    bool isFootnoteBlock = bl.Name.Contains(FootnoteItem.FOOTNOTE_KEY);
+                    bool isFootnoteBlock = block.Name.Contains(FootnoteItem.FOOTNOTE_KEY);
                     if (isFootnoteBlock)
                     {
-                        FootnoteItem note = new FootnoteItem();
-                        note.Create(bl);
-                        PropertiesDialog p = new PropertiesDialog();
-                        p.setItem(note);
-                        p.ShowDialog();
+                        FootnoteItem footnoteItem = new FootnoteItem();
+                        footnoteItem.Create(block);
+                        PropertiesDialog propertiesDialog = new PropertiesDialog();
+                        propertiesDialog.setItem(footnoteItem);
+                        propertiesDialog.ShowDialog();
 
                         return true;
                     }

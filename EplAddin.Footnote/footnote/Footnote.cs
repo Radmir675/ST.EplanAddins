@@ -25,11 +25,10 @@ namespace ST.EplAddin.Footnote
     public partial class FootnoteItem
     {
         public static String FOOTNOTE_KEY = "FOOTNOTE_OBJID#";
-        public string userTextForm { get; set; }
 
         public Block block = null;
         public ViewPlacement viewPlacement = null; //текущий обзор модели с которым группируемся
-        public Placement3D sourceItem = null; //объект пространства листа
+        public Placement3D sourceItem3D = null; //объект пространства листа
         public List<Placement> subItems = null;
         public PropertiesList PROPERTYID { get; set; } = STSettings.instance.PROPERTYID;
 
@@ -43,13 +42,13 @@ namespace ST.EplAddin.Footnote
 
         #region Properties
         [Browsable(false)]
-        public PointD itemPosition
+        public PointD startPosition
         {
             get => itemline.StartPoint;
             set => itemline.StartPoint = value;
         }
         [Browsable(false)]
-        public PointD notePosition
+        public PointD finishPosition
         {
             get => noteline.StartPoint;
             set => noteline.StartPoint = value;
@@ -233,8 +232,6 @@ namespace ST.EplAddin.Footnote
             currentPage = vpart.Page;
             viewPlacement = vpart.Group as ViewPlacement;
             CreateSubItems();
-            //    CreateBlock();
-            //     GetSubItems();
             SetSourceObject(vpart);
         }
 
@@ -245,10 +242,8 @@ namespace ST.EplAddin.Footnote
         public void Create(Page page)
         {
             currentPage = page;
-            //createSubItems();
             UpdateBlock();
             UpdateSubItems();
-            //getSubPlacements();
         }
 
         /// <summary>
@@ -257,7 +252,7 @@ namespace ST.EplAddin.Footnote
         /// <param name="point"></param>
         public void SetItemPoint(PointD point)
         {
-            itemPosition = point;
+            startPosition = point;
             UpdateSubItems();
         }
 
@@ -267,8 +262,9 @@ namespace ST.EplAddin.Footnote
         /// <param name="point"></param>
         public void SetNotePoint(PointD point)
         {
-            notePosition = point;
+            finishPosition = point;
             UpdateSubItems();
+            //TODO: зачем везде пихать обновление вложенных элементов
         }
 
 
@@ -277,10 +273,8 @@ namespace ST.EplAddin.Footnote
         /// </summary>
         public void CreateSubItems()
         {
-
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-
                 Pen penline = new Pen();
                 penline.ColorId = 0;
                 penline.StyleId = 0;
@@ -335,35 +329,14 @@ namespace ST.EplAddin.Footnote
                 }
                 subItems = new List<Placement> { label, itemline, noteline, startpoint, jsontext, propid };
 
-
-                /*
-                string name = block.Name;*/
-                //PointD p = itemPosition;
-                /*Placement[] groupb = block.BreakUp();*/
-                /*
-                block = new Block();
-                block.Create(currentPage, group);
-                block.Name = name;*/
-
-                //getSubPlacements();
-                /*
-                Placement[] groupnew = group.Concat(new Placement[] { 2 }).ToArray();
-                block.Create(block.SubPlacements,)
-                block.SubPlacements.Contains(label) block.SubPlacements.
-                    block.*/
-
-                // }
-
-                //getSubPlacements();
-
                 safetyPoint.Commit();
             }
-
         }
         public void CreateBlock()
         {
             CreateBlock(subItems.ToArray());
         }
+
         /// <summary>
         /// При создании блока переданные элементы удаляются со страницы и объеденяются в блок
         /// </summary>
@@ -381,10 +354,9 @@ namespace ST.EplAddin.Footnote
             }
         }
 
-
         /// <summary>
         /// Обновление блока
-        /// При изменении вложенных компанентов необходимо пересобрать блок для корректировки BoundingBox
+        /// При изменении вложенных компонентов необходимо пересобрать блок для корректировки BoundingBox
         /// </summary>
         public void UpdateBlock()
         {
@@ -398,98 +370,51 @@ namespace ST.EplAddin.Footnote
                     Placement[] items = block.BreakUp();
                     GetSubItems(items); //получили существующие экземпляры после извлечения из блока
                     block = null;
-
                 }
 
                 CreateSubItems(); //создание недостающих элементов
                 //updateSubItems(); //обновление текстов и расположения
                 CreateBlock(); //объединенить в блок
                 GetSubItems(block.SubPlacements); //получили существующие экземпляры после объединения в блок
-                if (sourceItem != null) //Подумать
-                    SetSourceObject(sourceItem); //устанавливаем ссылку на исходный объект, (ссылку на который получили ранее!)
+                //if (sourceItem3D != null) //Подумать
+                GetSourceObject();
+                SetSourceObject(sourceItem3D); //устанавливаем ссылку на исходный объект, (ссылку на который получили ранее!)//TODO:это можно уже пропустить
                 safetyPoint.Commit();
             }
-
-            //getSubPlacements();
-        }
-
-
-        /// <summary>
-        /// Обновление блока
-        /// При изменении вложенных компанентов необходимо пересобрать блок для корректировки BoundingBox
-        /// </summary>
-        public void UpdateBlock_original()
-        {
-
-            using (SafetyPoint safetyPoint = SafetyPoint.Create())
-            {
-                //Если блок создан ломаем его и пересобираем
-                if (block != null)
-                {
-                    //получить обзор модели на котором лежит блок
-                    viewPlacement = block.Group as ViewPlacement;
-                    Placement[] items = block.BreakUp();
-                    GetSubItems(items); //получили существующие экземпляры после извлечения из блока
-                    block = null;
-                }
-
-                CreateSubItems(); //создание недостающих элементов
-                //updateSubItems(); //обновление текстов и расположения
-                CreateBlock(); //объединенить в блок
-                GetSubItems(block.SubPlacements); //получили существующие экземпляры после объединения в блок
-                if (sourceItem != null) //Подумать
-                    SetSourceObject(sourceItem); //устанавливаем ссылку на исходный объект, (ссылку на который получили ранее!)
-                safetyPoint.Commit();
-            }
-
-            //getSubPlacements();
         }
 
         /// <summary>
-        /// Обновленеи Вложенных в блок элементов
+        /// Обновление вложенных в блок элементов
         /// </summary>
         public void UpdateSubItems(string oldText = null)
         {
-
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-                //if (itemline.IsTransient) return;
+                //update lines
+                Pen penpoint = new Pen();
+                penpoint.ColorId = 0;
+                penpoint.StyleId = 0;
+                penpoint.StyleFactor = -16002;
+                penpoint.Width = 0.0;
+                penpoint.LineEndType = 0;
 
                 if (STARTPOINT)
                 {
-                    //update lines
-                    Pen penpoint = new Pen();
-                    penpoint.ColorId = 0;
-                    penpoint.StyleId = 0;
-                    penpoint.StyleFactor = -16002;
-                    penpoint.Width = 0.0;
-                    penpoint.LineEndType = 0;
-
-                    startpoint.SetCircle(itemPosition, STARTPOINTRADIUS);
-                    startpoint.IsSurfaceFilled = true;
-                    startpoint.Pen = penpoint;
+                    startpoint.SetCircle(startPosition, STARTPOINTRADIUS);
                 }
                 else
                 {
-                    Pen penpoint = new Pen();
-                    penpoint.ColorId = 0;
-                    penpoint.StyleId = 0;
-                    penpoint.StyleFactor = -16002;
-                    penpoint.Width = 0.0;
-                    penpoint.LineEndType = 0;
-
-                    startpoint.IsSurfaceFilled = true;
-                    startpoint.Pen = penpoint;
-                    startpoint.SetCircle(itemPosition, 0.0);
+                    startpoint.SetCircle(startPosition, 0.0);
                 }
 
+                startpoint.IsSurfaceFilled = true;
+                startpoint.Pen = penpoint;
 
                 if (jsontext != null)
-                    jsontext.Location = notePosition;
-
+                    jsontext.Location = finishPosition;
 
                 //update Text
-                Text = GetSourceObjectProperty(oldText);
+                Text = GetSourceObjectProperty();
                 MultiLangString mls = new MultiLangString();
                 mls.SetAsString(Text);
                 label.Contents = mls;
@@ -497,17 +422,17 @@ namespace ST.EplAddin.Footnote
                 label.TextColorId = (Text == "-1") ? (short)1 : (short)-16002; // если свойство не прочиталось красим в красный
 
                 //itemline.StartPoint = itemPosition;
-                itemline.EndPoint = notePosition;
+                itemline.EndPoint = finishPosition;
 
                 double textwidth = label.GetBoundingBox()[1].X - label.GetBoundingBox()[0].X + TEXTHEIGHT;
                 //textwidth = textwidth;/** (sourceItem.Group as ViewPlacement).Scale;*/
 
-                noteline.StartPoint = notePosition;
+                noteline.StartPoint = finishPosition;
 
-                PointD endpoint = notePosition;
-                PointD labelpoint = notePosition;
+                PointD endpoint = finishPosition;
+                PointD labelpoint = finishPosition;
 
-                if (notePosition.X > itemPosition.X ^ INVERTDIRECTION)
+                if (finishPosition.X > startPosition.X ^ INVERTDIRECTION)
                 {
                     endpoint.X += textwidth;
                     noteline.EndPoint = endpoint;
@@ -534,8 +459,6 @@ namespace ST.EplAddin.Footnote
                     PointD idpoint = new PointD(labelpoint.X, labelpoint.Y - TEXTHEIGHT);
                     propid.Location = idpoint;
                 }
-
-
                 //update lines
                 Pen penline = new Pen();
                 penline.ColorId = 0;
@@ -563,43 +486,14 @@ namespace ST.EplAddin.Footnote
                 jsontext = array.ElementAtOrDefault(4) as Text;
                 propid = array.ElementAtOrDefault(5) as Text;
                 subItems = new List<Placement> { label, itemline, noteline, startpoint, jsontext, propid };
-
-                // Если нуль то создать и присвоить значения
-                //block.BreakUp();
-                /*if (
-                    label == null ||
-                    itemline == null ||
-                    noteline == null ||
-                    startpoint == null ||
-                    jsontext == null ||
-                    propid == null || true
-                    )
-                {
-
-                    //Placement[] bp = block.BreakUp();
-                    //пересоздать блок, создав элементы недостающие
-                    createSubItems();
-                    //getSubPlacements();
-                    
-                    updateBlock();
-                    setReferencedObject(sourceItem);
-                    GroupWithReferencedObject();
-                    updateSubItems();
-                }*/
             }
             catch (Exception e)
             {
                 DialogResult result = MessageBox.Show(e.Message, "FootNote", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                //создаем недостающие
-                //createSubItems();
-
                 if (result == DialogResult.Abort)
                 {
-
                 }
             }
-
         }
 
         /// <summary>
@@ -619,11 +513,11 @@ namespace ST.EplAddin.Footnote
             if (si_p3d == null)
             {
                 ViewPart si_vp = obj as ViewPart;
-                sourceItem = si_vp.Source;
+                sourceItem3D = si_vp.Source;
             }
             else
             {
-                sourceItem = si_p3d;
+                sourceItem3D = si_p3d;
             }
             /*
             if (sourceItem != null)
@@ -634,90 +528,90 @@ namespace ST.EplAddin.Footnote
         /// <summary>
         /// Получить значение свойства исходного объекта
         /// </summary>
-        public string GetSourceObjectProperty(string oldtext = null)
+        public string GetSourceObjectProperty()
         {
-            return GetSourceObjectProperty(sourceItem, oldtext);
+            return GetSourceObjectProperty(sourceItem3D);
         }
 
         /// <summary>
         /// Получить значение свойства исходного объекта
         /// </summary>
-        /// <param name="so">исходный объект</param>
+        /// <param name="placement3D">исходный объект</param>
         /// <returns></returns>
-        public string GetSourceObjectProperty(Placement3D so, string oldtext = null)
+        public string GetSourceObjectProperty(Placement3D placement3D)
         {
+            String result = "-1";//default result
 
-            String result = "-1";
-
-            if (so != null)
+            if (placement3D != null)
             {
                 switch (PROPERTYID)
                 {
-                    //нужно получить текст блока
+                    case PropertiesList.AllAvailableProperties:
+                        PropertySelectDialogForm propertySelectDialogForm = new PropertySelectDialogForm(placement3D);
+                        propertySelectDialogForm.ShowDialog();
+                        break;
+
                     case PropertiesList.User_defined:
-                        PropertySelectDialogForm propertySelectDialogForm = new PropertySelectDialogForm(so);
-                        //propertySelectDialogForm.ShowDialog();
-                        //if (oldtext != null)
-                        //{
-                        //    result = userTextForm;
-                        //    break;
-                        //}
-                        //if (userTextForm == null)
-                        //{
-                        //    Footnote_CustomTextForm form = new Footnote_CustomTextForm();
-                        //    form.ShowDialog();
-                        //    if (form.DialogResult == DialogResult.OK)
-                        //    {
-                        //        userTextForm = form.GetUserText();
-                        //    }
-                        //    form.Close();
-                        //}
-                        //result = userTextForm;
+                        if (label != null && label.Contents.GetStringToDisplay(ISOCode.Language.L_ru_RU) != "-1")
+                        {
+                            result = label.Contents.GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                            break;
+                        }
+                        else
+                        {
+                            Footnote_CustomTextForm form = new Footnote_CustomTextForm();
+                            form.ShowDialog();
+                            if (form.DialogResult == DialogResult.OK)
+                            {
+                                result = form.GetUserText();
+                            }
+                            form.Close();
+                        }
                         break;
+
                     case PropertiesList.P20450:
-                        result = so.Properties[20450].ToInt().ToString();
+                        result = placement3D.Properties[20450].ToInt().ToString();
                         break;
+
                     case PropertiesList.P20008:
-                        result = so.Properties[20008].ToString();
+                        result = placement3D.Properties[20008].ToString();
                         break;
+
                     case PropertiesList.P20487:
+                        Function3D function3D = placement3D as Function3D;
+                        if (function3D == null) { MessageBox.Show("Недействительный объект источника"); break; }
 
-                        Eplan.EplApi.DataModel.E3D.Function3D e3dc = so as Eplan.EplApi.DataModel.E3D.Function3D;
-                        if (e3dc == null) { MessageBox.Show("Недействительный объект источника"); break; }
-
-                        ArticleReference ar = e3dc.ArticleReferences.FirstOrDefault();
-                        if (ar == null || ar.IsTransient)
+                        ArticleReference articleReference = function3D.ArticleReferences.FirstOrDefault();
+                        if (articleReference == null || articleReference.IsTransient)
                         {
                             //Попытка найти номер в связанных элементах
-                            var arr = e3dc.CrossReferencedObjectsAll.Where(a => (a as Function3D).ArticleReferences.Count() > 0);
+                            var arr = function3D.CrossReferencedObjectsAll.Where(a => (a as Function3D).ArticleReferences.Count() > 0);
                             StorableObject arrItem = null;
                             if (arr != null)
                             {
                                 arrItem = arr.FirstOrDefault();
-                                ar = (arrItem as Function3D).ArticleReferences.FirstOrDefault();
+                                articleReference = (arrItem as Function3D).ArticleReferences.FirstOrDefault();
                             }
                         }
 
-                        if (ar == null || ar.IsTransient)
+                        if (articleReference == null || articleReference.IsTransient)
                         { MessageBox.Show("Недействительная ссылка изделия объекта источника"); break; }
 
-                        if (ar.Properties.Exists(20487) == false) { MessageBox.Show("Несуществующее свойство ссылки изделия объекта источника"); break; }
+                        if (articleReference.Properties.Exists(20487) == false) { MessageBox.Show("Несуществующее свойство ссылки изделия объекта источника"); break; }
 
-                        if (ar.Properties[20487].IsEmpty)
+                        if (articleReference.Properties[20487].IsEmpty)
                         {
                             //MessageBox.Show("Пустой Номер позиции");
                             result = "-1";
                             break;
                         }
 
-                        result = ar.Properties[20487].ToInt().ToString();
+                        result = articleReference.Properties[20487].ToInt().ToString();
                         break;
                 }
             }
             return result;
         }
-
-
 
         /// <summary>
         /// Присвоить исходный объект
@@ -728,23 +622,24 @@ namespace ST.EplAddin.Footnote
             if (vpart != null)
                 SetSourceObject(vpart.Source);
         }
-
-        public void SetSourceObject(Placement3D pl3d)
+        /// <summary>
+        /// Поиск 3D объекта
+        /// </summary>
+        /// <param name="placement3d">3D модель</param>
+        public void SetSourceObject(Placement3D placement3d)
         {
-
-            if (pl3d != null)
+            if (placement3d != null)
                 using (SafetyPoint safetyPoint = SafetyPoint.Create())
                 {
-                    string objectId = pl3d.Properties.PROPUSER_DBOBJECTID; //get object id
+                    string objectId = placement3d.Properties.PROPUSER_DBOBJECTID; //get object id
                     int idxOfSlash = objectId.IndexOf("/", 1, objectId.Length - 1, StringComparison.InvariantCultureIgnoreCase);    //get index of first separator
                     string objectIdWithoutProjectId = objectId.Substring(idxOfSlash + 1, (objectId.Length - idxOfSlash - 1));   //cut off value before first separator together with this separator
                     String referenceID = objectIdWithoutProjectId;
-                    sourceItem = pl3d;
-                    if (sourceItem != null)
-                        Text = GetSourceObjectProperty(sourceItem);
-                    //Text = vpart.Source.Properties[PROPERTYID].ToInt().ToString();
-
-                    block.Name = FOOTNOTE_KEY + referenceID;
+                    sourceItem3D = placement3d;
+                    if (sourceItem3D != null)
+                        Text = GetSourceObjectProperty(sourceItem3D);//получение текста из свойства но надо ли оно тут?????
+                    if (block != null)
+                        block.Name = FOOTNOTE_KEY + referenceID;//здесь ловим ошибку
                     safetyPoint.Commit();
                 }
             else MessageBox.Show("Не найдена ссылка на исходный объект", "FootNote", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -758,14 +653,13 @@ namespace ST.EplAddin.Footnote
             GroupWithViewPlacement(viewPlacement);
         }
 
-        public void GroupWithViewPlacement(ViewPlacement vp)
+        public void GroupWithViewPlacement(ViewPlacement viewPlacement)
         {
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-                if (vp != null)
+                if (viewPlacement != null)
                 {
-                    vp.InsertSubPlacement(block);
-                    //sourceItem.Group.InsertSubPlacement(block);
+                    viewPlacement.InsertSubPlacement(block);
                     safetyPoint.Commit();
                 }
             }

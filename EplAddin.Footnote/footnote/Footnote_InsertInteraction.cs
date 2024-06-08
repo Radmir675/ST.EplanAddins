@@ -37,7 +37,9 @@ namespace ST.EplAddin.Footnote
             this.state = State.Selection;
             this.PromptForStatusLine = "Выберите объект пространаства листа.";
         }
-
+        /// <summary>
+        /// Выбор точки на объекте
+        /// </summary>
         public void stateSourcePoint()
         {
             this.state = State.SourcePoint;
@@ -62,23 +64,22 @@ namespace ST.EplAddin.Footnote
             ClearCursor();
         }
 
-        public bool isViewPartSelected()
+        public bool isViewPartSelected(StorableObject storableObject)
         {
-            SelectionSet s = new SelectionSet();
-            s.LockProjectByDefault = false;
-            s.LockSelectionByDefault = false;
-            StorableObject o = s.GetSelectedObject(true);
-            return (o != null && o is ViewPart);
+            return (storableObject != null && storableObject is ViewPart);
         }
 
-        public void setSource(StorableObject o)
+        /// <summary>
+        /// Получение ViewPart and vpartID
+        /// </summary>
+        /// <param name="storableObject"></param>
+        public void setSource(StorableObject storableObject)
         {
-            if (o != null && o is ViewPart)
+            if (storableObject != null && storableObject is ViewPart vPart)
             {
-                vpartID = (o as ViewPart).ToStringIdentifier();
-                vpart = (o as ViewPart);
+                vpart = vPart;
+                vpartID = vpart.ToStringIdentifier();
             }
-
         }
         public override RequestCode OnStart(InteractionContext oContext)
         {
@@ -88,16 +89,17 @@ namespace ST.EplAddin.Footnote
 
             this.Description = "Вставить сноску";
 
-            SelectionSet s = new SelectionSet();
-            s.LockProjectByDefault = false;
-            s.LockSelectionByDefault = false;
-            StorableObject o = s.GetSelectedObject(true);
+            SelectionSet selectionSet = new SelectionSet();
+            selectionSet.LockProjectByDefault = false;
+            selectionSet.LockSelectionByDefault = false;
+            StorableObject storableObject = selectionSet.GetSelectedObject(true);
 
-            if (isViewPartSelected())
+            //TODO: тут можно сделать выноски под любые типы ст
+            if (isViewPartSelected(storableObject))
             {
                 Trace.WriteLine("OnStart isViewPartSelected");
-                setSource(o);
-                stateSourcePoint();
+                setSource(storableObject);//получили vPart
+                stateSourcePoint();//выбор точки на объекте
                 return RequestCode.Point;
             }
             else
@@ -106,8 +108,6 @@ namespace ST.EplAddin.Footnote
                 stateSelection();
                 return RequestCode.Select | RequestCode.NoPreselect | RequestCode.NoMultiSelect | RequestCode.Highlite | RequestCode.IgnoreGroup;
             }
-
-            return RequestCode.Stop;
         }
 
         public override RequestCode OnSelect(StorableObject[] arrSelectedObjects, SelectionContext oContext)
@@ -144,10 +144,7 @@ namespace ST.EplAddin.Footnote
 
         public override bool OnFilterElement(StorableObject oStorableObject)
         {
-
-            if (oStorableObject is ViewPart)
-                return true;
-            return false;
+            return oStorableObject is ViewPart ? true : false;
         }
 
         public override void OnSuccess(InteractionContext oContext)
@@ -156,9 +153,9 @@ namespace ST.EplAddin.Footnote
             {
                 Trace.WriteLine("OnSuccess");
 
-                FootnoteItem note = new FootnoteItem(); ;
-                note.Create(this.Page);
+                FootnoteItem note = new FootnoteItem();
                 note.SetSourceObject(vpart);
+                note.Create(this.Page);
                 note.SetItemPoint(startPoint);
                 note.SetNotePoint(endPoint);
 
