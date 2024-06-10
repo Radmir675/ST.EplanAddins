@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using static Eplan.EplApi.DataModel.Placement;
 
@@ -540,7 +541,7 @@ namespace ST.EplAddin.Footnote
         /// <returns></returns>
         public string GetSourceObjectProperty(Placement3D placement3D)
         {
-            String result = "-1";//default result
+            String result = "-1"; //default result
 
             if (placement3D != null)
             {
@@ -563,7 +564,9 @@ namespace ST.EplAddin.Footnote
                             form.ShowDialog();
                             if (form.DialogResult == DialogResult.OK)
                             {
-                                result = form.GetUserText();
+                                var textInForm = form.GetUserText();
+                                var propertiesId = GetPropID(textInForm);
+                                result =//тут заменить свойства на текст.
                             }
                             form.Close();
                         }
@@ -612,7 +615,17 @@ namespace ST.EplAddin.Footnote
             }
             return result;
         }
+        private List<int> GetPropID(string inputText)
+        {
+            string pattern = @"(?<=\{).*?(?=\})";
+            Regex regex = new Regex(pattern);
+            MatchCollection collection = regex.Matches(inputText);
 
+            var result = collection.Cast<IEnumerable<T>>().Select(s => new { Success = int.TryParse(s.Value, out var value), value })
+                    .Where(pair => pair.Success)
+                    .Select(pair => pair.value).ToList();
+            return result;
+        }
         /// <summary>
         /// Присвоить исходный объект
         /// </summary>
