@@ -566,7 +566,13 @@ namespace ST.EplAddin.Footnote
                             {
                                 var textInForm = form.GetUserText();
                                 var propertiesId = GetPropID(textInForm);
-                                result =//тут заменить свойства на текст.
+                                var validPropertiesText = GetValidPropertiesText(placement3D, propertiesId).ToList();
+
+                                for (var i = 0; i < validPropertiesText.Count; i++)
+                                {
+                                    result = textInForm.Replace(propertiesId[i].ToString(), $"{{{validPropertiesText[i]}}}");
+                                }
+
                             }
                             form.Close();
                         }
@@ -615,13 +621,24 @@ namespace ST.EplAddin.Footnote
             }
             return result;
         }
+
+        private IEnumerable<string> GetValidPropertiesText(Placement3D placement3D, List<int> propertiesId)
+        {
+            foreach (var property in propertiesId)
+            {
+                //  TODO: проверить на валидность
+                var propertyText = placement3D.Properties[property].ToString(ISOCode.Language.L_ru_RU);
+                yield return propertyText;
+            }
+        }
+
         private List<int> GetPropID(string inputText)
         {
             string pattern = @"(?<=\{).*?(?=\})";
             Regex regex = new Regex(pattern);
             MatchCollection collection = regex.Matches(inputText);
 
-            var result = collection.Cast<IEnumerable<T>>().Select(s => new { Success = int.TryParse(s.Value, out var value), value })
+            var result = collection.Cast<Match>().Select(s => new { Success = int.TryParse(s.Value, out var value), value })
                     .Where(pair => pair.Success)
                     .Select(pair => pair.value).ToList();
             return result;
