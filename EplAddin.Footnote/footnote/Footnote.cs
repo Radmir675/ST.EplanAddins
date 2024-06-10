@@ -570,7 +570,7 @@ namespace ST.EplAddin.Footnote
 
                                 for (var i = 0; i < validPropertiesText.Count; i++)
                                 {
-                                    result = textInForm.Replace(propertiesId[i].ToString(), $"{{{validPropertiesText[i]}}}");
+                                    result = textInForm.Replace($"{{{propertiesId[i].ToString()}}}", validPropertiesText[i]);
                                 }
 
                             }
