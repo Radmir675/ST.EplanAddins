@@ -626,9 +626,15 @@ namespace ST.EplAddin.Footnote
         {
             foreach (var property in propertiesId)
             {
-                //  TODO: проверить на валидность
-                var propertyText = placement3D.Properties[property].ToString(ISOCode.Language.L_ru_RU);
-                yield return propertyText;
+                using (PropertyDefinition propertyDefinition = new PropertyDefinition(property))
+                {
+                    bool IsIndexed = propertyDefinition.IsIndexed;
+                    if (IsIndexed == true)
+                    {
+                        var propertyText = placement3D.Properties[property].ToString(ISOCode.Language.L_ru_RU);
+                        yield return propertyText;
+                    }
+                }
             }
         }
 
