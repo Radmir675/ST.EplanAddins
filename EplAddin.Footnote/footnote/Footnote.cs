@@ -567,12 +567,14 @@ namespace ST.EplAddin.Footnote
                                 var textInForm = form.GetUserText();
                                 var propertiesId = GetPropID(textInForm);
                                 var validPropertiesText = GetValidPropertiesText(placement3D, propertiesId).ToList();
-
+                                if (!validPropertiesText.Any())
+                                {
+                                    result = textInForm;
+                                }
                                 for (var i = 0; i < validPropertiesText.Count; i++)
                                 {
                                     result = textInForm.Replace($"{{{propertiesId[i].ToString()}}}", validPropertiesText[i]);
                                 }
-
                             }
                             form.Close();
                         }
@@ -629,7 +631,7 @@ namespace ST.EplAddin.Footnote
                 using (PropertyDefinition propertyDefinition = new PropertyDefinition(property))
                 {
                     bool IsIndexed = propertyDefinition.IsIndexed;
-                    if (IsIndexed == true)
+                    if (IsIndexed == false)
                     {
                         var propertyText = placement3D.Properties[property].ToString(ISOCode.Language.L_ru_RU);
                         yield return propertyText;
