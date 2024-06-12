@@ -30,20 +30,19 @@ namespace ST.EplAddin.Footnote
                 bool isBlock = so is Block;
                 if (isBlock)
                 {
-                    Block bl = so as Block;
-                    bool isFootnoteBlock = bl.Name.Contains(FootnoteItem.FOOTNOTE_KEY);
+                    Block block = so as Block;
+                    bool isFootnoteBlock = block.Name.Contains(FootnoteItem.FOOTNOTE_KEY);
                     if (isFootnoteBlock)
                     {
                         FootnoteItem note = new FootnoteItem();
-                        note.Create(bl);
-                        PropertiesDialog p = new PropertiesDialog();
-                        p.setItem(note);
-                        p.ShowDialog();
+                        note.Create(block);
+                        PropertiesDialogForm propertiesDialogForm = new PropertiesDialogForm();
+                        propertiesDialogForm.SetItem(note);
+                        propertiesDialogForm.ShowDialog();
                         return true;
                     }
                 }
             }
-
             ActionManager oMng = new ActionManager();
             Action baseAction = oMng.FindBaseAction(this, true);
             return baseAction.Execute(oActionCallingContext);

@@ -90,6 +90,11 @@ namespace ST.EplAddin.Footnote
         [CategoryAttribute("Line"), DefaultValueAttribute(0.25)]
         public double STARTPOINTRADIUS { get; set; } = STSettings.instance.STARTPOINTRADIUS;
 
+        [DataMember]
+        [Description("Введенный пользователем текст")]
+        [CategoryAttribute("Text"), DefaultValueAttribute(0.25)]
+        public string USERTEXT { get; set; } = STSettings.instance.USERTEXT;
+
         //[DataMember]
         [Description("Индекс размещаемого свойства")]
         [CategoryAttribute("Text"), DefaultValueAttribute(PropertiesList.P20450)]
@@ -103,11 +108,11 @@ namespace ST.EplAddin.Footnote
         public String Serialize()
         {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(FootnoteItem));
-            var stream1 = new MemoryStream();
-            serializer.WriteObject(stream1, this);
+            var stream = new MemoryStream();
+            serializer.WriteObject(stream, this);
 
-            byte[] json = stream1.ToArray();
-            stream1.Close();
+            byte[] json = stream.ToArray();
+            stream.Close();
             string jsonstring = Encoding.UTF8.GetString(json, 0, json.Length);
 
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
@@ -140,8 +145,9 @@ namespace ST.EplAddin.Footnote
                 this.STARTPOINT = jsonnote.STARTPOINT;
                 this.STARTPOINTRADIUS = jsonnote.STARTPOINTRADIUS;
                 this.INVERTDIRECTION = jsonnote.INVERTDIRECTION;
+                this.USERTEXT = jsonnote.USERTEXT;
 
-                if (jsonnote.PROPERTYID != 0)
+                if (jsonnote.PROPERTYID != 0)// тут надо подумать
                     this.PROPERTYID = jsonnote.PROPERTYID;
 
                 ms.Close();
@@ -157,70 +163,35 @@ namespace ST.EplAddin.Footnote
         /// <summary>
         /// Создаение элемента выноски из блока
         /// </summary>
-        /// <param name="blo"></param>
-        public void Create(Block blo)
+        /// <param name="block"></param>
+        public void Create(Block block)
         {
-
-            if (blo.Name.Contains(FOOTNOTE_KEY))
+            if (block.Name.Contains(FOOTNOTE_KEY))
             {
-                block = blo;
-                currentPage = block.Page;
-                viewPlacement = block.Group as ViewPlacement;
+                this.block = block;
+                currentPage = this.block.Page;
+                viewPlacement = this.block.Group as ViewPlacement;
 
                 GetSourceObject(); // извлечение из имени идентификатор исходного объекта
                 UpdateBlock(); //обновление или создание элементов
-                //SetSourceObject(sourceItem); //Указать исходный объект
-
                 Deserialize(); //получение сохраненных свойств
                 UpdateSubItems(); //обновление элементов
-                //setReferencedObject(sourceItem);
-
                 GroupWithViewPlacement();
-                //checkSubPlacements();
-
-
-                //updateSubItems();
-
-                /*Text = label.Contents.GetAsString();
-                updateSubItems();*/
-
-                /*
-                String msg = $"Block RECREATE_{referenceID} position X:{itemPosition.X} Y:{itemPosition.Y}";
-                Eplan.EplApi.Base.BaseException exc = new Eplan.EplApi.Base.BaseException(msg, Eplan.EplApi.Base.MessageLevel.Message);
-                exc.FixMessage();*/
             }
         }
 
-        public void UpdateBlockItems(Block blo)
+        public void UpdateBlockItems(Block block)
         {
 
-            if (blo.Name.Contains(FOOTNOTE_KEY))
+            if (block.Name.Contains(FOOTNOTE_KEY))
             {
-                block = blo;
-                currentPage = block.Page;
-                viewPlacement = block.Group as ViewPlacement;
-                GetSubItems(block.SubPlacements);
+                this.block = block;
+                currentPage = this.block.Page;
+                viewPlacement = this.block.Group as ViewPlacement;
+                GetSubItems(this.block.SubPlacements);
                 GetSourceObject(); // извлечение из имени идентификатор исходного объекта
-                                   //UpdateBlock(); //обновление или создание элементов
-                                   //SetSourceObject(sourceItem); //Указать исходный объект
-
                 Deserialize(); //получение сохраненных свойств
                 UpdateSubItems(); //обновление элементов
-                //setReferencedObject(sourceItem);
-
-                //GroupWithViewPlacement();
-                //checkSubPlacements();
-
-
-                //updateSubItems();
-
-                /*Text = label.Contents.GetAsString();
-                updateSubItems();*/
-
-                /*
-                String msg = $"Block RECREATE_{referenceID} position X:{itemPosition.X} Y:{itemPosition.Y}";
-                Eplan.EplApi.Base.BaseException exc = new Eplan.EplApi.Base.BaseException(msg, Eplan.EplApi.Base.MessageLevel.Message);
-                exc.FixMessage();*/
             }
         }
 
@@ -289,8 +260,9 @@ namespace ST.EplAddin.Footnote
                 {
                     label = new Text();
                     label.Create(currentPage, Text, TEXTHEIGHT);
-                    label.Justification = TextBase.JustificationType.BottomCenter;
+                    label.Justification = TextBase.JustificationType.SpecialCenter;
                     label.Layer = layer;
+
                 }
 
                 if (jsontext == null)
@@ -439,7 +411,7 @@ namespace ST.EplAddin.Footnote
                     noteline.EndPoint = endpoint;
 
                     labelpoint.X += textwidth / 2;
-                    label.Location = labelpoint;
+                    label.Location = new PointD(labelpoint.X, labelpoint.Y + 3);
                 }
                 else
                 {
@@ -447,7 +419,7 @@ namespace ST.EplAddin.Footnote
                     noteline.EndPoint = endpoint;
 
                     labelpoint.X -= textwidth / 2;
-                    label.Location = labelpoint;
+                    label.Location = new PointD(labelpoint.X, labelpoint.Y + 3);
                 }
 
                 if (propid != null)
@@ -555,7 +527,7 @@ namespace ST.EplAddin.Footnote
                     case PropertiesList.User_defined:
                         if (label != null && label.Contents.GetStringToDisplay(ISOCode.Language.L_ru_RU) != "-1")
                         {
-                            result = label.Contents.GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                            result = label.Contents.GetStringToDisplay(ISOCode.Language.L_ru_RU);//тут надо перерисать после нажаьтя кнопочки apply
                             break;
                         }
                         else
@@ -564,16 +536,16 @@ namespace ST.EplAddin.Footnote
                             form.ShowDialog();
                             if (form.DialogResult == DialogResult.OK)
                             {
-                                var textInForm = form.GetUserText();
-                                var propertiesId = GetPropID(textInForm);
+                                USERTEXT = form.GetUserText();
+                                var propertiesId = GetPropID(USERTEXT);
                                 var validPropertiesText = GetValidPropertiesText(placement3D, propertiesId).ToList();
                                 if (!validPropertiesText.Any())
                                 {
-                                    result = textInForm;
+                                    result = USERTEXT;
                                 }
                                 for (var i = 0; i < validPropertiesText.Count; i++)
                                 {
-                                    result = textInForm.Replace($"{{{propertiesId[i].ToString()}}}", validPropertiesText[i]);
+                                    result = USERTEXT.Replace($"{{{propertiesId[i].ToString()}}}", validPropertiesText[i]);
                                 }
                             }
                             form.Close();

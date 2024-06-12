@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace ST.EplAddin.Footnote
 {
-    public partial class PropertiesDialog : Form
+    public partial class PropertiesDialogForm : Form
     {
-        public PropertiesDialog()
+        public PropertiesDialogForm()
         {
             InitializeComponent();
 
@@ -15,9 +15,9 @@ namespace ST.EplAddin.Footnote
             this.MinimizeBox = false;
         }
 
-        public void setItem(FootnoteItem note)
+        public void SetItem(FootnoteItem note)
         {
-            propertyGrid1.SelectedObject = note;
+            propertyGrid1.SelectedObject = note;//тут есть проблема
         }
 
         private void button_apply_Click(object sender, EventArgs e)

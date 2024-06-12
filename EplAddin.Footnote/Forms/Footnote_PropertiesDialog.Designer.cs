@@ -1,6 +1,6 @@
 ﻿namespace ST.EplAddin.Footnote
 {
-    partial class PropertiesDialog
+    partial class PropertiesDialogForm
     {
         /// <summary>
         /// Required designer variable.
@@ -96,9 +96,9 @@
             this.Controls.Add(this.propertyGrid1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "PropertiesDialog";
+            this.Name = "PropertiesDialogForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "PropertiesDialog";
+            this.Text = "PropertiesDialogForm";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

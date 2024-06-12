@@ -32,8 +32,8 @@ namespace ST.EplAddin.Footnote
                     {
                         FootnoteItem footnoteItem = new FootnoteItem();
                         footnoteItem.Create(block);
-                        PropertiesDialog propertiesDialog = new PropertiesDialog();
-                        propertiesDialog.setItem(footnoteItem);
+                        PropertiesDialogForm propertiesDialog = new PropertiesDialogForm();
+                        propertiesDialog.SetItem(footnoteItem);
                         propertiesDialog.ShowDialog();
 
                         return true;

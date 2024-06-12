@@ -10,7 +10,7 @@
     <RootNamespace>ST.EplAddin.Footnote</RootNamespace>
     <AssemblyName>ST.EplAddin.Footnote</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-	  <LangVersion>9.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -116,11 +116,11 @@
     <Compile Include="PropertyBrowser\PropertiesList.cs" />
     <Compile Include="footnote\SettingsDialog_Action.cs" />
     <Compile Include="PropertyBrowser\Settings.cs" />
-    <Compile Include="Forms\SettingsDialog.cs">
+    <Compile Include="Forms\SettingsDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SettingsDialog.Designer.cs">
-      <DependentUpon>SettingsDialog.cs</DependentUpon>
+    <Compile Include="Forms\SettingsDialogForm.Designer.cs">
+      <DependentUpon>SettingsDialogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Footnote_CustomTextForm.cs">
       <SubType>Form</SubType>
@@ -140,8 +140,8 @@
     <EmbeddedResource Include="Forms\Footnote_PropertiesDialog.resx">
       <DependentUpon>Footnote_PropertiesDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SettingsDialog.resx">
-      <DependentUpon>SettingsDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\SettingsDialogForm.resx">
+      <DependentUpon>SettingsDialogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Footnote_CustomTextForm.resx">
       <DependentUpon>Footnote_CustomTextForm.cs</DependentUpon>

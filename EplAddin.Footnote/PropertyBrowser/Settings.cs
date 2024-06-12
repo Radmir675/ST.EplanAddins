@@ -38,6 +38,11 @@ namespace ST.EplAddin.Footnote
         static String KEY_PROPERTYID = "USER.ST.FOOTNOTE.PROPERTYID";
         static String KEY_STARTPOINT = "USER.ST.FOOTNOTE.STARTPOINT";
         static String KEY_STARTPOINTRADIUS = "USER.ST.FOOTNOTE.STARTPOINTRADIUS";
+        static String KEY_USERTEXT = "USER.ST.FOOTNOTE.KEY_USERTEXT";
+
+        [CategoryAttribute("Text"), Description("Введенный пользователем текст"), ReadOnlyAttribute(false), DefaultValueAttribute("")]
+        public string USERTEXT { get; set; }
+
         private STSettings() { }
         public void RemoveSettings()
         {
@@ -102,6 +107,16 @@ namespace ST.EplAddin.Footnote
             {
                 MessageBox.Show($"Settings{KEY_STARTPOINTRADIUS} not found!", "Footnote addin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+
+            if (oSettings.ExistSetting(KEY_USERTEXT))
+            {
+                oSettings.DeleteSetting(KEY_USERTEXT);
+                MessageBox.Show($"Settings {KEY_USERTEXT} will be deleted", "Footnote addin", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show($"Settings{KEY_USERTEXT} not found!", "Footnote addin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         public void LoadSettings()
@@ -134,6 +149,10 @@ namespace ST.EplAddin.Footnote
             if (oSettings.ExistSetting(KEY_STARTPOINTRADIUS))
             {
                 STARTPOINTRADIUS = oSettings.GetDoubleSetting(KEY_STARTPOINTRADIUS, 0);
+            }
+            if (oSettings.ExistSetting(KEY_USERTEXT))
+            {
+                USERTEXT = oSettings.GetStringSetting(KEY_USERTEXT, 0);
             }
         }
 
@@ -192,6 +211,16 @@ namespace ST.EplAddin.Footnote
                     ISettings.CreationFlag.Insert);
             }
             oSettings.SetDoubleSetting(KEY_STARTPOINTRADIUS, STARTPOINTRADIUS, 0);
+
+
+            if (!oSettings.ExistSetting(KEY_USERTEXT))
+            {
+                oSettings.AddStringSetting(KEY_USERTEXT,
+                new string[] { USERTEXT },
+                new string[1],
+                    ISettings.CreationFlag.Insert);
+            }
+            oSettings.SetStringSetting(USERTEXT, KEY_USERTEXT, 0);
         }
     }
 }
