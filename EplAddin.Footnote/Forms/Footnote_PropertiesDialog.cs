@@ -23,12 +23,12 @@ namespace ST.EplAddin.Footnote
 
         private void button_apply_Click(object sender, EventArgs e)
         {
+            ApplyEventClick.Invoke(this, EventArgs.Empty);
             (propertyGrid1.SelectedObject as FootnoteItem).UpdateSubItems();
             (propertyGrid1.SelectedObject as FootnoteItem).Serialize();
             ActionManager oMng = new ActionManager();
             Eplan.EplApi.ApplicationFramework.Action baseAction = oMng.FindAction("gedRedraw");
             baseAction.Execute(new ActionCallingContext());
-            ApplyEventClick.Invoke(this, EventArgs.Empty);
         }
 
         private void button_close_Click(object sender, EventArgs e)

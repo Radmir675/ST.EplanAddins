@@ -107,9 +107,15 @@ namespace ST.EplAddin.Footnote
 
         private void ResetLabelText(object sender, EventArgs e)
         {
-            MultiLangString mls = new MultiLangString();
-            mls.SetAsString("-1");
-            label.Contents = mls;
+            using (SafetyPoint safetyPoint = SafetyPoint.Create())
+            {
+                if (label != null)
+                {
+                    MultiLangString mls = new MultiLangString();
+                    mls.SetAsString("-1");
+                    label.Contents = mls;
+                }
+            }
         }
 
         /// <summary>
