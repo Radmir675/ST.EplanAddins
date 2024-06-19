@@ -69,7 +69,6 @@ namespace ST.EplAddin.Footnote
         public string Text { get; set; } = "label";
 
         [DataMember]
-        //[TypeConverter(typeof(FigureConverter))]
         [Description("Высота текста выноски")]
         [CategoryAttribute("Text"), DefaultValueAttribute(2.5)]
         [DisplayName("Высота текста")]
@@ -79,8 +78,6 @@ namespace ST.EplAddin.Footnote
         [Description("Толщина линий выноски")]
         [CategoryAttribute("Line"), DefaultValueAttribute(0.25)]
         [DisplayName("Толщина линий")]
-        //[TypeConverter(typeof(FigureConverter))]
-
         public double LINEWIDTH
         {
             get { return Math.Round(mLINEWIDTH, 2); }
@@ -100,18 +97,20 @@ namespace ST.EplAddin.Footnote
         [DisplayName("Указатель-круг")]
         public bool STARTPOINT { get; set; } = STSettings.instance.STARTPOINT;
 
+        [ReadOnly(false)]
         [DataMember]
         [Description("Радиус кружка")]
-        //[TypeConverter(typeof(FigureConverter))]
+        // [TypeConverter(typeof(FigureConverter))]
         [CategoryAttribute("Line"), DefaultValueAttribute(0.25)]
         [DisplayName("Радиус кружка")]
+        // [Editor(typeof(Editor), typeof(UITypeEditor))]
         public double STARTPOINTRADIUS { get; set; } = STSettings.instance.STARTPOINTRADIUS;
 
         [DataMember]
         [Description("Введенный пользователем текст")]
         [CategoryAttribute("Text"), DefaultValueAttribute(0.25)]
-        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [DisplayName("Введенный пользователем текст")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string USERTEXT { get; set; } = STSettings.instance.USERTEXT;
 
         //[DataMember]
