@@ -98,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
-    <Compile Include="footnote\FigureConverter.cs" />
+    <Compile Include="PropertyBrowser\FigureConverter.cs" />
     <Compile Include="PropertyBrowser\EplHelper.cs" />
     <Compile Include="footnote\Footnote.cs" />
     <Compile Include="footnote\Footnote_MoveElementAction.cs" />
