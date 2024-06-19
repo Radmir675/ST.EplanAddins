@@ -97,9 +97,20 @@ namespace ST.EplAddin.Footnote
 
         //[DataMember]
         [Description("Индекс размещаемого свойства")]
-        [CategoryAttribute("Text"), DefaultValueAttribute(PropertiesList.P20450)]
+        [Category("Text"), DefaultValue(PropertiesList.P20450)]
         #endregion
 
+        public FootnoteItem()
+        {
+            PropertiesDialogForm.ApplyEventClick += ResetLabelText;
+        }
+
+        private void ResetLabelText(object sender, EventArgs e)
+        {
+            MultiLangString mls = new MultiLangString();
+            mls.SetAsString("-1");
+            label.Contents = mls;
+        }
 
         /// <summary>
         /// Сериазизует поля помеченные [DataMember] в строку и записываетсодержимое в скрытый элемент jsontext
@@ -527,7 +538,7 @@ namespace ST.EplAddin.Footnote
                     case PropertiesList.User_defined:
                         if (label != null && label.Contents.GetStringToDisplay(ISOCode.Language.L_ru_RU) != "-1")
                         {
-                            result = label.Contents.GetStringToDisplay(ISOCode.Language.L_ru_RU);//тут надо перерисать после нажаьтя кнопочки apply
+                            result = label.Contents.GetStringToDisplay(ISOCode.Language.L_ru_RU);
                             break;
                         }
                         else

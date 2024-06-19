@@ -6,6 +6,7 @@ namespace ST.EplAddin.Footnote
 {
     public partial class PropertiesDialogForm : Form
     {
+        public static event System.EventHandler ApplyEventClick;
         public PropertiesDialogForm()
         {
             InitializeComponent();
@@ -27,6 +28,7 @@ namespace ST.EplAddin.Footnote
             ActionManager oMng = new ActionManager();
             Eplan.EplApi.ApplicationFramework.Action baseAction = oMng.FindAction("gedRedraw");
             baseAction.Execute(new ActionCallingContext());
+            ApplyEventClick.Invoke(this, EventArgs.Empty);
         }
 
         private void button_close_Click(object sender, EventArgs e)
