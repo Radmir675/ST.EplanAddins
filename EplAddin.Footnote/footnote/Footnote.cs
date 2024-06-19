@@ -509,10 +509,6 @@ namespace ST.EplAddin.Footnote
             {
                 sourceItem3D = si_p3d;
             }
-            /*
-            if (sourceItem != null)
-                Text = getObjectProperty(sourceItem);*/
-            //Text = sourceItem.Source.Properties[PROPERTYID].ToInt().ToString();
         }
 
         /// <summary>
@@ -691,59 +687,6 @@ namespace ST.EplAddin.Footnote
                 }
             }
         }
-
-        ///// <summary>
-        ///// Обновление текстов выносок,
-        ///// используется при обновлении отчетов
-        ///// </summary>
-        ///// <param name="block"></param>
-        //public static void updateBlockProperties(Block block)
-        //{
-
-        //    if (!block.IsTransient)
-        //    {
-        //        using (SafetyPoint safetyPoint = SafetyPoint.Create())
-        //        {
-        //            if (block.Name.Contains(FOOTNOTE_KEY))
-        //            {
-        //                String objID = block.Name.Split('#').Last().Replace('_', '/');
-        //                string objIDDB = block.DatabaseIdentifier + "/" + objID;
-
-        //                StorableObject obj = null;
-        //                StorableObject.TryParseIdentifier(objIDDB, ref obj);
-
-        //                Text textblock = block.SubPlacements.First(placement => placement is Text) as Text;
-
-        //                string val = "empty";
-        //                if (obj != null)
-        //                {
-        //                    Placement3D source = obj as Placement3D;
-
-        //                    FootnoteItem note = new FootnoteItem();
-        //                    note.Create(block);
-        //                    //TODO ЗАменить на Update dcnhjtyysq
-
-        //                    if (note != null)
-        //                    {
-        //                        val = note.GetSourceObjectProperty(source);
-        //                        // Text = getObjectProperty(sourceItem);
-        //                        //val = source.Source.Properties[note.PROPERTYID].ToInt().ToString();
-        //                    }
-        //                }
-        //                else
-        //                {
-        //                    val = "Error";
-        //                    textblock.TextColorId = 1;
-        //                }
-
-        //                MultiLangString labeltext = new MultiLangString();
-        //                labeltext.SetAsString(val);
-        //                textblock.Contents = labeltext;
-        //            }
-        //            safetyPoint.Commit();
-        //        }
-        //    }
-        //}
     }
 }
 
