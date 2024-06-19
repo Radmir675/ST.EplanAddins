@@ -85,6 +85,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
@@ -97,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
+    <Compile Include="footnote\FigureConverter.cs" />
     <Compile Include="PropertyBrowser\EplHelper.cs" />
     <Compile Include="footnote\Footnote.cs" />
     <Compile Include="footnote\Footnote_MoveElementAction.cs" />
@@ -107,11 +109,11 @@
     <Compile Include="footnote\Footnote_PropertiesAction.cs" />
     <Compile Include="footnote\Footnote_SelectSameObjectsAction.cs" />
     <Compile Include="footnote\Footnote_UpdateAction.cs" />
-    <Compile Include="Forms\Footnote_PropertiesDialog.cs">
+    <Compile Include="Forms\PropertiesDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Footnote_PropertiesDialog.Designer.cs">
-      <DependentUpon>Footnote_PropertiesDialog.cs</DependentUpon>
+    <Compile Include="Forms\PropertiesDialogForm.Designer.cs">
+      <DependentUpon>PropertiesDialogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PropertyBrowser\PropertiesList.cs" />
     <Compile Include="footnote\SettingsDialog_Action.cs" />
@@ -137,8 +139,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\Footnote_PropertiesDialog.resx">
-      <DependentUpon>Footnote_PropertiesDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PropertiesDialogForm.resx">
+      <DependentUpon>PropertiesDialogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SettingsDialogForm.resx">
       <DependentUpon>SettingsDialogForm.cs</DependentUpon>

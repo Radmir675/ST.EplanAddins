@@ -6,6 +6,8 @@ using ST.EplAddin.Footnote.ProperyBrowser;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
+using System.Drawing.Design;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -31,7 +33,6 @@ namespace ST.EplAddin.Footnote
         public ViewPlacement viewPlacement = null; //текущий обзор модели с которым группируемся
         public Placement3D sourceItem3D = null; //объект пространства листа
         public List<Placement> subItems = null;
-        public PropertiesList PROPERTYID { get; set; } = STSettings.instance.PROPERTYID;
 
         private Page currentPage = null;
         private Line itemline = null;
@@ -41,7 +42,12 @@ namespace ST.EplAddin.Footnote
         private Text propid = null;
         private Arc startpoint = null;
 
+
         #region Properties
+        [Description("ID выноски")]
+        [DisplayName("Тип выноски текста")]
+        public PropertiesList PROPERTYID { get; set; } = STSettings.instance.PROPERTYID;
+
         [Browsable(false)]
         public PointD startPosition
         {
@@ -54,6 +60,8 @@ namespace ST.EplAddin.Footnote
             get => noteline.StartPoint;
             set => noteline.StartPoint = value;
         }
+        [Browsable(false)]
+        public bool IsUserTextUpdated { get; set; } = false;
 
         [Browsable(false)]
         [Description("Текст выноски")]
@@ -61,13 +69,18 @@ namespace ST.EplAddin.Footnote
         public string Text { get; set; } = "label";
 
         [DataMember]
+        //[TypeConverter(typeof(FigureConverter))]
         [Description("Высота текста выноски")]
         [CategoryAttribute("Text"), DefaultValueAttribute(2.5)]
+        [DisplayName("Высота текста")]
         public double TEXTHEIGHT { get; set; } = STSettings.instance.TEXTHEIGHT;
 
         [DataMember(Name = "Толщина линии")]
         [Description("Толщина линий выноски")]
         [CategoryAttribute("Line"), DefaultValueAttribute(0.25)]
+        [DisplayName("Толщина линий")]
+        //[TypeConverter(typeof(FigureConverter))]
+
         public double LINEWIDTH
         {
             get { return Math.Round(mLINEWIDTH, 2); }
@@ -78,21 +91,27 @@ namespace ST.EplAddin.Footnote
         [DataMember(Name = "Направление выноски")] //этот текст попадает в Json
         [Description("Инвертировать направление полки")]
         [CategoryAttribute("Line"), DefaultValueAttribute(2.5)]
+        [DisplayName("Инвертировать направление")]
         public bool INVERTDIRECTION { get; set; } = false;
 
         [DataMember]
         [Description("Кружок")]
         [CategoryAttribute("Line"), DefaultValueAttribute(2.5)]
+        [DisplayName("Указатель-круг")]
         public bool STARTPOINT { get; set; } = STSettings.instance.STARTPOINT;
 
         [DataMember]
         [Description("Радиус кружка")]
+        //[TypeConverter(typeof(FigureConverter))]
         [CategoryAttribute("Line"), DefaultValueAttribute(0.25)]
+        [DisplayName("Радиус кружка")]
         public double STARTPOINTRADIUS { get; set; } = STSettings.instance.STARTPOINTRADIUS;
 
         [DataMember]
         [Description("Введенный пользователем текст")]
         [CategoryAttribute("Text"), DefaultValueAttribute(0.25)]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        [DisplayName("Введенный пользователем текст")]
         public string USERTEXT { get; set; } = STSettings.instance.USERTEXT;
 
         //[DataMember]
@@ -107,16 +126,7 @@ namespace ST.EplAddin.Footnote
 
         private void ResetLabelText(object sender, EventArgs e)
         {
-            using (SafetyPoint safetyPoint = SafetyPoint.Create())
-            {
-                if (label != null)
-                {
-                    MultiLangString mls = new MultiLangString();
-                    mls.SetAsString("-1");
-                    label.Contents = mls;
-                }
-                safetyPoint.Commit();
-            }
+            IsUserTextUpdated = true;
         }
 
         /// <summary>
@@ -405,6 +415,7 @@ namespace ST.EplAddin.Footnote
                     jsontext.Location = finishPosition;
 
                 //update Text
+                //надо достать данные с формы
                 Text = GetSourceObjectProperty();
                 MultiLangString mls = new MultiLangString();
                 mls.SetAsString(Text);
@@ -539,6 +550,20 @@ namespace ST.EplAddin.Footnote
                         break;
 
                     case PropertiesList.User_defined:
+                        if (IsUserTextUpdated == true)
+                        {
+                            var propertiesId = GetPropID(USERTEXT);
+                            var validPropertiesText = GetValidPropertiesText(placement3D, propertiesId).ToList();
+                            if (!validPropertiesText.Any())
+                            {
+                                result = USERTEXT;
+                            }
+                            for (var i = 0; i < validPropertiesText.Count; i++)
+                            {
+                                result = USERTEXT.Replace($"{{{propertiesId[i].ToString()}}}", validPropertiesText[i]);
+                            }
+                            break;
+                        }
                         if (label != null && label.Contents.GetStringToDisplay(ISOCode.Language.L_ru_RU) != "-1")
                         {
                             result = label.Contents.GetStringToDisplay(ISOCode.Language.L_ru_RU);
