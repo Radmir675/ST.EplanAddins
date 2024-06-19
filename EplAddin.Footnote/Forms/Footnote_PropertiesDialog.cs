@@ -23,7 +23,7 @@ namespace ST.EplAddin.Footnote
 
         private void button_apply_Click(object sender, EventArgs e)
         {
-            ApplyEventClick.Invoke(this, EventArgs.Empty);
+            ApplyEventClick?.Invoke(this, EventArgs.Empty);
             (propertyGrid1.SelectedObject as FootnoteItem).UpdateSubItems();
             (propertyGrid1.SelectedObject as FootnoteItem).Serialize();
             ActionManager oMng = new ActionManager();

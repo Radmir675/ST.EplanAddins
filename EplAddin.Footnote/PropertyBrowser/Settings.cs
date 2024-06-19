@@ -24,7 +24,7 @@ namespace ST.EplAddin.Footnote
         public bool LINECURSOR { get; set; } = true;
 
         [CategoryAttribute("Text"), Description("Индекс размещаемого свойства"), ReadOnlyAttribute(false), DefaultValueAttribute("")]
-        public PropertiesList PROPERTYID { get; set; } = PropertiesList.P20450;
+        public PropertiesList PROPERTYID { get; set; }
 
         [CategoryAttribute("Line"), Description("Кружок на конце линии"), ReadOnlyAttribute(false), DefaultValueAttribute("")]
         public bool STARTPOINT { get; set; } = true;

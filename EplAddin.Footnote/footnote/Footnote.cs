@@ -115,6 +115,7 @@ namespace ST.EplAddin.Footnote
                     mls.SetAsString("-1");
                     label.Contents = mls;
                 }
+                safetyPoint.Commit();
             }
         }
 
