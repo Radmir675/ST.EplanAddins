@@ -64,10 +64,10 @@ namespace ST.EplAddins.LastTerminalStrip
 
                 if (terminal.Articles.Count() >= 2)
                 {
-                    var productSubGroup = terminal.ArticleReferences[1].Properties.ARTICLE_PRODUCTSUBGROUP.GetDisplayString();// проверить только второе изделие главной клеммы
-                    var displaySubGroupName = productSubGroup.GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                    var productSubGroup = terminal.ArticleReferences.Select(x => x.Properties.ARTICLE_PRODUCTSUBGROUP.GetDisplayString());// проверить только второе изделие главной клеммы
+                    var displaySubGroupName = productSubGroup.Select(x => x.GetStringToDisplay(ISOCode.Language.L_ru_RU));
 
-                    if (displaySubGroupName == "Торцевая пластина" || displaySubGroupName == "Стопор концевой")
+                    if (displaySubGroupName.Contains("Торцевая пластина") || displaySubGroupName.Contains("Стопор концевой"))
                     {
                         if (!LastTerminals.Contains(terminal))
                         {
