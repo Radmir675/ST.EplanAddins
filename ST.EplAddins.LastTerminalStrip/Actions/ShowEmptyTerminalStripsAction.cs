@@ -1,8 +1,6 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.DataModel;
-using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.HEServices;
-using System.Linq;
 
 
 namespace ST.EplAddins.LastTerminalStrip
@@ -26,7 +24,7 @@ namespace ST.EplAddins.LastTerminalStrip
                 Project currentProject = selectionSet.GetCurrentProject(true);
                 var projectName = currentProject.ProjectName;
                 DMObjectsFinder dMObjectsFinder = new DMObjectsFinder(currentProject);
-                var emptyTerminalStrps = dMObjectsFinder.GetTerminalStripsWithCF(new TerminalStripFilter());
+                var emptyTerminalStrps = dMObjectsFinder.GetTerminalStripsWithCF(new EmptyArticleTerminalStripFilter());
 
                 Search search = new Search();
                 search.ClearSearchDB(currentProject);
@@ -46,20 +44,6 @@ namespace ST.EplAddins.LastTerminalStrip
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
 
-        }
-    }
-    public class TerminalStripFilter : ICustomFilter
-    {
-        public bool IsMatching(StorableObject objectToCheck)
-        {
-            if (objectToCheck is TerminalStrip terminalStrip)
-            {
-                if (!terminalStrip.Articles.Any() && terminalStrip.Properties.FUNC_TYPE == 1)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }
