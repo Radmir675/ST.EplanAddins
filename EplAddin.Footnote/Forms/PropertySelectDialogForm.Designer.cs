@@ -38,7 +38,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.cancel_button = new System.Windows.Forms.Button();
             this.ok_button = new System.Windows.Forms.Button();
-            this.treeListView1 = new BrightIdeasSoftware.TreeListView();
+            this.dataTreeListView = new BrightIdeasSoftware.DataTreeListView();
+            this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -47,7 +49,7 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTreeListView)).BeginInit();
             this.SuspendLayout();
             // 
             // treeView
@@ -111,7 +113,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.treeListView1);
+            this.tabPage1.Controls.Add(this.dataTreeListView);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
@@ -154,18 +156,35 @@
             this.ok_button.UseVisualStyleBackColor = true;
             this.ok_button.Click += new System.EventHandler(this.ok_button_Click);
             // 
-            // treeListView1
+            // dataTreeListView
             // 
-            this.treeListView1.CellEditUseWholeCell = false;
-            this.treeListView1.HideSelection = false;
-            this.treeListView1.Location = new System.Drawing.Point(39, 35);
-            this.treeListView1.Name = "treeListView1";
-            this.treeListView1.ShowGroups = false;
-            this.treeListView1.Size = new System.Drawing.Size(360, 319);
-            this.treeListView1.TabIndex = 0;
-            this.treeListView1.UseCompatibleStateImageBehavior = false;
-            this.treeListView1.View = System.Windows.Forms.View.LargeIcon;
-            this.treeListView1.VirtualMode = true;
+            this.dataTreeListView.AllColumns.Add(this.olvColumn1);
+            this.dataTreeListView.AllColumns.Add(this.olvColumn2);
+            this.dataTreeListView.CellEditUseWholeCell = false;
+            this.dataTreeListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColumn1,
+            this.olvColumn2});
+            this.dataTreeListView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.dataTreeListView.DataSource = null;
+            this.dataTreeListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataTreeListView.HideSelection = false;
+            this.dataTreeListView.Location = new System.Drawing.Point(2, 2);
+            this.dataTreeListView.Name = "dataTreeListView";
+            this.dataTreeListView.RootKeyValueString = "";
+            this.dataTreeListView.ShowGroups = false;
+            this.dataTreeListView.Size = new System.Drawing.Size(652, 591);
+            this.dataTreeListView.TabIndex = 1;
+            this.dataTreeListView.UseCompatibleStateImageBehavior = false;
+            this.dataTreeListView.View = System.Windows.Forms.View.Details;
+            this.dataTreeListView.VirtualMode = true;
+            // 
+            // olvColumn1
+            // 
+            this.olvColumn1.Width = 455;
+            // 
+            // olvColumn2
+            // 
+            this.olvColumn2.Width = 119;
             // 
             // PropertySelectDialogForm
             // 
@@ -188,7 +207,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTreeListView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -204,6 +223,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button cancel_button;
         private System.Windows.Forms.Button ok_button;
-        private BrightIdeasSoftware.TreeListView treeListView1;
+        private BrightIdeasSoftware.DataTreeListView dataTreeListView;
+        private BrightIdeasSoftware.OLVColumn olvColumn1;
+        private BrightIdeasSoftware.OLVColumn olvColumn2;
     }
 }

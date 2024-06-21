@@ -77,5 +77,13 @@ namespace ST.EplAddin.Footnote.ProperyBrowser
         {
             AppentText();
         }
+        public void SetDataToTreeListView()
+        {
+            ListViewItem listViewItem = new ListViewItem();
+            listViewItem.Text = "d";
+            listViewItem.SubItems.Add("reg");
+            dataTreeListView.Items.Add(listViewItem);
+            dataTreeListView.Items.Add(listViewItem);
+        }
     }
 }
