@@ -404,7 +404,7 @@ namespace ST.EplAddin.Footnote
                 }
                 else
                 {
-                    startpoint.SetCircle(startPosition, 0.0);
+                    itemline.StartArrow = true;
                 }
 
                 startpoint.IsSurfaceFilled = true;
@@ -468,8 +468,8 @@ namespace ST.EplAddin.Footnote
                 penline.Width = LINEWIDTH;
                 penline.LineEndType = 0;
 
-                noteline.Pen = penline;
-                itemline.Pen = penline;
+                noteline.Pen = penline;//это полка текста
+                itemline.Pen = penline;//это линия выноски
 
                 safetyPoint.Commit();
             }
