@@ -17,7 +17,6 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using static Eplan.EplApi.DataModel.Placement;
 
-//LEGEND NOTE
 namespace ST.EplAddin.Footnote
 {
     /// <summary>

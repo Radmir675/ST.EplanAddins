@@ -7,12 +7,14 @@ namespace ST.EplAddin.Footnote.ProperyBrowser
 {
     public partial class PropertySelectDialogForm : Form
     {
+        public string CurrentSelection { get; set; }
         public Placement3D Placement3D { get; }
         public PropertySelectDialogForm(Placement3D placement3D)
         {
             InitializeComponent();
             Placement3D = placement3D;
-            GetProperties();
+
+            //  GetProperties();
         }
         public void GetProperties()
         {
@@ -29,7 +31,7 @@ namespace ST.EplAddin.Footnote.ProperyBrowser
                     bool IsIndexed = propertyDefinition.IsIndexed;
                     var fff = property.Definition.Name;
                     var ss = property.Definition.Id;
-                    if (IsIndexed /*&& !Placement3D.Properties[property].IsEmpty*/)
+                    if (true /*&& !Placement3D.Properties[property].IsEmpty*/)
                     {
 
                         var value = Placement3D.Properties[property];
@@ -48,5 +50,32 @@ namespace ST.EplAddin.Footnote.ProperyBrowser
             s.Add("");
         }
 
+        private void cancel_button_Click(object sender, System.EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void ok_button_Click(object sender, System.EventArgs e)
+        {
+
+        }
+        public void AppentText()
+        {
+            treeView.Nodes.Add("id", "1 часть");
+            treeView.Nodes.Add("id1", "2 часть");
+        }
+
+        private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            TreeNode treeNode = e.Node;
+            if (treeNode == null) return;
+            CurrentSelection = treeNode.Text;// по name можно достать ID
+
+        }
+
+        private void PropertySelectDialogForm_Load(object sender, System.EventArgs e)
+        {
+            AppentText();
+        }
     }
 }
