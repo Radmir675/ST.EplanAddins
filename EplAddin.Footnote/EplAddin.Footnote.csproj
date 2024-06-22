@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
+    <Compile Include="Forms\PropertiesEplan.cs" />
     <Compile Include="PropertyBrowser\FigureConverter.cs" />
     <Compile Include="PropertyBrowser\EplHelper.cs" />
     <Compile Include="footnote\Footnote.cs" />

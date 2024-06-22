@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddin.SymbolVariants"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EplAddin.Footnote", "EplAddin.Footnote\EplAddin.Footnote.csproj", "{70B12156-B3AB-4FB5-B0B1-10374C3D362E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProjectFootnote", "UnitTestProjectFootnote\UnitTestProjectFootnote.csproj", "{4666A4ED-CCC1-405A-B1FC-1EE9F7F74844}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,14 @@ Global
 		{70B12156-B3AB-4FB5-B0B1-10374C3D362E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{70B12156-B3AB-4FB5-B0B1-10374C3D362E}.Release|x64.ActiveCfg = Release|Any CPU
 		{70B12156-B3AB-4FB5-B0B1-10374C3D362E}.Release|x64.Build.0 = Release|Any CPU
+		{4666A4ED-CCC1-405A-B1FC-1EE9F7F74844}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4666A4ED-CCC1-405A-B1FC-1EE9F7F74844}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4666A4ED-CCC1-405A-B1FC-1EE9F7F74844}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4666A4ED-CCC1-405A-B1FC-1EE9F7F74844}.Debug|x64.Build.0 = Debug|Any CPU
+		{4666A4ED-CCC1-405A-B1FC-1EE9F7F74844}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4666A4ED-CCC1-405A-B1FC-1EE9F7F74844}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4666A4ED-CCC1-405A-B1FC-1EE9F7F74844}.Release|x64.ActiveCfg = Release|Any CPU
+		{4666A4ED-CCC1-405A-B1FC-1EE9F7F74844}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

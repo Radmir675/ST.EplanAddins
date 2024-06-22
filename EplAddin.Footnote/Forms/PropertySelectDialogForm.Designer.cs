@@ -35,12 +35,10 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dataTreeListView = new BrightIdeasSoftware.DataTreeListView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cancel_button = new System.Windows.Forms.Button();
             this.ok_button = new System.Windows.Forms.Button();
-            this.dataTreeListView = new BrightIdeasSoftware.DataTreeListView();
-            this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -48,8 +46,8 @@
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataTreeListView)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView
@@ -86,8 +84,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer1.Size = new System.Drawing.Size(991, 670);
-            this.splitContainer1.SplitterDistance = 330;
+            this.splitContainer1.Size = new System.Drawing.Size(982, 798);
+            this.splitContainer1.SplitterDistance = 327;
             this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -98,7 +96,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(330, 74);
+            this.panel2.Size = new System.Drawing.Size(327, 74);
             this.panel2.TabIndex = 2;
             // 
             // tabControl1
@@ -108,7 +106,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(664, 621);
+            this.tabControl1.Size = new System.Drawing.Size(649, 621);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -118,20 +116,39 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage1.Size = new System.Drawing.Size(656, 595);
+            this.tabPage1.Size = new System.Drawing.Size(641, 595);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // dataTreeListView
+            // 
+            this.dataTreeListView.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.dataTreeListView.CellEditUseWholeCell = false;
+            this.dataTreeListView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.dataTreeListView.DataSource = this.treeView.Nodes;
+            this.dataTreeListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataTreeListView.HideSelection = false;
+            this.dataTreeListView.Location = new System.Drawing.Point(2, 2);
+            this.dataTreeListView.Name = "dataTreeListView";
+            this.dataTreeListView.RootKeyValueString = "";
+            this.dataTreeListView.SelectedForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dataTreeListView.ShowGroups = false;
+            this.dataTreeListView.Size = new System.Drawing.Size(637, 591);
+            this.dataTreeListView.TabIndex = 1;
+            this.dataTreeListView.UseCompatibleStateImageBehavior = false;
+            this.dataTreeListView.View = System.Windows.Forms.View.Details;
+            this.dataTreeListView.VirtualMode = true;
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.cancel_button);
             this.panel1.Controls.Add(this.ok_button);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(5, 621);
+            this.panel1.Location = new System.Drawing.Point(5, 749);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(991, 54);
+            this.panel1.Size = new System.Drawing.Size(982, 54);
             this.panel1.TabIndex = 3;
             // 
             // cancel_button
@@ -156,41 +173,11 @@
             this.ok_button.UseVisualStyleBackColor = true;
             this.ok_button.Click += new System.EventHandler(this.ok_button_Click);
             // 
-            // dataTreeListView
-            // 
-            this.dataTreeListView.AllColumns.Add(this.olvColumn1);
-            this.dataTreeListView.AllColumns.Add(this.olvColumn2);
-            this.dataTreeListView.CellEditUseWholeCell = false;
-            this.dataTreeListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.olvColumn1,
-            this.olvColumn2});
-            this.dataTreeListView.Cursor = System.Windows.Forms.Cursors.Default;
-            this.dataTreeListView.DataSource = null;
-            this.dataTreeListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataTreeListView.HideSelection = false;
-            this.dataTreeListView.Location = new System.Drawing.Point(2, 2);
-            this.dataTreeListView.Name = "dataTreeListView";
-            this.dataTreeListView.RootKeyValueString = "";
-            this.dataTreeListView.ShowGroups = false;
-            this.dataTreeListView.Size = new System.Drawing.Size(652, 591);
-            this.dataTreeListView.TabIndex = 1;
-            this.dataTreeListView.UseCompatibleStateImageBehavior = false;
-            this.dataTreeListView.View = System.Windows.Forms.View.Details;
-            this.dataTreeListView.VirtualMode = true;
-            // 
-            // olvColumn1
-            // 
-            this.olvColumn1.Width = 455;
-            // 
-            // olvColumn2
-            // 
-            this.olvColumn2.Width = 119;
-            // 
             // PropertySelectDialogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1001, 680);
+            this.ClientSize = new System.Drawing.Size(992, 808);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.splitContainer1);
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -206,8 +193,8 @@
             this.panel2.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataTreeListView)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -224,7 +211,5 @@
         private System.Windows.Forms.Button cancel_button;
         private System.Windows.Forms.Button ok_button;
         private BrightIdeasSoftware.DataTreeListView dataTreeListView;
-        private BrightIdeasSoftware.OLVColumn olvColumn1;
-        private BrightIdeasSoftware.OLVColumn olvColumn2;
     }
 }

@@ -9,12 +9,18 @@ namespace ST.EplAddin.Footnote.ProperyBrowser
     {
         public string CurrentSelection { get; set; }
         public Placement3D Placement3D { get; }
+        public List<PropertiesEplan> propertiesEplans { get; set; }
         public PropertySelectDialogForm(Placement3D placement3D)
         {
             InitializeComponent();
             Placement3D = placement3D;
 
             //  GetProperties();
+        }
+        public PropertySelectDialogForm()
+        {
+            InitializeComponent();
+
         }
         public void GetProperties()
         {
@@ -70,20 +76,33 @@ namespace ST.EplAddin.Footnote.ProperyBrowser
             TreeNode treeNode = e.Node;
             if (treeNode == null) return;
             CurrentSelection = treeNode.Text;// по name можно достать ID
+            if (CurrentSelection == "1 часть")
+            {
+                SetDataToTreeListView();
+
+            }
 
         }
 
         private void PropertySelectDialogForm_Load(object sender, System.EventArgs e)
         {
             AppentText();
+
         }
         public void SetDataToTreeListView()
         {
-            ListViewItem listViewItem = new ListViewItem();
-            listViewItem.Text = "d";
-            listViewItem.SubItems.Add("reg");
-            dataTreeListView.Items.Add(listViewItem);
-            dataTreeListView.Items.Add(listViewItem);
+            try
+            {
+                dataTreeListView.SetObjects(treeView.Nodes);
+                var s = dataTreeListView.Items.Count;
+
+
+            }
+            catch (System.Exception)
+            {
+
+
+            }
         }
     }
 }
