@@ -35,10 +35,10 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.dataTreeListView = new BrightIdeasSoftware.DataTreeListView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cancel_button = new System.Windows.Forms.Button();
             this.ok_button = new System.Windows.Forms.Button();
+            this.dataTreeListView1 = new BrightIdeasSoftware.DataTreeListView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -46,8 +46,8 @@
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataTreeListView)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTreeListView1)).BeginInit();
             this.SuspendLayout();
             // 
             // treeView
@@ -111,7 +111,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.dataTreeListView);
+            this.tabPage1.Controls.Add(this.dataTreeListView1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
@@ -120,25 +120,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // dataTreeListView
-            // 
-            this.dataTreeListView.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.dataTreeListView.CellEditUseWholeCell = false;
-            this.dataTreeListView.Cursor = System.Windows.Forms.Cursors.Default;
-            this.dataTreeListView.DataSource = this.treeView.Nodes;
-            this.dataTreeListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataTreeListView.HideSelection = false;
-            this.dataTreeListView.Location = new System.Drawing.Point(2, 2);
-            this.dataTreeListView.Name = "dataTreeListView";
-            this.dataTreeListView.RootKeyValueString = "";
-            this.dataTreeListView.SelectedForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.dataTreeListView.ShowGroups = false;
-            this.dataTreeListView.Size = new System.Drawing.Size(637, 591);
-            this.dataTreeListView.TabIndex = 1;
-            this.dataTreeListView.UseCompatibleStateImageBehavior = false;
-            this.dataTreeListView.View = System.Windows.Forms.View.Details;
-            this.dataTreeListView.VirtualMode = true;
             // 
             // panel1
             // 
@@ -173,6 +154,21 @@
             this.ok_button.UseVisualStyleBackColor = true;
             this.ok_button.Click += new System.EventHandler(this.ok_button_Click);
             // 
+            // dataTreeListView1
+            // 
+            this.dataTreeListView1.CellEditUseWholeCell = false;
+            this.dataTreeListView1.DataSource = null;
+            this.dataTreeListView1.HideSelection = false;
+            this.dataTreeListView1.Location = new System.Drawing.Point(14, 5);
+            this.dataTreeListView1.Name = "dataTreeListView1";
+            this.dataTreeListView1.RootKeyValueString = "";
+            this.dataTreeListView1.ShowGroups = false;
+            this.dataTreeListView1.Size = new System.Drawing.Size(404, 309);
+            this.dataTreeListView1.TabIndex = 0;
+            this.dataTreeListView1.UseCompatibleStateImageBehavior = false;
+            this.dataTreeListView1.View = System.Windows.Forms.View.Details;
+            this.dataTreeListView1.VirtualMode = true;
+            // 
             // PropertySelectDialogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -193,8 +189,8 @@
             this.panel2.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataTreeListView)).EndInit();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataTreeListView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -210,6 +206,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button cancel_button;
         private System.Windows.Forms.Button ok_button;
-        private BrightIdeasSoftware.DataTreeListView dataTreeListView;
+        private BrightIdeasSoftware.DataTreeListView dataTreeListView1;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Eplan.EplApi.DataModel;
+﻿using BrightIdeasSoftware;
+using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.E3D;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -93,8 +94,9 @@ namespace ST.EplAddin.Footnote.ProperyBrowser
         {
             try
             {
-                dataTreeListView.SetObjects(treeView.Nodes);
-                var s = dataTreeListView.Items.Count;
+                var s = new DataTreeListView();
+                s.Items.Add("vdf");
+                dataTreeListView1.DataSource = s;
 
 
             }
