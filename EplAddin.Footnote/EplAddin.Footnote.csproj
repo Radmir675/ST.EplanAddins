@@ -101,6 +101,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
+    <Compile Include="Forms\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PropertiesEplan.cs" />
     <Compile Include="PropertyBrowser\FigureConverter.cs" />
     <Compile Include="PropertyBrowser\EplHelper.cs" />
@@ -143,6 +149,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PropertiesDialogForm.resx">
       <DependentUpon>PropertiesDialogForm.cs</DependentUpon>
     </EmbeddedResource>
