@@ -129,7 +129,7 @@ namespace ST.EplAddin.PlcEdit
         {
             foreach (var item in newDataPlc)    //тут будет применение всех измененных текстов для всех типов представлений
             {
-                var terminals = plcTerminals.Where(x => x.Properties.FUNC_FULLNAME == item.DT);
+                var terminals = plcTerminals.Where(x => x.Properties.FUNC_FULLNAME == item.DT && x.Properties.FUNC_TYPE.ToInt() == 1); //.GetDisplayString().GetString(ISOCode.Language.L_ru_RU) );
 
                 if (terminals != null)
                 {
