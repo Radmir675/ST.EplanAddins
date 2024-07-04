@@ -42,6 +42,7 @@ namespace ST.EplAddin.PlcEdit
             LoadTemplateForm.TemplateAction += LoadTemplateForm_TemplateAction;
             ComparingForm.OkEvent += ComparingForm_OkEvent;
             TryDowmLoadTemplates(pathToSaveTemplate);
+            this.dataGridView.Columns["FunctionText"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         }
 
         private void ComparingForm_OkEvent(object sender, EventArgs e)
