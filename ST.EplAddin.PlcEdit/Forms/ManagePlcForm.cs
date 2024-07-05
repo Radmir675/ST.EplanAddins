@@ -307,9 +307,9 @@ namespace ST.EplAddin.PlcEdit
                 exchange_button.Enabled = true;
             }
             LastSelectedRow = e.RowIndex;
-            if (true)
+            if (FastInput.Checked)
             {
-                // dataGridView.BeginEdit(false);
+                dataGridView.BeginEdit(false);
 
             }
             //  dataGridView.DefaultCellStyle.SelectionBackColor = Color.Transparent;
