@@ -524,9 +524,8 @@ namespace ST.EplAddin.PlcEdit
             InsertRowInEmptyPosition(Direction.Down, jumpThroughAll: true);
         }
 
-        private void dataGridView_KeyUp(object sender, KeyEventArgs e)
+        private void dataGridView_KeyDown(object sender, KeyEventArgs e)
         {
-
             if (e.KeyCode == Keys.V && e.Control)
                 foreach (DataGridViewCell item in dataGridView.SelectedCells)
                 {
