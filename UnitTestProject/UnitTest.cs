@@ -9,6 +9,21 @@ namespace UnitTestProject
     public class UnitTest
     {
         [TestMethod]
+        public void StartFormManage()
+        {
+            PlcDataModelView model = new PlcDataModelView();
+            model.DeviceNameShort = "cdc";
+            model.FunctionText = "Привет мир!";
+            PlcDataModelView modeli = new PlcDataModelView();
+            modeli.DeviceNameShort = "cd1c";
+            modeli.FunctionText = "Привет мир5!";
+            var ss = new List<PlcDataModelView>();
+            ss.Add(modeli);
+            ss.Add(model);
+            ManagePlcForm managePlcForm = new ManagePlcForm(ss);
+            managePlcForm.ShowDialog();
+        }
+        [TestMethod]
         public void LoadCsv()
         {
             ImportCsvForm importExportCsvForm = new ImportCsvForm();

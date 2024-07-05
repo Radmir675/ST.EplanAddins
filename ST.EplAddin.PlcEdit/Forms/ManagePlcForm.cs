@@ -44,7 +44,12 @@ namespace ST.EplAddin.PlcEdit
             TryDowmLoadTemplates(pathToSaveTemplate);
             this.dataGridView.Columns["FunctionText"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         }
-
+        public ManagePlcForm(List<PlcDataModelView> plcDataModelView)
+        {
+            InitializeComponent();
+            PlcDataModelView = plcDataModelView;
+            AddData(PlcDataModelView);
+        }
         private void ComparingForm_OkEvent(object sender, EventArgs e)
         {
             dataGridView.Refresh();
@@ -100,11 +105,18 @@ namespace ST.EplAddin.PlcEdit
 
         private void GetDefaultColumnSetting()
         {
-            EplanSettings eplanSettings = new EplanSettings();
-            var columnsToView = eplanSettings.TryGetSelectedColumns();
-            if (columnsToView.Any())
+            try
             {
-                SetVisibleColumns(columnsToView);
+                EplanSettings eplanSettings = new EplanSettings();
+                var columnsToView = eplanSettings.TryGetSelectedColumns();
+                if (columnsToView.Any())
+                {
+                    SetVisibleColumns(columnsToView);
+                }
+            }
+            catch (Exception)
+            {
+                //не найдена зависиосить на сборку                
             }
         }
 
@@ -295,6 +307,14 @@ namespace ST.EplAddin.PlcEdit
                 exchange_button.Enabled = true;
             }
             LastSelectedRow = e.RowIndex;
+            if (true)
+            {
+                // dataGridView.BeginEdit(false);
+
+            }
+            //  dataGridView.DefaultCellStyle.SelectionBackColor = Color.Transparent;
+
+
         }
         private void ManagePlcForm_KeyDown(object sender, KeyEventArgs e)
         {
@@ -502,6 +522,16 @@ namespace ST.EplAddin.PlcEdit
             if (SelectedRows.Count() != 1)
                 return;
             InsertRowInEmptyPosition(Direction.Down, jumpThroughAll: true);
+        }
+
+        private void dataGridView_KeyUp(object sender, KeyEventArgs e)
+        {
+
+            if (e.KeyCode == Keys.V && e.Control)
+                foreach (DataGridViewCell item in dataGridView.SelectedCells)
+                {
+                    item.Value = Clipboard.GetText();
+                }
         }
     }
 }
