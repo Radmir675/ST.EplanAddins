@@ -19,10 +19,10 @@ namespace ST.EplAddin.Comments
         {
             Eplan.EplApi.Gui.Menu oMenu = new Eplan.EplApi.Gui.Menu();
             uint MenuIDPopupComments = oMenu.AddPopupMenuItem(
-                "Комментарии", "Встарить комментарий", "CommentInsertDialog", "CommentInsertDialog", 35381, 0, false, false);
+                "Комментарии", "Вставить комментарий", "CommentInsertDialog", "CommentInsertDialog", 35381, 0, false, false);
 
             uint MenuIDPopupComments2 = oMenu.AddPopupMenuItem(
-               "Комментарии", "Встарить комментарий", "CommentInsertDialog", "CommentInsertDialog", 35381, 0, false, false);
+               "Комментарии", "Вставить комментарий", "CommentInsertDialog", "CommentInsertDialog", 35381, 0, false, false);
 
             uint MenuIDPopupCommentsShow = oMenu.AddPopupMenuItem(
                 "Показать", "Показать комментарий", "EMPTY", "", MenuIDPopupComments, 1, false, false);
