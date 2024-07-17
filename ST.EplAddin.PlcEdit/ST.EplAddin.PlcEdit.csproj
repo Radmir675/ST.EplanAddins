@@ -216,6 +216,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\WindowWrapper.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="View\CsvFileDataModelViews.cs" />
     <Compile Include="View\PlcDataView.cs" />
   </ItemGroup>
@@ -250,6 +255,10 @@
     <None Include="Properties\DataSources\CsvFileDataModelView.datasource" />
     <None Include="Properties\DataSources\PlcDataModelView.datasource" />
     <None Include="Properties\DataSources\ST.EplAddin.PlcEdit.View.CsvFileDataModelViews.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Resources\down.png" />
   </ItemGroup>
   <ItemGroup>

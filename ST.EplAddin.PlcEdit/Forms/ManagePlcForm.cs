@@ -43,6 +43,7 @@ namespace ST.EplAddin.PlcEdit
             ComparingForm.OkEvent += ComparingForm_OkEvent;
             TryDowmLoadTemplates(pathToSaveTemplate);
             this.dataGridView.Columns["FunctionText"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            FastInput.Checked = Properties.Settings.Default.FastInputChecked;
         }
         public ManagePlcForm(List<PlcDataModelView> plcDataModelView)
         {
@@ -531,6 +532,11 @@ namespace ST.EplAddin.PlcEdit
                 {
                     item.Value = Clipboard.GetText();
                 }
+        }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            Properties.Settings.Default.FastInputChecked = FastInput.Checked;
         }
     }
 }
