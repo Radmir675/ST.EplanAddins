@@ -144,6 +144,37 @@ namespace ST.EplAddin.PlcEdit
                 }
             }
         }
+
+        //TODO: на будущее надо сделать
+
+        //private void RewritePlcProperties(Terminal[] plcTerminals, List<PlcDataModelView> newDataPlc)
+        //{
+        //    foreach (var item in newDataPlc)    //тут будет применение всех измененных текстов для всех типов представлений
+        //    {
+        //        var terminals = plcTerminals.Where(x => x.Properties.FUNC_FULLNAME == item.DT); //.GetDisplayString().GetString(ISOCode.Language.L_ru_RU) );
+        //        var multyLineTerminal = terminals.FirstOrDefault(z => z.Properties.FUNC_TYPE.ToInt() == 1);
+        //        var overviewTerminal = terminals.FirstOrDefault(z => z.Properties.FUNC_TYPE.ToInt() == 3);
+        //        var overviewTerminalFuncText = overviewTerminal?.Properties?.FUNC_TEXT;
+        //        if (overviewTerminalFuncText != string.Empty && overviewTerminalFuncText != null)
+        //        {
+        //            DialogResult result = MessageBox.Show("Обзор выводов ПЛК содержит ненужный функциональный текст. Вы хотите его удалить?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        //            if (result == DialogResult.Yes)
+        //            {
+        //                overviewTerminalFuncText = string.Empty;
+        //            }
+        //        }
+        //        if (multyLineTerminal != null)
+        //        {
+        //            multyLineTerminal.Properties.FUNC_TEXT = item.FunctionText;
+        //            multyLineTerminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
+        //            multyLineTerminal.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL = item.SymbolicAdress;
+        //            //terminal.Properties.FUNC_ALLCONNECTIONDESCRIPTIONS = item.DevicePointDescription;//DI3
+        //            //terminal.Properties.FUNC_ALLCONNECTIONDESIGNATIONS = item.DevicePinNumber;//6
+        //        }
+        //    }
+        //}
+
+
         private string GetPath(Project project)
         {
             using (LockingStep lockingStep = new LockingStep())
