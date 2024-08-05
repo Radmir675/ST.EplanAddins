@@ -228,9 +228,9 @@ namespace ST.EplAddin.PlcEdit.Forms
             var eplanDataInCSVFormat = Mapper.ConvertDataToCsvModel(PlcDataModelView);
             for (int i = 0; i < dataFromCSVFile.Count; i++)
             {
-                if (i >= template.IndexFirstRow && i < template.IndexLastRow)
+                if (i >= template.IndexFirstRow && i < template.IndexLastRow + 1)
                 {
-                    dataFromCSVFile[i] = eplanDataInCSVFormat[i - template.IndexFirstRow + 1];
+                    dataFromCSVFile[i] = eplanDataInCSVFormat[i - template.IndexFirstRow];
                 }
             }
             foreach (var data in dataFromCSVFile)

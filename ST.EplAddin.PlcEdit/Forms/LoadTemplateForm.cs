@@ -38,7 +38,7 @@ namespace ST.EplAddin.PlcEdit.Forms
             List<CsvFileDataModelView> csvFileDataModelViews = new List<CsvFileDataModelView>();
             var indexFirstRow = SelectedRows.OrderBy(x => x.Index).First().Index;
             var indexLastRow = SelectedRows.OrderBy(x => x.Index).Last().Index;
-            var changableRows = (indexFirstRow, indexLastRow - indexFirstRow + 2);
+            var changableRows = (indexFirstRow, indexLastRow);
             var fileName = PathDialog.TryGetFileName(path);
             var fileNameWithType = PathDialog.TryGetFileNameWithType(path);
             var dataInTable = ((IEnumerable)dataGridView.DataSource).Cast<CsvFileDataModelView>().ToList();
