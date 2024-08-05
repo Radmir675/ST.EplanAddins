@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace ST.EplAddin.PlcEdit.Forms
 {
@@ -38,7 +39,6 @@ namespace ST.EplAddin.PlcEdit.Forms
             sourceDataGridView.Columns["TerminalId"].Visible = false;
             sourceDataGridView.Columns["DevicePinNumber"].Visible = false;
             sourceDataGridView.Columns["DevicePointDesignation"].Visible = false;
-
         }
 
         private void ComparingForm_Load(object sender, EventArgs e)
@@ -88,6 +88,7 @@ namespace ST.EplAddin.PlcEdit.Forms
                 var isEqualDataRow = PlcDataModelView.Count == CsvFileDataModelViews.Count ? true : false;
                 if (isEqualDataRow)
                 {
+
                     for (int i = 0; i < PlcDataModelView.Count; i++)
                     {
                         switch (comparisonState)
@@ -136,10 +137,7 @@ namespace ST.EplAddin.PlcEdit.Forms
             {
                 return false;
             }
-            if (!(plcDataModelView.DeviceNameShort ??= string.Empty).Equals(csvFileDataModelViews.DeviceNameShort ??= string.Empty))
-            {
-                MessageBox.Show("Выбран неверный модуль для импорта! Пожалуйста проверьте корректность CSV файла.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+
             return true;
         }
         private void Upload_doc_button_Click(object sender, EventArgs e)
@@ -162,7 +160,12 @@ namespace ST.EplAddin.PlcEdit.Forms
 
             targetDataGridView.DataSource = dataWithTemplate;
             CsvFileDataModelViews = dataWithTemplate;
+
             //TODO:сделать привязку а не вот это г.
+            if (!(PlcDataModelView[0].DeviceNameShort ??= string.Empty).Equals(CsvFileDataModelViews[0].DeviceNameShort ??= string.Empty))
+            {
+                MessageBox.Show("Выбран неверный модуль для импорта! Пожалуйста проверьте корректность CSV файла.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private List<CsvFileDataModelViews> GetDataWithTemplateBorders(List<CsvFileDataModelViews> items)
@@ -273,6 +276,19 @@ namespace ST.EplAddin.PlcEdit.Forms
             elementToRewrite.PLCAdress = checkedRow.PLCAdress;
             elementToRewrite.SymbolicAdress = checkedRow.SymbolicAdress;
             elementToRewrite.FunctionText = checkedRow.FunctionText;
+        }
+
+        private void checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox.Checked)
+            {
+                CsvFileDataModelViews?.ForEach(x => x.IsChecked = true);
+            }
+            else
+            {
+                CsvFileDataModelViews?.ForEach(x => x.IsChecked = false);
+            }
+            targetDataGridView?.Refresh();
         }
     }
 }
