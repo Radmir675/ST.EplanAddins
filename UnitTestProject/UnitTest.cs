@@ -61,10 +61,24 @@ namespace UnitTestProject
             list.Add(plcDataModelView);
             list.Add(plcDataModelView1);
 
-            var pathSaveTemplate = @"C:\Users\biktimirov.rr\Desktop\Scantronic";
+            var pathSaveTemplate = TryGetPathTemplateSaves();
+            if (string.IsNullOrEmpty(pathSaveTemplate))
+            {
+                return;
+            }
             ManagePlcForm managePlcForm = new ManagePlcForm(list, pathSaveTemplate);
             managePlcForm.ShowDialog();
         }
+
+        private string TryGetPathTemplateSaves()
+        {
+            //@"C:\Users\biktimirov.rr\Desktop\Scantronic"
+
+            var path =;
+
+            return path;
+        }
+
         public List<PlcDataModelView> Init()
         {
 

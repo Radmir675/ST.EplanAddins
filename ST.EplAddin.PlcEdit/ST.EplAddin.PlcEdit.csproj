@@ -182,6 +182,7 @@
     </Compile>
     <Compile Include="Helpers\ComparisonState.cs" />
     <Compile Include="Helpers\CsvConverter.cs" />
+    <Compile Include="Helpers\Import_Export_Type.cs" />
     <Compile Include="Helpers\Linq.cs" />
     <Compile Include="Helpers\PathDialog.cs" />
     <Compile Include="ModelView\CompareList.cs" />
@@ -200,7 +201,8 @@
     <Compile Include="Forms\ManagePlcForm.Designer.cs">
       <DependentUpon>ManagePlcForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\TemplateMembers.cs" />
+    <Compile Include="Model\Template.cs" />
+    <Compile Include="Model\TemplatesData.cs" />
     <Compile Include="PlcAddinEditAction.cs" />
     <Compile Include="Forms\PropertiesForm.cs">
       <SubType>Form</SubType>

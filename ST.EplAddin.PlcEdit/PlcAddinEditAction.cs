@@ -8,6 +8,7 @@ using Eplan.EplApi.HEServices;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MessageBox = System.Windows.Forms.MessageBox;
@@ -88,7 +89,7 @@ namespace ST.EplAddin.PlcEdit
             Process oCurrent = Process.GetCurrentProcess();
             var eplanOwner = new WindowWrapper(oCurrent.MainWindowHandle);
 
-            ManagePlcForm = new ManagePlcForm(plcDataModelView, GetPath(CurrentProject));
+            ManagePlcForm = new ManagePlcForm(plcDataModelView, GetPathToSaveTemplate(CurrentProject));
             ManagePlcForm.Show(eplanOwner);
             ManagePlcForm.ApplyEvent += ManagePlcForm_ApplyEvent;
         }
@@ -182,6 +183,16 @@ namespace ST.EplAddin.PlcEdit
                 string path = project.ProjectDirectoryPath;
                 //  string fullPath = System.IO.Path.Combine(path, $"{project.ProjectName}.txt");
                 return path;
+            }
+        }
+        private string GetPathToSaveTemplate(Project project)
+        {
+            using (LockingStep lockingStep = new LockingStep())
+            {
+                string projectPath = project.ProjectDirectoryPath;
+                var fullPath = Path.Combine(projectPath, "CSV_files_template");
+                Directory.CreateDirectory(fullPath);
+                return fullPath;
             }
         }
         private void CheckToIdenticalTerminal(Terminal[] terminal)

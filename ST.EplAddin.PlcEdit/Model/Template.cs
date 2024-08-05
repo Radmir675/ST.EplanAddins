@@ -1,8 +1,9 @@
 ﻿namespace ST.EplAddin.PlcEdit.Model
 {
-    public class TemplateMembers
+    public class Template
+
     {
-        public TemplateMembers(int indexFirstRow, int indexLastRow, string fileName)
+        public Template(int indexFirstRow, int indexLastRow, string fileName)
         {
             IndexFirstRow = indexFirstRow;
             IndexLastRow = indexLastRow;

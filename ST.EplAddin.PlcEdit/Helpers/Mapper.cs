@@ -98,6 +98,7 @@ namespace ST.EplAddin.PlcEdit
         }
         public static List<CsvFileDataModelViews> ConvertDataToCsvCompare(List<CsvFileDataModelView> csvFileDataModelView)
         {
+
             return csvFileDataModelView.Select(p => new CsvFileDataModelViews(p, false)).ToList();
         }
     }

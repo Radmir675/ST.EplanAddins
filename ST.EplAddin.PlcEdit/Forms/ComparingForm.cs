@@ -1,4 +1,5 @@
 ﻿using ST.EplAddin.PlcEdit.Helpers;
+using ST.EplAddin.PlcEdit.Model;
 using ST.EplAddin.PlcEdit.View;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace ST.EplAddin.PlcEdit.Forms
     {
         public ComparisonState ComparisonSelection { get; set; }
         public List<PlcDataModelView> PlcDataModelView { get; }
+        public string TemplateName { get; }
+        public Import_Export_Type SelectedMode { get; }
         public List<CsvFileDataModelViews> CsvFileDataModelViews { get; set; }
         public static event EventHandler OkEvent;
 
@@ -19,10 +22,12 @@ namespace ST.EplAddin.PlcEdit.Forms
         /// </summary>
         /// <param name="plcDataModelView">Данные из Eplan(ManagePlcForm)</param>
         /// <param name="csvFileDataModelViews">Данные из импортируемого файла</param>
-        public ComparingForm(List<PlcDataModelView> plcDataModelView, List<CsvFileDataModelViews> csvFileDataModelViews = null)
+        public ComparingForm(List<PlcDataModelView> plcDataModelView, string TemplateName, Import_Export_Type type, List<CsvFileDataModelViews> csvFileDataModelViews = null)
         {
             InitializeComponent();
             PlcDataModelView = plcDataModelView;
+            this.TemplateName = TemplateName;
+            SelectedMode = type;
             CsvFileDataModelViews = csvFileDataModelViews;
             sourceDataGridView.DataSource = PlcDataModelView;
             sourceDataGridView.Columns["DataType"].Visible = false;
@@ -76,40 +81,44 @@ namespace ST.EplAddin.PlcEdit.Forms
 
         private void CheckSimilaritiesOrDifferences(ComparisonState comparisonState)
         {
-            if (PlcDataModelView != null)
+            if (PlcDataModelView != null && CsvFileDataModelViews != null)
             {
                 var result = new List<PlcDataModelView>();
                 var result1 = new List<CsvFileDataModelViews>();
-                for (int i = 0; i < PlcDataModelView.Count; i++)
+                var isEqualDataRow = PlcDataModelView.Count == CsvFileDataModelViews.Count ? true : false;
+                if (isEqualDataRow)
                 {
-                    switch (comparisonState)
+                    for (int i = 0; i < PlcDataModelView.Count; i++)
                     {
-
-                        case ComparisonState.Similarities:
-                            {
-                                if (IsEqual(PlcDataModelView[i], CsvFileDataModelViews[i]))
+                        switch (comparisonState)
+                        {
+                            case ComparisonState.Similarities:
                                 {
-                                    result.Add(PlcDataModelView[i]);
-                                    result1.Add(CsvFileDataModelViews[i]);
-                                }
-                                break;
-                            }
+                                    if (IsEqual(PlcDataModelView[i], CsvFileDataModelViews[i]))
+                                    {
+                                        result.Add(PlcDataModelView[i]);
+                                        result1.Add(CsvFileDataModelViews[i]);
+                                    }
 
-                        case ComparisonState.Differences:
-                            {
-                                if (!IsEqual(PlcDataModelView[i], CsvFileDataModelViews[i]))
-                                {
-                                    result.Add(PlcDataModelView[i]);
-                                    result1.Add(CsvFileDataModelViews[i]);
+                                    break;
                                 }
-                                break;
-                            }
+
+                            case ComparisonState.Differences://индекс за пределами диапазона
+                                {
+                                    if (!IsEqual(PlcDataModelView[i], CsvFileDataModelViews[i]))
+                                    {
+                                        result.Add(PlcDataModelView[i]);
+                                        result1.Add(CsvFileDataModelViews[i]);
+                                    }
+                                    break;
+                                }
+                        }
                     }
+                    sourceDataGridView.DataSource = result;
+                    sourceDataGridView.Refresh();
+                    targetDataGridView.DataSource = result1;
+                    targetDataGridView.Refresh();
                 }
-                sourceDataGridView.DataSource = result;
-                sourceDataGridView.Refresh();
-                targetDataGridView.DataSource = result1;
-                targetDataGridView.Refresh();
             }
         }
 
@@ -129,7 +138,7 @@ namespace ST.EplAddin.PlcEdit.Forms
             }
             if (!(plcDataModelView.DeviceNameShort ??= string.Empty).Equals(csvFileDataModelViews.DeviceNameShort ??= string.Empty))
             {
-                return false;
+                MessageBox.Show("Выбран неверный модуль для импорта! Пожалуйста проверьте корректность CSV файла.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             return true;
         }
@@ -143,19 +152,59 @@ namespace ST.EplAddin.PlcEdit.Forms
             CsvConverter csvConverter = new CsvConverter(path);
             var dataFromFile = csvConverter.ReadFile();
             CsvFileDataModelViews = Mapper.ConvertDataToCsvCompare(dataFromFile);
-            targetDataGridView.DataSource = CsvFileDataModelViews;
+            var dataWithTemplate = GetDataWithTemplateBorders(CsvFileDataModelViews);
+            var isEqualDataRow = PlcDataModelView.Count == dataWithTemplate?.Count ? true : false;
+            if (!isEqualDataRow)
+            {
+                MessageBox.Show("Данные для сравнения не совпадают по числу строк.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            targetDataGridView.DataSource = dataWithTemplate;
+            CsvFileDataModelViews = dataWithTemplate;
+            //TODO:сделать привязку а не вот это г.
+        }
+
+        private List<CsvFileDataModelViews> GetDataWithTemplateBorders(List<CsvFileDataModelViews> items)
+        {
+            var template = TemplatesData.GetInstance().TryGetTemplate(TemplateName);
+            if (template == null)
+            {
+                MessageBox.Show("Шаблон не найден", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+            var maxIndex = template.IndexLastRow;
+            var minIndex = template.IndexFirstRow;
+            var result = items.GetRange(minIndex, maxIndex - minIndex + 1);
+            return result;
         }
 
         private void ok_button_Click(object sender, EventArgs e)
         {
-            var checkedRows = CsvFileDataModelViews.Where(x => x.IsChecked);
-            foreach (var checkedRow in checkedRows)
+            switch (SelectedMode)
             {
-                var elementPosition = CsvFileDataModelViews.IndexOf(checkedRow);
-                ReWriteProperties(elementPosition, checkedRow);
+                case Import_Export_Type.Import:
+                    var checkedRows = CsvFileDataModelViews.Where(x => x.IsChecked);
+                    foreach (var checkedRow in checkedRows)
+                    {
+                        var elementPosition = CsvFileDataModelViews.IndexOf(checkedRow);
+                        ReWriteProperties(elementPosition, checkedRow);
+                    }
+                    Close();
+                    OkEvent?.Invoke(this, EventArgs.Empty);
+                    break;
+
+                case Import_Export_Type.Export:
+                    var path = PathDialog.TryGetSavePath();
+                    if (path == null)
+                    {
+                        return;
+                    }
+                    CsvConverter csvConverter = new CsvConverter(path);
+                    csvConverter.SaveFile(dataToExport);//его надо переписать исходя из полученнго шаблона
+                    Close();
+                    break;
             }
-            Close();
-            OkEvent?.Invoke(this, EventArgs.Empty);
         }
 
         private void ReWriteProperties(int elementPosition, CsvFileDataModelViews checkedRow)

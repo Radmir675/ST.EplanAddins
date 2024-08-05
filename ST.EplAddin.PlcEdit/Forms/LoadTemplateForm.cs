@@ -14,7 +14,7 @@ namespace ST.EplAddin.PlcEdit.Forms
         private readonly string path;
         private readonly string pathToSaveTemplate;
 
-        public static event EventHandler<TemplateMembers> TemplateAction;
+        public static event EventHandler<Template> TemplateAction;
         private DataGridViewRow[] SelectedRows
         {
             get
@@ -38,17 +38,16 @@ namespace ST.EplAddin.PlcEdit.Forms
             List<CsvFileDataModelView> csvFileDataModelViews = new List<CsvFileDataModelView>();
             var indexFirstRow = SelectedRows.OrderBy(x => x.Index).First().Index;
             var indexLastRow = SelectedRows.OrderBy(x => x.Index).Last().Index;
-            var changableRows = (indexFirstRow, indexLastRow - indexFirstRow + 1);
+            var changableRows = (indexFirstRow, indexLastRow - indexFirstRow + 2);
             var fileName = PathDialog.TryGetFileName(path);
             var fileNameWithType = PathDialog.TryGetFileNameWithType(path);
             var dataInTable = ((IEnumerable)dataGridView.DataSource).Cast<CsvFileDataModelView>().ToList();
             dataInTable.Add(new CsvFileDataModelView(string.Join(";", indexFirstRow, indexLastRow)));// информацию по поводу строчек перезаписываемых
 
-            TemplateAction?.Invoke(this, new TemplateMembers(indexFirstRow, indexLastRow, fileName));
+            TemplateAction?.Invoke(this, new Template(indexFirstRow, indexLastRow, fileName));
             var fullPath = Path.Combine(pathToSaveTemplate, fileNameWithType);
             CsvConverter csvConverter = new CsvConverter(fullPath);
             csvConverter.SaveFile(dataInTable);
-
             this.Close();
         }
 

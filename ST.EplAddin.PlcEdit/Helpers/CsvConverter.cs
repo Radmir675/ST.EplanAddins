@@ -20,6 +20,7 @@ namespace ST.EplAddin.PlcEdit
 
         public List<CsvFileDataModelView> ReadFile()
         {
+            //TODO:все сломается если фаил открыт
             CsvConfiguration config = GetConfig();
             List<CsvFileDataModelView> lines = new List<CsvFileDataModelView>(50);
             try
@@ -53,6 +54,7 @@ namespace ST.EplAddin.PlcEdit
         }
         public void SaveFile(List<CsvFileDataModelView> fileToWrite)
         {
+            //TODO:все сломается если фаил открыт
             CsvConfiguration config = GetConfig();
             using (var writer = new StreamWriter(filePath, false, Encoding.UTF8)) //поменять тип шифрования
             using (var csvWriter = new CsvWriter(writer, config))
@@ -64,6 +66,30 @@ namespace ST.EplAddin.PlcEdit
                 }
             }
             MessageBox.Show("Files are recorded!", "Mesage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public (int, int) ReadAdditionalInformation()
+        {
+            string[] parsedNums = new string[2];
+
+            CsvConfiguration config = GetConfig();
+            using (var reader = new StreamReader(filePath))
+            using (var csvReader = new CsvReader(reader, config))
+            {
+                var encoding = reader.CurrentEncoding;
+                csvReader.Read();
+                while (csvReader.Read())
+                {
+                    parsedNums = csvReader.GetField(0).Split(';');
+                }
+            }
+
+
+            var IsParseFirst = int.TryParse(parsedNums[0], out int minRow);
+            var IsParseSecond = int.TryParse(parsedNums[1], out int maxRow);
+
+
+            return (minRow, maxRow);
         }
 
         private CsvConfiguration GetConfig()
