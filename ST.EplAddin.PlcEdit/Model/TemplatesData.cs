@@ -52,11 +52,16 @@ namespace ST.EplAddin.PlcEdit.Model
                 Templates.Add(new Template(minRow, maxRow, fileName));
             }
         }
-        public Template TryGetTemplate(string selectedTemplateName)
+        public Template TryGetTemplateByName(string selectedTemplateName)
         {
             var result = Templates.SingleOrDefault(x => x.FileName == selectedTemplateName);
             return result;
-            ;
         }
+        public string TryGetTemplatePath(string templateName)
+        {
+            var result = Directory.GetFiles(SavePath, $"{templateName}*").FirstOrDefault();
+            return result;
+        }
+
     }
 }

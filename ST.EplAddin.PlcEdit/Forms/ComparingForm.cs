@@ -22,11 +22,11 @@ namespace ST.EplAddin.PlcEdit.Forms
         /// </summary>
         /// <param name="plcDataModelView">Данные из Eplan(ManagePlcForm)</param>
         /// <param name="csvFileDataModelViews">Данные из импортируемого файла</param>
-        public ComparingForm(List<PlcDataModelView> plcDataModelView, string TemplateName, Import_Export_Type type, List<CsvFileDataModelViews> csvFileDataModelViews = null)
+        public ComparingForm(List<PlcDataModelView> plcDataModelView, string templateName, Import_Export_Type type, List<CsvFileDataModelViews> csvFileDataModelViews = null)
         {
             InitializeComponent();
             PlcDataModelView = plcDataModelView;
-            this.TemplateName = TemplateName;
+            this.TemplateName = templateName;
             SelectedMode = type;
             CsvFileDataModelViews = csvFileDataModelViews;
             sourceDataGridView.DataSource = PlcDataModelView;
@@ -167,7 +167,7 @@ namespace ST.EplAddin.PlcEdit.Forms
 
         private List<CsvFileDataModelViews> GetDataWithTemplateBorders(List<CsvFileDataModelViews> items)
         {
-            var template = TemplatesData.GetInstance().TryGetTemplate(TemplateName);
+            var template = TemplatesData.GetInstance().TryGetTemplateByName(TemplateName);
             if (template == null)
             {
                 MessageBox.Show("Шаблон не найден", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -201,15 +201,75 @@ namespace ST.EplAddin.PlcEdit.Forms
                         return;
                     }
                     CsvConverter csvConverter = new CsvConverter(path);
-                    csvConverter.SaveFile(dataToExport);//его надо переписать исходя из полученнго шаблона
+                    var dataToExport = GetDataToExport();
+                    csvConverter.SaveFile(dataToExport);
                     Close();
                     break;
             }
         }
 
+        private List<CsvFileDataModelView> GetDataToExport()
+        {
+            var template = TemplatesData.GetInstance().TryGetTemplateByName(TemplateName);
+            if (template == null)
+            {
+                MessageBox.Show("Шаблон не найден");
+                return null;
+            }
+            var templatePath = TemplatesData.GetInstance().TryGetTemplatePath(TemplateName);
+            if (string.IsNullOrEmpty(templatePath))
+            {
+                MessageBox.Show("Фаил не найден!");
+                return null;
+            }
+
+            CsvConverter csvConverter = new CsvConverter(templatePath);
+            var dataFromCSVFile = csvConverter.ReadFile();//полный данными фаил.
+            var eplanDataInCSVFormat = Mapper.ConvertDataToCsvModel(PlcDataModelView);
+            for (int i = 0; i < dataFromCSVFile.Count; i++)
+            {
+                if (i >= template.IndexFirstRow && i < template.IndexLastRow)
+                {
+                    dataFromCSVFile[i] = eplanDataInCSVFormat[i - template.IndexFirstRow + 1];
+                }
+            }
+            foreach (var data in dataFromCSVFile)
+            {
+                if (!string.IsNullOrEmpty(data.DeviceNameShort) && !data.DeviceNameShort.Contains("//"))
+                {
+                    data.DeviceNameShort = eplanDataInCSVFormat[0].DeviceNameShort;
+                }
+            }
+            dataFromCSVFile.Remove(dataFromCSVFile.Last());
+
+
+            //var checkedRows = CsvFileDataModelViews.Where(x => x.IsChecked);
+            //if (checkedRows.Any())
+            //{
+            //    foreach (var checkedRow in checkedRows)
+            //    {
+            //        var elementPosition = CsvFileDataModelViews.IndexOf(checkedRow);// номер для перезаписи
+
+
+            //    }
+            //}
+            //else 
+            //{
+            //    //здесь перезаписать все строки
+            //}
+
+
+
+
+            var dataToExport = dataFromCSVFile;//тут должна быть замена в соотвествии с шаблоном и выбранными ячейками
+            return dataToExport;
+
+        }
+
         private void ReWriteProperties(int elementPosition, CsvFileDataModelViews checkedRow)
         {
             var elementToRewrite = PlcDataModelView.ElementAt(elementPosition);
+
             elementToRewrite.PLCAdress = checkedRow.PLCAdress;
             elementToRewrite.SymbolicAdress = checkedRow.SymbolicAdress;
             elementToRewrite.FunctionText = checkedRow.FunctionText;

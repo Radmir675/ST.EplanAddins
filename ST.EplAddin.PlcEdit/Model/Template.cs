@@ -13,6 +13,5 @@
         public int IndexFirstRow { get; set; }
         public int IndexLastRow { get; set; }
         public string FileName { get; set; }
-
     }
 }
