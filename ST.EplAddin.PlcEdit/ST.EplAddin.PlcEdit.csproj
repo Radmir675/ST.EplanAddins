@@ -182,7 +182,7 @@
     </Compile>
     <Compile Include="Helpers\ComparisonState.cs" />
     <Compile Include="Helpers\CsvConverter.cs" />
-    <Compile Include="Helpers\Import_Export_Type.cs" />
+    <Compile Include="Helpers\ExchangeMode.cs" />
     <Compile Include="Helpers\Linq.cs" />
     <Compile Include="Helpers\PathDialog.cs" />
     <Compile Include="ModelView\CompareList.cs" />

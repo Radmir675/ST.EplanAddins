@@ -410,7 +410,7 @@ namespace ST.EplAddin.PlcEdit
                 return;
             }
             var dataToExport = GetProperlyRowsToImportData(PlcDataModelView);
-            ComparingForm comparingForm = new ComparingForm(dataToExport, TemplateName, Import_Export_Type.Export);
+            ComparingForm comparingForm = new ComparingForm(dataToExport, TemplateName, ExchangeMode.Export);
             comparingForm.ShowDialog();
         }
 
@@ -422,7 +422,7 @@ namespace ST.EplAddin.PlcEdit
                 return;
             }
             var dataToImport = GetProperlyRowsToImportData(PlcDataModelView);
-            ComparingForm comparingForm = new ComparingForm(dataToImport, TemplateName, Import_Export_Type.Import);
+            ComparingForm comparingForm = new ComparingForm(dataToImport, TemplateName, ExchangeMode.Import);
             comparingForm.ShowDialog();
         }
 

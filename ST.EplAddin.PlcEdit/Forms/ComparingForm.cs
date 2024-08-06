@@ -14,7 +14,7 @@ namespace ST.EplAddin.PlcEdit.Forms
         public ComparisonState ComparisonSelection { get; set; }
         public List<PlcDataModelView> PlcDataModelView { get; }
         public string TemplateName { get; }
-        public Import_Export_Type SelectedMode { get; }
+        public ExchangeMode SelectedMode { get; }
         public List<CsvFileDataModelViews> CsvFileDataModelViews { get; set; }
         public static event EventHandler OkEvent;
 
@@ -23,7 +23,7 @@ namespace ST.EplAddin.PlcEdit.Forms
         /// </summary>
         /// <param name="plcDataModelView">Данные из Eplan(ManagePlcForm)</param>
         /// <param name="csvFileDataModelViews">Данные из импортируемого файла</param>
-        public ComparingForm(List<PlcDataModelView> plcDataModelView, string templateName, Import_Export_Type type, List<CsvFileDataModelViews> csvFileDataModelViews = null)
+        public ComparingForm(List<PlcDataModelView> plcDataModelView, string templateName, ExchangeMode type, List<CsvFileDataModelViews> csvFileDataModelViews = null)
         {
             InitializeComponent();
             PlcDataModelView = plcDataModelView;
@@ -186,7 +186,7 @@ namespace ST.EplAddin.PlcEdit.Forms
         {
             switch (SelectedMode)
             {
-                case Import_Export_Type.Import:
+                case ExchangeMode.Import:
                     var checkedRows = CsvFileDataModelViews.Where(x => x.IsChecked);
                     foreach (var checkedRow in checkedRows)
                     {
@@ -197,7 +197,7 @@ namespace ST.EplAddin.PlcEdit.Forms
                     OkEvent?.Invoke(this, EventArgs.Empty);
                     break;
 
-                case Import_Export_Type.Export:
+                case ExchangeMode.Export:
                     var path = PathDialog.TryGetSavePath();
                     if (path == null)
                     {

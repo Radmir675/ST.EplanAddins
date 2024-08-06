@@ -1,6 +1,6 @@
 ﻿namespace ST.EplAddin.PlcEdit.Helpers
 {
-    public enum Import_Export_Type
+    public enum ExchangeMode
     {
         Import,
         Export
