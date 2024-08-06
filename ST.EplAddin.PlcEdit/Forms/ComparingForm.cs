@@ -205,6 +205,11 @@ namespace ST.EplAddin.PlcEdit.Forms
                     }
                     CsvConverter csvConverter = new CsvConverter(path);
                     var dataToExport = GetDataToExport();
+                    if (dataToExport == null)
+                    {
+                        Close();
+                        break;
+                    }
                     csvConverter.SaveFile(dataToExport);
                     Close();
                     break;
@@ -244,25 +249,8 @@ namespace ST.EplAddin.PlcEdit.Forms
                 }
             }
             dataFromCSVFile.Remove(dataFromCSVFile.Last());
-
-
-            //var checkedRows = CsvFileDataModelViews.Where(x => x.IsChecked);
-            //if (checkedRows.Any())
-            //{
-            //    foreach (var checkedRow in checkedRows)
-            //    {
-            //        var elementPosition = CsvFileDataModelViews.IndexOf(checkedRow);// номер для перезаписи
-
-
-            //    }
-            //}
-            //else 
-            //{
-            //    //здесь перезаписать все строки
-            //}
-
-
-
+            dataFromCSVFile[template.IndexFirstRow - 1].SymbolicAdress = $"IDW_{eplanDataInCSVFormat[0].DeviceNameShort}";
+            dataFromCSVFile.Last().SymbolicAdress = $"xModError_{eplanDataInCSVFormat[0].DeviceNameShort}";
 
             var dataToExport = dataFromCSVFile;//тут должна быть замена в соотвествии с шаблоном и выбранными ячейками
             return dataToExport;

@@ -317,9 +317,6 @@ namespace ST.EplAddin.PlcEdit
                 dataGridView.BeginEdit(false);
 
             }
-            //  dataGridView.DefaultCellStyle.SelectionBackColor = Color.Transparent;
-
-
         }
         private void ManagePlcForm_KeyDown(object sender, KeyEventArgs e)
         {
