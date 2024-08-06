@@ -103,8 +103,7 @@ namespace ST.EplAddin.PlcEdit
             var correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
             if (correlationTable.tableWithReverse.Any())
             {
-                //MessageBox.Show("Reverse cannot be operated");
-                //return;
+                //TODO:может быть попробовать удалить в листе изменений после присвоений
             }
             AsssignNewFunctions(functionsInProgram, correlationTable);
             RewritePlcProperties(plcTerminals, newDataPlc);
@@ -112,6 +111,12 @@ namespace ST.EplAddin.PlcEdit
         }
         private void AsssignNewFunctions(IEnumerable<Function> functionsInProgram, (List<NameCorrelation> tableWithoutReverse, List<NameCorrelation> tableWithReverse) correlationTable)
         {
+            foreach (var item in correlationTable.tableWithReverse)
+            {
+                var sourceFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionOldName);//найдем его
+                var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
+                AssignFunction(sourceFunction, targetFunction, true);
+            }
             foreach (var item in correlationTable.tableWithoutReverse)
             {
                 var sourceFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionOldName);//найдем его
@@ -119,12 +124,6 @@ namespace ST.EplAddin.PlcEdit
                 AssignFunction(sourceFunction, targetFunction);
             }
 
-            foreach (var item in correlationTable.tableWithReverse)
-            {
-                var sourceFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionOldName);//найдем его
-                var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
-                AssignFunction(sourceFunction, targetFunction, true);
-            }
         }
         private void RewritePlcProperties(Terminal[] plcTerminals, List<PlcDataModelView> newDataPlc)
         {

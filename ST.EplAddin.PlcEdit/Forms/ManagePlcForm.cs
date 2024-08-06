@@ -57,6 +57,7 @@ namespace ST.EplAddin.PlcEdit
         }
         private void ComparingForm_OkEvent(object sender, EventArgs e)
         {
+            dataGridView.EndEdit();
             dataGridView.Refresh();
         }
 
@@ -501,6 +502,7 @@ namespace ST.EplAddin.PlcEdit
         }
         private void LoadTemplateForm_TemplateAction(object sender, Model.Template e)
         {
+            TemplatesData.GetInstance().Add(e);
             dropDownList.Items.Add(e.FileName);
             dropDownList.SelectedItem = e.FileName;
         }
