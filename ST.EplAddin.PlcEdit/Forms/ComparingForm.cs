@@ -45,7 +45,10 @@ namespace ST.EplAddin.PlcEdit.Forms
         {
             comboBox1.DataSource = Enum.GetValues(typeof(ComparisonState));
             comboBox1.SelectedIndex = 0;
-
+            if (SelectedMode == ExchangeMode.Export)
+            {
+                Upload_doc_button.Enabled = false;
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
