@@ -96,34 +96,38 @@ namespace ST.EplAddin.PlcEdit
 
         private void ManagePlcForm_ApplyEvent(object sender, CustomEventArgs e)
         {
-            var plcTerminals = GetPlcTerminals();//тут получаем данные, которые могли быть изменены за время нашего изменения в форме
-            var functionsInProgram = plcTerminals.Cast<Function>();
+            Terminal[] plcTerminals;
+            IEnumerable<Function> functionsInProgram;
+            Get(out plcTerminals, out functionsInProgram);
+
             var newDataPlc = e.PlcDataModelView; //тут получаем данные из формы
-            InitialPlcData = Mapper.GetPlcData(plcTerminals);
             var correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
-            if (correlationTable.tableWithReverse.Any())
+            //correlationTable.Clear();
+            while (correlationTable.Any())
             {
-                //TODO:может быть попробовать удалить в листе изменений после присвоений
+                AsssignNewFunctions(functionsInProgram, correlationTable.FirstOrDefault());
+                Get(out plcTerminals, out functionsInProgram);
+                correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
+                //  correlationTable.RemoveAt(0);
             }
-            AsssignNewFunctions(functionsInProgram, correlationTable);
+
             RewritePlcProperties(plcTerminals, newDataPlc);
             UpdateFormData();
         }
-        private void AsssignNewFunctions(IEnumerable<Function> functionsInProgram, (List<NameCorrelation> tableWithoutReverse, List<NameCorrelation> tableWithReverse) correlationTable)
-        {
-            foreach (var item in correlationTable.tableWithReverse)
-            {
-                var sourceFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionOldName);//найдем его
-                var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
-                AssignFunction(sourceFunction, targetFunction, true);
-            }
-            foreach (var item in correlationTable.tableWithoutReverse)
-            {
-                var sourceFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionOldName);//найдем его
-                var targetFunction = functionsInProgram.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.FunctionNewName);//найдем его
-                AssignFunction(sourceFunction, targetFunction);
-            }
 
+        private void Get(out Terminal[] plcTerminals, out IEnumerable<Function> functionsInProgram)
+        {
+            plcTerminals = GetPlcTerminals();
+            functionsInProgram = plcTerminals.Cast<Function>();
+            InitialPlcData = Mapper.GetPlcData(plcTerminals);
+        }
+
+        private void AsssignNewFunctions(IEnumerable<Function> functionsInProgram, NameCorrelation tableWithReverse)
+        {
+            //тут надо скать главные функции
+            var sourceFunction = functionsInProgram.Where(x => x.Properties.FUNC_FULLNAME == tableWithReverse.FunctionOldName).ToList();//найдем его
+            var targetFunction = functionsInProgram.Where(x => x.Properties.FUNC_FULLNAME == tableWithReverse.FunctionNewName).ToList();//найдем его
+            AssignFunction(sourceFunction, targetFunction, true);
         }
         private void RewritePlcProperties(Terminal[] plcTerminals, List<PlcDataModelView> newDataPlc)
         {
@@ -212,7 +216,7 @@ namespace ST.EplAddin.PlcEdit
             ManagePlcForm.UpdateTable(mappedPlcTerminals);//туть передать данные после присвоения для обновления формы
         }
 
-        private (List<NameCorrelation> tableWithoutReverse, List<NameCorrelation> tableWithReverse) GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)
+        private List<NameCorrelation> GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)
         {
             var result = oldData.Join(newDataPlc,
                 data1 => data1.TerminalId,//проверяем и формируем группу по клеммы
@@ -228,19 +232,19 @@ namespace ST.EplAddin.PlcEdit
 
             return FindDifferences(result);
         }
-        private (List<NameCorrelation> tableWithoutReverse, List<NameCorrelation> tableWithReverse) FindDifferences(List<NameCorrelation> table)
+        private List<NameCorrelation> FindDifferences(List<NameCorrelation> table)
         {
             table = table.Where(x => x.FunctionNewName != x.FunctionOldName).ToList();
             var oldNames = table.Select(x => x.FunctionOldName);
             var newNames = table.Select(x => x.FunctionNewName);
-            var namesInFirstAndSecondSequence = oldNames.Intersect(newNames);
+            //var namesInFirstAndSecondSequence = oldNames.Intersect(newNames);
 
-            var tableWithReverse = table.Where(x => namesInFirstAndSecondSequence.Contains(x.FunctionOldName)).Distinct(new EqualityComparer()).ToList();
-            var tableWithoutReverse = table.Where(x => !namesInFirstAndSecondSequence.Contains(x.FunctionOldName)).ToList();
-            return (tableWithoutReverse, tableWithReverse);
+            var tableWithReverse = table.Distinct(new EqualityComparer()).ToList();
+
+            return tableWithReverse;
         }
 
-        private void AssignFunction(Function sourceFunction, Function targetFunction, bool reverse = false)
+        private void AssignFunction(List<Function> sourceFunction, List<Function> targetFunction, bool reverse = false)
         {
             try
             {
@@ -250,7 +254,7 @@ namespace ST.EplAddin.PlcEdit
                     {
                         if (reverse == false)
                         {
-                            targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
+                            // targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
                         }
                         else//если есть реверс то применяем вот эту схему "с реверсом"
                         {
@@ -269,15 +273,38 @@ namespace ST.EplAddin.PlcEdit
             }
         }
 
-        private void ReverseOutputPins(Function sourceFunction, Function targetFunction)
+        private void ReverseOutputPins(List<Function> sourceFunction, List<Function> targetFunction)
         {
-            var allCrossreferencedFunctions = sourceFunction.CrossReferencedObjectsAll.OfType<Terminal>();
-            var sourceOverviewFunction = allCrossreferencedFunctions.First(z => z.Properties.FUNC_TYPE == 3
-            && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == sourceFunction.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
-            var targetOverviewFunction = allCrossreferencedFunctions.First(z => z.Properties.FUNC_TYPE == 3
-            && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == targetFunction.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
-            sourceOverviewFunction.Assign(targetFunction);
-            targetOverviewFunction.Assign(sourceFunction);
+            var allCrossreferencedFunctions = sourceFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>() ?? targetFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>();
+
+            var sourceOverviewFunction = sourceFunction.FirstOrDefault(z => z.Properties.FUNC_TYPE == 3
+            && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == sourceFunction.FirstOrDefault()?.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
+
+            var targetOverviewFunction = allCrossreferencedFunctions.FirstOrDefault(z => z.Properties.FUNC_TYPE == 3
+            && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == targetFunction.FirstOrDefault()?.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
+
+            var targetMainFunction = targetFunction.FirstOrDefault(x => x.Properties.FUNC_TYPE == 1);
+            var sourceMainFunction = sourceFunction.FirstOrDefault(x => x.Properties.FUNC_TYPE == 1);
+
+
+            if (targetMainFunction?.Properties.FUNC_TYPE == 1 && sourceMainFunction?.Properties.FUNC_TYPE == 1)
+            {
+                sourceOverviewFunction.Assign(targetMainFunction);
+                targetOverviewFunction.Assign(sourceMainFunction);
+            }
+            else if (sourceMainFunction?.Properties.FUNC_TYPE == 1)
+            {
+                targetOverviewFunction?.Assign(sourceMainFunction);
+            }
+            else if (targetMainFunction?.Properties.FUNC_TYPE == 1)
+            {
+                sourceOverviewFunction.Assign(targetMainFunction);
+            }
+            else
+            {
+                MessageBox.Show("Упс... Что-то пошло не так.");
+                return;
+            }
         }
 
         private Function CreateTransientFunction()

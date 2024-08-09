@@ -6,7 +6,8 @@ namespace ST.EplAddin.PlcEdit
     {
         public bool Equals(NameCorrelation x, NameCorrelation y)
         {
-            return (x.FunctionNewName == y.FunctionOldName || x.FunctionOldName == y.FunctionNewName) ? true : false;
+            var result = (x.FunctionNewName == y.FunctionOldName && x.FunctionOldName == y.FunctionNewName) ? true : false;
+            return result;
         }
 
         public int GetHashCode(NameCorrelation obj)
