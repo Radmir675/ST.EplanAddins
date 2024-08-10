@@ -307,16 +307,10 @@ namespace ST.EplAddin.PlcEdit
 
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            exchange_button.Enabled = false;
-            if (SelectedRows.Count() == 2)
-            {
-                exchange_button.Enabled = true;
-            }
             LastSelectedRow = e.RowIndex;
             if (FastInput.Checked)
             {
                 dataGridView.BeginEdit(false);
-
             }
         }
         private void ManagePlcForm_KeyDown(object sender, KeyEventArgs e)
@@ -348,43 +342,14 @@ namespace ST.EplAddin.PlcEdit
 
         private void dataGridView_SelectionChanged(object sender, EventArgs e)
         {
-            if (SelectedRows.Count() > 1 || SelectedRows.Count() == 0)
-            {
-                up_button.Enabled = false;
-                dowm_button.Enabled = false;
-                upper_button.Enabled = false;
-                lower_button.Enabled = false;
-                return;
-            }
-            var currentRow = SelectedRows.FirstOrDefault();//туть null
-            if (currentRow == null)
-            {
-                return;
-            }
-            var functionDefinition = currentRow?.Cells["FunctionDefinition"]?.Value?.ToString();
 
-            var emptyUpRow = TryGetEmptyIndexRow(currentRow.Index, Direction.Up, functionDefinition);
-            if (!emptyUpRow.HasValue || SelectedRows.Count() != 1)
-            {
-                up_button.Enabled = false;
-                upper_button.Enabled = false;
-            }
-            else
-            {
-                up_button.Enabled = true;
-                upper_button.Enabled = true;
-            }
-            var emptyDownRow = TryGetEmptyIndexRow(currentRow.Index, Direction.Down, functionDefinition);
-            if (!emptyDownRow.HasValue || SelectedRows.Count() != 1)
-            {
-                dowm_button.Enabled = false;
-                lower_button.Enabled = false;
-            }
-            else
-            {
-                dowm_button.Enabled = true;
-                lower_button.Enabled = true;
-            }
+        }
+
+        private bool IsReadyToExchange(DataGridViewRow firstSelectedRow, DataGridViewRow secondSelectedRow)
+        {
+            var firstFunctionDefinition = firstSelectedRow?.Cells["FunctionDefinition"]?.Value?.ToString();
+            var secondFunctionDefinition = secondSelectedRow?.Cells["FunctionDefinition"]?.Value?.ToString();
+            return firstFunctionDefinition == secondFunctionDefinition;
         }
 
         private void properties_button_Click(object sender, EventArgs e)
@@ -548,6 +513,54 @@ namespace ST.EplAddin.PlcEdit
             if (dataGridView.IsCurrentCellDirty)
             {
                 dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+        }
+
+        private void dataGridView_MouseUp(object sender, MouseEventArgs e)
+        {
+            exchange_button.Enabled = false;
+            var firstSelectedRow = SelectedRows.FirstOrDefault();
+            var secondSelectedRow = SelectedRows.LastOrDefault();
+            if (SelectedRows.Count() == 2 && IsReadyToExchange(firstSelectedRow, secondSelectedRow))
+            {
+                exchange_button.Enabled = true;
+            }
+            if (SelectedRows.Count() > 1 || SelectedRows.Count() == 0)
+            {
+                up_button.Enabled = false;
+                dowm_button.Enabled = false;
+                upper_button.Enabled = false;
+                lower_button.Enabled = false;
+                return;
+            }
+            if (firstSelectedRow == null)
+            {
+                return;
+            }
+            var functionDefinition = firstSelectedRow?.Cells["FunctionDefinition"]?.Value?.ToString();
+
+            var emptyUpRow = TryGetEmptyIndexRow(firstSelectedRow.Index, Direction.Up, functionDefinition);
+
+            if (!emptyUpRow.HasValue || SelectedRows.Count() != 1)
+            {
+                up_button.Enabled = false;
+                upper_button.Enabled = false;
+            }
+            else
+            {
+                up_button.Enabled = true;
+                upper_button.Enabled = true;
+            }
+            var emptyDownRow = TryGetEmptyIndexRow(firstSelectedRow.Index, Direction.Down, functionDefinition);
+            if (!emptyDownRow.HasValue || SelectedRows.Count() != 1)
+            {
+                dowm_button.Enabled = false;
+                lower_button.Enabled = false;
+            }
+            else
+            {
+                dowm_button.Enabled = true;
+                lower_button.Enabled = true;
             }
         }
     }
