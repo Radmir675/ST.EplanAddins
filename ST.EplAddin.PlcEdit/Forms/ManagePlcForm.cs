@@ -20,7 +20,7 @@ namespace ST.EplAddin.PlcEdit
         public static event EventHandler<string> PathEvent;
         private List<PlcDataModelView> PlcDataModelView { get; set; }
         public int InitialFormWidth { get; set; }
-        private int LastSelectedRow { get; set; }
+        private List<int> LastSelectedRow { get; set; } = new List<int>();
         public string TemplateName { get; set; }
         public List<Template> Templates { get; set; }
 
@@ -144,53 +144,98 @@ namespace ST.EplAddin.PlcEdit
 
         private void up_button_Click(object sender, EventArgs e)
         {
-            if (SelectedRows.Count() != 1)
-                return;
-            InsertRowInEmptyPosition(Direction.Up);
-
+            if (SelectedRows.Any())
+            {
+                InsertRowsToEmptyPositions(Direction.Up, 2);
+                dataGridView_MouseUp(this, null);
+            }
         }
 
         private void dowm_button_Click(object sender, EventArgs e)
         {
-            if (SelectedRows.Count() != 1)
-                return;
-            InsertRowInEmptyPosition(Direction.Down);
+            if (SelectedRows.Any())
+            {
+                InsertRowsToEmptyPositions(Direction.Down, 3);
+                dataGridView_MouseUp(this, null);
+            }
         }
         private void exchange_button_Click(object sender, EventArgs e)
         {
-            if (SelectedRows.Count() != 2)
-                return;
-            ExchangePositions();
-        }
-
-        private void HighlightRow(int rowIndex)
-        {
-            dataGridView.ClearSelection();
-            dataGridView.Rows[rowIndex].Selected = true;
-            LastSelectedRow = rowIndex;
-            dataGridView.Refresh();
-        }
-        private void HighlightRow(int rowIndex1, int rowIndex2)
-        {
-            dataGridView.ClearSelection();
-            dataGridView.Rows[rowIndex1].Selected = true;
-            dataGridView.Rows[rowIndex2].Selected = true;
-
-            dataGridView.Refresh();
-        }
-        private void InsertRowInEmptyPosition(Direction direction, bool jumpThroughAll = false)
-        {
-            var currentIndexRow = dataGridView.SelectedCells.Cast<DataGridViewCell>().First().RowIndex;
-            var currentRow = dataGridView.Rows[currentIndexRow];
-            var functionDefinition = currentRow.Cells["FunctionDefinition"].Value.ToString();
-            var targetIndexRow = TryGetEmptyIndexRow(currentRow.Index, direction, functionDefinition, jumpThroughAll);// задать смещение 
-            if (targetIndexRow == null)
+            if (SelectedRows.Count() == 2)
             {
-                return;
+                ExchangePositions();
+                dataGridView_MouseUp(this, null);
             }
-            AssignDataToTargetRow(currentIndexRow, targetIndexRow.Value);
-            HighlightRow(targetIndexRow.Value);
         }
+        private void upper_button_Click(object sender, EventArgs e)
+        {
+            if (SelectedRows.Any())
+            {
+                InsertRowsToEmptyPositions(Direction.Up, 2, jumpThroughAll: true);
+                dataGridView_MouseUp(this, null);
+            }
+        }
+
+        private void lower_button_Click(object sender, EventArgs e)
+        {
+
+            if (SelectedRows.Any())
+            {
+                InsertRowsToEmptyPositions(Direction.Down, 2, jumpThroughAll: true);
+                dataGridView_MouseUp(this, null);
+            }
+        }
+        private void HighlightRows(List<int> rows)
+        {
+            dataGridView.ClearSelection();
+            rows.ForEach(rowIndex => dataGridView.Rows[rowIndex].Selected = true);
+            LastSelectedRow = rows;
+            dataGridView.Refresh();
+        }
+
+        private void InsertRowsToEmptyPositions(Direction direction, int selectedRows, bool jumpThroughAll = false)
+        {
+            // var currentIndexRows = dataGridView.SelectedCells.Cast<DataGridViewCell>().Select(x => x.RowIndex).ToList();
+            var currentIndexRows = SelectedRows.Select(x => x.Index).ToList();
+            switch (direction)
+            {
+                case Direction.Up:
+                    currentIndexRows = currentIndexRows.OrderBy(x => x).ToList();
+                    break;
+                case Direction.Down:
+                    currentIndexRows = currentIndexRows.OrderByDescending(x => x).ToList();
+                    break;
+            }
+
+            List<int> rows = new();
+            foreach (var currentIndexRow in currentIndexRows)
+            {
+                var currentRow = dataGridView.Rows[currentIndexRow];
+                var functionDefinition = currentRow.Cells["FunctionDefinition"].Value.ToString();
+                var targetIndexRow = TryGetEmptyIndexRow(currentRow.Index, direction, functionDefinition, jumpThroughAll);// задать смещение 
+                if (targetIndexRow == null)
+                {
+                    return;
+                }
+                AssignDataToTargetRow(currentIndexRow, targetIndexRow.Value);
+                rows.Add(targetIndexRow.Value);
+            }
+            HighlightRows(rows);
+        }
+
+        private List<DataGridViewRow> GetRowsWithIndex(DataGridViewRowCollection rows, List<int> currentIndexRows)
+        {
+            List<DataGridViewRow> result = new();
+            foreach (DataGridViewRow row in rows)
+            {
+                if (currentIndexRows.Contains(row.Index))
+                {
+                    result.Add(row);
+                }
+            }
+            return result;
+        }
+
         private void ExchangePositions()
         {
             var rowsIndex = dataGridView.SelectedCells.Cast<DataGridViewCell>().Select(c => c.RowIndex).Distinct().ToArray();
@@ -199,7 +244,7 @@ namespace ST.EplAddin.PlcEdit
             if (currentIndexRow != targetIndexRow)
             {
                 AssignDataToTargetRow(currentIndexRow, targetIndexRow);
-                HighlightRow(currentIndexRow, targetIndexRow);
+                HighlightRows(rowsIndex.ToList());
             }
         }
 
@@ -302,12 +347,12 @@ namespace ST.EplAddin.PlcEdit
         private void Apply_button_Click(object sender, EventArgs e)
         {
             ApplyEvent?.Invoke(this, new CustomEventArgs(PlcDataModelView));
-            HighlightRow(LastSelectedRow);
+            HighlightRows(LastSelectedRow);
         }
 
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            LastSelectedRow = e.RowIndex;
+            LastSelectedRow.Add(e.RowIndex);
             if (FastInput.Checked)
             {
                 dataGridView.BeginEdit(false);
@@ -345,11 +390,16 @@ namespace ST.EplAddin.PlcEdit
 
         }
 
-        private bool IsReadyToExchange(DataGridViewRow firstSelectedRow, DataGridViewRow secondSelectedRow)
+        private bool IsEqualDefinitions(DataGridViewRow firstSelectedRow, DataGridViewRow secondSelectedRow)
         {
             var firstFunctionDefinition = firstSelectedRow?.Cells["FunctionDefinition"]?.Value?.ToString();
             var secondFunctionDefinition = secondSelectedRow?.Cells["FunctionDefinition"]?.Value?.ToString();
             return firstFunctionDefinition == secondFunctionDefinition;
+        }
+        private bool IsEqualDefinitions(List<DataGridViewRow> rows)
+        {
+            return rows.TrueForAll(z => z?.Cells["FunctionDefinition"]?.Value?.ToString()
+            == rows.FirstOrDefault()?.Cells["FunctionDefinition"]?.Value?.ToString());
         }
 
         private void properties_button_Click(object sender, EventArgs e)
@@ -480,19 +530,7 @@ namespace ST.EplAddin.PlcEdit
             }
         }
 
-        private void upper_button_Click(object sender, EventArgs e)
-        {
-            if (SelectedRows.Count() != 1)
-                return;
-            InsertRowInEmptyPosition(Direction.Up, jumpThroughAll: true);
-        }
 
-        private void lower_button_Click(object sender, EventArgs e)
-        {
-            if (SelectedRows.Count() != 1)
-                return;
-            InsertRowInEmptyPosition(Direction.Down, jumpThroughAll: true);
-        }
 
         private void dataGridView_KeyDown(object sender, KeyEventArgs e)
         {
@@ -518,46 +556,30 @@ namespace ST.EplAddin.PlcEdit
 
         private void dataGridView_MouseUp(object sender, MouseEventArgs e)
         {
+            up_button.Enabled = false;
+            dowm_button.Enabled = false;
+            upper_button.Enabled = false;
+            lower_button.Enabled = false;
             exchange_button.Enabled = false;
+
             var firstSelectedRow = SelectedRows.FirstOrDefault();
             var secondSelectedRow = SelectedRows.LastOrDefault();
-            if (SelectedRows.Count() == 2 && IsReadyToExchange(firstSelectedRow, secondSelectedRow))
+
+            var functionDefinition = firstSelectedRow?.Cells["FunctionDefinition"]?.Value?.ToString() ?? "Не определено";
+
+            var emptyUpRow = TryGetEmptyIndexRow(firstSelectedRow.Index, Direction.Up, functionDefinition);
+            var emptyDownRow = TryGetEmptyIndexRow(firstSelectedRow.Index, Direction.Down, functionDefinition);
+
+            if (SelectedRows.Count() == 2 && IsEqualDefinitions(firstSelectedRow, secondSelectedRow))
             {
                 exchange_button.Enabled = true;
             }
-            if (SelectedRows.Count() > 1 || SelectedRows.Count() == 0)
-            {
-                up_button.Enabled = false;
-                dowm_button.Enabled = false;
-                upper_button.Enabled = false;
-                lower_button.Enabled = false;
-                return;
-            }
-            if (firstSelectedRow == null)
-            {
-                return;
-            }
-            var functionDefinition = firstSelectedRow?.Cells["FunctionDefinition"]?.Value?.ToString();
-
-            var emptyUpRow = TryGetEmptyIndexRow(firstSelectedRow.Index, Direction.Up, functionDefinition);
-
-            if (!emptyUpRow.HasValue || SelectedRows.Count() != 1)
-            {
-                up_button.Enabled = false;
-                upper_button.Enabled = false;
-            }
-            else
+            if (emptyUpRow.HasValue && IsEqualDefinitions(SelectedRows.ToList()))
             {
                 up_button.Enabled = true;
                 upper_button.Enabled = true;
             }
-            var emptyDownRow = TryGetEmptyIndexRow(firstSelectedRow.Index, Direction.Down, functionDefinition);
-            if (!emptyDownRow.HasValue || SelectedRows.Count() != 1)
-            {
-                dowm_button.Enabled = false;
-                lower_button.Enabled = false;
-            }
-            else
+            if (emptyDownRow.HasValue && IsEqualDefinitions(SelectedRows.ToList()))
             {
                 dowm_button.Enabled = true;
                 lower_button.Enabled = true;
