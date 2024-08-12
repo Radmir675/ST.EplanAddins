@@ -1,4 +1,6 @@
-﻿using ST.EplAddin.PlcEdit.Forms;
+﻿using Eplan.EplApi.Base;
+using Eplan.EplApi.DataModel;
+using ST.EplAddin.PlcEdit.Forms;
 using ST.EplAddin.PlcEdit.Helpers;
 using ST.EplAddin.PlcEdit.Model;
 using System;
@@ -15,9 +17,11 @@ namespace ST.EplAddin.PlcEdit
     public partial class ManagePlcForm : Form
     {
         private readonly string pathToSaveTemplate;
+        private readonly IEnumerable<Function> allFunctions;
 
         public static event EventHandler<CustomEventArgs> ApplyEvent;
         public static event EventHandler<string> PathEvent;
+        public static event EventHandler<IEnumerable<StorableObject>> ShowSearch;
         private List<PlcDataModelView> PlcDataModelView { get; set; }
         public int InitialFormWidth { get; set; }
         private List<int> LastSelectedRow { get; set; } = new List<int>();
@@ -33,18 +37,20 @@ namespace ST.EplAddin.PlcEdit
             }
         }
 
-        public ManagePlcForm(List<PlcDataModelView> plcDataModelView, string pathToSaveTemplate)
+        public ManagePlcForm(List<PlcDataModelView> plcDataModelView, string pathToSaveTemplate, IEnumerable<Function> allFunctions)
         {
             InitializeComponent();
             PlcDataModelView = plcDataModelView;
             this.pathToSaveTemplate = pathToSaveTemplate;
+            this.allFunctions = allFunctions;
             AddData(PlcDataModelView);
             PropertiesForm.SettingsChanged += PropertiesForm_SettingsChanged;
             ImportCsvForm.ImportCsvData += ImportCsvForm_ImportCsvData;
             LoadTemplateForm.TemplateAction += LoadTemplateForm_TemplateAction;
             ComparingForm.OkEvent += ComparingForm_OkEvent;
+            TemplatesData.GetInstance();
             PathEvent?.Invoke(this, pathToSaveTemplate);
-            Templates = TemplatesData.GetInstance().GetTemplates();
+            Templates = TemplatesData.GetInstance().GetTemplates();//тут ошибка null
             TryDowmLoadTemplates(pathToSaveTemplate);
             this.dataGridView.Columns["FunctionText"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             FastInput.Checked = Properties.Settings.Default.FastInputChecked;
@@ -585,6 +591,37 @@ namespace ST.EplAddin.PlcEdit
                 lower_button.Enabled = true;
             }
         }
+
+        private void reviewPLC_button_Click(object sender, EventArgs e)
+        {
+            var overviewPLCs = allFunctions?.Where(x => x.Properties.FUNC_TYPE == 3);
+            var result = new List<Function>();
+            foreach (var overviewPLC in overviewPLCs)
+            {
+                var IsFunctionTextEmpty = string.IsNullOrEmpty(overviewPLC.Properties.FUNC_TEXT.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU));
+                var IsSymbolicAdressEmpty = string.IsNullOrEmpty(overviewPLC.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL.ToString(ISOCode.Language.L_ru_RU));
+
+                var multyLinePLC = allFunctions.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == overviewPLC.Properties.FUNC_FULLNAME && x.Properties.FUNC_TYPE.ToInt() == 1);
+                bool IsAdressEqualInDifferentRepresentations;
+                if (multyLinePLC != null)
+                {
+                    IsAdressEqualInDifferentRepresentations = multyLinePLC.Properties.FUNC_PLCADDRESS.ToString(ISOCode.Language.L_ru_RU) ==
+                      overviewPLC.Properties.FUNC_PLCADDRESS.ToString(ISOCode.Language.L_ru_RU);
+                }
+                else
+                {
+                    IsAdressEqualInDifferentRepresentations = true;
+                }
+
+                if (!IsFunctionTextEmpty || !IsSymbolicAdressEmpty || !IsAdressEqualInDifferentRepresentations)
+                {
+                    result.Add(overviewPLC);
+                }
+            }
+            MessageBox.Show(@"Результаты проверки отображены во вкладке ""Поиск"" ");
+            ShowSearch?.Invoke(this, result.Cast<StorableObject>());
+        }
+
     }
 }
 

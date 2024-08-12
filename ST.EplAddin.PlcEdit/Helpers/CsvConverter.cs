@@ -20,7 +20,7 @@ namespace ST.EplAddin.PlcEdit
 
         public List<CsvFileDataModelView> ReadFile()
         {
-            //TODO:все сломается если фаил открыт
+            //TODO: все сломается если фаил открыт
             CsvConfiguration config = GetConfig();
             List<CsvFileDataModelView> lines = new List<CsvFileDataModelView>(50);
             try

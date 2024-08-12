@@ -20,7 +20,7 @@ namespace ST.EplAddin.PlcEdit.Model
         private static void ManagePlcForm_PathEvent(object sender, string e)
         {
 
-            SavePath = e.ToString();
+            SavePath = e;
             ReadFilesFromFolder();
         }
 

@@ -164,7 +164,7 @@ namespace ST.EplAddin.PlcEdit.Forms
             targetDataGridView.DataSource = dataWithTemplate;
             CsvFileDataModelViews = dataWithTemplate;
 
-            //TODO:сделать привязку а не вот это г.
+            //TODO: сделать привязку а не вот это г.
             if (!(PlcDataModelView[0].DeviceNameShort ??= string.Empty).Equals(CsvFileDataModelViews[0].DeviceNameShort ??= string.Empty))
             {
                 MessageBox.Show("Выбран неверный модуль для импорта! Пожалуйста проверьте корректность CSV файла.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);

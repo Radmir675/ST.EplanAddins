@@ -66,6 +66,7 @@
             this.FunctionDefinition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SymbolicAdressDefined = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.reviewPLC_button = new System.Windows.Forms.Button();
             this.flowLayoutPanelUp.SuspendLayout();
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -84,6 +85,7 @@
             this.flowLayoutPanelUp.Controls.Add(this.up_button);
             this.flowLayoutPanelUp.Controls.Add(this.properties_button);
             this.flowLayoutPanelUp.Controls.Add(this.FastInput);
+            this.flowLayoutPanelUp.Controls.Add(this.reviewPLC_button);
             this.flowLayoutPanelUp.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanelUp.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanelUp.Location = new System.Drawing.Point(0, 0);
@@ -462,6 +464,16 @@
             this.FunctionType.Name = "FunctionType";
             this.FunctionType.ReadOnly = true;
             // 
+            // reviewPLC_button
+            // 
+            this.reviewPLC_button.Location = new System.Drawing.Point(761, 3);
+            this.reviewPLC_button.Name = "reviewPLC_button";
+            this.reviewPLC_button.Size = new System.Drawing.Size(75, 23);
+            this.reviewPLC_button.TabIndex = 4;
+            this.reviewPLC_button.Text = "PLC review";
+            this.reviewPLC_button.UseVisualStyleBackColor = true;
+            this.reviewPLC_button.Click += new System.EventHandler(this.reviewPLC_button_Click);
+            // 
             // ManagePlcForm
             // 
             this.AcceptButton = this.Ok_button;
@@ -527,5 +539,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FunctionDefinition;
         private System.Windows.Forms.DataGridViewTextBoxColumn SymbolicAdressDefined;
         private System.Windows.Forms.DataGridViewTextBoxColumn FunctionType;
+        private System.Windows.Forms.Button reviewPLC_button;
     }
 }
