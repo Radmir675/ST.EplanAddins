@@ -173,9 +173,39 @@ namespace ST.EplAddin.PlcEdit.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap plcMultyLine {
+            get {
+                object obj = ResourceManager.GetObject("plcMultyLine", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap plcOverview {
+            get {
+                object obj = ResourceManager.GetObject("plcOverview", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap reverse {
             get {
                 object obj = ResourceManager.GetObject("reverse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap undefined {
+            get {
+                object obj = ResourceManager.GetObject("undefined", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

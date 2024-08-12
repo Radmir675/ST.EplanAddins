@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace ST.EplAddin.PlcEdit
 {
@@ -17,6 +18,7 @@ namespace ST.EplAddin.PlcEdit
         public string TerminalId { get; set; }//id вывода ПЛК
         public string DeviceNameShort { get; set; }//A5
         public string DevicePinNumber { get; set; }//5 
+        public Image StatusImage { get; set; }//image of type
 
         public object Clone()
         {

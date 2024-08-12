@@ -2,6 +2,7 @@
 using Eplan.EplApi.DataModel.EObjects;
 using ST.EplAddin.PlcEdit.View;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace ST.EplAddin.PlcEdit
@@ -29,7 +30,9 @@ namespace ST.EplAddin.PlcEdit
                         FunctionType = (terminal.Properties.FUNC_TYPE).GetDisplayString().GetString(ISOCode.Language.L_ru_RU),
                         TerminalId = terminal.ToStringIdentifier(),
                         DeviceNameShort = terminal.Properties.FUNC_IDENTDEVICETAGWITHOUTSTRUCTURES.ToString(ISOCode.Language.L_ru_RU),
-                        DevicePinNumber = terminal.Properties.FUNC_ALLCONNECTIONDESIGNATIONS.ToString(ISOCode.Language.L_ru_RU)
+                        DevicePinNumber = terminal.Properties.FUNC_ALLCONNECTIONDESIGNATIONS.ToString(ISOCode.Language.L_ru_RU),
+                        StatusImage = GetImage(terminal)
+
                     };
                     plcDataModelView.Add(mappedPlc);
                 }
@@ -58,6 +61,17 @@ namespace ST.EplAddin.PlcEdit
 
         }
 
+        private static Image GetImage(Terminal terminal)
+        {
+            switch (terminal.Properties.FUNC_TYPE.ToInt())
+            {
+                case 1: return Properties.Resources.plcMultyLine;
+
+                case 3: return Properties.Resources.plcOverview;
+
+                default: return null;//Properties.Resources.undefined;
+            }
+        }
 
         public static List<FromCsvModelView> ConvertDataFromCsvModel(List<CsvFileDataModelView> csvFiles)
         {

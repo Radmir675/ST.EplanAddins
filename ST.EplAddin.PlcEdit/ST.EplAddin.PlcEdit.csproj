@@ -261,46 +261,51 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\down.png" />
+    <EmbeddedResource Include="Resources\down.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\up.png" />
+    <EmbeddedResource Include="Resources\up.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\reverse.png" />
+    <EmbeddedResource Include="Resources\reverse.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\eplan_up.png" />
+    <EmbeddedResource Include="Resources\eplan_up.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\eplan_down.png" />
+    <EmbeddedResource Include="Resources\eplan_down.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\eplan_down1.png" />
+    <EmbeddedResource Include="Resources\eplan_down1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\eplan_reverse.png" />
+    <EmbeddedResource Include="Resources\eplan_reverse.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\arrowUp.png" />
+    <EmbeddedResource Include="Resources\arrowUp.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\arrowDown.png" />
+    <EmbeddedResource Include="Resources\arrowDown.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\arrowDown1.png" />
+    <EmbeddedResource Include="Resources\arrowDown1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\downup.png" />
+    <EmbeddedResource Include="Resources\downup.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\image.psd.png" />
+    <EmbeddedResource Include="Resources\image.psd.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Upper.png" />
+    <EmbeddedResource Include="Resources\Upper.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Down1.png" />
+    <EmbeddedResource Include="Resources\Down1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\plcMultyLine.png" />
+    <EmbeddedResource Include="Resources\plcOverview.png" />
+    <EmbeddedResource Include="Resources\undefined.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.5.0.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.5.0.0\build\MaterialDesignThemes.targets')" />

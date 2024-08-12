@@ -48,6 +48,14 @@
             this.Cancel_button = new System.Windows.Forms.Button();
             this.flowLayoutPanelDown = new System.Windows.Forms.FlowLayoutPanel();
             this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.loadTemplate_button = new System.Windows.Forms.Button();
+            this.dropDownList = new System.Windows.Forms.ComboBox();
+            this.export_button = new System.Windows.Forms.Button();
+            this.import_button = new System.Windows.Forms.Button();
+            this.StatusImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DeviceDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Datatype = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,13 +66,6 @@
             this.FunctionDefinition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SymbolicAdressDefined = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.loadTemplate_button = new System.Windows.Forms.Button();
-            this.dropDownList = new System.Windows.Forms.ComboBox();
-            this.export_button = new System.Windows.Forms.Button();
-            this.import_button = new System.Windows.Forms.Button();
             this.flowLayoutPanelUp.SuspendLayout();
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -253,6 +254,7 @@
             this.dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.StatusImage,
             this.PLCAdress,
             this.DeviceDescription,
             this.Datatype,
@@ -295,6 +297,89 @@
             this.dataGridView.SelectionChanged += new System.EventHandler(this.dataGridView_SelectionChanged);
             this.dataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView_KeyDown);
             this.dataGridView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dataGridView_MouseUp);
+            // 
+            // plcDataModelViewBindingSource
+            // 
+            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
+            // 
+            // tableLayoutPanel
+            // 
+            this.tableLayoutPanel.AutoSize = true;
+            this.tableLayoutPanel.ColumnCount = 2;
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel.Controls.Add(this.flowLayoutPanelDown, 1, 0);
+            this.tableLayoutPanel.Controls.Add(this.flowLayoutPanel1, 0, 0);
+            this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel.Location = new System.Drawing.Point(0, 730);
+            this.tableLayoutPanel.Name = "tableLayoutPanel";
+            this.tableLayoutPanel.RowCount = 1;
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel.Size = new System.Drawing.Size(1107, 35);
+            this.tableLayoutPanel.TabIndex = 7;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.AutoSize = true;
+            this.flowLayoutPanel1.Controls.Add(this.loadTemplate_button);
+            this.flowLayoutPanel1.Controls.Add(this.dropDownList);
+            this.flowLayoutPanel1.Controls.Add(this.export_button);
+            this.flowLayoutPanel1.Controls.Add(this.import_button);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(396, 29);
+            this.flowLayoutPanel1.TabIndex = 5;
+            this.flowLayoutPanel1.WrapContents = false;
+            // 
+            // loadTemplate_button
+            // 
+            this.loadTemplate_button.Location = new System.Drawing.Point(305, 3);
+            this.loadTemplate_button.Name = "loadTemplate_button";
+            this.loadTemplate_button.Size = new System.Drawing.Size(88, 23);
+            this.loadTemplate_button.TabIndex = 5;
+            this.loadTemplate_button.Text = "Load Template";
+            this.loadTemplate_button.UseVisualStyleBackColor = true;
+            this.loadTemplate_button.Click += new System.EventHandler(this.loadTemplate_button_Click);
+            // 
+            // dropDownList
+            // 
+            this.dropDownList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.dropDownList.FormattingEnabled = true;
+            this.dropDownList.Location = new System.Drawing.Point(178, 3);
+            this.dropDownList.Name = "dropDownList";
+            this.dropDownList.Size = new System.Drawing.Size(121, 21);
+            this.dropDownList.TabIndex = 6;
+            this.dropDownList.SelectedIndexChanged += new System.EventHandler(this.dropDownList_SelectedIndexChanged);
+            // 
+            // export_button
+            // 
+            this.export_button.Location = new System.Drawing.Point(84, 3);
+            this.export_button.Name = "export_button";
+            this.export_button.Size = new System.Drawing.Size(88, 23);
+            this.export_button.TabIndex = 5;
+            this.export_button.Text = "Export";
+            this.export_button.UseVisualStyleBackColor = true;
+            this.export_button.Click += new System.EventHandler(this.export_button_Click);
+            // 
+            // import_button
+            // 
+            this.import_button.Location = new System.Drawing.Point(3, 3);
+            this.import_button.Name = "import_button";
+            this.import_button.Size = new System.Drawing.Size(75, 23);
+            this.import_button.TabIndex = 5;
+            this.import_button.Text = "Import";
+            this.import_button.UseVisualStyleBackColor = true;
+            this.import_button.Click += new System.EventHandler(this.import_button_Click);
+            // 
+            // StatusImage
+            // 
+            this.StatusImage.DataPropertyName = "StatusImage";
+            this.StatusImage.HeaderText = "Status";
+            this.StatusImage.Name = "StatusImage";
+            this.StatusImage.ReadOnly = true;
             // 
             // PLCAdress
             // 
@@ -377,82 +462,6 @@
             this.FunctionType.Name = "FunctionType";
             this.FunctionType.ReadOnly = true;
             // 
-            // plcDataModelViewBindingSource
-            // 
-            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
-            // 
-            // tableLayoutPanel
-            // 
-            this.tableLayoutPanel.AutoSize = true;
-            this.tableLayoutPanel.ColumnCount = 2;
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.Controls.Add(this.flowLayoutPanelDown, 1, 0);
-            this.tableLayoutPanel.Controls.Add(this.flowLayoutPanel1, 0, 0);
-            this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel.Location = new System.Drawing.Point(0, 730);
-            this.tableLayoutPanel.Name = "tableLayoutPanel";
-            this.tableLayoutPanel.RowCount = 1;
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(1107, 35);
-            this.tableLayoutPanel.TabIndex = 7;
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.Controls.Add(this.loadTemplate_button);
-            this.flowLayoutPanel1.Controls.Add(this.dropDownList);
-            this.flowLayoutPanel1.Controls.Add(this.export_button);
-            this.flowLayoutPanel1.Controls.Add(this.import_button);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(396, 29);
-            this.flowLayoutPanel1.TabIndex = 5;
-            this.flowLayoutPanel1.WrapContents = false;
-            // 
-            // loadTemplate_button
-            // 
-            this.loadTemplate_button.Location = new System.Drawing.Point(305, 3);
-            this.loadTemplate_button.Name = "loadTemplate_button";
-            this.loadTemplate_button.Size = new System.Drawing.Size(88, 23);
-            this.loadTemplate_button.TabIndex = 5;
-            this.loadTemplate_button.Text = "Load Template";
-            this.loadTemplate_button.UseVisualStyleBackColor = true;
-            this.loadTemplate_button.Click += new System.EventHandler(this.loadTemplate_button_Click);
-            // 
-            // dropDownList
-            // 
-            this.dropDownList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.dropDownList.FormattingEnabled = true;
-            this.dropDownList.Location = new System.Drawing.Point(178, 3);
-            this.dropDownList.Name = "dropDownList";
-            this.dropDownList.Size = new System.Drawing.Size(121, 21);
-            this.dropDownList.TabIndex = 6;
-            this.dropDownList.SelectedIndexChanged += new System.EventHandler(this.dropDownList_SelectedIndexChanged);
-            // 
-            // export_button
-            // 
-            this.export_button.Location = new System.Drawing.Point(84, 3);
-            this.export_button.Name = "export_button";
-            this.export_button.Size = new System.Drawing.Size(88, 23);
-            this.export_button.TabIndex = 5;
-            this.export_button.Text = "Export";
-            this.export_button.UseVisualStyleBackColor = true;
-            this.export_button.Click += new System.EventHandler(this.export_button_Click);
-            // 
-            // import_button
-            // 
-            this.import_button.Location = new System.Drawing.Point(3, 3);
-            this.import_button.Name = "import_button";
-            this.import_button.Size = new System.Drawing.Size(75, 23);
-            this.import_button.TabIndex = 5;
-            this.import_button.Text = "Import";
-            this.import_button.UseVisualStyleBackColor = true;
-            this.import_button.Click += new System.EventHandler(this.import_button_Click);
-            // 
             // ManagePlcForm
             // 
             this.AcceptButton = this.Ok_button;
@@ -506,6 +515,8 @@
         private System.Windows.Forms.ComboBox dropDownList;
         private System.Windows.Forms.Button upper_button;
         private System.Windows.Forms.Button lower_button;
+        private System.Windows.Forms.CheckBox FastInput;
+        private System.Windows.Forms.DataGridViewImageColumn StatusImage;
         private System.Windows.Forms.DataGridViewTextBoxColumn PLCAdress;
         private System.Windows.Forms.DataGridViewTextBoxColumn DeviceDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn Datatype;
@@ -516,6 +527,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FunctionDefinition;
         private System.Windows.Forms.DataGridViewTextBoxColumn SymbolicAdressDefined;
         private System.Windows.Forms.DataGridViewTextBoxColumn FunctionType;
-        private System.Windows.Forms.CheckBox FastInput;
     }
 }
