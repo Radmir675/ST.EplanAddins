@@ -180,10 +180,17 @@
     <Compile Include="Forms\ImportCsvForm.Designer.cs">
       <DependentUpon>ImportCsvForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LoggerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LoggerForm.Designer.cs">
+      <DependentUpon>LoggerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\ComparisonState.cs" />
     <Compile Include="Helpers\CsvConverter.cs" />
     <Compile Include="Helpers\ExchangeMode.cs" />
     <Compile Include="Helpers\Linq.cs" />
+    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\PathDialog.cs" />
     <Compile Include="ModelView\CompareList.cs" />
     <Compile Include="ModelView\CsvFileDataModelView.cs" />
@@ -238,6 +245,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ImportCsvForm.resx">
       <DependentUpon>ImportCsvForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LoggerForm.resx">
+      <DependentUpon>LoggerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ManagePlcForm.resx">
       <DependentUpon>ManagePlcForm.cs</DependentUpon>

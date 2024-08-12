@@ -594,12 +594,26 @@ namespace ST.EplAddin.PlcEdit
 
         private void reviewPLC_button_Click(object sender, EventArgs e)
         {
+            Logger logger = new();
             var overviewPLCs = allFunctions?.Where(x => x.Properties.FUNC_TYPE == 3);
             var result = new List<Function>();
             foreach (var overviewPLC in overviewPLCs)
             {
-                var IsFunctionTextEmpty = string.IsNullOrEmpty(overviewPLC.Properties.FUNC_TEXT.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU));
-                var IsSymbolicAdressEmpty = string.IsNullOrEmpty(overviewPLC.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL.ToString(ISOCode.Language.L_ru_RU));
+                var functiomText = overviewPLC.Properties.FUNC_TEXT.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                var IsFunctionTextEmpty = string.IsNullOrEmpty(functiomText);
+                if (!IsFunctionTextEmpty)
+                {
+                    var text = $"Данная функция {overviewPLC.Name} содержит функциональный текст на обзоре ПЛК";
+                    logger.Log(text);
+                }
+
+                var symbolicAdress = overviewPLC.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL.ToString(ISOCode.Language.L_ru_RU);
+                var IsSymbolicAdressEmpty = string.IsNullOrEmpty(symbolicAdress);
+                if (!IsSymbolicAdressEmpty)
+                {
+                    var text = $"Данная функция {overviewPLC.Name} содержит символический адрес на обзоре ПЛК";
+                    logger.Log(text);
+                }
 
                 var multyLinePLC = allFunctions.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == overviewPLC.Properties.FUNC_FULLNAME && x.Properties.FUNC_TYPE.ToInt() == 1);
                 bool IsAdressEqualInDifferentRepresentations;
@@ -612,14 +626,25 @@ namespace ST.EplAddin.PlcEdit
                 {
                     IsAdressEqualInDifferentRepresentations = true;
                 }
-
-                if (!IsFunctionTextEmpty || !IsSymbolicAdressEmpty || !IsAdressEqualInDifferentRepresentations)
+                if (!IsAdressEqualInDifferentRepresentations)
                 {
-                    result.Add(overviewPLC);
+                    var text = $"Адрес на функции {overviewPLC.Name} отличается на разных представлениях";
+                    logger.Log(text);
                 }
+                //    if (!IsFunctionTextEmpty || !IsSymbolicAdressEmpty || !IsAdressEqualInDifferentRepresentations)
+                //    {
+                //        result.Add(overviewPLC);
+                //    }
+                //}
+                //MessageBox.Show(@"Результаты проверки отображены во вкладке ""Поиск"" ");
+                //ShowSearch?.Invoke(this, result.Cast<StorableObject>());
             }
-            MessageBox.Show(@"Результаты проверки отображены во вкладке ""Поиск"" ");
-            ShowSearch?.Invoke(this, result.Cast<StorableObject>());
+            var loggerResult = logger.GetMessages();
+            if (loggerResult.Any())
+            {
+                LoggerForm loggerForm = new LoggerForm(loggerResult);
+                loggerForm.Show();
+            }
         }
 
     }
