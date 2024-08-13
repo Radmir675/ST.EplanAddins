@@ -197,9 +197,18 @@ namespace ST.EplAddin.PlcEdit
         private void HighlightRows(List<int> rows)
         {
             dataGridView.ClearSelection();
-            rows.ForEach(rowIndex => dataGridView.Rows[rowIndex].Selected = true);
-            LastSelectedRow = rows;
-            dataGridView.Refresh();
+            try
+            {
+                rows.ForEach(rowIndex => dataGridView.Rows[rowIndex].Selected = true);
+                LastSelectedRow = rows;
+                dataGridView.Refresh();
+
+            }
+            catch (Exception e)
+            {
+
+                MessageBox.Show(e.Message);
+            }
         }
 
         private void InsertRowsToEmptyPositions(Direction direction, int selectedRows, bool jumpThroughAll = false)

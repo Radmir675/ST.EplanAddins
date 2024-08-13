@@ -145,18 +145,18 @@ namespace ST.EplAddin.PlcEdit
             foreach (var item in newDataPlc)
             {
                 var multyLineTerminal = plcTerminals.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.DT && x.Properties.FUNC_TYPE.ToInt() == 1);
-                //var overviewTerminal = plcTerminals.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.DT && x.Properties.FUNC_TYPE.ToInt() == 3);
+                var overviewTerminal = plcTerminals.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.DT && x.Properties.FUNC_TYPE.ToInt() == 3);
 
                 if (multyLineTerminal != null)
                 {
                     multyLineTerminal.Properties.FUNC_TEXT = item.FunctionText;
-                    //multyLineTerminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
+                    multyLineTerminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
                     multyLineTerminal.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL = item.SymbolicAdress;
                 }
-                //if (overviewTerminal != null)
-                //{
-                //    overviewTerminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
-                //}
+                if (overviewTerminal != null)
+                {
+                    overviewTerminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
+                }
             }
         }
 
