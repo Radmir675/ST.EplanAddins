@@ -261,8 +261,8 @@ namespace ST.EplAddin.PlcEdit.Forms
                 }
             }
             dataFromCSVFile.Remove(dataFromCSVFile.Last());
-            dataFromCSVFile[template.IndexFirstRow - 1].SymbolicAdress = $"IDW_{eplanDataInCSVFormat[0].DeviceNameShort}";
-            dataFromCSVFile.Last().SymbolicAdress = $"xModError_{eplanDataInCSVFormat[0].DeviceNameShort}";
+            dataFromCSVFile[template.IndexFirstRow - 1].SymbolicAdress = $"{eplanDataInCSVFormat[0].DeviceNameShort}";
+            dataFromCSVFile.Last().SymbolicAdress = $"xHwError_{eplanDataInCSVFormat[0].DeviceNameShort}";
 
             var dataToExport = dataFromCSVFile;//тут должна быть замена в соотвествии с шаблоном и выбранными ячейками
             return dataToExport;
