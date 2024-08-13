@@ -141,7 +141,7 @@ namespace ST.EplAddin.PlcEdit
                 {
                     multyLineTerminal.Properties.FUNC_TEXT = item.FunctionText;
                     multyLineTerminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
-                    multyLineTerminal.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL = item.SymbolicAdress;
+                    // multyLineTerminal.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL = item.SymbolicAdress;
                 }
                 if (overviewTerminal != null)
                 {

@@ -50,17 +50,13 @@ namespace ST.EplAddin.PlcEdit
             ComparingForm.OkEvent += ComparingForm_OkEvent;
             TemplatesData.GetInstance();
             PathEvent?.Invoke(this, pathToSaveTemplate);
-            Templates = TemplatesData.GetInstance().GetTemplates();//тут ошибка null
+            Templates = TemplatesData.GetInstance().GetTemplates();
             TryDowmLoadTemplates(pathToSaveTemplate);
             this.dataGridView.Columns["FunctionText"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             FastInput.Checked = Properties.Settings.Default.FastInputChecked;
+
         }
-        public ManagePlcForm(List<PlcDataModelView> plcDataModelView)
-        {
-            InitializeComponent();
-            PlcDataModelView = plcDataModelView;
-            AddData(PlcDataModelView);
-        }
+
         private void ComparingForm_OkEvent(object sender, EventArgs e)
         {
             dataGridView.EndEdit();
@@ -535,9 +531,6 @@ namespace ST.EplAddin.PlcEdit
                     dropDownList.Items.Add(template.FileName);
             }
         }
-
-
-
         private void dataGridView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.V && e.Control)
@@ -643,8 +636,14 @@ namespace ST.EplAddin.PlcEdit
             if (loggerResult.Any())
             {
                 LoggerForm loggerForm = new LoggerForm(loggerResult);
-                loggerForm.Show();
+                loggerForm.ShowDialog();
+                // loggerForm.FormClosed += (sender, e) =>;
             }
+        }
+        private void ManagePlcForm_Shown(object sender, EventArgs e)
+        {
+
+            reviewPLC_button_Click(this, new EventArgs());
         }
 
     }

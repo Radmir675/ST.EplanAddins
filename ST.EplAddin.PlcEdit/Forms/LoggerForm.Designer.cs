@@ -40,7 +40,7 @@
             this.richTextBox.TabIndex = 0;
             this.richTextBox.Text = "";
             // 
-            // Logger
+            // LoggerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -48,6 +48,8 @@
             this.Controls.Add(this.richTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "LoggerForm";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "LoggerForm";
             this.ResumeLayout(false);
 
