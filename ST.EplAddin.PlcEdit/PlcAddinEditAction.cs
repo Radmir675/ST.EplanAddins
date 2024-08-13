@@ -30,6 +30,11 @@ namespace ST.EplAddin.PlcEdit
             Ordinal = 99;
             return true;
         }
+        public PlcAddinEditAction()
+        {
+            ManagePlcForm.ApplyEvent += ManagePlcForm_ApplyEvent;
+            ManagePlcForm.ShowSearch += (sender, args) => ShowSearch(args);
+        }
         public void GetActionProperties(ref ActionProperties actionProperties) { }
 
 
@@ -92,8 +97,7 @@ namespace ST.EplAddin.PlcEdit
 
             ManagePlcForm = new ManagePlcForm(plcDataModelView, GetPathToSaveTemplate(CurrentProject), FunctionsInProgram);
             ManagePlcForm.Show(eplanOwner);
-            ManagePlcForm.ApplyEvent += ManagePlcForm_ApplyEvent;
-            ManagePlcForm.ShowSearch += (sender, args) => ShowSearch(args);
+
         }
 
 
@@ -101,7 +105,6 @@ namespace ST.EplAddin.PlcEdit
         private void ManagePlcForm_ApplyEvent(object sender, CustomEventArgs e)
         {
             GetPLCData();
-
             var newDataPlc = e.PlcDataModelView; //тут получаем данные из формы
             var correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
             //correlationTable.Clear();
@@ -112,7 +115,6 @@ namespace ST.EplAddin.PlcEdit
                 correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
                 //  correlationTable.RemoveAt(0);
             }
-
             RewritePlcProperties(PlcTerminals, newDataPlc);
             UpdateFormData();
         }
