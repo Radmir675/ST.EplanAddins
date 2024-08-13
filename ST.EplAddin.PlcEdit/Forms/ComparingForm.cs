@@ -153,22 +153,25 @@ namespace ST.EplAddin.PlcEdit.Forms
             }
             CsvConverter csvConverter = new CsvConverter(path);
             var dataFromFile = csvConverter.ReadFile();
-            CsvFileDataModelViews = Mapper.ConvertDataToCsvCompare(dataFromFile);
-            var dataWithTemplate = GetDataWithTemplateBorders(CsvFileDataModelViews);
-            var isEqualDataRow = PlcDataModelView.Count == dataWithTemplate?.Count ? true : false;
-            if (!isEqualDataRow)
+            if (dataFromFile.Any())
             {
-                MessageBox.Show("Данные для сравнения не совпадают по числу строк.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                CsvFileDataModelViews = Mapper.ConvertDataToCsvCompare(dataFromFile);
+                var dataWithTemplate = GetDataWithTemplateBorders(CsvFileDataModelViews);
+                var isEqualDataRow = PlcDataModelView.Count == dataWithTemplate?.Count ? true : false;
+                if (!isEqualDataRow)
+                {
+                    MessageBox.Show("Данные для сравнения не совпадают по числу строк.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
-            targetDataGridView.DataSource = dataWithTemplate;
-            CsvFileDataModelViews = dataWithTemplate;
-            IsFileUploaded = true;
-            //TODO: сделать привязку а не вот это г.
-            if (!(PlcDataModelView[0].DeviceNameShort ??= string.Empty).Equals(CsvFileDataModelViews[0].DeviceNameShort ??= string.Empty))
-            {
-                MessageBox.Show("Выбран неверный модуль для импорта! Пожалуйста проверьте корректность CSV файла.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                targetDataGridView.DataSource = dataWithTemplate;
+                CsvFileDataModelViews = dataWithTemplate;
+                IsFileUploaded = true;
+                //TODO: сделать привязку а не вот это г.
+                if (!(PlcDataModelView[0].DeviceNameShort ??= string.Empty).Equals(CsvFileDataModelViews[0].DeviceNameShort ??= string.Empty))
+                {
+                    MessageBox.Show("Выбран неверный модуль для импорта! Пожалуйста проверьте корректность CSV файла.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 

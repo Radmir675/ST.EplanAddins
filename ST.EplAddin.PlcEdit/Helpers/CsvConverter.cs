@@ -29,7 +29,6 @@ namespace ST.EplAddin.PlcEdit
                 using (var csvReader = new CsvReader(reader, config))
                 {
                     var encoding = reader.CurrentEncoding;
-                    // csvReader.Read();
                     while (csvReader.Read())
                     {
                         var module = new CsvFileDataModelView()
