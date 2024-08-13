@@ -619,6 +619,8 @@ namespace ST.EplAddin.PlcEdit
             var result = new List<Function>();
             foreach (var overviewPLC in overviewPLCs)
             {
+                var multyLinePLC = allFunctions.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == overviewPLC.Properties.FUNC_FULLNAME && x.Properties.FUNC_TYPE.ToInt() == 1);
+
                 var functiomText = overviewPLC.Properties.FUNC_TEXT.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
                 var IsFunctionTextEmpty = string.IsNullOrEmpty(functiomText);
                 if (!IsFunctionTextEmpty)
@@ -629,13 +631,12 @@ namespace ST.EplAddin.PlcEdit
 
                 var symbolicAdress = overviewPLC.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL.ToString(ISOCode.Language.L_ru_RU);
                 var IsSymbolicAdressEmpty = string.IsNullOrEmpty(symbolicAdress);
-                if (!IsSymbolicAdressEmpty)
-                {
-                    var text = $"Данная функция {overviewPLC.Name} содержит символический адрес на обзоре ПЛК";
-                    logger.Log(text);
-                }
+                //if (!IsSymbolicAdressEmpty)
+                //{
+                //    var text = $"Данная функция {overviewPLC.Name} содержит символический адрес на обзоре ПЛК";
+                //    logger.Log(text);
+                //}
 
-                var multyLinePLC = allFunctions.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == overviewPLC.Properties.FUNC_FULLNAME && x.Properties.FUNC_TYPE.ToInt() == 1);
                 bool IsAdressEqualInDifferentRepresentations;
                 if (multyLinePLC != null)
                 {

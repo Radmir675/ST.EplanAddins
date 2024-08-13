@@ -153,9 +153,10 @@ namespace ST.EplAddin.PlcEdit
                     multyLineTerminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
                     multyLineTerminal.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL = item.SymbolicAdress;
                 }
-                if (overviewTerminal != null)
+                if (overviewTerminal != null)//тут я разрешил перезапись обзора
                 {
                     overviewTerminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
+                    overviewTerminal.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL = item.SymbolicAdress;
                 }
             }
         }

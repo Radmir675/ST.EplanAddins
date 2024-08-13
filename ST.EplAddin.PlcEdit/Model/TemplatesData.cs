@@ -53,7 +53,7 @@ namespace ST.EplAddin.PlcEdit.Model
         }
         public Template TryGetTemplateByName(string selectedTemplateName)
         {
-            var result = Templates.SingleOrDefault(x => x.FileName == selectedTemplateName);
+            var result = Templates.FirstOrDefault(x => x.FileName == selectedTemplateName);
             return result;
         }
         public string TryGetTemplatePath(string templateName)

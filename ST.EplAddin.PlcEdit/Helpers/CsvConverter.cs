@@ -20,7 +20,6 @@ namespace ST.EplAddin.PlcEdit
 
         public List<CsvFileDataModelView> ReadFile()
         {
-            //TODO: все сломается если фаил открыт
             CsvConfiguration config = GetConfig();
             List<CsvFileDataModelView> lines = new List<CsvFileDataModelView>(50);
             try
@@ -35,6 +34,7 @@ namespace ST.EplAddin.PlcEdit
                         {
                             SymbolicAdress = csvReader.GetField(0),
                             BitNumber = csvReader.GetField(1),
+                            Unit = csvReader.GetField(2),
                             FunctionText = csvReader?.GetField(3),
                             PLCAdress = csvReader?.GetField(4),
                             DeviceNameShort = csvReader.GetField(5),
