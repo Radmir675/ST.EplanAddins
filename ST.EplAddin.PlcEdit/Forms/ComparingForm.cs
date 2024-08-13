@@ -17,6 +17,7 @@ namespace ST.EplAddin.PlcEdit.Forms
         public ExchangeMode SelectedMode { get; }
         public List<CsvFileDataModelViews> CsvFileDataModelViews { get; set; }
         public static event EventHandler OkEvent;
+        private bool IsFileUploaded = false;
 
         /// <summary>
         /// Использовать для импорта и экспорта (при экспорте csvFileDataModelViews может быть null)
@@ -163,7 +164,7 @@ namespace ST.EplAddin.PlcEdit.Forms
 
             targetDataGridView.DataSource = dataWithTemplate;
             CsvFileDataModelViews = dataWithTemplate;
-
+            IsFileUploaded = true;
             //TODO: сделать привязку а не вот это г.
             if (!(PlcDataModelView[0].DeviceNameShort ??= string.Empty).Equals(CsvFileDataModelViews[0].DeviceNameShort ??= string.Empty))
             {
@@ -187,35 +188,43 @@ namespace ST.EplAddin.PlcEdit.Forms
 
         private void ok_button_Click(object sender, EventArgs e)
         {
-            switch (SelectedMode)
+            if (IsFileUploaded == false && SelectedMode == ExchangeMode.Import)
             {
-                case ExchangeMode.Import:
-                    var checkedRows = CsvFileDataModelViews.Where(x => x.IsChecked);
-                    foreach (var checkedRow in checkedRows)
-                    {
-                        var elementPosition = CsvFileDataModelViews.IndexOf(checkedRow);
-                        ReWriteProperties(elementPosition, checkedRow);
-                    }
-                    Close();
-                    OkEvent?.Invoke(this, EventArgs.Empty);
-                    break;
+                MessageBox.Show("Пожалуйста выберите фаил для импорта", "InFormation", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                case ExchangeMode.Export:
-                    var path = PathDialog.TryGetSavePath();
-                    if (path == null)
-                    {
-                        return;
-                    }
-                    CsvConverter csvConverter = new CsvConverter(path);
-                    var dataToExport = GetDataToExport();
-                    if (dataToExport == null)
-                    {
+            }
+            else
+            {
+                switch (SelectedMode)
+                {
+                    case ExchangeMode.Import:
+                        var checkedRows = CsvFileDataModelViews.Where(x => x.IsChecked);
+                        foreach (var checkedRow in checkedRows)
+                        {
+                            var elementPosition = CsvFileDataModelViews.IndexOf(checkedRow);
+                            ReWriteProperties(elementPosition, checkedRow);
+                        }
+                        Close();
+                        OkEvent?.Invoke(this, EventArgs.Empty);
+                        break;
+
+                    case ExchangeMode.Export:
+                        var path = PathDialog.TryGetSavePath();
+                        if (path == null)
+                        {
+                            return;
+                        }
+                        CsvConverter csvConverter = new CsvConverter(path);
+                        var dataToExport = GetDataToExport();
+                        if (dataToExport == null)
+                        {
+                            Close();
+                            break;
+                        }
+                        csvConverter.SaveFile(dataToExport);
                         Close();
                         break;
-                    }
-                    csvConverter.SaveFile(dataToExport);
-                    Close();
-                    break;
+                }
             }
         }
 

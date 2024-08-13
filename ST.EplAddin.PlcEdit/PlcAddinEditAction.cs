@@ -107,13 +107,21 @@ namespace ST.EplAddin.PlcEdit
             GetPLCData();
             var newDataPlc = e.PlcDataModelView; //тут получаем данные из формы
             var correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
-            //correlationTable.Clear();
             while (correlationTable.Any())
             {
-                AsssignNewFunctions(FunctionsInProgram, correlationTable.FirstOrDefault());
-                GetPLCData();
-                correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
-                //  correlationTable.RemoveAt(0);
+                try
+                {
+                    AsssignNewFunctions(FunctionsInProgram, correlationTable.FirstOrDefault());
+                    GetPLCData();
+                    correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
+
+                }
+                catch (Exception ee)
+                {
+                    MessageBox.Show(ee.Message);
+                    break;
+
+                }
             }
             RewritePlcProperties(PlcTerminals, newDataPlc);
             UpdateFormData();
@@ -137,18 +145,18 @@ namespace ST.EplAddin.PlcEdit
             foreach (var item in newDataPlc)
             {
                 var multyLineTerminal = plcTerminals.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.DT && x.Properties.FUNC_TYPE.ToInt() == 1);
-                var overviewTerminal = plcTerminals.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.DT && x.Properties.FUNC_TYPE.ToInt() == 3);
+                //var overviewTerminal = plcTerminals.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.DT && x.Properties.FUNC_TYPE.ToInt() == 3);
 
                 if (multyLineTerminal != null)
                 {
                     multyLineTerminal.Properties.FUNC_TEXT = item.FunctionText;
-                    multyLineTerminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
-                    // multyLineTerminal.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL = item.SymbolicAdress;
+                    //multyLineTerminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
+                    multyLineTerminal.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL = item.SymbolicAdress;
                 }
-                if (overviewTerminal != null)
-                {
-                    overviewTerminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
-                }
+                //if (overviewTerminal != null)
+                //{
+                //    overviewTerminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
+                //}
             }
         }
 
@@ -241,35 +249,43 @@ namespace ST.EplAddin.PlcEdit
 
         private void ReverseOutputPins(List<Function> sourceFunction, List<Function> targetFunction)
         {
-            var allCrossreferencedFunctions = sourceFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>() ?? targetFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>();
-
-            var sourceOverviewFunction = sourceFunction.FirstOrDefault(z => z.Properties.FUNC_TYPE == 3
-            && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == sourceFunction.FirstOrDefault()?.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
-
-            var targetOverviewFunction = allCrossreferencedFunctions.FirstOrDefault(z => z.Properties.FUNC_TYPE == 3
-            && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == targetFunction.FirstOrDefault()?.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
-
-            var targetMainFunction = targetFunction.FirstOrDefault(x => x.Properties.FUNC_TYPE == 1);
-            var sourceMainFunction = sourceFunction.FirstOrDefault(x => x.Properties.FUNC_TYPE == 1);
-
-
-            if (targetMainFunction?.Properties.FUNC_TYPE == 1 && sourceMainFunction?.Properties.FUNC_TYPE == 1)
+            try
             {
-                sourceOverviewFunction.Assign(targetMainFunction);
-                targetOverviewFunction.Assign(sourceMainFunction);
+                var allCrossreferencedFunctions = sourceFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>() ?? targetFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>();
+
+                var sourceOverviewFunction = allCrossreferencedFunctions.FirstOrDefault(z => z.Properties.FUNC_TYPE == 3
+                && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == sourceFunction.FirstOrDefault()?.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
+
+                var targetOverviewFunction = allCrossreferencedFunctions.FirstOrDefault(z => z.Properties.FUNC_TYPE == 3
+                && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == targetFunction.FirstOrDefault()?.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
+
+                var targetMainFunction = targetFunction.FirstOrDefault(x => x.Properties.FUNC_TYPE == 1);
+                var sourceMainFunction = sourceFunction.FirstOrDefault(x => x.Properties.FUNC_TYPE == 1);
+
+
+                if (targetMainFunction?.Properties.FUNC_TYPE == 1 && sourceMainFunction?.Properties.FUNC_TYPE == 1)
+                {
+                    sourceOverviewFunction.Assign(targetMainFunction);
+                    targetOverviewFunction.Assign(sourceMainFunction);
+                }
+                else if (sourceMainFunction?.Properties.FUNC_TYPE == 1)
+                {
+                    targetOverviewFunction?.Assign(sourceMainFunction);
+                }
+                else if (targetMainFunction?.Properties.FUNC_TYPE == 1)
+                {
+                    sourceOverviewFunction.Assign(targetMainFunction);
+                }
+                else
+                {
+                    MessageBox.Show("Упс... Что-то пошло не так.");
+                    return;
+                }
             }
-            else if (sourceMainFunction?.Properties.FUNC_TYPE == 1)
+            catch (Exception e)
             {
-                targetOverviewFunction?.Assign(sourceMainFunction);
-            }
-            else if (targetMainFunction?.Properties.FUNC_TYPE == 1)
-            {
-                sourceOverviewFunction.Assign(targetMainFunction);
-            }
-            else
-            {
-                MessageBox.Show("Упс... Что-то пошло не так.");
-                return;
+
+                MessageBox.Show(e.Message);
             }
         }
 

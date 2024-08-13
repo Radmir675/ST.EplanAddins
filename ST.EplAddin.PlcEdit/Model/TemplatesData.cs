@@ -19,7 +19,6 @@ namespace ST.EplAddin.PlcEdit.Model
         }
         private static void ManagePlcForm_PathEvent(object sender, string e)
         {
-
             SavePath = e;
             ReadFilesFromFolder();
         }
@@ -33,7 +32,7 @@ namespace ST.EplAddin.PlcEdit.Model
         }
         public void Add(Template template)
         {
-            GetInstance().Add(template);
+            Templates.Add(template);
         }
         public List<Template> GetTemplates()
         {

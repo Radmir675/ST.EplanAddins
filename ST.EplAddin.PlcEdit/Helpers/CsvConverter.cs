@@ -65,7 +65,7 @@ namespace ST.EplAddin.PlcEdit
                     csvWriter.NextRecord();
                 }
             }
-            MessageBox.Show("Files are recorded!", "Mesage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Files are recorded!", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public (int, int) ReadAdditionalInformation()
