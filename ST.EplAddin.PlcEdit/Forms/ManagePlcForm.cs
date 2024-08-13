@@ -36,6 +36,13 @@ namespace ST.EplAddin.PlcEdit
                                        .Select(c => c.OwningRow).Distinct().ToArray();
             }
         }
+        public DataGridViewCell[] SelectedCells
+        {
+            get
+            {
+                return dataGridView.SelectedCells.Cast<DataGridViewCell>().ToArray();
+            }
+        }
 
         public ManagePlcForm(List<PlcDataModelView> plcDataModelView, string pathToSaveTemplate, IEnumerable<Function> allFunctions)
         {
@@ -538,6 +545,17 @@ namespace ST.EplAddin.PlcEdit
                 {
                     item.Value = Clipboard.GetText();
                 }
+            if (e.KeyCode == Keys.Delete)
+            {
+                foreach (var cell in SelectedCells)
+                {
+                    if (cell.OwningColumn.ReadOnly == false)
+                    {
+                        cell.Value = string.Empty;
+                    }
+                }
+
+            }
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
@@ -642,7 +660,6 @@ namespace ST.EplAddin.PlcEdit
         }
         private void ManagePlcForm_Shown(object sender, EventArgs e)
         {
-
             reviewPLC_button_Click(this, new EventArgs());
         }
 
