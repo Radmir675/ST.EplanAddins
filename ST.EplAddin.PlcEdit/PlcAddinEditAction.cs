@@ -107,24 +107,27 @@ namespace ST.EplAddin.PlcEdit
             GetPLCData();
             var newDataPlc = e.PlcDataModelView; //тут получаем данные из формы
             var correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
-            while (correlationTable.Any())
+
+            using (UndoStep undo = new UndoManager().CreateUndoStep())
             {
-                try
+                while (correlationTable.Any())
                 {
-                    AsssignNewFunctions(FunctionsInProgram, correlationTable.FirstOrDefault());
-                    GetPLCData();
-                    correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
-
+                    try
+                    {
+                        AsssignNewFunctions(FunctionsInProgram, correlationTable.FirstOrDefault());
+                        GetPLCData();
+                        correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
+                    }
+                    catch (Exception ee)
+                    {
+                        MessageBox.Show(ee.Message);
+                        break;
+                    }
                 }
-                catch (Exception ee)
-                {
-                    MessageBox.Show(ee.Message);
-                    break;
-
-                }
+                RewritePlcProperties(PlcTerminals, newDataPlc);
+                UpdateFormData();
+                undo.SetUndoDescription($"Удалить присвоение");
             }
-            RewritePlcProperties(PlcTerminals, newDataPlc);
-            UpdateFormData();
         }
 
         private void GetPLCData()
