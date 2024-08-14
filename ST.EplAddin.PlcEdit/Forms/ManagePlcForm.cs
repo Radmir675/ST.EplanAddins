@@ -556,7 +556,10 @@ namespace ST.EplAddin.PlcEdit
             if (e.KeyCode == Keys.V && e.Control)
                 foreach (DataGridViewCell item in dataGridView.SelectedCells)
                 {
-                    item.Value = Clipboard.GetText();
+                    if (item.OwningColumn.ReadOnly == false)
+                    {
+                        item.Value = Clipboard.GetText();
+                    }
                 }
             if (e.KeyCode == Keys.Delete)
             {
