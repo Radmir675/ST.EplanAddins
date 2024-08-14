@@ -97,6 +97,8 @@ namespace ST.EplAddin.PlcEdit
             InitialFormWidth = GetCurrentColumnsHeaderWidth() + 58;
             ChangeColorDisableColumns();
             GetDefaultColumnSetting();
+            UpdateButtonsState();
+
         }
 
         private void PropertiesForm_SettingsChanged(object sender, List<string> columnsToView)
@@ -371,6 +373,7 @@ namespace ST.EplAddin.PlcEdit
 
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            LastSelectedRow.Clear();
             LastSelectedRow.Add(e.RowIndex);
             if (FastInput.Checked)
             {
@@ -582,6 +585,12 @@ namespace ST.EplAddin.PlcEdit
         }
 
         private void dataGridView_MouseUp(object sender, MouseEventArgs e)
+        {
+            UpdateButtonsState();
+            LastSelectedRow = SelectedRows.Select(x => x.Index).ToList();
+        }
+
+        private void UpdateButtonsState()
         {
             up_button.Enabled = false;
             dowm_button.Enabled = false;

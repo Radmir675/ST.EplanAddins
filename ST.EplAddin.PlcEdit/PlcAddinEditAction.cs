@@ -23,6 +23,7 @@ namespace ST.EplAddin.PlcEdit
         public Project CurrentProject { get; set; }
         private IEnumerable<Function> FunctionsInProgram { get; set; }
         private Terminal[] PlcTerminals { get; set; }
+        public string DeviceTag { get; set; }
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
             Name = actionName;
@@ -59,12 +60,12 @@ namespace ST.EplAddin.PlcEdit
             functionsFilter.Category = Function.Enums.Category.PLCTerminal;
             if (selectedPlcdata.Length == 1)
             {
-                string fullDeviceTag = GetPlcFullName(selectedPlcdata);
-                if (fullDeviceTag != string.Empty)
+                DeviceTag = GetPlcFullName(selectedPlcdata);
+                if (DeviceTag != string.Empty)
                 {
                     selectedPlcdata = new DMObjectsFinder(CurrentProject)
                         .GetTerminals(functionsFilter)
-                        .Where(x => x.Properties.FUNC_FULLDEVICETAG.ToString() == fullDeviceTag)
+                        .Where(x => x.Properties.FUNC_FULLDEVICETAG.ToString() == DeviceTag)
                         .ToArray();
                 }
             }
@@ -110,23 +111,27 @@ namespace ST.EplAddin.PlcEdit
 
             using (UndoStep undo = new UndoManager().CreateUndoStep())
             {
-                while (correlationTable.Any())
+                //  undo.CloseOpenUndo();
+                try
                 {
-                    try
+                    while (correlationTable.Any())
                     {
                         AsssignNewFunctions(FunctionsInProgram, correlationTable.FirstOrDefault());
                         GetPLCData();
                         correlationTable = GetСorrelationTable(InitialPlcData, newDataPlc);
                     }
-                    catch (Exception ee)
-                    {
-                        MessageBox.Show(ee.Message);
-                        break;
-                    }
+                }
+                catch (Exception ee)
+                {
+                    MessageBox.Show(ee.Message);
+                    undo.CloseOpenUndo();
+                    undo.DoUndo(true);
+                    Application.Exit();
+                    return;
                 }
                 RewritePlcProperties(PlcTerminals, newDataPlc);
                 UpdateFormData();
-                undo.SetUndoDescription($"Обновление плк модуля через API");
+                undo.SetUndoDescription($"Обновление плк модуля {DeviceTag} через API");
             }
         }
 
@@ -231,66 +236,54 @@ namespace ST.EplAddin.PlcEdit
 
         private void AssignFunction(List<Function> sourceFunction, List<Function> targetFunction, bool reverse = false)
         {
-            try
+
+            using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-                using (SafetyPoint safetyPoint = SafetyPoint.Create())
+                if (reverse == false)
                 {
-                    if (reverse == false)
-                    {
-                        // targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
-                    }
-                    else//если есть реверс то применяем вот эту схему "с реверсом"
-                    {
-                        ReverseOutputPins(sourceFunction, targetFunction);
-                    }
-                    safetyPoint.Commit();
+                    // targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
                 }
+                else//если есть реверс то применяем вот эту схему "с реверсом"
+                {
+                    ReverseOutputPins(sourceFunction, targetFunction);
+                }
+                safetyPoint.Commit();
             }
-            catch (Exception)
-            {
-                ManagePlcForm.Exit();
-            }
+
+
         }
 
         private void ReverseOutputPins(List<Function> sourceFunction, List<Function> targetFunction)
         {
-            try
+
+            var allCrossreferencedFunctions = sourceFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>() ?? targetFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>();
+
+            var sourceOverviewFunction = allCrossreferencedFunctions.FirstOrDefault(z => z.Properties.FUNC_TYPE == 3
+            && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == sourceFunction.FirstOrDefault()?.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
+
+            var targetOverviewFunction = allCrossreferencedFunctions.FirstOrDefault(z => z.Properties.FUNC_TYPE == 3
+            && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == targetFunction.FirstOrDefault()?.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
+
+            var targetMainFunction = targetFunction.FirstOrDefault(x => x.Properties.FUNC_TYPE == 1);
+            var sourceMainFunction = sourceFunction.FirstOrDefault(x => x.Properties.FUNC_TYPE == 1);
+
+
+            if (targetMainFunction?.Properties.FUNC_TYPE == 1 && sourceMainFunction?.Properties.FUNC_TYPE == 1)
             {
-                var allCrossreferencedFunctions = sourceFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>() ?? targetFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>();
-
-                var sourceOverviewFunction = allCrossreferencedFunctions.FirstOrDefault(z => z.Properties.FUNC_TYPE == 3
-                && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == sourceFunction.FirstOrDefault()?.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
-
-                var targetOverviewFunction = allCrossreferencedFunctions.FirstOrDefault(z => z.Properties.FUNC_TYPE == 3
-                && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == targetFunction.FirstOrDefault()?.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
-
-                var targetMainFunction = targetFunction.FirstOrDefault(x => x.Properties.FUNC_TYPE == 1);
-                var sourceMainFunction = sourceFunction.FirstOrDefault(x => x.Properties.FUNC_TYPE == 1);
-
-
-                if (targetMainFunction?.Properties.FUNC_TYPE == 1 && sourceMainFunction?.Properties.FUNC_TYPE == 1)
-                {
-                    sourceOverviewFunction.Assign(targetMainFunction);
-                    targetOverviewFunction.Assign(sourceMainFunction);
-                }
-                else if (sourceMainFunction?.Properties.FUNC_TYPE == 1)
-                {
-                    targetOverviewFunction?.Assign(sourceMainFunction);
-                }
-                else if (targetMainFunction?.Properties.FUNC_TYPE == 1)
-                {
-                    sourceOverviewFunction.Assign(targetMainFunction);
-                }
-                else
-                {
-                    MessageBox.Show("Упс... Что-то пошло не так.");
-                    return;
-                }
+                sourceOverviewFunction.Assign(targetMainFunction);
+                targetOverviewFunction.Assign(sourceMainFunction);
             }
-            catch (Exception e)
+            else if (sourceMainFunction?.Properties.FUNC_TYPE == 1)
             {
-
-                MessageBox.Show(e.Message);
+                targetOverviewFunction?.Assign(sourceMainFunction);
+            }
+            else if (targetMainFunction?.Properties.FUNC_TYPE == 1)
+            {
+                sourceOverviewFunction.Assign(targetMainFunction);
+            }
+            else
+            {
+                throw new Exception("Присвоение обзора-обзору недопустимо при наличии у обзора многополюсного представления. Пожалуйста выберите верный диапазон данных!");
             }
         }
         private void ShowSearch(IEnumerable<StorableObject> enumerable)
