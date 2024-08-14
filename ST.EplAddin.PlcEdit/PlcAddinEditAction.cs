@@ -3,7 +3,6 @@ using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.E3D;
 using Eplan.EplApi.DataModel.EObjects;
-using Eplan.EplApi.DataModel.MasterData;
 using Eplan.EplApi.HEServices;
 using System;
 using System.Collections.Generic;
@@ -126,7 +125,7 @@ namespace ST.EplAddin.PlcEdit
                 }
                 RewritePlcProperties(PlcTerminals, newDataPlc);
                 UpdateFormData();
-                undo.SetUndoDescription($"Удалить присвоение");
+                undo.SetUndoDescription($"Обновление плк модуля через API");
             }
         }
 
@@ -228,21 +227,17 @@ namespace ST.EplAddin.PlcEdit
         {
             try
             {
-                using (UndoStep undo = new UndoManager().CreateUndoStep())
+                using (SafetyPoint safetyPoint = SafetyPoint.Create())
                 {
-                    using (SafetyPoint safetyPoint = SafetyPoint.Create())
+                    if (reverse == false)
                     {
-                        if (reverse == false)
-                        {
-                            // targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
-                        }
-                        else//если есть реверс то применяем вот эту схему "с реверсом"
-                        {
-                            ReverseOutputPins(sourceFunction, targetFunction);
-                        }
-                        safetyPoint.Commit();
-                        undo.SetUndoDescription($"Удалить присвоение");
+                        // targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
                     }
+                    else//если есть реверс то применяем вот эту схему "с реверсом"
+                    {
+                        ReverseOutputPins(sourceFunction, targetFunction);
+                    }
+                    safetyPoint.Commit();
                 }
             }
             catch (Exception)
@@ -291,17 +286,6 @@ namespace ST.EplAddin.PlcEdit
 
                 MessageBox.Show(e.Message);
             }
-        }
-
-        private Function CreateTransientFunction()
-        {
-            Function function = new Function();
-            SymbolVariant symbolVariant = new SymbolVariant();
-            Symbol symbol = new Symbol();
-            symbol.Initialize(new SymbolLibrary(CurrentProject, "IEC_symbol"), 350);
-            symbolVariant.Initialize(symbol, 1);
-            function.CreateTransient(CurrentProject, symbolVariant);
-            return function;
         }
         private void ShowSearch(IEnumerable<StorableObject> enumerable)
         {
