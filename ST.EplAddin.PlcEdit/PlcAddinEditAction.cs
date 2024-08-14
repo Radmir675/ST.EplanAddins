@@ -69,6 +69,7 @@ namespace ST.EplAddin.PlcEdit
                 }
             }
             var result = selectedPlcdata.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
+            //возникает ошибка при перезаписи так как берется только то  что выделено
             return result;
         }
 
@@ -157,8 +158,14 @@ namespace ST.EplAddin.PlcEdit
                 }
                 if (overviewTerminal != null)//тут я разрешил перезапись обзора
                 {
-                    overviewTerminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
-                    overviewTerminal.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL = item.SymbolicAdress;
+                    if (Properties.Settings.Default.IsRewritePLCAdress)
+                    {
+                        overviewTerminal.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL = item.SymbolicAdress;
+                    }
+                    if (Properties.Settings.Default.IsRewritePLCAdress)
+                    {
+                        overviewTerminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
+                    }
                 }
             }
         }

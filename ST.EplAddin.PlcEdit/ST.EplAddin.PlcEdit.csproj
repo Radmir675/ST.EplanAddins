@@ -317,6 +317,9 @@
     <EmbeddedResource Include="Resources\plcOverview.png" />
     <EmbeddedResource Include="Resources\undefined.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\png-transparent-gear-encapsulated-postscript-computer-icons-engrenagem.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.5.0.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.5.0.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

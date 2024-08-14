@@ -34,5 +34,29 @@ namespace ST.EplAddin.PlcEdit.Properties {
                 this["FastInputChecked"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsRewritePLCAdress {
+            get {
+                return ((bool)(this["IsRewritePLCAdress"]));
+            }
+            set {
+                this["IsRewritePLCAdress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsRewriteSymbolicAdress {
+            get {
+                return ((bool)(this["IsRewriteSymbolicAdress"]));
+            }
+            set {
+                this["IsRewriteSymbolicAdress"] = value;
+            }
+        }
     }
 }

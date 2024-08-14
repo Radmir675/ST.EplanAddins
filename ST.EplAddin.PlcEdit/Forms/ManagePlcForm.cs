@@ -61,7 +61,8 @@ namespace ST.EplAddin.PlcEdit
             TryDowmLoadTemplates(pathToSaveTemplate);
             this.dataGridView.Columns["FunctionText"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             FastInput.Checked = Properties.Settings.Default.FastInputChecked;
-
+            SymbolicAdressToolStripMenuItem.Checked = Properties.Settings.Default.IsRewriteSymbolicAdress;
+            PLCAdressToolStripMenuItem.Checked = Properties.Settings.Default.IsRewritePLCAdress;
         }
 
         private void ComparingForm_OkEvent(object sender, EventArgs e)
@@ -666,13 +667,26 @@ namespace ST.EplAddin.PlcEdit
                 LoggerForm loggerForm = new LoggerForm(loggerResult);
                 loggerForm.ShowDialog();
                 // loggerForm.FormClosed += (sender, e) =>;
+
             }
         }
         private void ManagePlcForm_Shown(object sender, EventArgs e)
         {
             reviewPLC_button_Click(this, new EventArgs());
         }
+        private void rewriteOverviewAdressToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var menuItem = sender as ToolStripMenuItem;
+            menuItem.Checked = !menuItem.Checked;
+            Properties.Settings.Default.IsRewritePLCAdress = menuItem.Checked;
+        }
 
+        private void rewriteOwerviewSymbolicAdressToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var menuItem = sender as ToolStripMenuItem;
+            menuItem.Checked = !menuItem.Checked;
+            Properties.Settings.Default.IsRewriteSymbolicAdress = menuItem.Checked;
+        }
     }
 }
 

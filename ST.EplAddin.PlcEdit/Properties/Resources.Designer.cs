@@ -193,6 +193,16 @@ namespace ST.EplAddin.PlcEdit.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap png_transparent_gear_encapsulated_postscript_computer_icons_engrenagem {
+            get {
+                object obj = ResourceManager.GetObject("png-transparent-gear-encapsulated-postscript-computer-icons-engrenagem", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap reverse {
             get {
                 object obj = ResourceManager.GetObject("reverse", resourceCulture);
