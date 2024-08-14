@@ -168,7 +168,6 @@ namespace ST.EplAddin.PlcEdit
             using (LockingStep lockingStep = new LockingStep())
             {
                 string path = project.ProjectDirectoryPath;
-                //  string fullPath = System.IO.Path.Combine(path, $"{project.ProjectName}.txt");
                 return path;
             }
         }
