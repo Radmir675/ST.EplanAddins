@@ -59,7 +59,6 @@ namespace ST.EplAddin.PlcEdit
             PathEvent?.Invoke(this, pathToSaveTemplate);
             Templates = TemplatesData.GetInstance().GetTemplates();
             TryDowmLoadTemplates(pathToSaveTemplate);
-            this.dataGridView.Columns["FunctionText"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             FastInput.Checked = Properties.Settings.Default.FastInputChecked;
             SymbolicAdressToolStripMenuItem.Checked = Properties.Settings.Default.IsRewriteSymbolicAdress;
             PLCAdressToolStripMenuItem.Checked = Properties.Settings.Default.IsRewritePLCAdress;

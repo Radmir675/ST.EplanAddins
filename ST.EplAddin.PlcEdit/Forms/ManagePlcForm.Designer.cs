@@ -31,18 +31,17 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManagePlcForm));
             this.Ok_button = new System.Windows.Forms.Button();
             this.Apply_button = new System.Windows.Forms.Button();
             this.Cancel_button = new System.Windows.Forms.Button();
             this.flowLayoutPanelDown = new System.Windows.Forms.FlowLayoutPanel();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.StatusImage = new System.Windows.Forms.DataGridViewImageColumn();
-            this.DeviceDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.loadTemplate_button = new System.Windows.Forms.Button();
@@ -57,15 +56,18 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.lower_button = new System.Windows.Forms.Button();
-            this.properties_button = new System.Windows.Forms.Button();
-            this.up_button = new System.Windows.Forms.Button();
-            this.dowm_button = new System.Windows.Forms.Button();
-            this.exchange_button = new System.Windows.Forms.Button();
             this.upper_button = new System.Windows.Forms.Button();
+            this.exchange_button = new System.Windows.Forms.Button();
+            this.dowm_button = new System.Windows.Forms.Button();
+            this.up_button = new System.Windows.Forms.Button();
+            this.properties_button = new System.Windows.Forms.Button();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.reviewPLC_button = new System.Windows.Forms.Button();
             this.FastInput = new System.Windows.Forms.CheckBox();
+            this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.StatusImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeviceDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Datatype = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SymbolicAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FunctionText = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -73,7 +75,7 @@
             this.DevicePointDesignation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FunctionDefinition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SymbolicAdressDefined = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.tableLayoutPanel.SuspendLayout();
@@ -124,7 +126,7 @@
             this.flowLayoutPanelDown.Controls.Add(this.Ok_button);
             this.flowLayoutPanelDown.Dock = System.Windows.Forms.DockStyle.Right;
             this.flowLayoutPanelDown.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanelDown.Location = new System.Drawing.Point(861, 3);
+            this.flowLayoutPanelDown.Location = new System.Drawing.Point(1024, 3);
             this.flowLayoutPanelDown.Name = "flowLayoutPanelDown";
             this.flowLayoutPanelDown.Size = new System.Drawing.Size(243, 29);
             this.flowLayoutPanelDown.TabIndex = 5;
@@ -164,31 +166,30 @@
             this.SymbolicAdressDefined,
             this.FunctionType});
             this.dataGridView.DataSource = this.plcDataModelViewBindingSource;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.EnableHeadersVisualStyles = false;
             this.dataGridView.GridColor = System.Drawing.Color.Gray;
             this.dataGridView.Location = new System.Drawing.Point(0, 37);
             this.dataGridView.Name = "dataGridView";
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridView.RowHeadersWidth = 17;
-            this.dataGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dataGridView.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView.RowTemplate.Height = 17;
-            this.dataGridView.Size = new System.Drawing.Size(1107, 693);
+            this.dataGridView.Size = new System.Drawing.Size(1270, 693);
             this.dataGridView.TabIndex = 6;
             this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellClick);
             this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellValueChanged);
@@ -196,28 +197,6 @@
             this.dataGridView.SelectionChanged += new System.EventHandler(this.dataGridView_SelectionChanged);
             this.dataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView_KeyDown);
             this.dataGridView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dataGridView_MouseUp);
-            // 
-            // StatusImage
-            // 
-            this.StatusImage.DataPropertyName = "StatusImage";
-            this.StatusImage.HeaderText = "Status";
-            this.StatusImage.Name = "StatusImage";
-            this.StatusImage.ReadOnly = true;
-            // 
-            // DeviceDescription
-            // 
-            this.DeviceDescription.DataPropertyName = "DevicePointDescription";
-            this.DeviceDescription.HeaderText = "DevicePointDescription";
-            this.DeviceDescription.Name = "DeviceDescription";
-            this.DeviceDescription.ReadOnly = true;
-            // 
-            // FunctionType
-            // 
-            this.FunctionType.DataPropertyName = "FunctionType";
-            this.FunctionType.FillWeight = 78.67199F;
-            this.FunctionType.HeaderText = "FunctionType";
-            this.FunctionType.Name = "FunctionType";
-            this.FunctionType.ReadOnly = true;
             // 
             // tableLayoutPanel
             // 
@@ -233,7 +212,7 @@
             this.tableLayoutPanel.RowCount = 1;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(1107, 35);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(1270, 35);
             this.tableLayoutPanel.TabIndex = 7;
             // 
             // flowLayoutPanel1
@@ -353,7 +332,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1107, 37);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1270, 37);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // flowLayoutPanel2
@@ -366,9 +345,9 @@
             this.flowLayoutPanel2.Controls.Add(this.properties_button);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(793, 3);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(909, 3);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(311, 31);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(358, 31);
             this.flowLayoutPanel2.TabIndex = 0;
             // 
             // lower_button
@@ -376,7 +355,7 @@
             this.lower_button.BackColor = System.Drawing.Color.Transparent;
             this.lower_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.lower_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.Down1;
-            this.lower_button.Location = new System.Drawing.Point(285, 3);
+            this.lower_button.Location = new System.Drawing.Point(332, 3);
             this.lower_button.Name = "lower_button";
             this.lower_button.Size = new System.Drawing.Size(23, 23);
             this.lower_button.TabIndex = 2;
@@ -384,20 +363,44 @@
             this.lower_button.UseVisualStyleBackColor = false;
             this.lower_button.Click += new System.EventHandler(this.lower_button_Click);
             // 
-            // properties_button
+            // upper_button
             // 
-            this.properties_button.BackColor = System.Drawing.Color.Transparent;
-            this.properties_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.properties_button.ForeColor = System.Drawing.Color.Transparent;
-            this.properties_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.image_psd;
-            this.properties_button.Location = new System.Drawing.Point(140, 3);
-            this.properties_button.Name = "properties_button";
-            this.properties_button.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.properties_button.Size = new System.Drawing.Size(23, 23);
-            this.properties_button.TabIndex = 1;
-            this.properties_button.TabStop = false;
-            this.properties_button.UseVisualStyleBackColor = false;
-            this.properties_button.Click += new System.EventHandler(this.properties_button_Click);
+            this.upper_button.BackColor = System.Drawing.Color.Transparent;
+            this.upper_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.upper_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.Upper;
+            this.upper_button.Location = new System.Drawing.Point(303, 3);
+            this.upper_button.Name = "upper_button";
+            this.upper_button.Size = new System.Drawing.Size(23, 23);
+            this.upper_button.TabIndex = 2;
+            this.upper_button.TabStop = false;
+            this.upper_button.UseVisualStyleBackColor = false;
+            this.upper_button.Click += new System.EventHandler(this.upper_button_Click);
+            // 
+            // exchange_button
+            // 
+            this.exchange_button.BackColor = System.Drawing.Color.Transparent;
+            this.exchange_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.exchange_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.downup;
+            this.exchange_button.Location = new System.Drawing.Point(274, 3);
+            this.exchange_button.Name = "exchange_button";
+            this.exchange_button.Size = new System.Drawing.Size(23, 23);
+            this.exchange_button.TabIndex = 2;
+            this.exchange_button.TabStop = false;
+            this.exchange_button.UseVisualStyleBackColor = false;
+            this.exchange_button.Click += new System.EventHandler(this.exchange_button_Click);
+            // 
+            // dowm_button
+            // 
+            this.dowm_button.BackColor = System.Drawing.Color.Transparent;
+            this.dowm_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.dowm_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.arrowDown1;
+            this.dowm_button.Location = new System.Drawing.Point(245, 3);
+            this.dowm_button.Name = "dowm_button";
+            this.dowm_button.Size = new System.Drawing.Size(23, 23);
+            this.dowm_button.TabIndex = 0;
+            this.dowm_button.TabStop = false;
+            this.dowm_button.UseVisualStyleBackColor = false;
+            this.dowm_button.Click += new System.EventHandler(this.dowm_button_Click);
             // 
             // up_button
             // 
@@ -405,7 +408,7 @@
             this.up_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.up_button.ForeColor = System.Drawing.Color.Transparent;
             this.up_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.arrowUp;
-            this.up_button.Location = new System.Drawing.Point(169, 3);
+            this.up_button.Location = new System.Drawing.Point(216, 3);
             this.up_button.Name = "up_button";
             this.up_button.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.up_button.Size = new System.Drawing.Size(23, 23);
@@ -414,44 +417,20 @@
             this.up_button.UseVisualStyleBackColor = false;
             this.up_button.Click += new System.EventHandler(this.up_button_Click);
             // 
-            // dowm_button
+            // properties_button
             // 
-            this.dowm_button.BackColor = System.Drawing.Color.Transparent;
-            this.dowm_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.dowm_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.arrowDown1;
-            this.dowm_button.Location = new System.Drawing.Point(198, 3);
-            this.dowm_button.Name = "dowm_button";
-            this.dowm_button.Size = new System.Drawing.Size(23, 23);
-            this.dowm_button.TabIndex = 0;
-            this.dowm_button.TabStop = false;
-            this.dowm_button.UseVisualStyleBackColor = false;
-            this.dowm_button.Click += new System.EventHandler(this.dowm_button_Click);
-            // 
-            // exchange_button
-            // 
-            this.exchange_button.BackColor = System.Drawing.Color.Transparent;
-            this.exchange_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.exchange_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.downup;
-            this.exchange_button.Location = new System.Drawing.Point(227, 3);
-            this.exchange_button.Name = "exchange_button";
-            this.exchange_button.Size = new System.Drawing.Size(23, 23);
-            this.exchange_button.TabIndex = 2;
-            this.exchange_button.TabStop = false;
-            this.exchange_button.UseVisualStyleBackColor = false;
-            this.exchange_button.Click += new System.EventHandler(this.exchange_button_Click);
-            // 
-            // upper_button
-            // 
-            this.upper_button.BackColor = System.Drawing.Color.Transparent;
-            this.upper_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.upper_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.Upper;
-            this.upper_button.Location = new System.Drawing.Point(256, 3);
-            this.upper_button.Name = "upper_button";
-            this.upper_button.Size = new System.Drawing.Size(23, 23);
-            this.upper_button.TabIndex = 2;
-            this.upper_button.TabStop = false;
-            this.upper_button.UseVisualStyleBackColor = false;
-            this.upper_button.Click += new System.EventHandler(this.upper_button_Click);
+            this.properties_button.BackColor = System.Drawing.Color.Transparent;
+            this.properties_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.properties_button.ForeColor = System.Drawing.Color.Transparent;
+            this.properties_button.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.image_psd;
+            this.properties_button.Location = new System.Drawing.Point(187, 3);
+            this.properties_button.Name = "properties_button";
+            this.properties_button.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.properties_button.Size = new System.Drawing.Size(23, 23);
+            this.properties_button.TabIndex = 1;
+            this.properties_button.TabStop = false;
+            this.properties_button.UseVisualStyleBackColor = false;
+            this.properties_button.Click += new System.EventHandler(this.properties_button_Click);
             // 
             // flowLayoutPanel3
             // 
@@ -461,7 +440,7 @@
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(784, 31);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(900, 31);
             this.flowLayoutPanel3.TabIndex = 1;
             // 
             // reviewPLC_button
@@ -489,12 +468,30 @@
             this.FastInput.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.FastInput.UseVisualStyleBackColor = true;
             // 
+            // plcDataModelViewBindingSource
+            // 
+            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
+            // 
+            // StatusImage
+            // 
+            this.StatusImage.DataPropertyName = "StatusImage";
+            this.StatusImage.HeaderText = "Status";
+            this.StatusImage.Name = "StatusImage";
+            this.StatusImage.ReadOnly = true;
+            // 
             // PLCAdress
             // 
             this.PLCAdress.DataPropertyName = "PLCAdress";
             this.PLCAdress.FillWeight = 86.17369F;
             this.PLCAdress.HeaderText = "PLCAdress";
             this.PLCAdress.Name = "PLCAdress";
+            // 
+            // DeviceDescription
+            // 
+            this.DeviceDescription.DataPropertyName = "DevicePointDescription";
+            this.DeviceDescription.HeaderText = "DevicePointDescription";
+            this.DeviceDescription.Name = "DeviceDescription";
+            this.DeviceDescription.ReadOnly = true;
             // 
             // Datatype
             // 
@@ -507,6 +504,8 @@
             // SymbolicAdress
             // 
             this.SymbolicAdress.DataPropertyName = "SymbolicAdress";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.SymbolicAdress.DefaultCellStyle = dataGridViewCellStyle3;
             this.SymbolicAdress.FillWeight = 114.2454F;
             this.SymbolicAdress.HeaderText = "SymbolicAdress";
             this.SymbolicAdress.Name = "SymbolicAdress";
@@ -514,6 +513,8 @@
             // FunctionText
             // 
             this.FunctionText.DataPropertyName = "FunctionText";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.FunctionText.DefaultCellStyle = dataGridViewCellStyle4;
             this.FunctionText.FillWeight = 78.17257F;
             this.FunctionText.HeaderText = "FunctionText";
             this.FunctionText.MinimumWidth = 140;
@@ -539,8 +540,8 @@
             // FunctionDefinition
             // 
             this.FunctionDefinition.DataPropertyName = "FunctionDefinition";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.FunctionDefinition.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.FunctionDefinition.DefaultCellStyle = dataGridViewCellStyle5;
             this.FunctionDefinition.FillWeight = 114.2454F;
             this.FunctionDefinition.HeaderText = "FunctionDefinition";
             this.FunctionDefinition.MinimumWidth = 150;
@@ -555,9 +556,13 @@
             this.SymbolicAdressDefined.ReadOnly = true;
             this.SymbolicAdressDefined.Visible = false;
             // 
-            // plcDataModelViewBindingSource
+            // FunctionType
             // 
-            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
+            this.FunctionType.DataPropertyName = "FunctionType";
+            this.FunctionType.FillWeight = 78.67199F;
+            this.FunctionType.HeaderText = "FunctionType";
+            this.FunctionType.Name = "FunctionType";
+            this.FunctionType.ReadOnly = true;
             // 
             // ManagePlcForm
             // 
@@ -566,7 +571,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.CancelButton = this.Cancel_button;
-            this.ClientSize = new System.Drawing.Size(1107, 765);
+            this.ClientSize = new System.Drawing.Size(1270, 765);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.tableLayoutPanel);
@@ -610,17 +615,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DevicePointDescription;
         private System.Windows.Forms.Button loadTemplate_button;
         private System.Windows.Forms.ComboBox dropDownList;
-        private System.Windows.Forms.DataGridViewImageColumn StatusImage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PLCAdress;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DeviceDescription;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Datatype;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SymbolicAdress;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FunctionText;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DT;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DevicePointDesignation;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FunctionDefinition;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SymbolicAdressDefined;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FunctionType;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem;
@@ -637,5 +631,16 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.Button reviewPLC_button;
         private System.Windows.Forms.CheckBox FastInput;
+        private System.Windows.Forms.DataGridViewImageColumn StatusImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PLCAdress;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DeviceDescription;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Datatype;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SymbolicAdress;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FunctionText;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DT;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DevicePointDesignation;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FunctionDefinition;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SymbolicAdressDefined;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FunctionType;
     }
 }
