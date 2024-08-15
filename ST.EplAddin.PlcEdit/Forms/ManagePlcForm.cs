@@ -143,7 +143,8 @@ namespace ST.EplAddin.PlcEdit
             {
                 if (column.ReadOnly == true)
                 {
-                    dataGridView.Columns[$"{column.Name}"].DefaultCellStyle.BackColor = Color.FromArgb(169, 169, 169);
+                    column.DefaultCellStyle = null;
+                    column.DefaultCellStyle.BackColor = Color.FromArgb(169, 169, 169);
                 }
             }
         }

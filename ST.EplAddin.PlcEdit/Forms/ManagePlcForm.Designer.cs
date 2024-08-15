@@ -30,12 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManagePlcForm));
             this.Ok_button = new System.Windows.Forms.Button();
             this.Apply_button = new System.Windows.Forms.Button();
@@ -64,10 +63,10 @@
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.reviewPLC_button = new System.Windows.Forms.Button();
             this.FastInput = new System.Windows.Forms.CheckBox();
-            this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.StatusImage = new System.Windows.Forms.DataGridViewImageColumn();
-            this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DeviceDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Datatype = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SymbolicAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FunctionText = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -75,7 +74,7 @@
             this.DevicePointDesignation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FunctionDefinition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SymbolicAdressDefined = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.tableLayoutPanel.SuspendLayout();
@@ -138,20 +137,18 @@
             this.dataGridView.AllowUserToDeleteRows = false;
             this.dataGridView.AllowUserToOrderColumns = true;
             this.dataGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            this.dataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView.AutoGenerateColumns = false;
             this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             this.dataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.StatusImage,
@@ -166,26 +163,26 @@
             this.SymbolicAdressDefined,
             this.FunctionType});
             this.dataGridView.DataSource = this.plcDataModelViewBindingSource;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.EnableHeadersVisualStyles = false;
             this.dataGridView.GridColor = System.Drawing.Color.Gray;
             this.dataGridView.Location = new System.Drawing.Point(0, 37);
             this.dataGridView.Name = "dataGridView";
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView.RowHeadersWidth = 17;
             this.dataGridView.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView.RowTemplate.Height = 17;
@@ -468,10 +465,6 @@
             this.FastInput.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.FastInput.UseVisualStyleBackColor = true;
             // 
-            // plcDataModelViewBindingSource
-            // 
-            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
-            // 
             // StatusImage
             // 
             this.StatusImage.DataPropertyName = "StatusImage";
@@ -479,19 +472,27 @@
             this.StatusImage.Name = "StatusImage";
             this.StatusImage.ReadOnly = true;
             // 
-            // PLCAdress
-            // 
-            this.PLCAdress.DataPropertyName = "PLCAdress";
-            this.PLCAdress.FillWeight = 86.17369F;
-            this.PLCAdress.HeaderText = "PLCAdress";
-            this.PLCAdress.Name = "PLCAdress";
-            // 
             // DeviceDescription
             // 
             this.DeviceDescription.DataPropertyName = "DevicePointDescription";
             this.DeviceDescription.HeaderText = "DevicePointDescription";
             this.DeviceDescription.Name = "DeviceDescription";
             this.DeviceDescription.ReadOnly = true;
+            // 
+            // FunctionType
+            // 
+            this.FunctionType.DataPropertyName = "FunctionType";
+            this.FunctionType.FillWeight = 78.67199F;
+            this.FunctionType.HeaderText = "FunctionType";
+            this.FunctionType.Name = "FunctionType";
+            this.FunctionType.ReadOnly = true;
+            // 
+            // PLCAdress
+            // 
+            this.PLCAdress.DataPropertyName = "PLCAdress";
+            this.PLCAdress.FillWeight = 86.17369F;
+            this.PLCAdress.HeaderText = "PLCAdress";
+            this.PLCAdress.Name = "PLCAdress";
             // 
             // Datatype
             // 
@@ -504,8 +505,8 @@
             // SymbolicAdress
             // 
             this.SymbolicAdress.DataPropertyName = "SymbolicAdress";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.SymbolicAdress.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.SymbolicAdress.DefaultCellStyle = dataGridViewCellStyle2;
             this.SymbolicAdress.FillWeight = 114.2454F;
             this.SymbolicAdress.HeaderText = "SymbolicAdress";
             this.SymbolicAdress.Name = "SymbolicAdress";
@@ -513,8 +514,8 @@
             // FunctionText
             // 
             this.FunctionText.DataPropertyName = "FunctionText";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.FunctionText.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.FunctionText.DefaultCellStyle = dataGridViewCellStyle3;
             this.FunctionText.FillWeight = 78.17257F;
             this.FunctionText.HeaderText = "FunctionText";
             this.FunctionText.MinimumWidth = 140;
@@ -540,8 +541,8 @@
             // FunctionDefinition
             // 
             this.FunctionDefinition.DataPropertyName = "FunctionDefinition";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.FunctionDefinition.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.FunctionDefinition.DefaultCellStyle = dataGridViewCellStyle4;
             this.FunctionDefinition.FillWeight = 114.2454F;
             this.FunctionDefinition.HeaderText = "FunctionDefinition";
             this.FunctionDefinition.MinimumWidth = 150;
@@ -556,13 +557,9 @@
             this.SymbolicAdressDefined.ReadOnly = true;
             this.SymbolicAdressDefined.Visible = false;
             // 
-            // FunctionType
+            // plcDataModelViewBindingSource
             // 
-            this.FunctionType.DataPropertyName = "FunctionType";
-            this.FunctionType.FillWeight = 78.67199F;
-            this.FunctionType.HeaderText = "FunctionType";
-            this.FunctionType.Name = "FunctionType";
-            this.FunctionType.ReadOnly = true;
+            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
             // 
             // ManagePlcForm
             // 
