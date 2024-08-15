@@ -92,8 +92,6 @@ namespace ST.EplAddin.PlcEdit
             {
                 dataGridView.Rows[0].Selected = true;
             }
-            (sender as Form).Width = GetCurrentColumnsHeaderWidth() + 58;
-            InitialFormWidth = GetCurrentColumnsHeaderWidth() + 58;
             ChangeColorDisableColumns();
             GetDefaultColumnSetting();
             UpdateButtonsState();
@@ -412,11 +410,6 @@ namespace ST.EplAddin.PlcEdit
         {
             PlcDataModelView = plcDataModelView;
             dataGridView.DataSource = plcDataModelView;
-        }
-
-        private void dataGridView_SelectionChanged(object sender, EventArgs e)
-        {
-
         }
 
         private bool IsEqualDefinitions(DataGridViewRow firstSelectedRow, DataGridViewRow secondSelectedRow)
