@@ -97,7 +97,7 @@ namespace ST.EplAddin.PlcEdit
             ChangeColorDisableColumns();
             GetDefaultColumnSetting();
             UpdateButtonsState();
-
+            Size = Properties.Settings.Default.FormSize;
         }
 
         private void PropertiesForm_SettingsChanged(object sender, List<string> columnsToView)
@@ -145,6 +145,13 @@ namespace ST.EplAddin.PlcEdit
                 {
                     column.DefaultCellStyle = null;
                     column.DefaultCellStyle.BackColor = Color.FromArgb(169, 169, 169);
+                }
+                else if (column.ReadOnly == false)
+                {
+                    column.DefaultCellStyle = null;
+                    column.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+
                 }
             }
         }
@@ -698,6 +705,11 @@ namespace ST.EplAddin.PlcEdit
             var menuItem = sender as ToolStripMenuItem;
             menuItem.Checked = !menuItem.Checked;
             Properties.Settings.Default.IsRewriteSymbolicAdress = menuItem.Checked;
+        }
+
+        private void ManagePlcForm_ResizeEnd(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.FormSize = Size;
         }
     }
 }
