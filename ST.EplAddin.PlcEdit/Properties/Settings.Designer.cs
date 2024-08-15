@@ -61,7 +61,7 @@ namespace ST.EplAddin.PlcEdit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1334, 794")]
         public global::System.Drawing.Size FormSize {
             get {
                 return ((global::System.Drawing.Size)(this["FormSize"]));
