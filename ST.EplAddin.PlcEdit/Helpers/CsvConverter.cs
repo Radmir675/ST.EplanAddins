@@ -53,18 +53,24 @@ namespace ST.EplAddin.PlcEdit
         }
         public void SaveFile(List<CsvFileDataModelView> fileToWrite)
         {
-            //TODO:все сломается если фаил открыт
-            CsvConfiguration config = GetConfig();
-            using (var writer = new StreamWriter(filePath, false, Encoding.UTF8)) //поменять тип шифрования
-            using (var csvWriter = new CsvWriter(writer, config))
+            try
             {
-                foreach (var file in fileToWrite)
+                CsvConfiguration config = GetConfig();
+                using (var writer = new StreamWriter(filePath, false, Encoding.UTF8))
+                using (var csvWriter = new CsvWriter(writer, config))
                 {
-                    csvWriter.WriteRecord(file);
-                    csvWriter.NextRecord();
+                    foreach (var file in fileToWrite)
+                    {
+                        csvWriter.WriteRecord(file);
+                        csvWriter.NextRecord();
+                    }
                 }
+                MessageBox.Show("Files are recorded!", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            MessageBox.Show("Files are recorded!", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            catch (System.Exception e)
+            {
+                MessageBox.Show($"{e}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public (int, int) ReadAdditionalInformation()

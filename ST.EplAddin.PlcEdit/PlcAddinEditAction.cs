@@ -111,7 +111,6 @@ namespace ST.EplAddin.PlcEdit
 
             using (UndoStep undo = new UndoManager().CreateUndoStep())
             {
-                //  undo.CloseOpenUndo();
                 try
                 {
                     while (correlationTable.Any())
