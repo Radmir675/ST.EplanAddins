@@ -606,22 +606,25 @@ namespace ST.EplAddin.PlcEdit
 
             var functionDefinition = firstSelectedRow?.Cells["FunctionDefinition"]?.Value?.ToString() ?? "Не определено";
 
-            var emptyUpRow = TryGetEmptyIndexRow(firstSelectedRow.Index, Direction.Up, functionDefinition);
-            var emptyDownRow = TryGetEmptyIndexRow(firstSelectedRow.Index, Direction.Down, functionDefinition);
+            if (firstSelectedRow != null)
+            {
+                var emptyUpRow = TryGetEmptyIndexRow(firstSelectedRow.Index, Direction.Up, functionDefinition);
+                var emptyDownRow = TryGetEmptyIndexRow(firstSelectedRow.Index, Direction.Down, functionDefinition);
 
-            if (SelectedRows.Count() == 2 && IsEqualDefinitions(firstSelectedRow, secondSelectedRow))
-            {
-                exchange_button.Enabled = true;
-            }
-            if (emptyUpRow.HasValue && IsEqualDefinitions(SelectedRows.ToList()))
-            {
-                up_button.Enabled = true;
-                upper_button.Enabled = true;
-            }
-            if (emptyDownRow.HasValue && IsEqualDefinitions(SelectedRows.ToList()))
-            {
-                dowm_button.Enabled = true;
-                lower_button.Enabled = true;
+                if (SelectedRows.Count() == 2 && IsEqualDefinitions(firstSelectedRow, secondSelectedRow))
+                {
+                    exchange_button.Enabled = true;
+                }
+                if (emptyUpRow.HasValue && IsEqualDefinitions(SelectedRows.ToList()))
+                {
+                    up_button.Enabled = true;
+                    upper_button.Enabled = true;
+                }
+                if (emptyDownRow.HasValue && IsEqualDefinitions(SelectedRows.ToList()))
+                {
+                    dowm_button.Enabled = true;
+                    lower_button.Enabled = true;
+                }
             }
         }
 
