@@ -116,6 +116,7 @@
     <Compile Include="CommentManager.cs" />
     <Compile Include="CommentStateExport.cs" />
     <Compile Include="CommentStateImport.cs" />
+    <Compile Include="PathDialog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

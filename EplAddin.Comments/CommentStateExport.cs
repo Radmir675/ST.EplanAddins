@@ -2,7 +2,6 @@
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.Graphics;
 using Eplan.EplApi.HEServices;
-using System;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
@@ -26,7 +25,13 @@ namespace ST.EplAddin.Comments
 
             //Work on all found comments
             string sTempFile;
-            sTempFile = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + @"\CommentStateExport.xml";
+            sTempFile = PathDialog.TryGetSavePath();
+            if (sTempFile == null)
+            {
+                return false;
+            }
+
+            // Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + @"\CommentStateExport.xml";
 
             XmlWriter xw = XmlWriter.Create(sTempFile);
             xw.WriteStartDocument();
@@ -54,7 +59,7 @@ namespace ST.EplAddin.Comments
             xw.WriteEndDocument();
             // CommentStateExport.xml
             xw.Close();
-            MessageBox.Show("Comments processed: " + count);
+            MessageBox.Show("Comments is processed: " + count);
             return true;
         }
 
