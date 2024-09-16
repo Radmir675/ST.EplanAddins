@@ -37,7 +37,7 @@ namespace ST.EplAddin.PlcEdit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool IsRewritePLCAdress {
             get {
                 return ((bool)(this["IsRewritePLCAdress"]));
@@ -49,7 +49,7 @@ namespace ST.EplAddin.PlcEdit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool IsRewriteSymbolicAdress {
             get {
                 return ((bool)(this["IsRewriteSymbolicAdress"]));
