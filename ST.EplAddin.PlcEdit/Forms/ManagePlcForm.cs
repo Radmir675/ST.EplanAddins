@@ -620,7 +620,7 @@ namespace ST.EplAddin.PlcEdit
                 {
                     int j = 0;
 
-                    foreach (DataGridViewCell item in dataGridView.SelectedCells)
+                    foreach (var item in SelectedCells)
                     {
                         if (item.OwningColumn.ReadOnly == false)
                         {
