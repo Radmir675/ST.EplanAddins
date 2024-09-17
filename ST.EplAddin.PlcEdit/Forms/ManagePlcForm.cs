@@ -612,7 +612,6 @@ namespace ST.EplAddin.PlcEdit
                             item.Value = dataInClipBoard;
                         }
                     }
-
                 }
 
                 else if (dataInClipboard.Count() == SelectedCells.Count()
@@ -631,7 +630,7 @@ namespace ST.EplAddin.PlcEdit
                 }
                 else
                 {
-                    MessageBox.Show("Индекс массива вышел за пределы диапазона");
+                    MessageBox.Show("Индекс массива вышел за пределы диапазона", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
