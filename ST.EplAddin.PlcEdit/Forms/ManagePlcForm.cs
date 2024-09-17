@@ -40,7 +40,7 @@ namespace ST.EplAddin.PlcEdit
         {
             get
             {
-                return dataGridView.SelectedCells.Cast<DataGridViewCell>().ToArray();
+                return dataGridView.SelectedCells.Cast<DataGridViewCell>().OrderBy(x => x.RowIndex).ToArray();
             }
         }
 
@@ -554,13 +554,9 @@ namespace ST.EplAddin.PlcEdit
         private void dataGridView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.V && e.Control)
-                foreach (DataGridViewCell item in dataGridView.SelectedCells)
-                {
-                    if (item.OwningColumn.ReadOnly == false)
-                    {
-                        item.Value = Clipboard.GetText();
-                    }
-                }
+            {
+                InsertData();
+            }
             if (e.KeyCode == Keys.Delete)
             {
                 foreach (var cell in SelectedCells)
@@ -573,6 +569,74 @@ namespace ST.EplAddin.PlcEdit
 
             }
         }
+
+        private void InsertData()
+        {
+            var dataInClipBoard = Clipboard.GetText();
+            string[] rowSplitter = { "\r\n" };
+            char[] columnSplitter = { '\t' };
+
+            var dataInClipboard = dataInClipBoard.Split(rowSplitter, StringSplitOptions.None);
+            int firstSelectedRowIndex = dataGridView.SelectedCells[0].RowIndex;
+            int firstSelectedColumnIndex = dataGridView.SelectedCells[0].ColumnIndex;
+
+            var selectedCellsCount = dataGridView.SelectedCells.Count;
+            if (selectedCellsCount == 1)
+            {
+                int j = 0;
+                for (int i = firstSelectedRowIndex; i < dataInClipboard.Count() + firstSelectedRowIndex; i++)
+                {
+                    if (i < dataGridView.Rows.Count)
+                    {
+                        if (dataGridView[firstSelectedColumnIndex, i].ReadOnly == false)
+                        {
+                            dataGridView[firstSelectedColumnIndex, i].Value = dataInClipboard[j];
+                        }
+                        j++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+
+            else
+            {
+                if (dataInClipboard.Count() == 1)
+                {
+                    foreach (DataGridViewCell item in dataGridView.SelectedCells)
+                    {
+                        if (item.OwningColumn.ReadOnly == false)
+                        {
+                            item.Value = dataInClipBoard;
+                        }
+                    }
+
+                }
+
+                else if (dataInClipboard.Count() == SelectedCells.Count()
+                   && SelectedCells.All(x => x.ColumnIndex == firstSelectedColumnIndex))
+                {
+                    int j = 0;
+
+                    foreach (DataGridViewCell item in dataGridView.SelectedCells)
+                    {
+                        if (item.OwningColumn.ReadOnly == false)
+                        {
+                            item.Value = dataInClipboard[j];
+                            j++;
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Индекс массива вышел за пределы диапазона");
+                }
+            }
+        }
+
+
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
