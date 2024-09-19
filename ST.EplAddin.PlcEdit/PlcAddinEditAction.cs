@@ -69,7 +69,7 @@ namespace ST.EplAddin.PlcEdit
                         .ToArray();
                 }
             }
-            var result = selectedPlcdata.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
+            var result = selectedPlcdata?.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
             //возникает ошибка при перезаписи так как берется только то  что выделено
             return result;
         }
@@ -207,7 +207,7 @@ namespace ST.EplAddin.PlcEdit
             var terminals = GetPlcTerminals();
             CheckToIdenticalTerminal(terminals);
             var mappedPlcTerminals = Mapper.GetPlcData(terminals);
-            ManagePlcForm.UpdateTable(mappedPlcTerminals);//тут передать данные после присвоения для обновления формы
+            ManagePlcForm?.UpdateTable(mappedPlcTerminals);//тут передать данные после присвоения для обновления формы
         }
 
         private List<NameCorrelation> GetСorrelationTable(List<PlcDataModelView> oldData, List<PlcDataModelView> newDataPlc)

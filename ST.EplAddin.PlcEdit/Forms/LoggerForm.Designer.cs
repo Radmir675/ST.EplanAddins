@@ -47,10 +47,12 @@
             this.ClientSize = new System.Drawing.Size(728, 183);
             this.Controls.Add(this.richTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.KeyPreview = true;
             this.Name = "LoggerForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "LoggerForm";
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.LoggerForm_KeyUp);
             this.ResumeLayout(false);
 
         }

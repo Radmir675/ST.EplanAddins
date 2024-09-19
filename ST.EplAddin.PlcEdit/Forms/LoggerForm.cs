@@ -15,6 +15,12 @@ namespace ST.EplAddin.PlcEdit.Forms
             }
         }
 
-
+        private void LoggerForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
+        }
     }
 }
