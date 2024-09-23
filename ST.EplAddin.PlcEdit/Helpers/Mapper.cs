@@ -7,6 +7,23 @@ using System.Linq;
 
 namespace ST.EplAddin.PlcEdit
 {
+    public class PinNumberComparer : IComparer<string>
+    {
+        public int Compare(string x, string y)
+        {
+            int pinNumberFirst = 100;
+            int.TryParse(x, out pinNumberFirst);
+
+            int pinNumberSecond = 100;
+            int.TryParse(x, out pinNumberSecond);
+
+            return pinNumberFirst.CompareTo(pinNumberSecond);
+        }
+    }
+
+
+
+
     public static class Mapper
     {
         public static List<PlcDataModelView> GetPlcData(Terminal[] plcTerminals, bool getFullData = false)
@@ -24,6 +41,7 @@ namespace ST.EplAddin.PlcEdit
                         SymbolicAdress = terminal.Properties.FUNC_PLCSYMBOLICADDRESS_AUTOMATIC.ToString(ISOCode.Language.L_ru_RU),
                         FunctionText = terminal.Properties.FUNC_TEXT_AUTOMATIC.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU).Replace("\n", " "),
                         DT = terminal.Properties.FUNC_FULLNAME.ToString(ISOCode.Language.L_ru_RU),
+                        IdenticalDT = terminal.Properties.FUNC_IDENTDEVICETAGWITHOUTSTRUCTURES,
                         DevicePointDesignation = terminal.Properties.FUNC_PLCAUTOPLUG_AND_CONNPTDESIGNATION.ToString(ISOCode.Language.L_ru_RU),
                         FunctionDefinition = terminal.Properties.FUNC_COMPONENTTYPE.ToString(ISOCode.Language.L_ru_RU),
                         SymbolicAdressDefined = terminal.Properties.FUNC_PLCSYMBOLICADDRESS_CALCULATED.ToString(ISOCode.Language.L_ru_RU),
@@ -41,24 +59,30 @@ namespace ST.EplAddin.PlcEdit
             {
                 return plcDataModelView;
             }
-            var output = plcDataModelView.GroupBy(f => f.DevicePointDesignation);//тут происходит поиск главной функции если ее нет берется обзор
+            var output = plcDataModelView.GroupBy(f => f.DT);//тут происходит поиск главной функции если ее нет берется обзор
             var result = new List<PlcDataModelView>();
             foreach (var entry in output)
             {
                 var terminal = entry.FirstOrDefault(item => item.FunctionType == "Многополюсный") ?? entry.First();
                 result.Add(terminal);
             }
+            var sortedInformation = SortTerminalPins(result).ToList();
+            return sortedInformation;
 
-            //return result.OrderBy(x => Convert.ToInt32(int.TryParse(x.DevicePinNumber, out int ss) ? 0 : x.DevicePinNumber)).ToList();
-            return result
-                  .OrderBy(s =>
-                  {
-                      int i = 0;
-                      return int.TryParse(s.DevicePinNumber, out i) ? i : int.MaxValue;
-                  })
-                  .ThenBy(s => s.DevicePinNumber)
-                  .ToList();
+            //return result
+            //      .OrderBy(s =>
+            //      {
+            //          int i = 0;
+            //          return int.TryParse(s.DevicePinNumber, out i) ? i : int.MaxValue;
+            //      })
+            //      .ThenBy(s => s.DevicePinNumber)
+            //      .ToList();
 
+        }
+
+        private static IEnumerable<PlcDataModelView> SortTerminalPins(List<PlcDataModelView> result)
+        {
+            return result.OrderBy(f => f.IdenticalDT).ThenBy(x => x.DevicePinNumber, new PinNumberComparer());
         }
 
         private static Image GetImage(Terminal terminal)

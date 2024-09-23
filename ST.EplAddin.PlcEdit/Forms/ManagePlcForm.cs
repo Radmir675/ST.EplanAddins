@@ -581,6 +581,7 @@ namespace ST.EplAddin.PlcEdit
             int firstSelectedColumnIndex = dataGridView.SelectedCells[0].ColumnIndex;
 
             var selectedCellsCount = dataGridView.SelectedCells.Count;
+
             if (selectedCellsCount == 1)
             {
                 int j = 0;

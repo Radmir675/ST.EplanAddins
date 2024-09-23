@@ -56,22 +56,37 @@ namespace ST.EplAddin.PlcEdit
             CurrentProject = selectionSet.GetCurrentProject(true);
 
             var selectedPlcdata = selectionSet.Selection;//отфильтровать надо именно selection
-            FunctionsFilter functionsFilter = new FunctionsFilter();
-            functionsFilter.Category = Function.Enums.Category.PLCTerminal;
-            if (selectedPlcdata.Length == 1)
+            //FunctionsFilter functionsFilter = new FunctionsFilter();
+            //functionsFilter.Category = Function.Enums.Category.PLCTerminal;
+            //if (selectedPlcdata.Length == 1)
+            //{
+            //    DeviceTag = GetPlcFullName(selectedPlcdata);
+            //    if (DeviceTag != string.Empty)
+            //    {
+            //        selectedPlcdata = new DMObjectsFinder(CurrentProject)
+            //            .GetTerminals(functionsFilter)
+            //            .Where(x => x.Properties.FUNC_FULLDEVICETAG.ToString() == DeviceTag)
+            //            .ToArray();
+            //    }
+            //}
+            if (selectedPlcdata.OfType<PLC>().Count() == selectedPlcdata.Count())
             {
-                DeviceTag = GetPlcFullName(selectedPlcdata);
-                if (DeviceTag != string.Empty)
+                List<List<Terminal>> plcTerminals = new List<List<Terminal>>();
+                foreach (var plc in selectedPlcdata)
                 {
-                    selectedPlcdata = new DMObjectsFinder(CurrentProject)
-                        .GetTerminals(functionsFilter)
-                        .Where(x => x.Properties.FUNC_FULLDEVICETAG.ToString() == DeviceTag)
-                        .ToArray();
+                    var s = plc.CrossReferencedObjectsAll.OfType<Terminal>().ToList();
+                    plcTerminals.Add(s);
                 }
+                var result = plcTerminals.SelectMany(x => x).ToArray();
+                return result;
             }
-            var result = selectedPlcdata?.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
+            else
+            {
+                var result = selectedPlcdata?.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
+                return result;
+            }
             //возникает ошибка при перезаписи так как берется только то  что выделено
-            return result;
+
         }
 
         private string GetPlcFullName(StorableObject[] selectedPlcdata)
