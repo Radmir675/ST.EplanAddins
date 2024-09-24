@@ -44,7 +44,7 @@ namespace ST.EplAddin.Footnote
                     if (isFootnoteBlock)
                     {
                         note = new FootnoteItem();
-                        note.Create(block);
+                        note.Create(block);//очень долго
                         oldPosition = note.finishPosition;
                         isFootnote = true;
 

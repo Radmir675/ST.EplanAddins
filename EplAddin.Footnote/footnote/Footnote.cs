@@ -503,7 +503,7 @@ namespace ST.EplAddin.Footnote
         {
             String referenceID = block.Name.Split('#').Last().Replace('_', '/');
             string objIDDB = block.DatabaseIdentifier + "/" + referenceID;
-            string objIDDB1 = currentPage.DatabaseIdentifier + "/" + referenceID;
+            //string objIDDB1 = currentPage.DatabaseIdentifier + "/" + referenceID;
             StorableObject obj = null;
             StorableObject.TryParseIdentifier(objIDDB, ref obj);
 
