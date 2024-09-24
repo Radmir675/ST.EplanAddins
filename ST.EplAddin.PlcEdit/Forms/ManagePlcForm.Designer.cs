@@ -533,6 +533,7 @@
             this.IdenticalDT.HeaderText = "IdenticalDT";
             this.IdenticalDT.Name = "IdenticalDT";
             this.IdenticalDT.ReadOnly = true;
+            this.IdenticalDT.Visible = false;
             // 
             // DevicePointDesignation
             // 
