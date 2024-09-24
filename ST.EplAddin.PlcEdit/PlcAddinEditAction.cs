@@ -56,19 +56,7 @@ namespace ST.EplAddin.PlcEdit
             CurrentProject = selectionSet.GetCurrentProject(true);
 
             var selectedPlcdata = selectionSet.Selection;//отфильтровать надо именно selection
-            //FunctionsFilter functionsFilter = new FunctionsFilter();
-            //functionsFilter.Category = Function.Enums.Category.PLCTerminal;
-            //if (selectedPlcdata.Length == 1)
-            //{
-            //    DeviceTag = GetPlcFullName(selectedPlcdata);
-            //    if (DeviceTag != string.Empty)
-            //    {
-            //        selectedPlcdata = new DMObjectsFinder(CurrentProject)
-            //            .GetTerminals(functionsFilter)
-            //            .Where(x => x.Properties.FUNC_FULLDEVICETAG.ToString() == DeviceTag)
-            //            .ToArray();
-            //    }
-            //}
+
             if (selectedPlcdata.OfType<PLC>().Count() == selectedPlcdata.Count())
             {
                 List<List<Terminal>> plcTerminals = new List<List<Terminal>>();
@@ -85,8 +73,6 @@ namespace ST.EplAddin.PlcEdit
                 var result = selectedPlcdata?.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
                 return result;
             }
-            //возникает ошибка при перезаписи так как берется только то  что выделено
-
         }
 
         private string GetPlcFullName(StorableObject[] selectedPlcdata)

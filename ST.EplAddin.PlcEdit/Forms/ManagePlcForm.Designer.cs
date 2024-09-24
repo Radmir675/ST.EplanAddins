@@ -41,6 +41,18 @@
             this.Cancel_button = new System.Windows.Forms.Button();
             this.flowLayoutPanelDown = new System.Windows.Forms.FlowLayoutPanel();
             this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.StatusImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeviceDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Datatype = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SymbolicAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FunctionText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IdenticalDT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DevicePointDesignation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FunctionDefinition = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SymbolicAdressDefined = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -64,18 +76,6 @@
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.reviewPLC_button = new System.Windows.Forms.Button();
             this.FastInput = new System.Windows.Forms.CheckBox();
-            this.StatusImage = new System.Windows.Forms.DataGridViewImageColumn();
-            this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DeviceDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Datatype = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SymbolicAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FunctionText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IdenticalDT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DevicePointDesignation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FunctionDefinition = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SymbolicAdressDefined = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource)).BeginInit();
@@ -195,6 +195,106 @@
             this.dataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView_CurrentCellDirtyStateChanged);
             this.dataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView_KeyDown);
             this.dataGridView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dataGridView_MouseUp);
+            // 
+            // StatusImage
+            // 
+            this.StatusImage.DataPropertyName = "StatusImage";
+            this.StatusImage.HeaderText = "Status";
+            this.StatusImage.Name = "StatusImage";
+            this.StatusImage.ReadOnly = true;
+            // 
+            // PLCAdress
+            // 
+            this.PLCAdress.DataPropertyName = "PLCAdress";
+            this.PLCAdress.FillWeight = 86.17369F;
+            this.PLCAdress.HeaderText = "PLCAdress";
+            this.PLCAdress.Name = "PLCAdress";
+            // 
+            // DeviceDescription
+            // 
+            this.DeviceDescription.DataPropertyName = "DevicePointDescription";
+            this.DeviceDescription.HeaderText = "DevicePointDescription";
+            this.DeviceDescription.Name = "DeviceDescription";
+            this.DeviceDescription.ReadOnly = true;
+            // 
+            // Datatype
+            // 
+            this.Datatype.DataPropertyName = "Datatype";
+            this.Datatype.HeaderText = "Datatype";
+            this.Datatype.Name = "Datatype";
+            this.Datatype.ReadOnly = true;
+            this.Datatype.Visible = false;
+            // 
+            // SymbolicAdress
+            // 
+            this.SymbolicAdress.DataPropertyName = "SymbolicAdress";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.SymbolicAdress.DefaultCellStyle = dataGridViewCellStyle2;
+            this.SymbolicAdress.FillWeight = 114.2454F;
+            this.SymbolicAdress.HeaderText = "SymbolicAdress";
+            this.SymbolicAdress.Name = "SymbolicAdress";
+            // 
+            // FunctionText
+            // 
+            this.FunctionText.DataPropertyName = "FunctionText";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.FunctionText.DefaultCellStyle = dataGridViewCellStyle3;
+            this.FunctionText.FillWeight = 78.17257F;
+            this.FunctionText.HeaderText = "FunctionText";
+            this.FunctionText.MinimumWidth = 140;
+            this.FunctionText.Name = "FunctionText";
+            this.FunctionText.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // DT
+            // 
+            this.DT.DataPropertyName = "DT";
+            this.DT.HeaderText = "DT";
+            this.DT.Name = "DT";
+            this.DT.ReadOnly = true;
+            this.DT.Visible = false;
+            // 
+            // IdenticalDT
+            // 
+            this.IdenticalDT.DataPropertyName = "IdenticalDT";
+            this.IdenticalDT.HeaderText = "IdenticalDT";
+            this.IdenticalDT.Name = "IdenticalDT";
+            this.IdenticalDT.ReadOnly = true;
+            this.IdenticalDT.Visible = false;
+            // 
+            // DevicePointDesignation
+            // 
+            this.DevicePointDesignation.DataPropertyName = "DevicePointDesignation";
+            this.DevicePointDesignation.FillWeight = 114.2454F;
+            this.DevicePointDesignation.HeaderText = "DevicePointDesignation";
+            this.DevicePointDesignation.Name = "DevicePointDesignation";
+            this.DevicePointDesignation.ReadOnly = true;
+            // 
+            // FunctionDefinition
+            // 
+            this.FunctionDefinition.DataPropertyName = "FunctionDefinition";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.FunctionDefinition.DefaultCellStyle = dataGridViewCellStyle4;
+            this.FunctionDefinition.FillWeight = 114.2454F;
+            this.FunctionDefinition.HeaderText = "FunctionDefinition";
+            this.FunctionDefinition.MinimumWidth = 150;
+            this.FunctionDefinition.Name = "FunctionDefinition";
+            this.FunctionDefinition.ReadOnly = true;
+            // 
+            // SymbolicAdressDefined
+            // 
+            this.SymbolicAdressDefined.DataPropertyName = "SymbolicAdressDefined";
+            this.SymbolicAdressDefined.HeaderText = "SymbolicAdressDefined";
+            this.SymbolicAdressDefined.Name = "SymbolicAdressDefined";
+            this.SymbolicAdressDefined.ReadOnly = true;
+            this.SymbolicAdressDefined.Visible = false;
+            // 
+            // FunctionType
+            // 
+            this.FunctionType.DataPropertyName = "FunctionType";
+            this.FunctionType.FillWeight = 78.67199F;
+            this.FunctionType.HeaderText = "FunctionType";
+            this.FunctionType.Name = "FunctionType";
+            this.FunctionType.ReadOnly = true;
             // 
             // plcDataModelViewBindingSource
             // 
@@ -470,106 +570,6 @@
             this.FastInput.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.FastInput.UseVisualStyleBackColor = true;
             // 
-            // StatusImage
-            // 
-            this.StatusImage.DataPropertyName = "StatusImage";
-            this.StatusImage.HeaderText = "Status";
-            this.StatusImage.Name = "StatusImage";
-            this.StatusImage.ReadOnly = true;
-            // 
-            // PLCAdress
-            // 
-            this.PLCAdress.DataPropertyName = "PLCAdress";
-            this.PLCAdress.FillWeight = 86.17369F;
-            this.PLCAdress.HeaderText = "PLCAdress";
-            this.PLCAdress.Name = "PLCAdress";
-            // 
-            // DeviceDescription
-            // 
-            this.DeviceDescription.DataPropertyName = "DevicePointDescription";
-            this.DeviceDescription.HeaderText = "DevicePointDescription";
-            this.DeviceDescription.Name = "DeviceDescription";
-            this.DeviceDescription.ReadOnly = true;
-            // 
-            // Datatype
-            // 
-            this.Datatype.DataPropertyName = "Datatype";
-            this.Datatype.HeaderText = "Datatype";
-            this.Datatype.Name = "Datatype";
-            this.Datatype.ReadOnly = true;
-            this.Datatype.Visible = false;
-            // 
-            // SymbolicAdress
-            // 
-            this.SymbolicAdress.DataPropertyName = "SymbolicAdress";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.SymbolicAdress.DefaultCellStyle = dataGridViewCellStyle2;
-            this.SymbolicAdress.FillWeight = 114.2454F;
-            this.SymbolicAdress.HeaderText = "SymbolicAdress";
-            this.SymbolicAdress.Name = "SymbolicAdress";
-            // 
-            // FunctionText
-            // 
-            this.FunctionText.DataPropertyName = "FunctionText";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.FunctionText.DefaultCellStyle = dataGridViewCellStyle3;
-            this.FunctionText.FillWeight = 78.17257F;
-            this.FunctionText.HeaderText = "FunctionText";
-            this.FunctionText.MinimumWidth = 140;
-            this.FunctionText.Name = "FunctionText";
-            this.FunctionText.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // DT
-            // 
-            this.DT.DataPropertyName = "DT";
-            this.DT.HeaderText = "DT";
-            this.DT.Name = "DT";
-            this.DT.ReadOnly = true;
-            this.DT.Visible = false;
-            // 
-            // IdenticalDT
-            // 
-            this.IdenticalDT.DataPropertyName = "IdenticalDT";
-            this.IdenticalDT.HeaderText = "IdenticalDT";
-            this.IdenticalDT.Name = "IdenticalDT";
-            this.IdenticalDT.ReadOnly = true;
-            this.IdenticalDT.Visible = false;
-            // 
-            // DevicePointDesignation
-            // 
-            this.DevicePointDesignation.DataPropertyName = "DevicePointDesignation";
-            this.DevicePointDesignation.FillWeight = 114.2454F;
-            this.DevicePointDesignation.HeaderText = "DevicePointDesignation";
-            this.DevicePointDesignation.Name = "DevicePointDesignation";
-            this.DevicePointDesignation.ReadOnly = true;
-            // 
-            // FunctionDefinition
-            // 
-            this.FunctionDefinition.DataPropertyName = "FunctionDefinition";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.FunctionDefinition.DefaultCellStyle = dataGridViewCellStyle4;
-            this.FunctionDefinition.FillWeight = 114.2454F;
-            this.FunctionDefinition.HeaderText = "FunctionDefinition";
-            this.FunctionDefinition.MinimumWidth = 150;
-            this.FunctionDefinition.Name = "FunctionDefinition";
-            this.FunctionDefinition.ReadOnly = true;
-            // 
-            // SymbolicAdressDefined
-            // 
-            this.SymbolicAdressDefined.DataPropertyName = "SymbolicAdressDefined";
-            this.SymbolicAdressDefined.HeaderText = "SymbolicAdressDefined";
-            this.SymbolicAdressDefined.Name = "SymbolicAdressDefined";
-            this.SymbolicAdressDefined.ReadOnly = true;
-            this.SymbolicAdressDefined.Visible = false;
-            // 
-            // FunctionType
-            // 
-            this.FunctionType.DataPropertyName = "FunctionType";
-            this.FunctionType.FillWeight = 78.67199F;
-            this.FunctionType.HeaderText = "FunctionType";
-            this.FunctionType.Name = "FunctionType";
-            this.FunctionType.ReadOnly = true;
-            // 
             // ManagePlcForm
             // 
             this.AcceptButton = this.Ok_button;
@@ -588,6 +588,7 @@
             this.Name = "ManagePlcForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ManagePlcForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ManagePlcForm_FormClosed);
             this.Load += new System.EventHandler(this.ManagePlcForm_Load);
             this.Shown += new System.EventHandler(this.ManagePlcForm_Shown);
             this.ResizeEnd += new System.EventHandler(this.ManagePlcForm_ResizeEnd);

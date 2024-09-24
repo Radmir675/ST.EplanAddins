@@ -96,6 +96,11 @@ namespace ST.EplAddin.PlcEdit
             GetDefaultColumnSetting();
             UpdateButtonsState();
             Size = Properties.Settings.Default.FormSize;
+            var initialPointLocation = Properties.Settings.Default?.FormLocation;
+            if (initialPointLocation.Value.X != 0 && initialPointLocation.Value.Y != 0)
+            {
+                Location = initialPointLocation.Value;
+            }
         }
 
         private void PropertiesForm_SettingsChanged(object sender, List<string> columnsToView)
@@ -770,6 +775,11 @@ namespace ST.EplAddin.PlcEdit
         private void ManagePlcForm_ResizeEnd(object sender, EventArgs e)
         {
             Properties.Settings.Default.FormSize = Size;
+        }
+
+        private void ManagePlcForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Properties.Settings.Default.FormLocation = this.Location;
         }
     }
 }
