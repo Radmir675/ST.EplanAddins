@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddin.ConnectionNumer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddin.SymbolVariants", "ST.EplAddins.SymbolVariants\ST.EplAddin.SymbolVariants.csproj", "{12B286E5-29AC-4F40-92F7-50095CDC94B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EplAddin.Comments", "EplAddin.Comments\EplAddin.Comments.csproj", "{E4B40616-CE92-4BFF-8A67-74CA0344DF39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddin.Images", "ST.EplAddin.Images\ST.EplAddin.Images.csproj", "{9582AFFD-3352-4DE5-AEFD-5899823DCB31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,14 +42,14 @@ Global
 		{12B286E5-29AC-4F40-92F7-50095CDC94B8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{12B286E5-29AC-4F40-92F7-50095CDC94B8}.Release|x64.ActiveCfg = Release|x64
 		{12B286E5-29AC-4F40-92F7-50095CDC94B8}.Release|x64.Build.0 = Release|x64
-		{E4B40616-CE92-4BFF-8A67-74CA0344DF39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E4B40616-CE92-4BFF-8A67-74CA0344DF39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E4B40616-CE92-4BFF-8A67-74CA0344DF39}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E4B40616-CE92-4BFF-8A67-74CA0344DF39}.Debug|x64.Build.0 = Debug|Any CPU
-		{E4B40616-CE92-4BFF-8A67-74CA0344DF39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E4B40616-CE92-4BFF-8A67-74CA0344DF39}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E4B40616-CE92-4BFF-8A67-74CA0344DF39}.Release|x64.ActiveCfg = Release|Any CPU
-		{E4B40616-CE92-4BFF-8A67-74CA0344DF39}.Release|x64.Build.0 = Release|Any CPU
+		{9582AFFD-3352-4DE5-AEFD-5899823DCB31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9582AFFD-3352-4DE5-AEFD-5899823DCB31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9582AFFD-3352-4DE5-AEFD-5899823DCB31}.Debug|x64.ActiveCfg = Debug|x64
+		{9582AFFD-3352-4DE5-AEFD-5899823DCB31}.Debug|x64.Build.0 = Debug|x64
+		{9582AFFD-3352-4DE5-AEFD-5899823DCB31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9582AFFD-3352-4DE5-AEFD-5899823DCB31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9582AFFD-3352-4DE5-AEFD-5899823DCB31}.Release|x64.ActiveCfg = Release|Any CPU
+		{9582AFFD-3352-4DE5-AEFD-5899823DCB31}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
