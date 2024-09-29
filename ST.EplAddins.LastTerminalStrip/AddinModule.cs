@@ -1,57 +1,45 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.Gui;
 using System;
-using Eplan.EplApi.Base;
 
 namespace ST.EplAddins.LastTerminalStrip
 {
     public class AddinModule : IEplAddIn
     {
-         
-            string actionName = FindLastTerminalAction.actionName;
+        private string FindLastTerminalsName { get; set; } = FindLastTerminalAction.ActionName;
+        private string ShowHistoryName { get; set; } = ShowHistoryAction.ActionName;
+        private string ShowEmptyTerminalStrips { get; set; } = ShowEmptyTerminalStripsAction.ActionName;
+        private string ShowUnnecessaryBackPlates { get; set; } = ShowUnnecessaryBackPlatesAction.ActionName;
         public bool OnExit()
         {
             throw new NotImplementedException();
         }
-
         public bool OnInit()
         {
             return true;
         }
-      
         public bool OnInitGui()
         {
             Menu menu = new Menu();
-            menu.AddMainMenu("ST ", Menu.MainMenuName.eMainMenuUtilities, "Last terminal", actionName, "Статус", 1);
-            // uint ID= menu.AddMenuItem("SRV",actionName,"Статус",37265,0,false,false);
-
+            var menuId = menu.GetCustomMenuId("ST", null);
+            if (menuId == 0)
+                menuId = menu.AddMainMenu("ST", Menu.MainMenuName.eMainMenuUtilities, "None", "None", "Статус", 1);
+            uint subMenuID = menu.AddPopupMenuItem(
+             "Terminals strips", "Show history", ShowHistoryName, "", menuId, 0, false, false);
+            menu.AddMenuItem("Find last terminals", FindLastTerminalsName, "", subMenuID, 0, false, false);
+            menu.AddMenuItem("ShowEmptyTerminalStrips", ShowEmptyTerminalStrips, "", subMenuID, 0, false, false);
+            menu.AddMenuItem("Show unnecessary back plates", ShowUnnecessaryBackPlates, "", subMenuID, 0, false, false);
             return true;
-            
         }
-
         public bool OnRegister(ref bool bLoadOnStart)
         {
             bLoadOnStart = true;
             System.Windows.Forms.MessageBox.Show("Last terminal addin is implemented");
-           // CreateStaticMenu();
             return true;
         }
-
         public bool OnUnregister()
         {
             return true;
-        }
-        public void CreateStaticMenu()
-        {
-            Menu staticMenu = new Menu();
-            staticMenu.AddStaticMainMenu("STS", NewmultiLanfString("Rlc"), Menu.MainMenuName.eMainMenuUtilities, NewmultiLanfString("Последние клеммы"), actionName, NewmultiLanfString("ms"),1);
-        }
-
-        private  MultiLangString NewmultiLanfString(string input)
-        {
-            MultiLangString multyLangString = new MultiLangString();
-            multyLangString.AddString(ISOCode.Language.L_ru_RU, input);
-            return multyLangString;
         }
     }
 }
