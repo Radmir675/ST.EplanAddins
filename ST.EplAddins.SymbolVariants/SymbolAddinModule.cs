@@ -1,10 +1,5 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.Gui;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ST.EplAddins.SymbolVariants
 {
@@ -12,7 +7,7 @@ namespace ST.EplAddins.SymbolVariants
     {
         public bool OnExit()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public bool OnInit()
