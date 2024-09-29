@@ -88,11 +88,6 @@ namespace ST.EplAddins.SymbolVariants
             return true;
         }
 
-           
-
-
-        }
-
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
             throw new NotImplementedException();
