@@ -4,11 +4,52 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ST.EplAddin.CheckCableAccesorities"
-             mc:Ignorable="d" Height="386" Width="794"
+             mc:Ignorable="d" Height="494" Width="654"
              Title="Cable check">
-    
-    
+
+
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="396*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="259*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.15*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.15*"/>
+        </Grid.RowDefinitions>
+        <GridSplitter Grid.Column="1" Grid.Row="0"
+                Grid.RowSpan="3"
+                Width="2" 
+                HorizontalAlignment="Center" 
+                ShowsPreview="False"/>
+        <Label Grid.Column="0" 
+               Content="Список предупреждений:"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Left"
+               Margin="5,0,0,0"
+               FontSize="12"/>
+        <Label Grid.Column="2" 
+               Content="Настройки:"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Left"
+               Margin="5,0,0,0"
+               FontSize="12"/>
+        <Button  Grid.Row="2" Grid.Column="0"
+                 Width="80"
+                 Height="25"
+                 Content="Проверить"
+                 HorizontalAlignment="Left"
+                 Margin="5"
+                 />
+        <Button  Grid.Row="2" Grid.Column="2"
+                 Width="80"
+                 Height="25"
+                 Content="Сохранить"
+                 HorizontalAlignment="Left"
+                 Margin="5"/>
+        <RichTextBox Grid.Column="0" Grid.Row="1"
+                     />
     </Grid>
 </Window>
