@@ -1,0 +1,25 @@
+﻿using Eplan.EplApi.ApplicationFramework;
+
+namespace ST.EplAddin.CheckCableAccesorities
+{
+    public class CheckCheckCableAccesoritiesAction : IEplAction
+    {
+        public static string actionName = "CheckCableAccesorities";
+        public bool Execute(ActionCallingContext oActionCallingContext)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void GetActionProperties(ref ActionProperties actionProperties)
+        {
+          
+        }
+
+        public bool OnRegister(ref string Name, ref int Ordinal)
+        {
+            Name = actionName;
+            Ordinal = 99;
+            return true;
+        }
+    }
+}
