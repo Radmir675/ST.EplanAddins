@@ -71,8 +71,15 @@
         </RichTextBox>
         <StackPanel  Grid.Row="1" Grid.Column="2">
 
-            <ListBox  MinHeight="300">
-
+            <ListBox  MinHeight="300" HorizontalAlignment="Stretch" ItemsSource="{Binding Settings}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <UniformGrid Columns="2">
+                            <TextBlock Text="f" />
+                            <ComboBox ItemsSource="{Binding TypesGroup}"/>
+                        </UniformGrid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
             <StackPanel Orientation="Horizontal" Margin="10">
                 <Button Content="+" Width="25" Margin="0,0,10,0"
