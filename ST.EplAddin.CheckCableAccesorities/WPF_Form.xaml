@@ -4,7 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ST.EplAddin.CheckCableAccesorities"
-             mc:Ignorable="d" Height="386" Width="794">
+             mc:Ignorable="d" Height="386" Width="794"
+             Title="Cable check">
+    
+    
     <Grid>
             
     </Grid>

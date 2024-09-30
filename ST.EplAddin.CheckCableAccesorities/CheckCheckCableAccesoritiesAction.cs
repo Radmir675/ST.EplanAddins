@@ -7,12 +7,14 @@ namespace ST.EplAddin.CheckCableAccesorities
         public static string actionName = "CheckCableAccesorities";
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            throw new System.NotImplementedException();
+            WPF_Form form = new WPF_Form();
+            form.Show();
+            return true;
         }
 
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
-          
+
         }
 
         public bool OnRegister(ref string Name, ref int Ordinal)
