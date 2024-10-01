@@ -6,10 +6,7 @@ namespace UnitTestProject12
     [TestClass]
     public class UnitTest1
     {
-        public void Main()
-        {
-            TestMethod1();
-        }
+
         [TestMethod]
         public void TestMethod1()
         {

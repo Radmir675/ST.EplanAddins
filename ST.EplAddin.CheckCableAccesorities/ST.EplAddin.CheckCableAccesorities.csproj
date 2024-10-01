@@ -45,6 +45,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files\EPLAN\Platform\2.9.4\Bin\Eplan.EplApi.Guiu.dll</HintPath>
     </Reference>
+    <Reference Include="Eplan.EplApi.MasterDatau, Version=1.0.0.0, Culture=neutral, PublicKeyToken=57aaa27e22f7b107, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\EPLAN\Platform\2.9.4\Bin\Eplan.EplApi.MasterDatau.dll</HintPath>
+    </Reference>
     <Reference Include="Eplan.EplSDK.WPFu, Version=1.0.0.0, Culture=neutral, PublicKeyToken=57aaa27e22f7b107, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files\EPLAN\Platform\2.9.4\Bin\Eplan.EplSDK.WPFu.dll</HintPath>
