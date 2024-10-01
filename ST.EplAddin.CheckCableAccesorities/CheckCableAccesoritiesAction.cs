@@ -10,12 +10,8 @@ namespace ST.EplAddin.CheckCableAccesorities
         public static string actionName = "CheckCableAccesorities";
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-
-            //var types = Enum.GetValues(typeof(MDPartsDatabaseItem.Enums.ProductGroup)).Cast<Enum>().ToList();
-            //var names = MDPartsDatabaseItem.Enums.ProductGroup.Common;
-
             WPF_Form form = new WPF_Form();
-            form.Show();
+            form.ShowDialog();
 
             return true;
         }

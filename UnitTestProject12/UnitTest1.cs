@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ST.EplAddin.CheckCableAccesorities.Help;
+using ST.EplAddin.CheckCableAccesorities;
 
 namespace UnitTestProject12
 {
@@ -10,10 +10,9 @@ namespace UnitTestProject12
         [TestMethod]
         public void TestMethod1()
         {
-            //WPF_Form form = new WPF_Form();
-            //form.Show();
-            ExcelHelper excelHelper = new ExcelHelper();
-            var data = excelHelper.GetData();
+            WPF_Form form = new WPF_Form();
+            form.ShowDialog();
+
         }
     }
 }

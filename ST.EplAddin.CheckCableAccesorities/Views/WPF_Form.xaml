@@ -23,8 +23,8 @@
             <RowDefinition Height="0.15*"/>
         </Grid.RowDefinitions>
         
-        <GridSplitter Grid.Column="1" Grid.Row="0"
-                Grid.RowSpan="3"
+        <GridSplitter Grid.Column="1" Grid.Row="1"
+                
                 Width="2" 
                 HorizontalAlignment="Center" 
                 ShowsPreview="False"/>
@@ -81,7 +81,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <StackPanel Orientation="Horizontal" Margin="10">
+            <StackPanel Orientation="Horizontal" Margin="10" >
                 <Button Content="+" Width="25" Margin="0,0,10,0"
                         Command="{Binding AddRowSetting}"/>
                 <Button Content="-" Width="25"
