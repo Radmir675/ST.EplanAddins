@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="CheckCheckCableAccesoritiesAction.cs" />
     <Compile Include="CheckCableAccesoritiesAddinModule.cs" />
+    <Compile Include="Help\ProductGroupType.cs" />
     <Compile Include="Models\Class1.cs" />
     <Compile Include="ViewModels\FormViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
