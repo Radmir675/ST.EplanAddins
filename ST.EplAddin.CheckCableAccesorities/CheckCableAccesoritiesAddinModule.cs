@@ -22,7 +22,7 @@ namespace ST.EplAddin.CheckCableAccesorities
             if (menuId == 0)
                 menuId = menu.AddMainMenu("ST", Menu.MainMenuName.eMainMenuUtilities, "None", "None", "Статус", 1);
             uint subMenuID = menu.AddMenuItem(
-             "CheckCableAccesorities", CheckCheckCableAccesoritiesAction.actionName, "", menuId, 0, false, false);
+             "CheckCableAccesorities", CheckCableAccesoritiesAction.actionName, "", menuId, 0, false, false);
             return true;
         }
 
