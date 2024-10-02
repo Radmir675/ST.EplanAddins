@@ -71,7 +71,7 @@
         </RichTextBox>
         <StackPanel  Grid.Row="1" Grid.Column="2">
 
-            <ListBox  MinHeight="300" HorizontalAlignment="Stretch" ItemsSource="{Binding Settings}">
+            <ListBox  MinHeight="300" HorizontalAlignment="Stretch" ItemsSource="{Binding Settings}" BorderBrush="Black">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <UniformGrid Columns="2">
@@ -88,5 +88,7 @@
                         Command="{Binding RemoveSelectedRowSetting}"/>
             </StackPanel>
         </StackPanel>
+      
+       
     </Grid>
 </Window>
