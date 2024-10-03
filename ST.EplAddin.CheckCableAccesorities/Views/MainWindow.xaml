@@ -15,7 +15,7 @@
     <Window.Resources>
         <cnvr:EnumDescriptionConverter x:Key="EnumDescriptionConverter"></cnvr:EnumDescriptionConverter>
     </Window.Resources>
-    
+
     <Window.DataContext>
         <vm:MainWindowVM></vm:MainWindowVM>
     </Window.DataContext>
@@ -26,33 +26,33 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="259*" />
         </Grid.ColumnDefinitions>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="0.15*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.15*"/>
         </Grid.RowDefinitions>
-        
+
         <GridSplitter Grid.Column="1" Grid.Row="1"
                 
                 Width="2" 
                 HorizontalAlignment="Center" 
                 ShowsPreview="False"/>
-        
+
         <Label Grid.Column="0" 
                Content="Список предупреждений:"
                VerticalAlignment="Center"
                HorizontalAlignment="Left"
                Margin="5,0,0,0"
                FontSize="12"/>
-        
+
         <Label Grid.Column="2" 
                Content="Настройки:"
                VerticalAlignment="Center"
                HorizontalAlignment="Left"
                Margin="5,0,0,0"
                FontSize="12"/>
-        
+
         <Button  Grid.Row="2" Grid.Column="0"
                  x:Name="Check_Button"
                  Width="80"
@@ -62,7 +62,7 @@
                  Margin="5"
                  Command="{Binding CheckCable}"
                  />
-        
+
         <Button  Grid.Row="2" Grid.Column="2"
                  x:Name="Save_Button"
                  Width="80"
@@ -71,7 +71,7 @@
                  HorizontalAlignment="Left"
                  Margin="5"
                  Command="{Binding SaveSetings}"/>
-        
+
         <RichTextBox Grid.Column="0" Grid.Row="1">
             <FlowDocument>
                 <Paragraph >
@@ -85,13 +85,9 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" >
-                            <TextBlock Text="{Binding Number, StringFormat={}{0} номер изделия}" Margin="5"/>
-                            <!--<ComboBox Width="100" ItemsSource="{Binding Partsdata.Type,Converter={x:EnumToCollectionConverter}}"/>-->
-                            <!--<ComboBox Width="100" SelectedItem="{Binding Type, Converter={StaticResource EnumDescriptionConverter}}"/>
-                            ItemsSource="{Binding Source={x:Type cnvr:ProductGroupType}, Converter={StaticResource EnumDescriptionConverter}}" />-->
+                            <TextBlock Text="{Binding Number, StringFormat={}изделие {0}}" Margin="5"/>
                             <ComboBox Width="100" ItemsSource="{Binding Source={StaticResource EnumDescriptionConverter }, Path=Strings}"
                                      SelectedItem="{Binding Type, Converter={StaticResource EnumDescriptionConverter}}"/>
-                           
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -103,7 +99,5 @@
                         Command="{Binding RemoveSelectedRowSetting}"/>
             </StackPanel>
         </StackPanel>
-      
-       
     </Grid>
 </Window>

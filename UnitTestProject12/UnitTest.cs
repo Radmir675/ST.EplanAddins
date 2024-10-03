@@ -4,11 +4,10 @@ using ST.EplAddin.CheckCableAccesorities;
 namespace UnitTestProject12
 {
     [TestClass]
-    public class UnitTest1
+    public class UnitTest
     {
-
         [TestMethod]
-        public void TestMethod1()
+        public void StartForm()
         {
             MainWindow form = new MainWindow();
             form.ShowDialog();

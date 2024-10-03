@@ -6,8 +6,10 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
     {
         [Description("Кабели")]
         ElectricalCableConnection = 29,
+
         [Description("Принадлежности для маршрутизации")]
         MechanicsRoutingAccessories = 125,
+
         [Description("Общие")]
         Common = 1,
     }

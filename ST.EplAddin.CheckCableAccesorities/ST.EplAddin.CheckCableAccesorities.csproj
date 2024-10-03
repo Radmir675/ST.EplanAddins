@@ -87,7 +87,6 @@
     <Compile Include="Help\ExcelHelper.cs" />
     <Compile Include="Help\Settings.cs" />
     <Compile Include="Models\Part.cs" />
-    <Compile Include="Models\TypeDBGroup.cs" />
     <Compile Include="Help\ProductGroupType.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
