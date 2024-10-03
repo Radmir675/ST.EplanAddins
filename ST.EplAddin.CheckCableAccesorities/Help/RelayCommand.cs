@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace ST.EplAddin.CheckCableAccesorities.View.ViewModel
+namespace ST.EplAddin.CheckCableAccesorities.Help
 {
     public class RelayCommand : ICommand
     {

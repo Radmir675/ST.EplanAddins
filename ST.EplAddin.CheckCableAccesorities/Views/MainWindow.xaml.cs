@@ -2,9 +2,9 @@
 
 namespace ST.EplAddin.CheckCableAccesorities
 {
-    public partial class WPF_Form : Window
+    public partial class MainWindow : Window
     {
-        public WPF_Form()
+        public MainWindow()
         {
             InitializeComponent();
         }

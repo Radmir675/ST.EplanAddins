@@ -10,7 +10,7 @@ namespace ST.EplAddin.CheckCableAccesorities
         public static string actionName = "CheckCableAccesorities";
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            WPF_Form form = new WPF_Form();
+            MainWindow form = new MainWindow();
             form.ShowDialog();
 
             return true;
@@ -46,7 +46,6 @@ namespace ST.EplAddin.CheckCableAccesorities
                 }
             }
         }
-
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
 

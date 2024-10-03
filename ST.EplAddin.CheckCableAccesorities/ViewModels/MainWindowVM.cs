@@ -1,10 +1,19 @@
-﻿using ST.EplAddin.CheckCableAccesorities.View.ViewModel;
+﻿using ST.EplAddin.CheckCableAccesorities.Help;
+using ST.EplAddin.CheckCableAccesorities.Models;
+using System.Collections.Generic;
 
-namespace ST.EplAddin.CheckCableAccesorities
+namespace ST.EplAddin.CheckCableAccesorities.ViewModels
 {
-    public class FormViewModel
+    class MainWindowVM : ViewModelBase
     {
+        public List<Part> PartsData { get => new Settings().GetData(); }
+
         private RelayCommand checkProducts;
+
+        public MainWindowVM()
+        {
+
+        }
         public RelayCommand CheckProducts
         {
             get
@@ -19,6 +28,7 @@ namespace ST.EplAddin.CheckCableAccesorities
                     }));
             }
         }
+
 
     }
 }

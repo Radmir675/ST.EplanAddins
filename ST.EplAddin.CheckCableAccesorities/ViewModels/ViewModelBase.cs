@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace WpfTestApplication.ViewModels
+namespace ST.EplAddin.CheckCableAccesorities.ViewModels
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

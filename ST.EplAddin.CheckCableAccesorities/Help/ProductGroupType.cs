@@ -1,11 +1,14 @@
-﻿namespace ST.EplAddin.CheckCableAccesorities.Help
+﻿using System.ComponentModel;
+
+namespace ST.EplAddin.CheckCableAccesorities.Help
 {
     public enum ProductGroupType
     {
-        ElectricalCableConnection = 29,//кабели
-        MechanicsRoutingAccessories = 125,//принадлежности для маршрутизации
-        Common = 1,//Общие
-
-
+        [Description("Кабели")]
+        ElectricalCableConnection = 29,
+        [Description("Принадлежности для маршрутизации")]
+        MechanicsRoutingAccessories = 125,
+        [Description("Общие")]
+        Common = 1,
     }
 }

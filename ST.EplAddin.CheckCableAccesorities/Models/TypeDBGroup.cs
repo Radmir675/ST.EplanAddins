@@ -1,4 +1,4 @@
-﻿namespace ST.EplAddin.CheckCableAccesorities.Help
+﻿namespace ST.EplAddin.CheckCableAccesorities.Models
 {
     public class TypeDBGroup
     {
