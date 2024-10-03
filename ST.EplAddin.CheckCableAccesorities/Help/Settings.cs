@@ -26,14 +26,17 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
                 new Part(2, ProductGroupType.ElectricalCableConnection),
                 new Part(3, ProductGroupType.MechanicsRoutingAccessories)
             };
-
         }
         public List<Part> GetData()
         {
             //тут надо или получить данные из Eplan или если там пусто то проинициализировать самим
             return Parts;
         }
-        public void SetData(List<Part> parts)
+        public void AddNewPart()
+        {
+            parts.Add(new Part(4, ProductGroupType.Undefined));
+        }
+        public void SeveData(List<Part> parts)
         {
             //надо вызывать метод и все сохранить в БД Eplan
         }

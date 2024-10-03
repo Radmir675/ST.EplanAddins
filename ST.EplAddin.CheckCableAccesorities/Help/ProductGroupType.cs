@@ -12,5 +12,8 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
 
         [Description("Общие")]
         Common = 1,
+
+        [Description("Не определено")]
+        Undefined = 0,
     }
 }

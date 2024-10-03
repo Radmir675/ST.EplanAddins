@@ -94,7 +94,7 @@
             </ListBox>
             <StackPanel Orientation="Horizontal" Margin="10" >
                 <Button Content="+" Width="25" Margin="0,0,10,0"
-                        Command="{Binding AddRowSetting}"/>
+                        Command="{Binding AddNewPart}"/>
                 <Button Content="-" Width="25"
                         Command="{Binding RemoveSelectedRowSetting}"/>
             </StackPanel>
