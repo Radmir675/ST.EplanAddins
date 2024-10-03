@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="CheckCableAccesoritiesAction.cs" />
     <Compile Include="CheckCableAccesoritiesAddinModule.cs" />
+    <Compile Include="Help\EnumDescriptionConverter.cs" />
     <Compile Include="Help\ExcelHelper.cs" />
     <Compile Include="Help\Settings.cs" />
     <Compile Include="Models\Part.cs" />

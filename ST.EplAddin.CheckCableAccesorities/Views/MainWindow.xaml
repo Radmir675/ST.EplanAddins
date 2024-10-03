@@ -5,11 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ST.EplAddin.CheckCableAccesorities"
              xmlns:vm="clr-namespace:ST.EplAddin.CheckCableAccesorities.ViewModels"
+            xmlns:cnvr="clr-namespace:ST.EplAddin.CheckCableAccesorities.Help"
+            xmlns:m="clr-namespace:ST.EplAddin.CheckCableAccesorities.Models"
              mc:Ignorable="d" Height="494" Width="654"
              Title="Cable check"
              ResizeMode="NoResize">
 
 
+    <Window.Resources>
+        <cnvr:EnumDescriptionConverter x:Key="EnumDescriptionConverter"></cnvr:EnumDescriptionConverter>
+    </Window.Resources>
+    
     <Window.DataContext>
         <vm:MainWindowVM></vm:MainWindowVM>
     </Window.DataContext>
@@ -75,13 +81,18 @@
         </RichTextBox>
         <StackPanel  Grid.Row="1" Grid.Column="2">
 
-            <ListBox  MinHeight="300" HorizontalAlignment="Stretch" ItemsSource="{Binding Settings}" BorderBrush="Black">
+            <ListBox  MinHeight="300" HorizontalAlignment="Stretch" ItemsSource="{Binding PartsData}" BorderBrush="Black">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <UniformGrid Columns="2">
-                            <TextBlock Text="f" />
-                            <ComboBox ItemsSource="{Binding Partsdata}"/>
-                        </UniformGrid>
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="{Binding Number, StringFormat={}{0} номер изделия}" Margin="5"/>
+                            <!--<ComboBox Width="100" ItemsSource="{Binding Partsdata.Type,Converter={x:EnumToCollectionConverter}}"/>-->
+                            <!--<ComboBox Width="100" SelectedItem="{Binding Type, Converter={StaticResource EnumDescriptionConverter}}"/>
+                            ItemsSource="{Binding Source={x:Type cnvr:ProductGroupType}, Converter={StaticResource EnumDescriptionConverter}}" />-->
+                            <ComboBox Width="100" ItemsSource="{Binding Source={StaticResource EnumDescriptionConverter }, Path=Strings}"
+                                     SelectedItem="{Binding Type, Converter={StaticResource EnumDescriptionConverter}}"/>
+                           
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

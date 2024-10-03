@@ -10,7 +10,7 @@ namespace UnitTestProject12
         [TestMethod]
         public void TestMethod1()
         {
-            WPF_Form form = new WPF_Form();
+            MainWindow form = new MainWindow();
             form.ShowDialog();
 
         }

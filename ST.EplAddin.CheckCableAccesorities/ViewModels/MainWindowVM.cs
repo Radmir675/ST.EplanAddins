@@ -28,6 +28,10 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
                     }));
             }
         }
+        //    public IEnumerable<KeyValuePair<ProductGroupType, string>> EnumValues =>
+        //Enum.GetValues(typeof(ProductGroupType))
+        //    .Cast<ProductGroupType>()
+        //    .Select(e => new KeyValuePair<ProductGroupType, string>(e, e.GetDescription()));
 
 
     }
