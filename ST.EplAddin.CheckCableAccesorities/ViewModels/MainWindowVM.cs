@@ -9,12 +9,20 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
     {
         private readonly Settings settings;
         public ObservableCollection<Part> PartsData { get; set; }
-
+        public Part SelectedPart
+        {
+            get => selectedPart;
+            set
+            {
+                selectedPart = value;
+                OnPropertyChanged();
+            }
+        }
+        private Part selectedPart;
 
         private RelayCommand checkProducts;
         private RelayCommand addNewPart;
         private RelayCommand removeSelectedPart;
-
 
         public MainWindowVM()
         {
@@ -43,7 +51,7 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
                     (
                     addNewPart = new RelayCommand(obj =>
                     {
-                        PartsData.Add(new Part(PartsData.LastOrDefault()?.Number + 1 ?? 0, ProductGroupType.Undefined));
+                        PartsData.Add(new Part(PartsData.LastOrDefault()?.Number + 1 ?? 1, ProductGroupType.Undefined));
                     }));
             }
         }
@@ -57,7 +65,12 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
                     {
                         if (obj is Part part)
                         {
+                            var partIndex = PartsData.IndexOf(part);
                             PartsData.Remove(part);
+                            if (partIndex > 0)
+                            {
+                                SelectedPart = PartsData[partIndex - 1];
+                            }
                         }
                     },
                     (obj) => PartsData.Any()));
