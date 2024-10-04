@@ -43,8 +43,7 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
                     (
                     addNewPart = new RelayCommand(obj =>
                     {
-                        PartsData.Add(new Part(PartsData.Last().Number + 1, ProductGroupType.Undefined));
-
+                        PartsData.Add(new Part(PartsData.LastOrDefault()?.Number + 1 ?? 0, ProductGroupType.Undefined));
                     }));
             }
         }
@@ -56,8 +55,10 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
                     (
                     removeSelectedPart = new RelayCommand(obj =>
                     {
-
-                        PartsData.Remove();
+                        if (obj is Part part)
+                        {
+                            PartsData.Remove(part);
+                        }
                     },
                     (obj) => PartsData.Any()));
             }

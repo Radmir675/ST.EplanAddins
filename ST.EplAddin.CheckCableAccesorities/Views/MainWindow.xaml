@@ -79,12 +79,14 @@
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <StackPanel  Grid.Row="1" Grid.Column="2">
 
-            <ListBox  MinHeight="300" HorizontalAlignment="Stretch" 
+        <StackPanel  Grid.Row="1" Grid.Column="2">
+            <ListBox  MinHeight="300" HorizontalAlignment="Stretch"
                       ItemsSource="{Binding PartsData}" 
                       BorderBrush="Black"
-                      x:Name="PartsListBox">
+                      x:Name="PartsListBox"
+                      MaxHeight="310"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" >
@@ -100,7 +102,7 @@
                         Command="{Binding AddNewPart}"/>
                 <Button Content="-" Width="25"
                         Command="{Binding RemoveSelectedPart}"
-                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListBox}} }"/>
+                        CommandParameter="{Binding ElementName=PartsListBox, Path=SelectedItem}"/>
             </StackPanel>
         </StackPanel>
     </Grid>
