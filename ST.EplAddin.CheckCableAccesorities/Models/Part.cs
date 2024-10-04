@@ -5,10 +5,18 @@ namespace ST.EplAddin.CheckCableAccesorities.Models
 {
     internal class Part : ViewModelBase
     {
-        public int Number { get; }
-
+        private int number;
         private ProductGroupType type;
 
+        public int Number
+        {
+            get { return number; }
+            set
+            {
+                number = value;
+                OnPropertyChanged();
+            }
+        }
         public ProductGroupType Type
         {
             get { return type; }

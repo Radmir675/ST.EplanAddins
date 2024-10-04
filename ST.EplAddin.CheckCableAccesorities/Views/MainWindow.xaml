@@ -81,13 +81,16 @@
         </RichTextBox>
         <StackPanel  Grid.Row="1" Grid.Column="2">
 
-            <ListBox  MinHeight="300" HorizontalAlignment="Stretch" ItemsSource="{Binding PartsData}" BorderBrush="Black">
+            <ListBox  MinHeight="300" HorizontalAlignment="Stretch" 
+                      ItemsSource="{Binding PartsData}" 
+                      BorderBrush="Black"
+                      x:Name="PartsListBox">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" >
                             <TextBlock Text="{Binding Number, StringFormat={}изделие {0}}" Margin="5"/>
-                            <ComboBox Width="100" ItemsSource="{Binding Source={StaticResource EnumDescriptionConverter }, Path=Strings}"
-                                     SelectedItem="{Binding Type, Converter={StaticResource EnumDescriptionConverter}}"/>
+                            <ComboBox Width="100" ItemsSource="{Binding Source={StaticResource EnumDescriptionConverter }, Path=Strings, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                                     SelectedItem="{Binding Type, Converter={StaticResource EnumDescriptionConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -96,7 +99,8 @@
                 <Button Content="+" Width="25" Margin="0,0,10,0"
                         Command="{Binding AddNewPart}"/>
                 <Button Content="-" Width="25"
-                        Command="{Binding RemoveSelectedRowSetting}"/>
+                        Command="{Binding RemoveSelectedPart}"
+                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListBox}} }"/>
             </StackPanel>
         </StackPanel>
     </Grid>
