@@ -73,7 +73,7 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
                             }
                         }
                     },
-                    (obj) => PartsData.Any()));
+                    (obj) => SelectedPart != null));
             }
         }
 
