@@ -28,7 +28,7 @@
 
         <GroupBox Grid.Column="0" Header="Список предупреждений" Margin="5">
             <DockPanel>
-                <RichTextBox DockPanel.Dock="Top" >
+                <RichTextBox DockPanel.Dock="Top" Height="400" >
                     <FlowDocument>
                         <Paragraph >
                             1.Hello world!
@@ -65,10 +65,10 @@
                               ItemsSource="{Binding PartsData}" 
                               BorderBrush="Black"
                               x:Name="PartsListBox"
-                              MaxHeight="310"
+                              MaxHeight="360"
                         
                               ScrollViewer.VerticalScrollBarVisibility="Auto"
-                              SelectedItem="{Binding SelectedPart,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                              SelectedItem="{Binding SelectedPart,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Height="358">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" >
