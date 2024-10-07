@@ -115,13 +115,15 @@
                               x:Name="PartsListBox"
                               VerticalAlignment="Stretch"
                               ScrollViewer.VerticalScrollBarVisibility="Auto"
-                              SelectedItem="{Binding SelectedPart,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
-                               >
+                              SelectedItem="{Binding SelectedPart,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" >
+
+                   
                     <ListBox.ItemTemplate>
-                        <DataTemplate >
-                            <Grid>
+                        <DataTemplate>
+                            <Grid Grid.IsSharedSizeScope="True">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="c"/>
+                                    <ColumnDefinition Width="3" SharedSizeGroup="cв"/>
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
                                 </Grid.ColumnDefinitions>
                                 
@@ -133,9 +135,11 @@
                                     Text="{Binding Number, StringFormat={}изделие {0}}" 
                                     Margin="5"/>
 
+                                <GridSplitter Grid.Column="1">
+                                    
+                                </GridSplitter>
 
-
-                                <ComboBox Width="124"  Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                <ComboBox Width="124"  Grid.Column="2"  VerticalAlignment="Center" HorizontalAlignment="Center" 
                                           ItemsSource="{Binding Source={StaticResource EnumDescriptionConverter }, Path=Strings, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                                           SelectedItem="{Binding Type, Converter={StaticResource EnumDescriptionConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                 </ComboBox>
