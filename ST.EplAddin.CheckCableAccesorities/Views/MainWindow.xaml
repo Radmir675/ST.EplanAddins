@@ -7,9 +7,12 @@
              xmlns:vm="clr-namespace:ST.EplAddin.CheckCableAccesorities.ViewModels"
             xmlns:cnvr="clr-namespace:ST.EplAddin.CheckCableAccesorities.Help"
             xmlns:m="clr-namespace:ST.EplAddin.CheckCableAccesorities.Models"
-             mc:Ignorable="d" Height="500" Width="700"
+             mc:Ignorable="d" Height="547" Width="589"
              Title="Cable check"
-             ResizeMode="NoResize">
+             ResizeMode="CanResize"
+            MinHeight="250"
+            MinWidth="425">
+
 
     <Window.Resources>
         <cnvr:EnumDescriptionConverter x:Key="EnumDescriptionConverter"></cnvr:EnumDescriptionConverter>
@@ -28,20 +31,13 @@
 
         <GroupBox Grid.Column="0" Header="Список предупреждений" Margin="5">
             <DockPanel>
-                <RichTextBox DockPanel.Dock="Top" Height="400" >
-                    <FlowDocument>
-                        <Paragraph >
-                            1.Hello world!
-                        </Paragraph>
-                    </FlowDocument>
-                </RichTextBox>
-                <StackPanel VerticalAlignment="Bottom">
+                <StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
 
                     <Separator  VerticalAlignment="Top"
                                 Width="Auto"
                                 Background="Black"/>
                     <Button VerticalAlignment="Top"
-                             x:Name="Check_Button"
+                             x:Name="CheckProducts"
                              Width="80"
                              Height="25"
                              Content="Проверить"
@@ -50,37 +46,25 @@
                              Command="{Binding CheckCable}">
                     </Button>
                 </StackPanel>
-                
 
+                <RichTextBox>
+                    <FlowDocument>
+                        <Paragraph >
+                            1.Hello world!
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
 
-               
             </DockPanel>
         </GroupBox>
 
-        <GroupBox  Grid.Row="1" Grid.Column="2" Header="Список изделий" Margin="5">
+        <GroupBox  Grid.Row="1" 
+                   Grid.Column="2" 
+                   Header="Список изделий" 
+                   Margin="5">
+            
             <DockPanel LastChildFill="True">
-                <StackPanel  DockPanel.Dock="Top">
-                    <ListBox   
-                              HorizontalAlignment="Stretch"
-                              ItemsSource="{Binding PartsData}" 
-                              BorderBrush="Black"
-                              x:Name="PartsListBox"
-                              MaxHeight="360"
-                        
-                              ScrollViewer.VerticalScrollBarVisibility="Auto"
-                              SelectedItem="{Binding SelectedPart,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Height="358">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" >
-                                    <TextBlock Text="{Binding Number, StringFormat={}изделие {0}}" Margin="5"/>
-                                    <ComboBox Width="100" ItemsSource="{Binding Source={StaticResource EnumDescriptionConverter }, Path=Strings, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                               SelectedItem="{Binding Type, Converter={StaticResource EnumDescriptionConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
 
-                </StackPanel>
                 <StackPanel DockPanel.Dock="Bottom"
                             Height="40" 
                             VerticalAlignment="Bottom">
@@ -99,12 +83,14 @@
                      Command="{Binding SaveSetings}">
                     </Button>
                 </StackPanel>
-                <WrapPanel DockPanel.Dock="Bottom" Height="Auto" VerticalAlignment="Bottom">
-                    
+                <WrapPanel DockPanel.Dock="Bottom" 
+                           Height="Auto" 
+                           VerticalAlignment="Bottom">
+
                     <StackPanel x:Name="PartsManageButtons" 
                             Orientation="Horizontal"
-                               Margin="5,5,5,5"> 
-                           
+                               Margin="5,5,5,5">
+
                         <Button 
                             Content="Добавить" 
                             Width="80"
@@ -121,7 +107,26 @@
                         </Button>
                     </StackPanel>
                 </WrapPanel>
-                  
+
+                <ListBox
+                              HorizontalAlignment="Stretch"
+                              ItemsSource="{Binding PartsData}" 
+                              BorderBrush="Black"
+                              x:Name="PartsListBox"
+                              VerticalAlignment="Stretch"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              SelectedItem="{Binding SelectedPart,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                               >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="{Binding Number, StringFormat={}изделие {0}}" Margin="5"/>
+                                <ComboBox Width="100" ItemsSource="{Binding Source={StaticResource EnumDescriptionConverter }, Path=Strings, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                               SelectedItem="{Binding Type, Converter={StaticResource EnumDescriptionConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </DockPanel>
         </GroupBox>
 
