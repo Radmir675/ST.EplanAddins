@@ -11,17 +11,13 @@
              Title="Cable check"
              ResizeMode="CanResize"
             MinHeight="250"
-            MinWidth="425">
+            MinWidth="425"
+            d:DataContext="{d:DesignInstance vm:MainWindowVM, IsDesignTimeCreatable=True}">
 
 
     <Window.Resources>
         <cnvr:EnumDescriptionConverter x:Key="EnumDescriptionConverter"></cnvr:EnumDescriptionConverter>
     </Window.Resources>
-
-    <Window.DataContext>
-        <vm:MainWindowVM></vm:MainWindowVM>
-    </Window.DataContext>
-
     
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
