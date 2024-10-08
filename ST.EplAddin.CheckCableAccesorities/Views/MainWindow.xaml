@@ -111,7 +111,8 @@
 
                 <ListView x:Name="ListViewPart"
                           ItemsSource="{Binding PartsData}"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          SelectedItem="{Binding SelectedPart,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                     <ListView.Resources>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment"
