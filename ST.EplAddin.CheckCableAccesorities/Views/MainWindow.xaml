@@ -104,7 +104,7 @@
                                 Height="25"
                                 Content="Удалить"
                                 Command="{Binding RemoveSelectedPart}"
-                                CommandParameter="{Binding ElementName=PartsListBox, Path=SelectedItem}">
+                                CommandParameter="{Binding ElementName=ListViewPart, Path=SelectedItem}">
                         </Button>
                     </StackPanel>
                 </WrapPanel>
