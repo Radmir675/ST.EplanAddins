@@ -7,7 +7,7 @@
              xmlns:vm="clr-namespace:ST.EplAddin.CheckCableAccesorities.ViewModels"
             xmlns:cnvr="clr-namespace:ST.EplAddin.CheckCableAccesorities.Help"
             xmlns:m="clr-namespace:ST.EplAddin.CheckCableAccesorities.Models"
-             mc:Ignorable="d" Height="496" Width="568"
+             mc:Ignorable="d" Height="547" Width="589"
              Title="Cable check"
              ResizeMode="CanResize"
             MinHeight="250"
@@ -25,7 +25,7 @@
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -38,7 +38,7 @@
                                 Background="Black"/>
                     <Button VerticalAlignment="Top"
                              x:Name="CheckProducts"
-                             MinWidth="80"
+                             Width="80"
                              Height="25"
                              Content="Проверить"
                              HorizontalAlignment="Left"
@@ -62,7 +62,7 @@
                    Grid.Column="2" 
                    Header="Список изделий" 
                    Margin="5">
-
+            
             <DockPanel LastChildFill="True">
 
                 <StackPanel DockPanel.Dock="Bottom"
@@ -120,31 +120,11 @@
                    
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Grid.IsSharedSizeScope="True">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" SharedSizeGroup="c"/>
-                                    <ColumnDefinition Width="3" SharedSizeGroup="cв"/>
-                                    <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <TextBlock
-                                    TextAlignment="Center"
-                                    Grid.Column="0" 
-                                    MinWidth="100"
-                                    HorizontalAlignment="Center"
-                                    Text="{Binding Number, StringFormat={}изделие {0}}" 
-                                    Margin="5"/>
-
-                                <GridSplitter Grid.Column="1">
-                                    
-                                </GridSplitter>
-
-                                <ComboBox Grid.Column="2"  VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                          ItemsSource="{Binding Source={StaticResource EnumDescriptionConverter }, Path=Strings, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                                          SelectedItem="{Binding Type, Converter={StaticResource EnumDescriptionConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                                </ComboBox>
-                            </Grid>
-
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="{Binding Number, StringFormat={}изделие {0}}" Margin="5"/>
+                                <ComboBox Width="100" ItemsSource="{Binding Source={StaticResource EnumDescriptionConverter }, Path=Strings, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                               SelectedItem="{Binding Type, Converter={StaticResource EnumDescriptionConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
