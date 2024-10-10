@@ -13,8 +13,9 @@
         Title="Cable check"
         ResizeMode="CanResize"
         MinHeight="250"
-        MinWidth="425">
-    <!--d:DataContext="{d:DesignInstance vm:MainWindowVM, IsDesignTimeCreatable=True}"-->
+        MinWidth="425"
+        d:DataContext="{d:DesignInstance vm:MainWindowVM, IsDesignTimeCreatable=True}">
+
     <Window.DataContext>
         <vm:MainWindowVM></vm:MainWindowVM>
     </Window.DataContext>
@@ -41,13 +42,13 @@
                                 Width="Auto"
                                 Background="Black" />
                     <Button VerticalAlignment="Top"
-                             x:Name="CheckProducts"
-                             MinWidth="80"
-                             Height="25"
-                             Content="Проверить"
-                             HorizontalAlignment="Left"
-                             Margin="5"
-                             Command="{Binding CheckCable}">
+                            x:Name="CheckProducts"
+                            MinWidth="80"
+                            Height="25"
+                            Content="Проверить"
+                            HorizontalAlignment="Left"
+                            Margin="5"
+                            Command="{Binding CheckCable}">
                     </Button>
                 </StackPanel>
 
@@ -66,7 +67,7 @@
                    Grid.Column="2"
                    Header="Список изделий"
                    Margin="5">
-            
+
             <DockPanel LastChildFill="True">
 
                 <StackPanel DockPanel.Dock="Bottom"
