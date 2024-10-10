@@ -1,7 +1,9 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
+using ST.EplAddin.CheckCableAccesorities.Models;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ST.EplAddin.CheckCableAccesorities
 {
@@ -29,7 +31,7 @@ namespace ST.EplAddin.CheckCableAccesorities
             return allCablesInProject;
         }
 
-        public IEnumerable<string> CheckCableAccesorities(Dictionary<int, int> checkDictionary)//checkDictionary 1-номер изделия; 2-номер enum
+        internal IEnumerable<string> CheckCableAccesorities(ObservableCollection<Part> parts)//checkDictionary 1-номер изделия; 2-номер enum
         {
             var allCablesInProject = GetAllCables();
 
@@ -39,9 +41,9 @@ namespace ST.EplAddin.CheckCableAccesorities
                 var articlesLength = articles.Length;
                 for (int i = 0; i < articlesLength; i++) //надо проверить на максимальный i
                 {
-                    if (articles[i].Properties[22041].ToInt() != checkDictionary[i])
+                    if (articles[i].Properties[22041].ToInt() != (int)parts[i].Type)
                     {
-                        yield return cable.Name + " " + i;
+                        yield return cable.Name + " " + parts[i].Number;
                     }
                 }
             }

@@ -52,10 +52,10 @@
                     </Button>
                 </StackPanel>
 
-                <RichTextBox>
+                <RichTextBox IsReadOnly="True" Name="TextBox1">
                     <FlowDocument>
                         <Paragraph>
-                            1.Hello world!
+                            dc
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>

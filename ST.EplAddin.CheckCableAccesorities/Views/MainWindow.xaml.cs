@@ -8,5 +8,7 @@ namespace ST.EplAddin.CheckCableAccesorities
         {
             InitializeComponent();
         }
+
+
     }
 }
