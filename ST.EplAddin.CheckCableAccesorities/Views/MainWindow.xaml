@@ -48,7 +48,7 @@
                             Content="Проверить"
                             HorizontalAlignment="Left"
                             Margin="5"
-                            Command="{Binding CheckCable}">
+                            Command="{Binding CheckProducts}">
                     </Button>
                 </StackPanel>
 

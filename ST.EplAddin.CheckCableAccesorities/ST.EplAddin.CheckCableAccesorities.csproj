@@ -10,6 +10,8 @@
     <RootNamespace>ST.EplAddin.CheckCableAccesorities</RootNamespace>
     <AssemblyName>ST.EplAddin.CheckCableAccesorities</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <LangVersion>8.0</LangVersion>
+     <Nullable>enable</Nullable>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -85,6 +87,7 @@
     <Compile Include="CheckCableAccesoritiesAddinModule.cs" />
     <Compile Include="Help\EnumDescriptionConverter.cs" />
     <Compile Include="Help\Settings.cs" />
+    <Compile Include="Models\ErrorDataCable.cs" />
     <Compile Include="Models\Part.cs" />
     <Compile Include="Help\ProductGroupType.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

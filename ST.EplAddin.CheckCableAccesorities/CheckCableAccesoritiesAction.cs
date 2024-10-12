@@ -1,9 +1,11 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
+using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
 using ST.EplAddin.CheckCableAccesorities.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ST.EplAddin.CheckCableAccesorities
 {
@@ -31,7 +33,7 @@ namespace ST.EplAddin.CheckCableAccesorities
             return allCablesInProject;
         }
 
-        internal IEnumerable<string> CheckCableAccesorities(ObservableCollection<Part> parts)//checkDictionary 1-номер изделия; 2-номер enum
+        internal IEnumerable<ErrorDataCable> CheckCableAccesorities(ObservableCollection<Part> parts)
         {
             var allCablesInProject = GetAllCables();
 
@@ -39,13 +41,28 @@ namespace ST.EplAddin.CheckCableAccesorities
             {
                 var articles = cable.ArticleReferences;
                 var articlesLength = articles.Length;
-                for (int i = 0; i < articlesLength; i++) //надо проверить на максимальный i
+                try
                 {
-                    if (articles[i].Properties[22041].ToInt() != (int)parts[i].Type)
+                    if (articles.Any())
                     {
-                        yield return cable.Name + " " + parts[i].Number;
+                        for (int i = 0; i < parts.Count; i++)
+                        {
+                            var currentProperlyArticle = articles.FirstOrDefault(article => article.ReferencePos == parts[i].Number);
+                            if (currentProperlyArticle == null)
+                            {
+                                yield return new ErrorDataCable(cable.Name, parts[i].Number, null, "Нет такого изделия");
+
+                            }
+                            else if (currentProperlyArticle?.Properties[22041].ToInt() != (int)parts[i].Type)
+                            {
+                                var typeName = currentProperlyArticle.Properties[22041].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                                yield return new ErrorDataCable(cable.Name, parts[i].Number, typeName, null);
+
+                            }
+                        }
                     }
                 }
+                finally { }
             }
         }
         public void GetActionProperties(ref ActionProperties actionProperties)

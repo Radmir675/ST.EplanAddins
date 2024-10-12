@@ -38,7 +38,7 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
                     checkProducts = new RelayCommand(obj =>
                     {
                         CheckCableAccesoritiesAction checkCheckCableAccesoritiesAction = new CheckCableAccesoritiesAction();
-                        var data = checkCheckCableAccesoritiesAction.CheckCableAccesorities(PartsData);
+                        var data = checkCheckCableAccesoritiesAction.CheckCableAccesorities(PartsData).ToList();
                     }));
             }
         }
