@@ -23,12 +23,21 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
             get => selectedMessage;
             set { selectedMessage = value; OnPropertyChanged(); }
         }
-        public ObservableCollection<ErrorDataCable> Message { get; set; }
+        public ObservableCollection<ErrorDataCable> Message
+        {
+            get => message;
+            set
+            {
+                message = value;
+                OnPropertyChanged();
+            }
+        }
         private Part selectedPart;
         private RelayCommand checkProducts;
         private RelayCommand addNewPart;
         private RelayCommand removeSelectedPart;
         private ErrorDataCable selectedMessage;
+        private ObservableCollection<ErrorDataCable> message;
 
         public MainWindowVM()
         {
