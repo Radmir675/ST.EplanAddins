@@ -58,7 +58,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <ListView ItemsSource="{Binding Message}" SelectedItem="{Binding SelectedMessage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <ListView ItemsSource="{Binding Message, Mode=TwoWay}" SelectedItem="{Binding SelectedMessage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}" />
@@ -127,8 +127,8 @@
                             Height="25"
                             Content="Сохранить"
                             HorizontalAlignment="Left"
-                            Margin="5"
-                            Command="{Binding SaveSetings}">
+                            Margin="5">
+                        <!--Command="{Binding SaveSetings}"-->
                     </Button>
                 </StackPanel>
                 <WrapPanel DockPanel.Dock="Bottom"
