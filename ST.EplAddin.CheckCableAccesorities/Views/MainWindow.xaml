@@ -52,13 +52,30 @@
                     </Button>
                 </StackPanel>
 
-                <RichTextBox IsReadOnly="True" Name="TextBox1">
-                    <FlowDocument>
-                        <Paragraph>
-                            dc
-                        </Paragraph>
-                    </FlowDocument>
-                </RichTextBox>
+                <TreeView>
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate>
+                            <TextBlock Text="{Binding Name}"/>
+                            <HierarchicalDataTemplate.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Type, RelativeSource={RelativeSource Mode=PreviousData}}" />
+                                </DataTemplate>
+                            </HierarchicalDataTemplate.ItemTemplate>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+             
+
+                <!--<TreeViewItem>
+                    <TreeViewItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            
+                            <Label Content="USA"></Label>
+                        </StackPanel>
+                    </TreeViewItem.Header>
+                </TreeViewItem>-->
+                    
+                </TreeView>
+
 
             </DockPanel>
         </GroupBox>

@@ -18,8 +18,12 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
                 OnPropertyChanged();
             }
         }
+        public ObservableCollection<ErrorDataCable> Message { get; set; } = new ObservableCollection<ErrorDataCable>()
+        {
+            new ErrorDataCable("S1", 2, "пропуск"),
+            new ErrorDataCable("S2", 2, "пропуск")
+        };
         private Part selectedPart;
-
         private RelayCommand checkProducts;
         private RelayCommand addNewPart;
         private RelayCommand removeSelectedPart;
@@ -38,7 +42,7 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
                     checkProducts = new RelayCommand(obj =>
                     {
                         CheckCableAccesoritiesAction checkCheckCableAccesoritiesAction = new CheckCableAccesoritiesAction();
-                        var data = checkCheckCableAccesoritiesAction.CheckCableAccesorities(PartsData).ToList();
+                        Message = new ObservableCollection<ErrorDataCable>(checkCheckCableAccesoritiesAction.CheckCableAccesorities(PartsData));
                     }));
             }
         }
