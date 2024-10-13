@@ -52,29 +52,56 @@
                     </Button>
                 </StackPanel>
 
-                <TreeView>
-                    <TreeView.ItemTemplate>
-                        <HierarchicalDataTemplate>
-                            <TextBlock Text="{Binding Name}"/>
-                            <HierarchicalDataTemplate.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=Type, RelativeSource={RelativeSource Mode=PreviousData}}" />
-                                </DataTemplate>
-                            </HierarchicalDataTemplate.ItemTemplate>
-                        </HierarchicalDataTemplate>
-                    </TreeView.ItemTemplate>
-             
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <!--<TreeViewItem>
-                    <TreeViewItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            
-                            <Label Content="USA"></Label>
-                        </StackPanel>
-                    </TreeViewItem.Header>
-                </TreeViewItem>-->
-                    
-                </TreeView>
+                    <ListView ItemsSource="{Binding Message}" SelectedItem="{Binding SelectedMessage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Grid Grid.Column="1"
+                          Margin="10,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="Номер изделия: " />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   Text="Тип: " />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="0"
+                                   Text="Сообщение: " />
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="1"
+                                   Text="{Binding SelectedMessage.PartNumber}" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Text="{Binding SelectedMessage.Type}" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   Text="{Binding SelectedMessage.Message}" />
+                    </Grid>
+
+
+                </Grid>
+
+
+
+
 
 
             </DockPanel>

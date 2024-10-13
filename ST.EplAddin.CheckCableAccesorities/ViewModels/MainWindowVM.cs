@@ -18,15 +18,17 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
                 OnPropertyChanged();
             }
         }
-        public ObservableCollection<ErrorDataCable> Message { get; set; } = new ObservableCollection<ErrorDataCable>()
+        public ErrorDataCable SelectedMessage
         {
-            new ErrorDataCable("S1", 2, "пропуск"),
-            new ErrorDataCable("S2", 2, "пропуск")
-        };
+            get => selectedMessage;
+            set { selectedMessage = value; OnPropertyChanged(); }
+        }
+        public ObservableCollection<ErrorDataCable> Message { get; set; }
         private Part selectedPart;
         private RelayCommand checkProducts;
         private RelayCommand addNewPart;
         private RelayCommand removeSelectedPart;
+        private ErrorDataCable selectedMessage;
 
         public MainWindowVM()
         {
