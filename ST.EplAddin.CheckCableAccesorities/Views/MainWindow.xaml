@@ -72,11 +72,12 @@
                     
                     <TextBlock Grid.Row="1" 
                                Grid.Column="0" 
-                               Text="{Binding Message.Count}"
+                               Text="{Binding Message.Count, StringFormat={}Ошибок: {0}}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Left"
                                Margin="5,0"
-                               Width="Auto"/>
+                               Width="Auto"
+                               FontSize="12"/>
 
                     <Grid Grid.Column="1"
                           Margin="10,2" Grid.RowSpan="2">
