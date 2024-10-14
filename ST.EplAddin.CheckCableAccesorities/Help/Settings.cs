@@ -14,25 +14,24 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
 
         private void Initialize()
         {
-            //TODO: настроить
             Parts = new ObservableCollection<Part>()
             {
-                new Part(1, ProductGroupType.Common),
-                new Part(2, ProductGroupType.ElectricalCableConnection),
-                new Part(3, ProductGroupType.MechanicsRoutingAccessories)
+                new Part(1,ProductSubGroupEnum.Electric, ProductGroupEnum.Common,ProductTopGroupEnum.Mechanic),
+                new Part(2,ProductSubGroupEnum.Electric, ProductGroupEnum.ElectricalCableConnection,ProductTopGroupEnum.Electric),
+                new Part(3,ProductSubGroupEnum.Electric, ProductGroupEnum.MechanicsRoutingAccessories,ProductTopGroupEnum.Electric)
             };
         }
         public ObservableCollection<Part> GetData()
         {
-            var datafromSettings = JsonProvider<ObservableCollection<Part>>.GetData();
-            if (datafromSettings != null)
-            {
-                return datafromSettings;
-            }
-            else
-            {
-                return Parts ?? new ObservableCollection<Part>();
-            }
+            //var datafromSettings = JsonProvider<ObservableCollection<Part>>.GetData();
+            //if (datafromSettings != null)
+            //{
+            //    return datafromSettings;
+            //}
+            //else
+            //{
+            return Parts ?? new ObservableCollection<Part>();
+            //}
         }
         public void SaveData(ObservableCollection<Part> parts)
         {

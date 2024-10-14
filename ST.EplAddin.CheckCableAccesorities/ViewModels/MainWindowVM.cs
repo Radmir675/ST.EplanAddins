@@ -66,7 +66,10 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
                     (
                     addNewPart = new RelayCommand(obj =>
                     {
-                        PartsData.Add(new Part(PartsData.LastOrDefault()?.Number + 1 ?? 1, ProductGroupType.Undefined));
+                        PartsData.Add(new Part(PartsData.LastOrDefault()?.Number + 1 ?? 1,
+                            ProductSubGroupEnum.Electric,
+                            ProductGroupEnum.Undefined,
+                            ProductTopGroupEnum.Undefined));
                     }));
             }
         }

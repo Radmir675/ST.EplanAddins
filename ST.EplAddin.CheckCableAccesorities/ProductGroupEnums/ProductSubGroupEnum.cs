@@ -2,7 +2,7 @@
 
 namespace ST.EplAddin.CheckCableAccesorities.Help
 {
-    public enum ProductSubGroupType
+    public enum ProductSubGroupEnum
     {
         [Description("Электротехника")]
         Electric = 1,

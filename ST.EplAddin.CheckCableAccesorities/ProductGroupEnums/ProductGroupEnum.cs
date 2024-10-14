@@ -2,7 +2,7 @@
 
 namespace ST.EplAddin.CheckCableAccesorities.Help
 {
-    public enum ProductGroupType
+    public enum ProductGroupEnum
     {
         [Description("Кабели")]
         ElectricalCableConnection = 29,

@@ -170,7 +170,6 @@
 
                 <ListView x:Name="ListViewPart"
                           ItemsSource="{Binding PartsData}"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           SelectedItem="{Binding SelectedPart,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                     <ListView.Resources>
                         <Style TargetType="ListViewItem">
@@ -178,23 +177,50 @@
                                     Value="Stretch" />
                         </Style>
                     </ListView.Resources>
+                    
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding Path=Number}"
                                             x:Name="Column1"
                                             Width="Auto"
                                             Header="Номер изделия" />
+                            
                             <GridViewColumn  Header="Тип"
                                              x:Name="Column2"
                                              Width="150">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <ComboBox ItemsSource="{Binding Source={StaticResource EnumDescriptionConverter }, Path=Strings, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                                                  SelectedItem="{Binding Type, Converter={StaticResource EnumDescriptionConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                                  SelectedItem="{Binding ProductSubGroup, Converter={StaticResource EnumDescriptionConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                         </ComboBox>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
+
+                            <GridViewColumn  Header="Тип2"
+                                             x:Name="Column22"
+                                             Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox ItemsSource="{Binding Source={StaticResource EnumDescriptionConverter }, Path=Strings, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                                                  SelectedItem="{Binding ProductGroup, Converter={StaticResource EnumDescriptionConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn  Header="Тип2"
+                                             x:Name="Column222"
+                                             Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox ItemsSource="{Binding Source={StaticResource EnumDescriptionConverter }, Path=Strings, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                                                  SelectedItem="{Binding ProductTopGroup, Converter={StaticResource EnumDescriptionConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
                         </GridView>
                     </ListView.View>
                 </ListView>

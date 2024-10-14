@@ -53,7 +53,7 @@ namespace ST.EplAddin.CheckCableAccesorities
                                 yield return new ErrorDataCable(cable.Name, parts[i].Number, null, "Нет такого изделия");
 
                             }
-                            else if (currentProperlyArticle?.Properties[22041].ToInt() != (int)parts[i].Type)
+                            else if (currentProperlyArticle?.Properties[22041].ToInt() != (int)parts[i].ProductGroup)
                             {
                                 var typeName = currentProperlyArticle.Properties[22041].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
                                 yield return new ErrorDataCable(cable.Name, parts[i].Number, typeName, null);

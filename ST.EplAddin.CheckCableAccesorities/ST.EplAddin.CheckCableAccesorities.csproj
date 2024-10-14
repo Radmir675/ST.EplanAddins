@@ -89,12 +89,12 @@
     <Compile Include="CheckCableAccesoritiesAddinModule.cs" />
     <Compile Include="Help\EnumDescriptionConverter.cs" />
     <Compile Include="Help\JsonProvider.cs" />
-    <Compile Include="ProductGroupEnums\ProductSubGroupType.cs" />
-    <Compile Include="ProductGroupEnums\ProductTopGroupType.cs" />
+    <Compile Include="ProductGroupEnums\ProductSubGroupEnum.cs" />
+    <Compile Include="ProductGroupEnums\ProductTopGroupEnum.cs" />
     <Compile Include="Help\Settings.cs" />
     <Compile Include="Models\ErrorDataCable.cs" />
     <Compile Include="Models\Part.cs" />
-    <Compile Include="ProductGroupEnums\ProductGroupType.cs" />
+    <Compile Include="ProductGroupEnums\ProductGroupEnum.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

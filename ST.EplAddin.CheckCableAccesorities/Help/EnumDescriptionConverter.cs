@@ -11,7 +11,7 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is ProductGroupType format)
+            if (value is ProductGroupEnum format)
             {
                 return GetString(format);
             }
@@ -21,7 +21,7 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null) return null;
-            foreach (Enum one in Enum.GetValues(typeof(ProductGroupType)))
+            foreach (Enum one in Enum.GetValues(typeof(ProductGroupEnum)))
             {
                 if (value.ToString() == one.GetDescription())
                     return one;
@@ -31,19 +31,19 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
 
         public string[] Strings => GetStrings();
 
-        public static string GetString(ProductGroupType format)
+        public static string GetString(ProductGroupEnum format)
         {
             return GetDescription(format);
         }
 
-        public static string GetDescription(ProductGroupType format)
+        public static string GetDescription(ProductGroupEnum format)
         {
             return format.GetType().GetMember(format.ToString())[0].GetCustomAttribute<DescriptionAttribute>().Description;
         }
         public static string[] GetStrings()
         {
             List<string> list = new List<string>();
-            foreach (ProductGroupType format in Enum.GetValues(typeof(ProductGroupType)))
+            foreach (ProductGroupEnum format in Enum.GetValues(typeof(ProductGroupEnum)))
             {
                 list.Add(GetString(format));
             }
