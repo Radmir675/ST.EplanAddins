@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject12", "UnitTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EplAddin.ClipboardHelper", "EplAddin.ClipboardHelper\EplAddin.ClipboardHelper.csproj", "{6D664C93-C282-434D-919F-3D40794D8DC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.Epl.Addin.SyncPage", "ST.Epl.Addin.SyncPage\ST.Epl.Addin.SyncPage.csproj", "{B2D45B39-91D5-429A-843C-25F5BB722897}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,6 +100,14 @@ Global
 		{6D664C93-C282-434D-919F-3D40794D8DC6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6D664C93-C282-434D-919F-3D40794D8DC6}.Release|x64.ActiveCfg = Release|Any CPU
 		{6D664C93-C282-434D-919F-3D40794D8DC6}.Release|x64.Build.0 = Release|Any CPU
+		{B2D45B39-91D5-429A-843C-25F5BB722897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2D45B39-91D5-429A-843C-25F5BB722897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2D45B39-91D5-429A-843C-25F5BB722897}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B2D45B39-91D5-429A-843C-25F5BB722897}.Debug|x64.Build.0 = Debug|Any CPU
+		{B2D45B39-91D5-429A-843C-25F5BB722897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2D45B39-91D5-429A-843C-25F5BB722897}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2D45B39-91D5-429A-843C-25F5BB722897}.Release|x64.ActiveCfg = Release|Any CPU
+		{B2D45B39-91D5-429A-843C-25F5BB722897}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
