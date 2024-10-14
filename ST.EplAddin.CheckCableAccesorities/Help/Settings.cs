@@ -14,6 +14,7 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
 
         private void Initialize()
         {
+            //TODO: настроить
             Parts = new ObservableCollection<Part>()
             {
                 new Part(1, ProductGroupType.Common),
@@ -23,16 +24,19 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
         }
         public ObservableCollection<Part> GetData()
         {
-            //тут надо или получить данные из Eplan или если там пусто то проинициализировать самим
-            return new ObservableCollection<Part>(Parts);
+            var datafromSettings = JsonProvider<ObservableCollection<Part>>.GetData();
+            if (datafromSettings != null)
+            {
+                return datafromSettings;
+            }
+            else
+            {
+                return Parts ?? new ObservableCollection<Part>();
+            }
         }
-        public void AddNewPart()
+        public void SaveData(ObservableCollection<Part> parts)
         {
-            Parts.Add(new Part(4, ProductGroupType.Undefined));
-        }
-        public void SeveData(ObservableCollection<Part> parts)
-        {
-            //надо вызывать метод и все сохранить в БД Eplan
+            JsonProvider<Part>.SaveData(parts);
         }
     }
 }

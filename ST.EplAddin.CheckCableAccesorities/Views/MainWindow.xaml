@@ -141,9 +141,9 @@
                             Height="25"
                             Content="Сохранить"
                             HorizontalAlignment="Left"
-                            Margin="5">
-                        <!--Command="{Binding SaveSetings}"-->
-                    </Button>
+                            Margin="5"
+                            Command="{Binding SaveSettings}" />
+
                 </StackPanel>
                 <WrapPanel DockPanel.Dock="Bottom"
                            Height="Auto"

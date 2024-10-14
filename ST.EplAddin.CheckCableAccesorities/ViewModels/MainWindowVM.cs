@@ -36,6 +36,7 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
         private RelayCommand checkProducts;
         private RelayCommand addNewPart;
         private RelayCommand removeSelectedPart;
+        private RelayCommand saveSettings;
         private ErrorDataCable selectedMessage;
         private ObservableCollection<ErrorDataCable> message;
 
@@ -90,8 +91,17 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
                     (obj) => SelectedPart != null));
             }
         }
-
-
-
+        public RelayCommand SaveSettings
+        {
+            get
+            {
+                return saveSettings ??
+                    (
+                    saveSettings = new RelayCommand(obj =>
+                    {
+                        settings.SaveData(PartsData);
+                    }));
+            }
+        }
     }
 }
