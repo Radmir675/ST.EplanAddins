@@ -1,4 +1,5 @@
 ﻿using ST.EplAddin.CheckCableAccesorities.Models;
+using ST.EplAddin.CheckCableAccesorities.ProductGroupEnums;
 using System.Collections.ObjectModel;
 
 namespace ST.EplAddin.CheckCableAccesorities.Help

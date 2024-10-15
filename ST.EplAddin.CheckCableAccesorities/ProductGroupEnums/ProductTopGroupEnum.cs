@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ST.EplAddin.CheckCableAccesorities.Help
+namespace ST.EplAddin.CheckCableAccesorities.ProductGroupEnums
 {
     public enum ProductTopGroupEnum
     {

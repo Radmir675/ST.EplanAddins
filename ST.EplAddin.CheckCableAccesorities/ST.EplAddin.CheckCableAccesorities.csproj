@@ -73,6 +73,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
@@ -87,8 +88,11 @@
   <ItemGroup>
     <Compile Include="CheckCableAccesoritiesAction.cs" />
     <Compile Include="CheckCableAccesoritiesAddinModule.cs" />
+    <Compile Include="Help\EnumToDisplayConverter.cs" />
+    <Compile Include="Help\EnumExtension.cs" />
     <Compile Include="Help\EnumDescriptionConverter.cs" />
     <Compile Include="Help\JsonProvider.cs" />
+    <Compile Include="ProductGroupEnums\AllTypesEnum.cs" />
     <Compile Include="ProductGroupEnums\ProductSubGroupEnum.cs" />
     <Compile Include="ProductGroupEnums\ProductTopGroupEnum.cs" />
     <Compile Include="Help\Settings.cs" />

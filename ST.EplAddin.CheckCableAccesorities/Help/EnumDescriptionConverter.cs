@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ST.EplAddin.CheckCableAccesorities.ProductGroupEnums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -11,6 +12,7 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+           
             if (value is ProductGroupEnum format)
             {
                 return GetString(format);
@@ -21,6 +23,7 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null) return null;
+
             foreach (Enum one in Enum.GetValues(typeof(ProductGroupEnum)))
             {
                 if (value.ToString() == one.GetDescription())

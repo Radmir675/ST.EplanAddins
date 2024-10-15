@@ -1,5 +1,6 @@
 ﻿using ST.EplAddin.CheckCableAccesorities.Help;
 using ST.EplAddin.CheckCableAccesorities.Models;
+using ST.EplAddin.CheckCableAccesorities.ProductGroupEnums;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -7,6 +8,15 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
 {
     class MainWindowVM : ViewModelBase
     {
+
+
+
+
+
+
+
+
+
         private readonly Settings settings;
         public ObservableCollection<Part> PartsData { get; set; }
         public Part SelectedPart
@@ -44,6 +54,7 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
         {
             settings = new Settings();
             PartsData = settings.GetData();
+
         }
         public RelayCommand CheckProducts
         {

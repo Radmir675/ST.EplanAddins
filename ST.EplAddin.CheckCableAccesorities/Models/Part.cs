@@ -1,5 +1,8 @@
 ﻿using ST.EplAddin.CheckCableAccesorities.Help;
+using ST.EplAddin.CheckCableAccesorities.ProductGroupEnums;
 using ST.EplAddin.CheckCableAccesorities.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ST.EplAddin.CheckCableAccesorities.Models
 {
@@ -9,7 +12,26 @@ namespace ST.EplAddin.CheckCableAccesorities.Models
         private ProductGroupEnum productGroup;
         private ProductTopGroupEnum productTopGroup;
         private ProductSubGroupEnum productSubGroup;
-
+        private IReadOnlyList<ProductGroupEnum> options;
+        private ProductGroupEnum _selectedProductGroup;
+        public IReadOnlyList<ProductGroupEnum> ProductGroupOptions
+        {
+            get { return options; }
+            private set
+            {
+                options = value;
+                OnPropertyChanged();
+            }
+        }
+        public ProductGroupEnum SelectedProductGroup
+        {
+            get { return _selectedProductGroup; }
+            set
+            {
+                _selectedProductGroup = value;
+                OnPropertyChanged();
+            }
+        }
         public int Number
         {
             get { return number; }
@@ -52,6 +74,10 @@ namespace ST.EplAddin.CheckCableAccesorities.Models
             ProductGroup = productGroup;
             ProductTopGroup = productTopGroup;
             ProductSubGroup = productSubGroup;
+            // Initialization in constructor
+            ProductGroupOptions = EnumExtension.GetValues<ProductGroupEnum>().ToList();
+            // If you want to set a default.
+            SelectedProductGroup = ProductGroupOptions[0];
         }
     }
 }
