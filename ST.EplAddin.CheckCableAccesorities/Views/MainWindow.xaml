@@ -10,7 +10,7 @@
         xmlns:enums="clr-namespace:ST.EplAddin.CheckCableAccesorities.ProductGroupEnums"
         mc:Ignorable="d"
         Height="533"
-        Width="964"
+        Width="1165"
         Title="Cable check"
         ResizeMode="CanResize"
         MinHeight="250"
@@ -177,21 +177,21 @@
                     <ListView.Resources>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment"
-                                    Value="Stretch"/>
+                                    Value="Stretch" />
                         </Style>
                     </ListView.Resources>
 
                     <ListView.View>
                         <GridView>
-                            
+
                             <GridViewColumn DisplayMemberBinding="{Binding Path=Number}"
                                             x:Name="Column1"
                                             Width="Auto"
                                             Header="Номер изделия" />
-                            
+
                             <GridViewColumn  Header="Главная группа продуктов"
                                              Width="160">
-                                
+
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <ComboBox ItemsSource="{Binding  Source={StaticResource library}, Path=ProductGroupTopOptions}"
@@ -237,9 +237,7 @@
                                         </ComboBox>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
-                                
                             </GridViewColumn>
-
                         </GridView>
                     </ListView.View>
                 </ListView>

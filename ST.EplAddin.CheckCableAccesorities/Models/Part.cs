@@ -6,34 +6,34 @@ namespace ST.EplAddin.CheckCableAccesorities.Models
     internal class Part : ViewModelBase
     {
         private int number;
-        private ProductGroupEnum _selectedProductGroup;
-        private ProductTopGroupEnum _selectedProductTopGroup;
-        private ProductSubGroupEnum _selectedProductSubGroup;
+        private ProductGroupEnum _productGroup;
+        private ProductTopGroupEnum _productTopGroup;
+        private ProductSubGroupEnum _productSubGroup;
 
         public ProductGroupEnum ProductGroup
         {
-            get { return _selectedProductGroup; }
+            get { return _productGroup; }
             set
             {
-                _selectedProductGroup = value;
+                _productGroup = value;
                 OnPropertyChanged();
             }
         }
         public ProductTopGroupEnum ProductTopGroup
         {
-            get { return _selectedProductTopGroup; }
+            get { return _productTopGroup; }
             set
             {
-                _selectedProductTopGroup = value;
+                _productTopGroup = value;
                 OnPropertyChanged();
             }
         }
         public ProductSubGroupEnum ProductSubGroup
         {
-            get { return _selectedProductSubGroup; }
+            get { return _productSubGroup; }
             set
             {
-                _selectedProductSubGroup = value;
+                _productSubGroup = value;
                 OnPropertyChanged();
             }
         }

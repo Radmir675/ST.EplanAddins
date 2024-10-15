@@ -53,11 +53,23 @@ namespace ST.EplAddin.CheckCableAccesorities
                                 yield return new ErrorDataCable(cable.Name, parts[i].Number, null, "Нет такого изделия");
 
                             }
-                            else if (currentProperlyArticle?.Properties[22041].ToInt() != (int)parts[i].ProductGroup)
+                            else
                             {
-                                var typeName = currentProperlyArticle.Properties[22041].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
-                                yield return new ErrorDataCable(cable.Name, parts[i].Number, typeName, null);
-
+                                if (currentProperlyArticle?.Properties[22041].ToInt() != (int)parts[i].ProductGroup)
+                                {
+                                    var typeName = currentProperlyArticle.Properties[22041].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                                    yield return new ErrorDataCable(cable.Name, parts[i].Number, typeName);
+                                }
+                                if (currentProperlyArticle?.Properties[22138].ToInt() != (int)parts[i].ProductTopGroup)
+                                {
+                                    var typeName = currentProperlyArticle.Properties[22138].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                                    yield return new ErrorDataCable(cable.Name, parts[i].Number, typeName);
+                                }
+                                if (currentProperlyArticle?.Properties[22038].ToInt() != (int)parts[i].ProductSubGroup)
+                                {
+                                    var typeName = currentProperlyArticle.Properties[22038].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                                    yield return new ErrorDataCable(cable.Name, parts[i].Number, typeName);
+                                }
                             }
                         }
                     }
