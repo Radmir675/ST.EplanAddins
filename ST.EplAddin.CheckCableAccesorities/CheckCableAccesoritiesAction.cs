@@ -65,9 +65,9 @@ namespace ST.EplAddin.CheckCableAccesorities
                                     var typeName = currentProperlyArticle.Properties[22138].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
                                     yield return new ErrorDataCable(cable.Name, parts[i].Number, typeName);
                                 }
-                                if (currentProperlyArticle?.Properties[22038].ToInt() != (int)parts[i].ProductSubGroup)
+                                if (currentProperlyArticle?.Properties[22028].ToInt() != (int)parts[i].ProductSubGroup)
                                 {
-                                    var typeName = currentProperlyArticle.Properties[22038].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                                    var typeName = currentProperlyArticle.Properties[22028].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
                                     yield return new ErrorDataCable(cable.Name, parts[i].Number, typeName);
                                 }
                             }
