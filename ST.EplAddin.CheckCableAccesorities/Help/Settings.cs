@@ -17,7 +17,7 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
         {
             Parts = new ObservableCollection<Part>()
             {
-                new Part(1,ProductSubGroupEnum.Electric, ProductGroupEnum.Common,ProductTopGroupEnum.Mechanic),
+                new Part(1,ProductSubGroupEnum.Electric, ProductGroupEnum.Common,ProductTopGroupEnum.Undefined),
                 new Part(2,ProductSubGroupEnum.Electric, ProductGroupEnum.ElectricalCableConnection,ProductTopGroupEnum.Electric),
                 new Part(3,ProductSubGroupEnum.Electric, ProductGroupEnum.MechanicsRoutingAccessories,ProductTopGroupEnum.Electric)
             };

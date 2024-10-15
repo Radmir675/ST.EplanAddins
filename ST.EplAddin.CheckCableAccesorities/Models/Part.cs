@@ -10,16 +10,36 @@ namespace ST.EplAddin.CheckCableAccesorities.Models
     {
         private int number;
 
-        private IReadOnlyList<ProductGroupEnum> options;
+        private IReadOnlyList<ProductGroupEnum> _productGroupOptions;
+        private IReadOnlyList<ProductTopGroupEnum> _productGroupTopOptions;
+        private IReadOnlyList<ProductSubGroupEnum> _productGroupSubOptions;
         private ProductGroupEnum _selectedProductGroup;
         private ProductTopGroupEnum _selectedProductTopGroup;
         private ProductSubGroupEnum _selectedProductSubGroup;
         public IReadOnlyList<ProductGroupEnum> ProductGroupOptions
         {
-            get { return options; }
+            get { return _productGroupOptions; }
             private set
             {
-                options = value;
+                _productGroupOptions = value;
+                OnPropertyChanged();
+            }
+        }
+        public IReadOnlyList<ProductTopGroupEnum> ProductGroupTopOptions
+        {
+            get { return _productGroupTopOptions; }
+            private set
+            {
+                _productGroupTopOptions = value;
+                OnPropertyChanged();
+            }
+        }
+        public IReadOnlyList<ProductSubGroupEnum> ProductGroupSubOptions
+        {
+            get { return _productGroupSubOptions; }
+            private set
+            {
+                _productGroupSubOptions = value;
                 OnPropertyChanged();
             }
         }
@@ -69,6 +89,8 @@ namespace ST.EplAddin.CheckCableAccesorities.Models
 
             // Initialization in constructor
             ProductGroupOptions = EnumExtension.GetValues<ProductGroupEnum>().ToList();
+            ProductGroupTopOptions = EnumExtension.GetValues<ProductTopGroupEnum>().ToList();
+            ProductGroupSubOptions = EnumExtension.GetValues<ProductSubGroupEnum>().ToList();
 
         }
     }

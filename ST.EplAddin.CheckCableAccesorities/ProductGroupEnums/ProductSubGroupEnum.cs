@@ -6,6 +6,8 @@ namespace ST.EplAddin.CheckCableAccesorities.ProductGroupEnums
     {
         [Description("Электротехника")]
         Electric = 1,
+        [Description("Не определено")]
+        Undefined = 2,
 
     }
 }
