@@ -9,11 +9,11 @@ namespace ST.EplAddin.CheckCableAccesorities.Models
     internal class Part : ViewModelBase
     {
         private int number;
-        private ProductGroupEnum productGroup;
-        private ProductTopGroupEnum productTopGroup;
-        private ProductSubGroupEnum productSubGroup;
+
         private IReadOnlyList<ProductGroupEnum> options;
         private ProductGroupEnum _selectedProductGroup;
+        private ProductTopGroupEnum _selectedProductTopGroup;
+        private ProductSubGroupEnum _selectedProductSubGroup;
         public IReadOnlyList<ProductGroupEnum> ProductGroupOptions
         {
             get { return options; }
@@ -32,6 +32,24 @@ namespace ST.EplAddin.CheckCableAccesorities.Models
                 OnPropertyChanged();
             }
         }
+        public ProductTopGroupEnum SelectedProductTopGroup
+        {
+            get { return _selectedProductTopGroup; }
+            set
+            {
+                _selectedProductTopGroup = value;
+                OnPropertyChanged();
+            }
+        }
+        public ProductSubGroupEnum SelectedProductSubGroup
+        {
+            get { return _selectedProductSubGroup; }
+            set
+            {
+                _selectedProductSubGroup = value;
+                OnPropertyChanged();
+            }
+        }
         public int Number
         {
             get { return number; }
@@ -41,43 +59,17 @@ namespace ST.EplAddin.CheckCableAccesorities.Models
                 OnPropertyChanged();
             }
         }
-        public ProductGroupEnum ProductGroup
-        {
-            get { return productGroup; }
-            set
-            {
-                productGroup = value;
-                OnPropertyChanged();
-            }
-        }
-        public ProductTopGroupEnum ProductTopGroup
-        {
-            get { return productTopGroup; }
-            set
-            {
-                productTopGroup = value;
-                OnPropertyChanged();
-            }
-        }
-        public ProductSubGroupEnum ProductSubGroup
-        {
-            get { return productSubGroup; }
-            set
-            {
-                productSubGroup = value;
-                OnPropertyChanged();
-            }
-        }
+
         public Part(int number, ProductSubGroupEnum productSubGroup, ProductGroupEnum productGroup, ProductTopGroupEnum productTopGroup)
         {
             Number = number;
-            ProductGroup = productGroup;
-            ProductTopGroup = productTopGroup;
-            ProductSubGroup = productSubGroup;
+            SelectedProductTopGroup = productTopGroup;
+            SelectedProductSubGroup = productSubGroup;
+            SelectedProductGroup = productGroup;
+
             // Initialization in constructor
             ProductGroupOptions = EnumExtension.GetValues<ProductGroupEnum>().ToList();
-            // If you want to set a default.
-            SelectedProductGroup = ProductGroupOptions[0];
+
         }
     }
 }

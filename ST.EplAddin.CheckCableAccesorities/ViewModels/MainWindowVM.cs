@@ -8,15 +8,6 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
 {
     class MainWindowVM : ViewModelBase
     {
-
-
-
-
-
-
-
-
-
         private readonly Settings settings;
         public ObservableCollection<Part> PartsData { get; set; }
         public Part SelectedPart
