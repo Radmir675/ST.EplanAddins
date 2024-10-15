@@ -45,7 +45,6 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
         {
             settings = new Settings();
             PartsData = settings.GetData();
-
         }
         public RelayCommand CheckProducts
         {

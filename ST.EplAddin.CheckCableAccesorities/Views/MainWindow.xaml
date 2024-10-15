@@ -24,7 +24,7 @@
 
     <Window.Resources>
         <cnvr:EnumToDisplayConverter x:Key="EnumDescriptionConverter"></cnvr:EnumToDisplayConverter>
-
+        <m:TypesLibrary x:Key="library"></m:TypesLibrary>
 
     </Window.Resources>
 
@@ -177,23 +177,25 @@
                     <ListView.Resources>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment"
-                                    Value="Stretch" />
+                                    Value="Stretch"/>
                         </Style>
                     </ListView.Resources>
 
                     <ListView.View>
                         <GridView>
+                            
                             <GridViewColumn DisplayMemberBinding="{Binding Path=Number}"
                                             x:Name="Column1"
                                             Width="Auto"
                                             Header="Номер изделия" />
+                            
                             <GridViewColumn  Header="Главная группа продуктов"
-                                             Width="150">
+                                             Width="160">
                                 
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox ItemsSource="{Binding ProductGroupTopOptions}"
-                                                  SelectedItem="{Binding SelectedProductTopGroup}">
+                                        <ComboBox ItemsSource="{Binding  Source={StaticResource library}, Path=ProductGroupTopOptions}"
+                                                  SelectedItem="{Binding ProductTopGroup}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter }}" />
@@ -208,8 +210,8 @@
                                              Width="150">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox ItemsSource="{Binding ProductGroupOptions}"
-                                                  SelectedItem="{Binding SelectedProductGroup}">
+                                        <ComboBox ItemsSource="{Binding  Source={StaticResource library}, Path=ProductGroupOptions}"
+                                                  SelectedItem="{Binding ProductGroup}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter }}" />
@@ -225,8 +227,8 @@
                                              Width="150">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox ItemsSource="{Binding ProductGroupSubOptions}"
-                                                  SelectedItem="{Binding SelectedProductSubGroup}">
+                                        <ComboBox ItemsSource="{Binding  Source={StaticResource library}, Path=ProductGroupSubOptions}"
+                                                  SelectedItem="{Binding ProductSubGroup}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter }}" />
@@ -235,6 +237,7 @@
                                         </ComboBox>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
+                                
                             </GridViewColumn>
 
                         </GridView>

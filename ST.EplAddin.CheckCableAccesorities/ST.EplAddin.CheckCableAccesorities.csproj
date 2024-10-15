@@ -92,7 +92,7 @@
     <Compile Include="Help\EnumExtension.cs" />
     <Compile Include="Help\EnumDescriptionConverter.cs" />
     <Compile Include="Help\JsonProvider.cs" />
-    <Compile Include="ProductGroupEnums\AllTypesEnum.cs" />
+    <Compile Include="Models\TypesLibrary.cs" />
     <Compile Include="ProductGroupEnums\ProductSubGroupEnum.cs" />
     <Compile Include="ProductGroupEnums\ProductTopGroupEnum.cs" />
     <Compile Include="Help\Settings.cs" />
