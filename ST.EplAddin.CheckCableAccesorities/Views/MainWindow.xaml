@@ -138,6 +138,8 @@
                     <Separator  VerticalAlignment="Top"
                                 Width="Auto"
                                 Background="Black" />
+                    <StackPanel Orientation="Horizontal">
+                        
                     <Button VerticalAlignment="Top"
                             x:Name="Save_Button"
                             Width="80"
@@ -146,6 +148,16 @@
                             HorizontalAlignment="Left"
                             Margin="5"
                             Command="{Binding SaveSettings}" />
+                    
+                    <Button VerticalAlignment="Top"
+                            x:Name="Default_Button"
+                            Width="80"
+                            Height="25"
+                            Content="Сброс"
+                            HorizontalAlignment="Left"
+                            Margin="5"
+                            Command="{Binding DefaultCommand}" />
+                    </StackPanel>
 
                 </StackPanel>
                 <WrapPanel DockPanel.Dock="Bottom"
