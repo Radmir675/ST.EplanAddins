@@ -156,7 +156,7 @@
                             Content="Сброс"
                             HorizontalAlignment="Left"
                             Margin="5"
-                            Command="{Binding DefaultCommand}" />
+                            Command="{Binding ResetCommand}" />
                     </StackPanel>
 
                 </StackPanel>
@@ -184,7 +184,7 @@
                 </WrapPanel>
 
                 <ListView x:Name="ListViewPart"
-                          ItemsSource="{Binding PartsData}"
+                          ItemsSource="{Binding PartsData, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                           SelectedItem="{Binding SelectedPart,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
                     <ListView.Resources>
                         <Style TargetType="ListViewItem">
