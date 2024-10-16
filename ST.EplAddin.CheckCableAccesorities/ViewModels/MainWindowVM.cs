@@ -9,7 +9,15 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
     class MainWindowVM : ViewModelBase
     {
         private readonly Settings settings;
-        public ObservableCollection<Part> PartsData { get; set; }
+        public ObservableCollection<Part> PartsData
+        {
+            get => partsData;
+            set
+            {
+                partsData = value;
+                OnPropertyChanged();
+            }
+        }
         public Part SelectedPart
         {
             get => selectedPart;
@@ -41,6 +49,7 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
         private RelayCommand resetCommand;
         private ErrorDataCable selectedMessage;
         private ObservableCollection<ErrorDataCable> message;
+        private ObservableCollection<Part> partsData;
 
         public MainWindowVM()
         {
@@ -117,6 +126,7 @@ namespace ST.EplAddin.CheckCableAccesorities.ViewModels
                     resetCommand = new RelayCommand(obj =>
                     {
                         settings.ResetData();
+                        PartsData = settings.GetData();
 
                     }));
             }

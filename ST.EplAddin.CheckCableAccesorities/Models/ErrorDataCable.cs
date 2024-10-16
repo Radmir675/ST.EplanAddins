@@ -6,13 +6,14 @@
         public int PartNumber { get; set; }
         public string Type { get; set; }
         public string Message { get; set; }
-
-        public ErrorDataCable(string name, int partNumber, string type = null, string message = null)
+        public string GroupName { get; set; }
+        public ErrorDataCable(string cableName, int partNumber, string type, string name, string groupName)
         {
-            Name = name;
+            Name = cableName;
             PartNumber = partNumber;
             Type = type;
-            Message = message;
+            Message = name;
+            GroupName = groupName;
         }
     }
 }

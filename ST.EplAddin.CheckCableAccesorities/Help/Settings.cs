@@ -10,10 +10,11 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
         public Settings()
         {
             Initialize();
+            datafromSettings = JsonProvider<ObservableCollection<Part>>.GetData();
         }
 
         private ObservableCollection<Part> Parts { get; set; } = new ObservableCollection<Part>();
-
+        private ObservableCollection<Part> datafromSettings;
 
         private void Initialize()
         {
@@ -24,13 +25,13 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
             Parts.Add(new Part(5, ProductTopGroupEnum.Mechanic, ProductGroupEnum.MechanicsHousing, ProductSubGroupEnum.Common));
             Parts.Add(new Part(6, ProductTopGroupEnum.Mechanic, ProductGroupEnum.MechanicsHousing, ProductSubGroupEnum.Common));
             Parts.Add(new Part(7, ProductTopGroupEnum.Mechanic, ProductGroupEnum.MechanicsHousingaccessoriesIn, ProductSubGroupEnum.Undefined));
-            Parts.Add(new Part(8, ProductTopGroupEnum.Electric, ProductGroupEnum.MechanicsHousing, ProductSubGroupEnum.Any));
+            Parts.Add(new Part(8, ProductTopGroupEnum.Electric, ProductGroupEnum.Any, ProductSubGroupEnum.Any));
             Parts.Add(new Part(9, ProductTopGroupEnum.Mechanic, ProductGroupEnum.MechanicsHousing, ProductSubGroupEnum.MechanicsAccessories));
             Parts.Add(new Part(10, ProductTopGroupEnum.Electric, ProductGroupEnum.ElectricalWire, ProductSubGroupEnum.Common));
         }
         public ObservableCollection<Part> GetData()
         {
-            var datafromSettings = JsonProvider<ObservableCollection<Part>>.GetData();
+
             if (datafromSettings != null)
             {
                 return datafromSettings;
@@ -48,6 +49,7 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
         {
             Parts.Clear();
             Initialize();
+            datafromSettings = null;
         }
     }
 }

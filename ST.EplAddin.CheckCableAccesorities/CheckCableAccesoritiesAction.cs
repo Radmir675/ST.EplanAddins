@@ -50,26 +50,24 @@ namespace ST.EplAddin.CheckCableAccesorities
                             var currentProperlyArticle = articles.FirstOrDefault(article => article.ReferencePos == parts[i].Number);
                             if (currentProperlyArticle == null)
                             {
-                                //yield return new ErrorDataCable(cable.Name, parts[i].Number, null, "Нет такого изделия");
-
                             }
                             else
                             {
                                 if (currentProperlyArticle?.Properties[22041].ToInt() != (int)parts[i].ProductGroup && (int)parts[i].ProductGroup != 999)
                                 {
                                     var typeName = currentProperlyArticle.Properties[22041].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
-                                    yield return new ErrorDataCable(cable.Name, parts[i].Number, currentProperlyArticle.Properties[22041], typeName);
+                                    yield return new ErrorDataCable(cable.Name, parts[i].Number, currentProperlyArticle.Properties[22041], typeName, "Группа продуктов");
 
                                 }
                                 if (currentProperlyArticle?.Properties[22138].ToInt() != (int)parts[i].ProductTopGroup && (int)parts[i].ProductTopGroup != 999)
                                 {
                                     var typeName = currentProperlyArticle.Properties[22138].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
-                                    yield return new ErrorDataCable(cable.Name, parts[i].Number, currentProperlyArticle.Properties[22138], typeName);
+                                    yield return new ErrorDataCable(cable.Name, parts[i].Number, currentProperlyArticle.Properties[22138], typeName, "Главная группа продуктов");
                                 }
                                 if (currentProperlyArticle?.Properties[22028].ToInt() != (int)parts[i].ProductSubGroup && (int)parts[i].ProductSubGroup != 999)
                                 {
                                     var typeName = currentProperlyArticle.Properties[22028].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
-                                    yield return new ErrorDataCable(cable.Name, parts[i].Number, currentProperlyArticle.Properties[22028], typeName);
+                                    yield return new ErrorDataCable(cable.Name, parts[i].Number, currentProperlyArticle.Properties[22028], typeName, "Подгруппа продуктов");
                                 }
                             }
 

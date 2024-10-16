@@ -97,16 +97,20 @@
                             <RowDefinition Height="25" />
                             <RowDefinition Height="25" />
                             <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0"
                                    Grid.Column="0"
                                    Text="Номер изделия: " />
                         <TextBlock Grid.Row="1"
                                    Grid.Column="0"
-                                   Text="Тип: " />
+                                   Text="Enum number: " />
                         <TextBlock Grid.Row="2"
                                    Grid.Column="0"
-                                   Text="Сообщение: " />
+                                   Text="Требуемый тип: " />
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="0"
+                                   Text="Группа: " />
                         <TextBlock Grid.Row="0"
                                    Grid.Column="1"
                                    Text="{Binding SelectedMessage.PartNumber}" />
@@ -116,6 +120,9 @@
                         <TextBlock Grid.Row="2"
                                    Grid.Column="1"
                                    Text="{Binding SelectedMessage.Message}" />
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="1"
+                                   Text="{Binding SelectedMessage.GroupName}" />
                     </Grid>
 
 
