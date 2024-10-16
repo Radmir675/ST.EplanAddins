@@ -4,10 +4,19 @@ namespace ST.EplAddin.CheckCableAccesorities.ProductGroupEnums
 {
     public enum ProductSubGroupEnum
     {
-        [Description("Электротехника")]
-        Electric = 1,
         [Description("Не определено")]
-        Undefined = 2,
+        Undefined = 0,
 
+        [Description("Общее")]
+        Common = 1,
+
+        [Description("Крепление шланга/кабеля")]
+        MechanicsCableTubingClamp = 225,
+
+        [Description("Принадлежности")]
+        MechanicsAccessories = 136,
+
+        [Description("Любое")]
+        Any = 999
     }
 }

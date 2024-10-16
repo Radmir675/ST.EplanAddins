@@ -7,8 +7,6 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
 {
     class Settings : ViewModelBase
     {
-        private ObservableCollection<Part> parts;
-
         public Settings()
         {
             Initialize();
@@ -19,15 +17,16 @@ namespace ST.EplAddin.CheckCableAccesorities.Help
 
         private void Initialize()
         {
-
-            var data = new ObservableCollection<Part>()
-            {
-                new Part(1,ProductSubGroupEnum.Electric, ProductGroupEnum.Common,ProductTopGroupEnum.Undefined),
-                new Part(2,ProductSubGroupEnum.Electric, ProductGroupEnum.ElectricalCableConnection,ProductTopGroupEnum.Electric),
-                new Part(3,ProductSubGroupEnum.Electric, ProductGroupEnum.MechanicsRoutingAccessories,ProductTopGroupEnum.Electric)
-            };
-
-            Parts.Add(new Part(1, ProductSubGroupEnum.Electric, ProductGroupEnum.Common, ProductTopGroupEnum.Undefined));
+            Parts.Add(new Part(1, ProductTopGroupEnum.Electric, ProductGroupEnum.ElectricalCableConnection, ProductSubGroupEnum.Any));
+            Parts.Add(new Part(2, ProductTopGroupEnum.Mechanic, ProductGroupEnum.MechanicsRoutingAccessories, ProductSubGroupEnum.MechanicsCableTubingClamp));
+            Parts.Add(new Part(3, ProductTopGroupEnum.Mechanic, ProductGroupEnum.Common, ProductSubGroupEnum.Common));
+            Parts.Add(new Part(4, ProductTopGroupEnum.Mechanic, ProductGroupEnum.MechanicsRoutingAccessories, ProductSubGroupEnum.MechanicsCableTubingClamp));
+            Parts.Add(new Part(5, ProductTopGroupEnum.Mechanic, ProductGroupEnum.MechanicsHousing, ProductSubGroupEnum.Common));
+            Parts.Add(new Part(6, ProductTopGroupEnum.Mechanic, ProductGroupEnum.MechanicsHousing, ProductSubGroupEnum.Common));
+            Parts.Add(new Part(7, ProductTopGroupEnum.Mechanic, ProductGroupEnum.MechanicsHousingaccessoriesIn, ProductSubGroupEnum.Undefined));
+            Parts.Add(new Part(8, ProductTopGroupEnum.Electric, ProductGroupEnum.MechanicsHousing, ProductSubGroupEnum.Any));
+            Parts.Add(new Part(9, ProductTopGroupEnum.Mechanic, ProductGroupEnum.MechanicsHousing, ProductSubGroupEnum.MechanicsAccessories));
+            Parts.Add(new Part(10, ProductTopGroupEnum.Electric, ProductGroupEnum.ElectricalWire, ProductSubGroupEnum.Common));
         }
         public ObservableCollection<Part> GetData()
         {

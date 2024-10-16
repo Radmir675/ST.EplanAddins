@@ -47,7 +47,7 @@ namespace ST.EplAddin.CheckCableAccesorities.Models
             }
         }
 
-        public Part(int number, ProductSubGroupEnum productSubGroup, ProductGroupEnum productGroup, ProductTopGroupEnum productTopGroup)
+        public Part(int number, ProductTopGroupEnum productTopGroup, ProductGroupEnum productGroup, ProductSubGroupEnum productSubGroup)
         {
             Number = number;
             ProductTopGroup = productTopGroup;

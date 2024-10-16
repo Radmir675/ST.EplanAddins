@@ -16,5 +16,23 @@ namespace ST.EplAddin.CheckCableAccesorities.ProductGroupEnums
 
         [Description("Не определено")]
         Undefined = 0,
+
+        [Description("Принадлежности для внутренней установки")]
+        MechanicsHousingaccessoriesIn = 51,
+
+        [Description("Распределитель/соединитель проводов")]
+        ElectricalConnectionSplicer = 129,
+
+        [Description("Электрошкаф")]
+        MechanicsCabinet = 55,
+
+        [Description("Соединения")]
+        ElectricalWire = 100,
+
+        [Description("Корпус")]
+        MechanicsHousing = 49,
+
+        [Description("Любое")]
+        Any = 999
     }
 }
