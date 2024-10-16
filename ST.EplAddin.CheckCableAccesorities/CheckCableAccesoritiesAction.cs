@@ -16,10 +16,8 @@ namespace ST.EplAddin.CheckCableAccesorities
         {
             MainWindow form = new MainWindow();
             form.Show();
-
             return true;
         }
-
         private Function[] GetAllCables()
         {
             SelectionSet selectionSet = new SelectionSet();

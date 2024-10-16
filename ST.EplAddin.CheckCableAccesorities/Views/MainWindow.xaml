@@ -14,7 +14,7 @@
         Title="Cable check"
         ResizeMode="CanResize"
         MinHeight="250"
-        MinWidth="425"
+        MinWidth="675"
         d:DataContext="{d:DesignInstance vm:MainWindowVM, IsDesignTimeCreatable=True}">
 
 
