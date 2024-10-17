@@ -25,7 +25,15 @@
     <Window.Resources>
         <cnvr:EnumToDisplayConverter x:Key="EnumDescriptionConverter"></cnvr:EnumToDisplayConverter>
         <m:TypesLibrary x:Key="library"></m:TypesLibrary>
-
+        
+        <Style TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsPressed" Value="True" >
+                    <Setter Property="Foreground"
+                            Value="DarkGray" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Grid Margin="5">
