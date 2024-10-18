@@ -13,9 +13,8 @@ namespace ST.EplAddin.Footnote
     /// https://www.eplan.help/en-US/infoportal/content/api/2.8/Interactions.html
     /// </summary>
     [InteractionAttribute(Name = "XGedFootnote", Ordinal = 50, Prio = 20)]
-    public class Footnote_InsertInteraction : Interaction
+    public partial class Footnote_InsertInteraction : Interaction
     {
-        private enum State { Init, Selection, SourcePoint, TargetPoint, Finished }
         private State state = State.Init;
 
         private PointD startPoint = new PointD(0, 0);
