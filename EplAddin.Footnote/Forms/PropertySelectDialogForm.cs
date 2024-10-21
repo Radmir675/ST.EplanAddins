@@ -20,15 +20,14 @@ namespace ST.EplAddin.Footnote.ProperyBrowser
             InitializeComponent();
             Placement3D = placement3D;
 
-            //  GetProperties();
+            GetProperties();
         }
 
         public PropertySelectDialogForm()
         {
             InitializeComponent();
 
-            InitializeData();
-            FillTree();
+            GetProperties();
 
         }
         public void GetProperties()
@@ -37,7 +36,7 @@ namespace ST.EplAddin.Footnote.ProperyBrowser
 
 
 
-            List<string> s = new List<string>();
+            List<Tuple<string, string>> result = new();
             foreach (var property in Eplan.EplApi.DataModel.Properties.AllPlacement3DPropIDs)
             {
                 try
@@ -50,9 +49,8 @@ namespace ST.EplAddin.Footnote.ProperyBrowser
                     {
 
                         var value = Placement3D.Properties[property];
-                        var name = property.Definition.Name;
-                        s.Add(value);
-
+                        var name = property?.Definition.Name;
+                        result.Add(new Tuple<string, string>(name, value));
                     }
 
                 }
@@ -62,7 +60,9 @@ namespace ST.EplAddin.Footnote.ProperyBrowser
 
                 }
             }
-            s.Add("");
+            // var data = Placement3D.Properties[22074].ToMultiLangString().GetAsString();
+            dataGridView1.DataSource = result;
+            var countResult = result.Count;
         }
 
         private void cancel_button_Click(object sender, System.EventArgs e)
