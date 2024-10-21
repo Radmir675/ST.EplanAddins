@@ -7,7 +7,7 @@ namespace ST.EplAddin.Footnote
 {
     class Footnote_InsertAction : IEplAction, IEplActionChecked
     {
-        string paramValue = "Footnote_InsertAction";
+        private const string paramValue = "Footnote_InsertAction";
         public int Checked(string strActionName, ActionCallingContext actionContext)
         {
             if (strActionName == "TESTACTIONMIXED")
@@ -29,10 +29,10 @@ namespace ST.EplAddin.Footnote
             oActionCallingContext.AddParameter("Name", "MyInteraction");
             oActionCallingContext.AddParameter("_cmdline", "XGedStartInteractionAction2D /Name:MyInteraction");
 
-            ContextMenuLocation oLocation = new ContextMenuLocation();
+            ContextMenuLocation oLocation = new();
             oLocation.DialogName = "Editor";
             oLocation.ContextMenuName = "Ged";
-            ContextMenu oTestMenu = new ContextMenu();
+            ContextMenu oTestMenu = new();
             oTestMenu.AddMenuItem(oLocation, "My Contextmenuname", "Footnote_InsertAction", true, false);
 
             string strMenuName = "";
@@ -46,7 +46,7 @@ namespace ST.EplAddin.Footnote
             Action oAction = oActionManager.FindAction(strAction);
             if (oAction != null)
             {
-                ActionCallingContext oContext = new ActionCallingContext();
+                ActionCallingContext oContext = new();
                 oContext.AddParameter("Name", "MyInteraction");
                 oContext.AddParameter("_cmdline", "XGedStartInteractionAction2D /Name:MyInteraction");
                 oAction.Execute(oContext);

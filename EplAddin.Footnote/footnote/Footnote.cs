@@ -241,7 +241,7 @@ namespace ST.EplAddin.Footnote
         {
             currentPage = page;
             UpdateBlock();
-            UpdateSubItems();
+            //UpdateSubItems();
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace ST.EplAddin.Footnote
         public void SetItemPoint(PointD point)
         {
             startPosition = point;
-            UpdateSubItems();
+            // UpdateSubItems();
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace ST.EplAddin.Footnote
         public void SetNotePoint(PointD point)
         {
             finishPosition = point;
-            UpdateSubItems();
+            // UpdateSubItems();
             //TODO: зачем везде пихать обновление вложенных элементов
         }
 
