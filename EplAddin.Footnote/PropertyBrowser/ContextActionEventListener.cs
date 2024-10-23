@@ -31,11 +31,11 @@ namespace ST.EplAddin.Footnote
 
             if (FootnoteVerification.IsFootnoteBlock(storableObject))
             {
-                createContextMenu();
+                // createContextMenu();
             }
             else
             {
-                removeContextMenu();
+                // removeContextMenu();
             }
         }
 
