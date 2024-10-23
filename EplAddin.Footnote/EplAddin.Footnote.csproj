@@ -101,8 +101,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
+    <Compile Include="PropertyBrowser\FootnoteVerification.cs" />
     <Compile Include="footnote\Footnote_InsertInteraction.State.cs" />
     <Compile Include="Forms\PropertiesEplan.cs" />
+    <Compile Include="PropertyBrowser\ContextActionEventListener.cs" />
     <Compile Include="PropertyBrowser\FigureConverter.cs" />
     <Compile Include="PropertyBrowser\EplHelper.cs" />
     <Compile Include="footnote\Footnote.cs" />

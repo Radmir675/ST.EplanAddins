@@ -19,11 +19,12 @@ namespace ST.EplAddin.Footnote
     public class AddinModule : IEplAddIn
     {
         private Eplan.EplApi.Base.TraceListener m_oTrace;
-
+        private ContextActionEventListener m_ContextActionEventListener;
         public bool OnInit()
         {
             m_oTrace = new Eplan.EplApi.Base.TraceListener();
             System.Diagnostics.Trace.Listeners.Add(m_oTrace);
+            m_ContextActionEventListener = new ContextActionEventListener();
             return true;
         }
 

@@ -26,8 +26,6 @@ namespace ST.EplAddin.Footnote
     [RefreshProperties(RefreshProperties.All)]
     public partial class FootnoteItem
     {
-        public static String FOOTNOTE_KEY = "FOOTNOTE_OBJID#";
-
         public Block block = null;
         public ViewPlacement viewPlacement = null; //текущий обзор модели с которым группируемся
         public Placement3D sourceItem3D = null; //объект пространства листа
@@ -192,7 +190,7 @@ namespace ST.EplAddin.Footnote
         /// <param name="block"></param>
         public void Create(Block block)
         {
-            if (block.Name.Contains(FOOTNOTE_KEY))
+            if (FootnoteVerification.IsFootnoteBlock(block))
             {
                 this.block = block;
                 currentPage = this.block.Page;
@@ -209,7 +207,7 @@ namespace ST.EplAddin.Footnote
         public void UpdateBlockItems(Block block)
         {
 
-            if (block.Name.Contains(FOOTNOTE_KEY))
+            if (FootnoteVerification.IsFootnoteBlock(block))
             {
                 this.block = block;
                 currentPage = this.block.Page;
@@ -400,14 +398,14 @@ namespace ST.EplAddin.Footnote
                 if (STARTPOINT)
                 {
                     startpoint.SetCircle(startPosition, STARTPOINTRADIUS);
+                    startpoint.IsSurfaceFilled = true;
+                    startpoint.Pen = penpoint;
                 }
                 else
                 {
                     itemline.StartArrow = true;
                 }
 
-                startpoint.IsSurfaceFilled = true;
-                startpoint.Pen = penpoint;
 
                 if (jsontext != null)
                     jsontext.Location = finishPosition;
@@ -687,7 +685,7 @@ namespace ST.EplAddin.Footnote
                     if (sourceItem3D != null)
                         Text = GetSourceObjectProperty(sourceItem3D);//получение текста из свойства но надо ли оно тут?????
                     if (block != null)
-                        block.Name = FOOTNOTE_KEY + referenceID;//здесь ловим ошибку
+                        block.Name = FootnoteVerification.FOOTNOTE_KEY + referenceID;//здесь ловим ошибку
                     safetyPoint.Commit();
                 }
             else MessageBox.Show("Не найдена ссылка на исходный объект", "FootNote", MessageBoxButtons.OK, MessageBoxIcon.Warning);
