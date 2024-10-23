@@ -26,11 +26,8 @@ namespace ST.EplAddin.Footnote
             Set.LockProjectByDefault = false;
             Set.LockSelectionByDefault = false;
             var currentProject = Set.GetCurrentProject(false);
-
             var storableObject = Set.GetSelectedObject(true);
-
-            oLocation = new ContextMenuLocation("Editor", "Ged");
-
+            oLocation = new ContextMenuLocation("Editor", "Ged");//изменить
 
             if (FootnoteVerification.IsFootnoteBlock(storableObject))
             {
@@ -47,8 +44,9 @@ namespace ST.EplAddin.Footnote
             if (oTestMenu == null)
             {
                 oTestMenu = new ContextMenu();
-                oTestMenu.AddMenuItem(oLocation, "Добавить выноску", "XGedFootnotePoint", true, false);
+                var result = oTestMenu.AddMenuItem(oLocation, "Добавить выноску", "XGedFootnotePoint", true, false);
             }
+
         }
         private void removeContextMenu()
         {

@@ -1,6 +1,7 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
+using ST.EplAddin.Footnote.ProperyBrowser;
 using System;
 using Action = Eplan.EplApi.ApplicationFramework.Action;
 
@@ -31,17 +32,7 @@ namespace ST.EplAddin.Footnote.footnote
                 Set.LockSelectionByDefault = false;
                 Project CurrentProject = Set.GetCurrentProject(true);
                 StorableObject so = Set.GetSelectedObject(true);
-
-                bool isBlock = so is Block;
-                if (isBlock)
-                {
-                    Block bl = so as Block;
-                    bool isFootnoteBlock = bl.Name.Contains(FootnoteItem.FOOTNOTE_KEY);
-                    if (isFootnoteBlock)
-                    {
-                        return true;
-                    }
-                }
+                return FootnoteVerification.IsFootnoteBlock(so) ? true : false;
             }
 
             ActionManager oMng = new ActionManager();

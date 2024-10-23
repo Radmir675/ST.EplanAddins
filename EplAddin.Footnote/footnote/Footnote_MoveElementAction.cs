@@ -1,6 +1,7 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
+using ST.EplAddin.Footnote.ProperyBrowser;
 using System;
 using Action = Eplan.EplApi.ApplicationFramework.Action;
 
@@ -22,7 +23,7 @@ namespace ST.EplAddin.Footnote
             if (isBlock && false)
             {
                 Block bl = so as Block;
-                bool isFootnoteBlock = bl.Name.Contains(FootnoteItem.FOOTNOTE_KEY);
+                bool isFootnoteBlock = FootnoteVerification.IsFootnoteBlock(bl);
                 if (isFootnoteBlock)
                 {
                     note = new FootnoteItem();

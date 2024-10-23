@@ -1,6 +1,7 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
+using ST.EplAddin.Footnote.ProperyBrowser;
 using System;
 using System.Linq;
 using Action = Eplan.EplApi.ApplicationFramework.Action;
@@ -26,22 +27,17 @@ namespace ST.EplAddin.Footnote
                 Project CurrentProject = Set.GetCurrentProject(true);
 
                 DMObjectsFinder dmof = new DMObjectsFinder(CurrentProject);
-                Block[] blocks = dmof.GetStorableObjects(null).OfType<Block>().Where(b => b.Name.Contains(FootnoteItem.FOOTNOTE_KEY)).ToArray();
+                Block[] blocks = dmof.GetStorableObjects(null).OfType<Block>().Where(b => FootnoteVerification.IsFootnoteBlock(b)).ToArray();
 
                 foreach (Block block in blocks)
                 {
-                    String name = block.Name;
-                    if (name.Contains(FootnoteItem.FOOTNOTE_KEY))
+                    if (FootnoteVerification.IsFootnoteBlock(block))
                     {
-                        //FootnoteItem.updateBlockProperties(block);
                         FootnoteItem note = new FootnoteItem();
-                        //note.Create(block);
                         note.UpdateBlockItems(block);
-                        //note.updateSubItems();
                     }
                 }
             }
-
             ActionManager oMng = new ActionManager();
             Action oBaseAction = oMng.FindBaseAction(this, true);
 

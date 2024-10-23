@@ -10,11 +10,11 @@ namespace ST.EplAddin.Footnote.ProperyBrowser
 
         public static bool IsFootnoteBlock(StorableObject storableObject)
         {
-            if (storableObject == null)
+            if (storableObject != null)
             {
                 if (storableObject is Block block)
                 {
-                    IsFootnoteBlock(block);
+                    return IsFootnoteBlock(block);
                 }
             }
             return false;
