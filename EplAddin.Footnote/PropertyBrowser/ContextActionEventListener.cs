@@ -31,11 +31,11 @@ namespace ST.EplAddin.Footnote
 
             if (FootnoteVerification.IsFootnoteBlock(storableObject))
             {
-                // createContextMenu();
+                createContextMenu();
             }
             else
             {
-                // removeContextMenu();
+                removeContextMenu();
             }
         }
 
@@ -44,7 +44,7 @@ namespace ST.EplAddin.Footnote
             if (oTestMenu == null)
             {
                 oTestMenu = new ContextMenu();
-                var result = oTestMenu.AddMenuItem(oLocation, "Добавить выноску", "XGedFootnotePoint", true, false);
+                var result = oTestMenu.AddMenuItem(oLocation, "Добавить выноску", "ChangeVariantsSymbol", true, false);
             }
 
         }
@@ -52,7 +52,7 @@ namespace ST.EplAddin.Footnote
         {
             if (oTestMenu != null && oLocation != null)
             {
-                oTestMenu.RemoveMenuItem(oLocation, "Добавить выноску", "XGedFootnotePoint", true, false);
+                oTestMenu.RemoveMenuItem(oLocation, "Добавить выноску", "ChangeVariantsSymbol", true, false);
                 oTestMenu = null;
             }
         }
