@@ -28,7 +28,7 @@ namespace ST.EplAddin.Footnote
             var currentProject = Set.GetCurrentProject(false);
             var storableObject = Set.GetSelectedObject(true);
             oLocation = new ContextMenuLocation("Editor", "Ged");//изменить
-
+            oTestMenu = new ContextMenu();
             if (FootnoteVerification.IsFootnoteBlock(storableObject))
             {
                 createContextMenu();
@@ -41,19 +41,16 @@ namespace ST.EplAddin.Footnote
 
         private void createContextMenu()
         {
-            if (oTestMenu == null)
+            if (oTestMenu != null)
             {
-                oTestMenu = new ContextMenu();
                 var result = oTestMenu.AddMenuItem(oLocation, "Добавить выноску", "ChangeVariantsSymbol", true, false);
             }
-
         }
         private void removeContextMenu()
         {
             if (oTestMenu != null && oLocation != null)
             {
                 oTestMenu.RemoveMenuItem(oLocation, "Добавить выноску", "ChangeVariantsSymbol", true, false);
-                oTestMenu = null;
             }
         }
     }
