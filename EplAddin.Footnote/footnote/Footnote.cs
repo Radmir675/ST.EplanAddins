@@ -2,6 +2,7 @@
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.E3D;
 using Eplan.EplApi.DataModel.Graphics;
+using NLog;
 using ST.EplAddin.Footnote.ProperyBrowser;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace ST.EplAddin.Footnote
     [RefreshProperties(RefreshProperties.All)]
     public partial class FootnoteItem
     {
+        Logger logger;
         public Block block = null;
         public ViewPlacement viewPlacement = null; //текущий обзор модели с которым группируемся
         public Placement3D sourceItem3D = null; //объект пространства листа
@@ -118,10 +120,31 @@ namespace ST.EplAddin.Footnote
         public FootnoteItem()
         {
             PropertiesDialogForm.ApplyEventClick += ResetLabelText;
+
+            GetLoggerConfig();
+        }
+
+        private void GetLoggerConfig()
+        {
+
+            var config = new NLog.Config.LoggingConfiguration();
+            // Куда выводим: Файл и Консоль
+            var fileName = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            var path = Path.Combine(fileName, "file.txt");
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = path, Layout = @"${date:format=HH\\:mm\\:ss}  message=${message} ${callsite}" };
+            var logconsole = new NLog.Targets.ConsoleTarget("logconsole");
+            // Правила сопоставления регистраторов          
+            config.AddRule(LogLevel.Info, LogLevel.Fatal, logconsole);
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
+            // Установка конфигурации         
+            NLog.LogManager.Configuration = config;
+            logger = LogManager.GetLogger("logfile");
+            logger.Debug("");
         }
 
         private void ResetLabelText(object sender, EventArgs e)
         {
+            logger.Debug("");
             IsUserTextUpdated = true;
         }
 
@@ -131,6 +154,7 @@ namespace ST.EplAddin.Footnote
         /// <returns></returns>
         public String Serialize()
         {
+            logger.Debug("");
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(FootnoteItem));
             var stream = new MemoryStream();
             serializer.WriteObject(stream, this);
@@ -155,6 +179,7 @@ namespace ST.EplAddin.Footnote
         /// </summary>
         public void Deserialize()
         {
+            logger.Debug("");
             try
             {
                 var json = jsontext.Contents.GetString(0);
@@ -190,6 +215,7 @@ namespace ST.EplAddin.Footnote
         /// <param name="block"></param>
         public void Create(Block block)
         {
+            logger.Debug("Block");
             if (FootnoteVerification.IsFootnoteBlock(block))
             {
                 this.block = block;
@@ -205,6 +231,7 @@ namespace ST.EplAddin.Footnote
         }
         public void GetBlockInfoToDrag(Block block)
         {
+            logger.Debug("");
             this.block = block;
             currentPage = this.block.Page;
             viewPlacement = this.block.Group as ViewPlacement;
@@ -216,9 +243,10 @@ namespace ST.EplAddin.Footnote
 
         public void UpdateBlockItems(Block block)
         {
-
+            logger.Debug("");
             if (FootnoteVerification.IsFootnoteBlock(block))
             {
+
                 this.block = block;
                 currentPage = this.block.Page;
                 viewPlacement = this.block.Group as ViewPlacement;
@@ -235,6 +263,7 @@ namespace ST.EplAddin.Footnote
         /// <param name="vpart"></param>
         public void Create(ViewPart vpart)
         {
+            logger.Debug("");
             currentPage = vpart.Page;
             viewPlacement = vpart.Group as ViewPlacement;
             CreateSubItems();
@@ -247,6 +276,7 @@ namespace ST.EplAddin.Footnote
         /// <param name="page"></param>
         public void Create(Page page)
         {
+            logger.Debug("");
             currentPage = page;
             UpdateBlock();
             //UpdateSubItems();
@@ -258,6 +288,7 @@ namespace ST.EplAddin.Footnote
         /// <param name="point"></param>
         public void SetItemPoint(PointD point)
         {
+            logger.Debug("");
             startPosition = point;
             // UpdateSubItems();
         }
@@ -268,6 +299,7 @@ namespace ST.EplAddin.Footnote
         /// <param name="point"></param>
         public void SetNotePoint(PointD point)
         {
+            logger.Debug("");
             finishPosition = point;
             // UpdateSubItems();
             //TODO: зачем везде пихать обновление вложенных элементов
@@ -279,6 +311,7 @@ namespace ST.EplAddin.Footnote
         /// </summary>
         public void CreateSubItems()
         {
+            logger.Debug("");
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
                 Pen penline = new Pen();
@@ -341,6 +374,7 @@ namespace ST.EplAddin.Footnote
         }
         public void CreateBlock()
         {
+            logger.Debug("");
             CreateBlock(subItems.ToArray());
         }
 
@@ -350,6 +384,7 @@ namespace ST.EplAddin.Footnote
         /// <param name="items">элементы для создания блока</param>
         public void CreateBlock(Placement[] items)
         {
+            logger.Debug("");
             if (block == null)
             {
                 block = new Block();
@@ -367,6 +402,7 @@ namespace ST.EplAddin.Footnote
         /// </summary>
         public void UpdateBlock()
         {
+            logger.Debug("");
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
                 //Если блок создан ломаем его и пересобираем
@@ -395,6 +431,7 @@ namespace ST.EplAddin.Footnote
         /// </summary>
         public void UpdateSubItems(string oldText = null)
         {
+            logger.Debug("");
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
                 //update lines
@@ -487,6 +524,7 @@ namespace ST.EplAddin.Footnote
 
         public void GetSubItems(Placement[] array)
         {
+            logger.Debug("");
             try
             {
                 label = array.ElementAtOrDefault(0) as Text;
@@ -511,6 +549,7 @@ namespace ST.EplAddin.Footnote
         /// </summary>
         public void GetSourceObject()
         {
+            logger.Debug("");
             String referenceID = block.Name.Split('#').Last().Replace('_', '/');
             string objIDDB = block.DatabaseIdentifier + "/" + referenceID;
 
@@ -536,6 +575,7 @@ namespace ST.EplAddin.Footnote
         /// </summary>
         public string GetSourceObjectProperty()
         {
+            logger.Debug("");
             return GetSourceObjectProperty(sourceItem3D);
         }
 
@@ -546,6 +586,7 @@ namespace ST.EplAddin.Footnote
         /// <returns></returns>
         public string GetSourceObjectProperty(Placement3D placement3D)
         {
+            logger.Debug("Placement3D");
             String result = "-1"; //default result
 
             if (placement3D != null)
@@ -646,6 +687,7 @@ namespace ST.EplAddin.Footnote
 
         private IEnumerable<string> GetValidPropertiesText(Placement3D placement3D, List<int> propertiesId)
         {
+            logger.Debug("");
             foreach (var property in propertiesId)
             {
                 using (PropertyDefinition propertyDefinition = new PropertyDefinition(property))
@@ -662,6 +704,7 @@ namespace ST.EplAddin.Footnote
 
         private List<int> GetPropID(string inputText)
         {
+            logger.Debug("");
             string pattern = @"(?<=\{).*?(?=\})";
             Regex regex = new Regex(pattern);
             MatchCollection collection = regex.Matches(inputText);
@@ -677,6 +720,7 @@ namespace ST.EplAddin.Footnote
         /// <param name="vpart">элемент обзора модели</param>
         public void SetSourceObject(ViewPart vpart)
         {
+            logger.Debug("");
             if (vpart != null)
                 SetSourceObject(vpart.Source);
         }
@@ -686,6 +730,7 @@ namespace ST.EplAddin.Footnote
         /// <param name="placement3d">3D модель</param>
         public void SetSourceObject(Placement3D placement3d)
         {
+            logger.Debug("Placement3D");
             if (placement3d != null)
                 using (SafetyPoint safetyPoint = SafetyPoint.Create())
                 {
@@ -708,11 +753,13 @@ namespace ST.EplAddin.Footnote
         /// </summary>
         public void GroupWithViewPlacement()
         {
+            logger.Debug("");
             GroupWithViewPlacement(viewPlacement);
         }
 
         public void GroupWithViewPlacement(ViewPlacement viewPlacement)
         {
+            logger.Debug("");
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
                 if (viewPlacement != null)
