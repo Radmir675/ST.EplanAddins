@@ -384,7 +384,7 @@ namespace ST.EplAddin.Footnote
         /// <param name="items">элементы для создания блока</param>
         public void CreateBlock(Placement[] items)
         {
-            logger.Debug("");
+            logger.Debug("Placement");
             if (block == null)
             {
                 block = new Block();
@@ -759,7 +759,7 @@ namespace ST.EplAddin.Footnote
 
         public void GroupWithViewPlacement(ViewPlacement viewPlacement)
         {
-            logger.Debug("");
+            logger.Debug("ViewPlacement");
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
                 if (viewPlacement != null)
