@@ -8,8 +8,7 @@ namespace UnitTestProject12
         [TestMethod]
         public void TestMethod1()
         {
-            PropertySelectDialogForm propertySelectDialogForm = new PropertySelectDialogForm();
-            propertySelectDialogForm.ShowDialog();
+
             //Form1 form1 = new Form1();
             //form1.ShowDialog();
         }

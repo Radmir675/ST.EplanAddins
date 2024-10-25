@@ -43,7 +43,7 @@ namespace ST.EplAddin.Footnote
                     if (FootnoteVerification.IsFootnoteBlock(storableObject))
                     {
                         note = new FootnoteItem();
-                        note.Create(block);//очень долго
+                        note.GetBlockInfoToDrag(block);
                         oldPosition = note.finishPosition;
                         isFootnote = true;
 

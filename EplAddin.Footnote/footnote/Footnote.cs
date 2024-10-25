@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Drawing.Design;
 using System.IO;
 using System.Linq;
@@ -202,6 +203,22 @@ namespace ST.EplAddin.Footnote
                 UpdateSubItems(); //обновление элементов
                 GroupWithViewPlacement();
             }
+        }
+        public void GetBlockInfoToDrag(Block block)
+        {
+            Stopwatch stopWatch = new Stopwatch();
+
+
+            this.block = block;
+            currentPage = this.block.Page;
+            viewPlacement = this.block.Group as ViewPlacement;
+
+            GetSourceObject();
+            stopWatch.Start();
+            GetSubItems(block.SubPlacements);
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            Deserialize(); //получение сохраненных свойств
         }
 
         public void UpdateBlockItems(Block block)
@@ -400,10 +417,12 @@ namespace ST.EplAddin.Footnote
                     startpoint.SetCircle(startPosition, STARTPOINTRADIUS);
                     startpoint.IsSurfaceFilled = true;
                     startpoint.Pen = penpoint;
+                    itemline.StartArrow = false;
                 }
                 else
                 {
                     itemline.StartArrow = true;
+                    startpoint.SetCircle(startPosition, 0);
                 }
 
 
