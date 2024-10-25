@@ -122,7 +122,6 @@ namespace ST.EplAddin.Footnote
                 note.UpdateBlock();
                 note.UpdateSubItems(note.Text);
                 note.Serialize();
-
                 note.GroupWithViewPlacement();
 
                 ActionManager oMng = new ActionManager();
