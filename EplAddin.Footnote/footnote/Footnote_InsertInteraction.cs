@@ -155,7 +155,7 @@ namespace ST.EplAddin.Footnote
                 FootnoteItem note = new FootnoteItem();
                 note.SetSourceObject(vpart);
                 note.Create(this.Page);
-                note.SetItemPoint(startPoint);
+                note.SetItemPoint(startPoint);// после этого начинается все заново
                 note.SetNotePoint(endPoint);
 
                 note.UpdateBlock();

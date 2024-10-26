@@ -246,7 +246,6 @@ namespace ST.EplAddin.Footnote
             logger.Debug("");
             if (FootnoteVerification.IsFootnoteBlock(block))
             {
-
                 this.block = block;
                 currentPage = this.block.Page;
                 viewPlacement = this.block.Group as ViewPlacement;
@@ -279,7 +278,6 @@ namespace ST.EplAddin.Footnote
             logger.Debug("");
             currentPage = page;
             UpdateBlock();
-            //UpdateSubItems();
         }
 
         /// <summary>
@@ -290,7 +288,6 @@ namespace ST.EplAddin.Footnote
         {
             logger.Debug("");
             startPosition = point;
-            // UpdateSubItems();
         }
 
         /// <summary>
@@ -301,8 +298,6 @@ namespace ST.EplAddin.Footnote
         {
             logger.Debug("");
             finishPosition = point;
-            // UpdateSubItems();
-            //TODO: зачем везде пихать обновление вложенных элементов
         }
 
 
@@ -459,8 +454,7 @@ namespace ST.EplAddin.Footnote
                 if (jsontext != null)
                     jsontext.Location = finishPosition;
 
-                //update Text
-                //надо достать данные с формы
+
                 Text = GetSourceObjectProperty();
                 MultiLangString mls = new MultiLangString();
                 mls.SetAsString(Text);
@@ -468,11 +462,9 @@ namespace ST.EplAddin.Footnote
                 label.Height = TEXTHEIGHT;
                 label.TextColorId = (Text == "-1") ? (short)1 : (short)-16002; // если свойство не прочиталось красим в красный
 
-                //itemline.StartPoint = itemPosition;
                 itemline.EndPoint = finishPosition;
 
                 double textwidth = label.GetBoundingBox()[1].X - label.GetBoundingBox()[0].X + TEXTHEIGHT;
-                //textwidth = textwidth;/** (sourceItem.Group as ViewPlacement).Scale;*/
 
                 noteline.StartPoint = finishPosition;
 
@@ -740,7 +732,7 @@ namespace ST.EplAddin.Footnote
                     String referenceID = objectIdWithoutProjectId;
                     sourceItem3D = placement3d;
                     if (sourceItem3D != null)
-                        Text = GetSourceObjectProperty(sourceItem3D);//получение текста из свойства но надо ли оно тут?????
+                        Text = GetSourceObjectProperty(sourceItem3D);
                     if (block != null)
                         block.Name = FootnoteVerification.FOOTNOTE_KEY + referenceID;//здесь ловим ошибку
                     safetyPoint.Commit();
