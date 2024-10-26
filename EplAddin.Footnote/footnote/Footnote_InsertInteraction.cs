@@ -152,14 +152,9 @@ namespace ST.EplAddin.Footnote
             {
                 Trace.WriteLine("OnSuccess");
 
-                FootnoteItem note = new FootnoteItem();
+                FootnoteItem note = new FootnoteItem(startPoint, endPoint);
                 note.SetSourceObject(vpart);
-                note.Create(this.Page);
-                note.SetItemPoint(startPoint);// после этого начинается все заново
-                note.SetNotePoint(endPoint);
-
-                note.UpdateBlock();
-                note.UpdateSubItems();
+                note.Create(Page);
                 note.Serialize();
                 note.GroupWithViewPlacement(vpart.Group as ViewPlacement);
 

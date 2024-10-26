@@ -111,6 +111,8 @@ namespace ST.EplAddin.Footnote
         [DisplayName("Введенный пользователем текст")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string USERTEXT { get; set; } = STSettings.instance.USERTEXT;
+        public PointD StartPoint { get; }//сразу получаем из interaction
+        public PointD EndPoint { get; }//сразу получаем из interaction
 
         //[DataMember]
         [Description("Индекс размещаемого свойства")]
@@ -120,8 +122,12 @@ namespace ST.EplAddin.Footnote
         public FootnoteItem()
         {
             PropertiesDialogForm.ApplyEventClick += ResetLabelText;
-
             GetLoggerConfig();
+        }
+        public FootnoteItem(PointD startPoint, PointD endPoint) : base()
+        {
+            StartPoint = startPoint;
+            EndPoint = endPoint;
         }
 
         private void GetLoggerConfig()
@@ -367,60 +373,6 @@ namespace ST.EplAddin.Footnote
                 safetyPoint.Commit();
             }
         }
-        public void CreateBlock()
-        {
-            logger.Debug("");
-            CreateBlock(subItems.ToArray());
-        }
-
-        /// <summary>
-        /// При создании блока переданные элементы удаляются со страницы и объеденяются в блок
-        /// </summary>
-        /// <param name="items">элементы для создания блока</param>
-        public void CreateBlock(Placement[] items)
-        {
-            logger.Debug("Placement");
-            if (block == null)
-            {
-                block = new Block();
-                block.Create(currentPage, items);
-            }
-            else
-            {
-                MessageBox.Show("Блок уже создан", "FootNote", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        /// <summary>
-        /// Обновление блока
-        /// При изменении вложенных компонентов необходимо пересобрать блок для корректировки BoundingBox
-        /// </summary>
-        public void UpdateBlock()
-        {
-            logger.Debug("");
-            using (SafetyPoint safetyPoint = SafetyPoint.Create())
-            {
-                //Если блок создан ломаем его и пересобираем
-                if (block != null)
-                {
-                    //получить обзор модели на котором лежит блок
-                    viewPlacement = block.Group as ViewPlacement;
-                    Placement[] items = block.BreakUp();
-                    GetSubItems(items); //получили существующие экземпляры после извлечения из блока
-                    block = null;
-                }
-
-                CreateSubItems(); //создание недостающих элементов
-                //updateSubItems(); //обновление текстов и расположения
-                CreateBlock(); //объединенить в блок
-                GetSubItems(block.SubPlacements); //получили существующие экземпляры после объединения в блок
-                //if (sourceItem3D != null) //Подумать
-                GetSourceObject();
-                SetSourceObject(sourceItem3D); //устанавливаем ссылку на исходный объект, (ссылку на который получили ранее!)//TODO:это можно уже пропустить
-                safetyPoint.Commit();
-            }
-        }
-
         /// <summary>
         /// Обновление вложенных в блок элементов
         /// </summary>
@@ -512,6 +464,58 @@ namespace ST.EplAddin.Footnote
                 safetyPoint.Commit();
             }
         }
+        public void CreateBlock()
+        {
+            logger.Debug("");
+            CreateBlock(subItems.ToArray());
+        }
+
+        /// <summary>
+        /// При создании блока переданные элементы удаляются со страницы и объеденяются в блок
+        /// </summary>
+        /// <param name="items">элементы для создания блока</param>
+        public void CreateBlock(Placement[] items)
+        {
+            logger.Debug("Placement");
+            if (block == null)
+            {
+                block = new Block();
+                block.Create(currentPage, items);
+            }
+            else
+            {
+                MessageBox.Show("Блок уже создан", "FootNote", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        /// <summary>
+        /// Обновление блока
+        /// При изменении вложенных компонентов необходимо пересобрать блок для корректировки BoundingBox
+        /// </summary>
+        public void UpdateBlock()
+        {
+            logger.Debug("");
+            using (SafetyPoint safetyPoint = SafetyPoint.Create())
+            {
+                //Если блок создан ломаем его и пересобираем
+                if (block != null)
+                {
+                    //получить обзор модели на котором лежит блок
+                    viewPlacement = block.Group as ViewPlacement;
+                    Placement[] items = block.BreakUp();
+                    GetSubItems(items); //получили существующие экземпляры после извлечения из блока
+                    block = null;
+                }
+
+                CreateSubItems(); //создание недостающих элементов
+                CreateBlock(); //объединенить в блок
+                GetSubItems(block.SubPlacements); //получили существующие экземпляры после объединения в блок
+                GetSourceObject();
+                SetSourceObject(sourceItem3D); //устанавливаем ссылку на исходный объект, (ссылку на который получили ранее!)//TODO:это можно уже пропустить
+                safetyPoint.Commit();
+            }
+        }
+
 
 
         public void GetSubItems(Placement[] array)
