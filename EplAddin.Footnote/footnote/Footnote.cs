@@ -48,16 +48,42 @@ namespace ST.EplAddin.Footnote
         public PropertiesList PROPERTYID { get; set; } = STSettings.instance.PROPERTYID;
 
         [Browsable(false)]
-        public PointD startPosition
+        private PointD _startPosition;
+        [Browsable(false)]
+        public PointD StartPosition
         {
-            get => itemline.StartPoint;
-            set => itemline.StartPoint = value;
+            get
+            {
+                return itemline?.StartPoint ?? _startPosition;
+            }
+            set
+            {
+                if (itemline != null)
+                {
+                    itemline.StartPoint = value;
+                }
+                _startPosition = value;
+            }
         }
+
+        [Browsable(false)]
+        private PointD _finishPosition;
+
         [Browsable(false)]
         public PointD finishPosition
         {
-            get => noteline.StartPoint;
-            set => noteline.StartPoint = value;
+            get
+            {
+                return noteline?.StartPoint ?? _finishPosition;
+            }
+            set
+            {
+                if (noteline != null)
+                {
+                    noteline.StartPoint = value;
+                }
+                _finishPosition = value;
+            }
         }
         [Browsable(false)]
         public bool IsUserTextUpdated { get; set; } = false;
@@ -111,8 +137,6 @@ namespace ST.EplAddin.Footnote
         [DisplayName("Введенный пользователем текст")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string USERTEXT { get; set; } = STSettings.instance.USERTEXT;
-        public PointD StartPoint { get; }//сразу получаем из interaction
-        public PointD EndPoint { get; }//сразу получаем из interaction
 
         //[DataMember]
         [Description("Индекс размещаемого свойства")]
@@ -124,10 +148,11 @@ namespace ST.EplAddin.Footnote
             PropertiesDialogForm.ApplyEventClick += ResetLabelText;
             GetLoggerConfig();
         }
-        public FootnoteItem(PointD startPoint, PointD endPoint) : base()
+        public FootnoteItem(PointD startPoint, PointD endPoint) : this()
         {
-            StartPoint = startPoint;
-            EndPoint = endPoint;
+            StartPosition = startPoint;
+            finishPosition = endPoint;
+
         }
 
         private void GetLoggerConfig()
@@ -293,7 +318,7 @@ namespace ST.EplAddin.Footnote
         public void SetItemPoint(PointD point)
         {
             logger.Debug("");
-            startPosition = point;
+            StartPosition = point;
         }
 
         /// <summary>
@@ -315,19 +340,14 @@ namespace ST.EplAddin.Footnote
             logger.Debug("");
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-                Pen penline = new Pen();
-                penline.ColorId = 0;
-                penline.StyleId = 0;
-                penline.StyleFactor = -16002;
-                penline.Width = LINEWIDTH;
-                penline.LineEndType = 0;
-
+                Pen penline = SetNoteLineProperties();
                 GraphicalLayer layer = currentPage.Project.LayerTable["EPLAN107"];
 
                 if (label == null)
                 {
                     label = new Text();
                     label.Create(currentPage, Text, TEXTHEIGHT);
+                    //SetTextWithProperties();
                     label.Justification = TextBase.JustificationType.SpecialCenter;
                     label.Layer = layer;
 
@@ -337,11 +357,13 @@ namespace ST.EplAddin.Footnote
                 {
                     jsontext = new Text();
                     jsontext.Create(currentPage, "", 0.0);
+                    SetJsonContextLocation();
                 }
 
                 if (propid == null)
                 {
                     propid = new Text();
+                    SetPropId(label.Location);
                     propid.Create(currentPage, PROPERTYID.ToString(), TEXTHEIGHT / 2);
                     propid.IsSetAsVisible = Visibility.Invisible;
                 }
@@ -349,7 +371,7 @@ namespace ST.EplAddin.Footnote
                 if (itemline == null)
                 {
                     itemline = new Line();
-                    itemline.Create(currentPage);
+                    itemline.Create(currentPage, StartPosition, finishPosition);
                     itemline.Layer = layer;
                     itemline.Pen = penline;
                 }
@@ -357,7 +379,7 @@ namespace ST.EplAddin.Footnote
                 if (noteline == null)
                 {
                     noteline = new Line();
-                    noteline.Create(currentPage);
+                    noteline.Create(currentPage, finishPosition, new PointD(finishPosition.X + GetTextWidthBound(), finishPosition.Y));
                     noteline.Layer = layer;
                     noteline.Pen = penline;
                 }
@@ -366,13 +388,39 @@ namespace ST.EplAddin.Footnote
                 {
                     startpoint = new Arc();
                     startpoint.Create(currentPage);
-                    startpoint.Pen = penline;
+                    startpoint.Pen = penline;//эта строка несовсем понятна
+                    Pen penpoint = SetPenPointProperties();
+                    SetStartPointer(penpoint);
                 }
+                SetPropertiesToLines();
+
                 subItems = new List<Placement> { label, itemline, noteline, startpoint, jsontext, propid };
 
                 safetyPoint.Commit();
             }
         }
+
+        private void CreateNoteLinesWithProperties()
+        {
+            logger.Debug("");
+            using (SafetyPoint safetyPoint = SafetyPoint.Create())
+            {
+                //Pen penpoint = SetPenPointProperties();
+                //SetStartPointer(penpoint);
+
+                //if (jsontext != null)
+                //    jsontext.Location = finishPosition;
+
+                //SetTextWithProperties();
+                //double textwidth = label.GetBoundingBox()[1].X - label.GetBoundingBox()[0].X + TEXTHEIGHT;
+                //itemline.EndPoint = finishPosition;
+                //noteline.StartPoint = finishPosition;
+                //SetPointsPositionInvertDirectionCase(textwidth);
+                //SetPropertiesToLines();
+                //safetyPoint.Commit();
+            }
+        }
+
         /// <summary>
         /// Обновление вложенных в блок элементов
         /// </summary>
@@ -381,89 +429,124 @@ namespace ST.EplAddin.Footnote
             logger.Debug("");
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-                //update lines
-                Pen penpoint = new Pen();
-                penpoint.ColorId = 0;
-                penpoint.StyleId = 0;
-                penpoint.StyleFactor = -16002;
-                penpoint.Width = 0.0;
-                penpoint.LineEndType = 0;
-
-                if (STARTPOINT)
-                {
-                    startpoint.SetCircle(startPosition, STARTPOINTRADIUS);
-                    startpoint.IsSurfaceFilled = true;
-                    startpoint.Pen = penpoint;
-                    itemline.StartArrow = false;
-                }
-                else
-                {
-                    itemline.StartArrow = true;
-                    startpoint.SetCircle(startPosition, 0);
-                }
-
-
-                if (jsontext != null)
-                    jsontext.Location = finishPosition;
-
-
-                Text = GetSourceObjectProperty();
-                MultiLangString mls = new MultiLangString();
-                mls.SetAsString(Text);
-                label.Contents = mls;
-                label.Height = TEXTHEIGHT;
-                label.TextColorId = (Text == "-1") ? (short)1 : (short)-16002; // если свойство не прочиталось красим в красный
-
+                Pen penpoint = SetPenPointProperties();
+                SetStartPointer(penpoint);
+                SetJsonContextLocation();
+                SetTextWithProperties();
+                double textwidth = GetTextWidthBound();
                 itemline.EndPoint = finishPosition;
-
-                double textwidth = label.GetBoundingBox()[1].X - label.GetBoundingBox()[0].X + TEXTHEIGHT;
-
                 noteline.StartPoint = finishPosition;
-
-                PointD endpoint = finishPosition;
-                PointD labelpoint = finishPosition;
-
-                if (finishPosition.X > startPosition.X ^ INVERTDIRECTION)
-                {
-                    endpoint.X += textwidth;
-                    noteline.EndPoint = endpoint;
-
-                    labelpoint.X += textwidth / 2;
-                    label.Location = new PointD(labelpoint.X, labelpoint.Y + 3);
-                }
-                else
-                {
-                    endpoint.X -= textwidth;
-                    noteline.EndPoint = endpoint;
-
-                    labelpoint.X -= textwidth / 2;
-                    label.Location = new PointD(labelpoint.X, labelpoint.Y + 3);
-                }
-
-                if (propid != null)
-                {
-
-                    MultiLangString mlsid = new MultiLangString();
-                    mlsid.SetAsString(PROPERTYID.ToString());
-                    propid.Contents = mlsid;
-
-                    PointD idpoint = new PointD(labelpoint.X, labelpoint.Y - TEXTHEIGHT);
-                    propid.Location = idpoint;
-                }
-                //update lines
-                Pen penline = new Pen();
-                penline.ColorId = 0;
-                penline.StyleId = 0;
-                penline.StyleFactor = -16002;
-                penline.Width = LINEWIDTH;
-                penline.LineEndType = 0;
-
-                noteline.Pen = penline;//это полка текста
-                itemline.Pen = penline;//это линия выноски
-
+                SetPointsPositionInvertDirectionCase(textwidth);
+                SetPropertiesToLines();
                 safetyPoint.Commit();
             }
         }
+
+        private void SetJsonContextLocation()
+        {
+            if (jsontext != null)
+                jsontext.Location = finishPosition;
+        }
+
+        private double GetTextWidthBound()
+        {
+            return label.GetBoundingBox()[1].X - label.GetBoundingBox()[0].X + TEXTHEIGHT;
+        }
+
+        private void SetPropertiesToLines()
+        {
+            //update lines
+            Pen penline = SetNoteLineProperties();
+            noteline.Pen = penline;//это полка текста
+            itemline.Pen = penline;//это линия выноски
+        }
+
+        private void SetPointsPositionInvertDirectionCase(double textwidth)
+        {
+            PointD endpoint = finishPosition;
+            PointD labelpoint = finishPosition;
+
+            if (finishPosition.X > StartPosition.X ^ INVERTDIRECTION)
+            {
+                endpoint.X += textwidth;
+                noteline.EndPoint = endpoint;
+
+                labelpoint.X += textwidth / 2;
+                label.Location = new PointD(labelpoint.X, labelpoint.Y + 3);
+            }
+            else
+            {
+                endpoint.X -= textwidth;
+                noteline.EndPoint = endpoint;
+
+                labelpoint.X -= textwidth / 2;
+                label.Location = new PointD(labelpoint.X, labelpoint.Y + 3);
+            }
+            SetPropId(labelpoint);
+        }
+
+        private void SetPropId(PointD labelpoint)
+        {
+            if (propid != null)
+            {
+
+                MultiLangString mlsid = new MultiLangString();
+                mlsid.SetAsString(PROPERTYID.ToString());
+                propid.Contents = mlsid;
+
+                PointD idpoint = new PointD(labelpoint.X, labelpoint.Y - TEXTHEIGHT);
+                propid.Location = idpoint;
+            }
+        }
+
+        private void SetTextWithProperties()
+        {
+            Text = GetSourceObjectProperty();
+            MultiLangString mls = new MultiLangString();
+            mls.SetAsString(Text);
+            label.Contents = mls;
+            label.Height = TEXTHEIGHT;
+            label.TextColorId = (Text == "-1") ? (short)1 : (short)-16002; // если свойство не прочиталось красим в красный
+        }
+
+        private void SetStartPointer(Pen penpoint)
+        {
+            if (STARTPOINT)
+            {
+                startpoint.SetCircle(StartPosition, STARTPOINTRADIUS);
+                startpoint.IsSurfaceFilled = true;
+                startpoint.Pen = penpoint;
+                itemline.StartArrow = false;
+            }
+            else
+            {
+                itemline.StartArrow = true;
+                startpoint.SetCircle(StartPosition, 0);
+            }
+        }
+
+        private Pen SetNoteLineProperties()
+        {
+            Pen penline = new Pen();
+            penline.ColorId = 0;
+            penline.StyleId = 0;
+            penline.StyleFactor = -16002;
+            penline.Width = LINEWIDTH;
+            penline.LineEndType = 0;
+            return penline;
+        }
+
+        private Pen SetPenPointProperties()
+        {
+            Pen penpoint = new Pen();
+            penpoint.ColorId = 0;
+            penpoint.StyleId = 0;
+            penpoint.StyleFactor = -16002;
+            penpoint.Width = 0.0;
+            penpoint.LineEndType = 0;
+            return penpoint;
+        }
+
         public void CreateBlock()
         {
             logger.Debug("");
