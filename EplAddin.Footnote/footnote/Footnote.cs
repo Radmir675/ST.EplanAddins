@@ -370,7 +370,7 @@ namespace ST.EplAddin.Footnote
                     SetTextWithProperties();
                     label.Justification = TextBase.JustificationType.SpecialCenter;
                     label.Layer = layer;
-                    label.Location = FinishPosition;
+                    //label.Location = FinishPosition;
                     SetPointsPositionInvertDirectionCase(GetTextWidthBound());
                 }
 
@@ -418,27 +418,6 @@ namespace ST.EplAddin.Footnote
                 subItems = new List<Placement> { label, itemline, noteline, startpoint, jsontext, propid };
 
                 safetyPoint.Commit();
-            }
-        }
-
-        private void CreateNoteLinesWithProperties()
-        {
-            logger.Debug("");
-            using (SafetyPoint safetyPoint = SafetyPoint.Create())
-            {
-                //Pen penpoint = SetPenPointProperties();
-                //SetStartPointer(penpoint);
-
-                //if (jsontext != null)
-                //    jsontext.Location = finishPosition;
-
-                //SetTextWithProperties();
-                //double textwidth = label.GetBoundingBox()[1].X - label.GetBoundingBox()[0].X + TEXTHEIGHT;
-                //itemline.EndPoint = finishPosition;
-                //noteline.StartPoint = finishPosition;
-                //SetPointsPositionInvertDirectionCase(textwidth);
-                //SetPropertiesToLines();
-                //safetyPoint.Commit();
             }
         }
 
@@ -494,7 +473,6 @@ namespace ST.EplAddin.Footnote
                 {
                     noteline.EndPoint = endpoint;
                 }
-
                 labelpoint.X += textwidth / 2;
                 label.Location = new PointD(labelpoint.X, labelpoint.Y + 3);
             }
@@ -516,7 +494,6 @@ namespace ST.EplAddin.Footnote
         {
             if (propid != null)
             {
-
                 MultiLangString mlsid = new MultiLangString();
                 mlsid.SetAsString(PROPERTYID.ToString());
                 propid.Contents = mlsid;
