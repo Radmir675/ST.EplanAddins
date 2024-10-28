@@ -370,8 +370,6 @@ namespace ST.EplAddin.Footnote
                     SetTextWithProperties();
                     label.Justification = TextBase.JustificationType.SpecialCenter;
                     label.Layer = layer;
-                    //label.Location = FinishPosition;
-                    SetPointsPositionInvertDirectionCase(GetTextWidthBound());
                 }
 
                 if (jsontext == null)
@@ -404,7 +402,6 @@ namespace ST.EplAddin.Footnote
                     itemline.Pen = penline;
                 }
 
-
                 if (startpoint == null)
                 {
                     startpoint = new Arc();
@@ -413,8 +410,8 @@ namespace ST.EplAddin.Footnote
                     Pen penpoint = SetPenPointProperties();
                     SetStartPointer(penpoint);
                 }
+                SetPointsPositionInvertDirectionCase(GetTextWidthBound());
                 SetPropertiesToLines();
-
                 subItems = new List<Placement> { label, itemline, noteline, startpoint, jsontext, propid };
 
                 safetyPoint.Commit();
@@ -597,7 +594,7 @@ namespace ST.EplAddin.Footnote
                 CreateSubItems(); //создание недостающих элементов
                 CreateBlock(); //объединенить в блок
                 GetSubItems(block.SubPlacements); //получили существующие экземпляры после объединения в блок
-                GetSourceObject();
+                //GetSourceObject(); //!!!!он может понадобится в обновлении отчета
                 SetSourceObject(sourceItem3D); //устанавливаем ссылку на исходный объект, (ссылку на который получили ранее!)//TODO:это можно уже пропустить
                 safetyPoint.Commit();
             }
