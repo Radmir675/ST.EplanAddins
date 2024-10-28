@@ -54,7 +54,17 @@ namespace ST.EplAddin.Footnote
         {
             get
             {
-                return _startPosition;
+                PointD? result = null;
+                try
+                {
+                    result = itemline?.StartPoint;
+                }
+                catch { }
+                finally
+                {
+                    result ??= _startPosition;
+                }
+                return result.Value;
             }
             set
             {
@@ -74,7 +84,17 @@ namespace ST.EplAddin.Footnote
         {
             get
             {
-                return _finishPosition;
+                PointD? result = null;
+                try
+                {
+                    result = noteline?.StartPoint;
+                }
+                catch { }
+                finally
+                {
+                    result ??= _finishPosition;
+                }
+                return result.Value;
             }
             set
             {
@@ -347,11 +367,11 @@ namespace ST.EplAddin.Footnote
                 {
                     label = new Text();
                     label.Create(currentPage, Text, TEXTHEIGHT);
-                    // SetTextWithProperties();
+                    SetTextWithProperties();
                     label.Justification = TextBase.JustificationType.SpecialCenter;
                     label.Layer = layer;
                     label.Location = FinishPosition;
-
+                    SetPointsPositionInvertDirectionCase(GetTextWidthBound());
                 }
 
                 if (jsontext == null)
@@ -369,6 +389,13 @@ namespace ST.EplAddin.Footnote
                     propid.IsSetAsVisible = Visibility.Invisible;
                 }
 
+                if (noteline == null)
+                {
+                    noteline = new Line();
+                    noteline.Create(currentPage, FinishPosition, new PointD(FinishPosition.X + GetTextWidthBound(), FinishPosition.Y));
+                    noteline.Layer = layer;
+                    noteline.Pen = penline;
+                }
                 if (itemline == null)
                 {
                     itemline = new Line();
@@ -377,13 +404,6 @@ namespace ST.EplAddin.Footnote
                     itemline.Pen = penline;
                 }
 
-                if (noteline == null)
-                {
-                    noteline = new Line();
-                    noteline.Create(currentPage, FinishPosition, new PointD(FinishPosition.X + GetTextWidthBound(), FinishPosition.Y));
-                    noteline.Layer = layer;
-                    noteline.Pen = penline;
-                }
 
                 if (startpoint == null)
                 {
@@ -470,7 +490,10 @@ namespace ST.EplAddin.Footnote
             if (FinishPosition.X > StartPosition.X ^ INVERTDIRECTION)
             {
                 endpoint.X += textwidth;
-                noteline.EndPoint = endpoint;
+                if (noteline != null)
+                {
+                    noteline.EndPoint = endpoint;
+                }
 
                 labelpoint.X += textwidth / 2;
                 label.Location = new PointD(labelpoint.X, labelpoint.Y + 3);
@@ -478,7 +501,10 @@ namespace ST.EplAddin.Footnote
             else
             {
                 endpoint.X -= textwidth;
-                noteline.EndPoint = endpoint;
+                if (noteline != null)
+                {
+                    noteline.EndPoint = endpoint;
+                }
 
                 labelpoint.X -= textwidth / 2;
                 label.Location = new PointD(labelpoint.X, labelpoint.Y + 3);
