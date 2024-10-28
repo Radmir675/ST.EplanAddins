@@ -31,11 +31,8 @@ namespace ST.EplAddin.Footnote
 
                 foreach (Block block in blocks)
                 {
-                    if (FootnoteVerification.IsFootnoteBlock(block))
-                    {
-                        FootnoteItem note = new FootnoteItem();
-                        note.UpdateBlockItems(block);
-                    }
+                    FootnoteItem note = new FootnoteItem();
+                    note.UpdateBlockItems(block);
                 }
             }
             ActionManager oMng = new ActionManager();
