@@ -54,7 +54,7 @@ namespace ST.EplAddin.Footnote
         {
             get
             {
-                return itemline?.StartPoint ?? _startPosition;
+                return _startPosition;
             }
             set
             {
@@ -74,7 +74,7 @@ namespace ST.EplAddin.Footnote
         {
             get
             {
-                return noteline?.StartPoint ?? _finishPosition;
+                return _finishPosition;
             }
             set
             {
@@ -350,6 +350,7 @@ namespace ST.EplAddin.Footnote
                     //SetTextWithProperties();
                     label.Justification = TextBase.JustificationType.SpecialCenter;
                     label.Layer = layer;
+                    label.Location = finishPosition;
 
                 }
 
@@ -363,8 +364,8 @@ namespace ST.EplAddin.Footnote
                 if (propid == null)
                 {
                     propid = new Text();
-                    SetPropId(label.Location);
                     propid.Create(currentPage, PROPERTYID.ToString(), TEXTHEIGHT / 2);
+                    SetPropId(label.Location);
                     propid.IsSetAsVisible = Visibility.Invisible;
                 }
 
