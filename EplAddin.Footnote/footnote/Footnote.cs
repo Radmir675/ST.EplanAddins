@@ -70,7 +70,7 @@ namespace ST.EplAddin.Footnote
         private PointD _finishPosition;
 
         [Browsable(false)]
-        public PointD finishPosition
+        public PointD FinishPosition
         {
             get
             {
@@ -151,7 +151,7 @@ namespace ST.EplAddin.Footnote
         public FootnoteItem(PointD startPoint, PointD endPoint) : this()
         {
             StartPosition = startPoint;
-            finishPosition = endPoint;
+            FinishPosition = endPoint;
 
         }
 
@@ -328,7 +328,7 @@ namespace ST.EplAddin.Footnote
         public void SetNotePoint(PointD point)
         {
             logger.Debug("");
-            finishPosition = point;
+            FinishPosition = point;
         }
 
 
@@ -347,10 +347,10 @@ namespace ST.EplAddin.Footnote
                 {
                     label = new Text();
                     label.Create(currentPage, Text, TEXTHEIGHT);
-                    //SetTextWithProperties();
+                    // SetTextWithProperties();
                     label.Justification = TextBase.JustificationType.SpecialCenter;
                     label.Layer = layer;
-                    label.Location = finishPosition;
+                    label.Location = FinishPosition;
 
                 }
 
@@ -372,7 +372,7 @@ namespace ST.EplAddin.Footnote
                 if (itemline == null)
                 {
                     itemline = new Line();
-                    itemline.Create(currentPage, StartPosition, finishPosition);
+                    itemline.Create(currentPage, StartPosition, FinishPosition);
                     itemline.Layer = layer;
                     itemline.Pen = penline;
                 }
@@ -380,7 +380,7 @@ namespace ST.EplAddin.Footnote
                 if (noteline == null)
                 {
                     noteline = new Line();
-                    noteline.Create(currentPage, finishPosition, new PointD(finishPosition.X + GetTextWidthBound(), finishPosition.Y));
+                    noteline.Create(currentPage, FinishPosition, new PointD(FinishPosition.X + GetTextWidthBound(), FinishPosition.Y));
                     noteline.Layer = layer;
                     noteline.Pen = penline;
                 }
@@ -435,8 +435,8 @@ namespace ST.EplAddin.Footnote
                 SetJsonContextLocation();
                 SetTextWithProperties();
                 double textwidth = GetTextWidthBound();
-                itemline.EndPoint = finishPosition;
-                noteline.StartPoint = finishPosition;
+                itemline.EndPoint = FinishPosition;
+                noteline.StartPoint = FinishPosition;
                 SetPointsPositionInvertDirectionCase(textwidth);
                 SetPropertiesToLines();
                 safetyPoint.Commit();
@@ -446,7 +446,7 @@ namespace ST.EplAddin.Footnote
         private void SetJsonContextLocation()
         {
             if (jsontext != null)
-                jsontext.Location = finishPosition;
+                jsontext.Location = FinishPosition;
         }
 
         private double GetTextWidthBound()
@@ -464,10 +464,10 @@ namespace ST.EplAddin.Footnote
 
         private void SetPointsPositionInvertDirectionCase(double textwidth)
         {
-            PointD endpoint = finishPosition;
-            PointD labelpoint = finishPosition;
+            PointD endpoint = FinishPosition;
+            PointD labelpoint = FinishPosition;
 
-            if (finishPosition.X > StartPosition.X ^ INVERTDIRECTION)
+            if (FinishPosition.X > StartPosition.X ^ INVERTDIRECTION)
             {
                 endpoint.X += textwidth;
                 noteline.EndPoint = endpoint;

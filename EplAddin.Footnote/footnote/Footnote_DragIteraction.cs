@@ -44,7 +44,7 @@ namespace ST.EplAddin.Footnote
                     {
                         note = new FootnoteItem();
                         note.GetBlockInfoToDrag(block);
-                        oldPosition = note.finishPosition;
+                        oldPosition = note.FinishPosition;
                         isFootnote = true;
 
                         double x = note.StartPosition.X + note.block.Properties.INSTANCE_XCOORD.ToDouble();
