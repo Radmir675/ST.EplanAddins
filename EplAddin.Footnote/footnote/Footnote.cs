@@ -156,7 +156,7 @@ namespace ST.EplAddin.Footnote
         [CategoryAttribute("Text"), DefaultValueAttribute(0.25)]
         [DisplayName("Введенный пользователем текст")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
-        public string USERTEXT { get; set; } = STSettings.instance.USERTEXT;
+        public string USERTEXT { get; set; }
 
         //[DataMember]
         [Description("Индекс размещаемого свойства")]

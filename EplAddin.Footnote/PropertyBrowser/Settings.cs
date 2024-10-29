@@ -40,8 +40,6 @@ namespace ST.EplAddin.Footnote
         static String KEY_STARTPOINTRADIUS = "USER.ST.FOOTNOTE.STARTPOINTRADIUS";
         static String KEY_USERTEXT = "USER.ST.FOOTNOTE.KEY_USERTEXT";
 
-        [CategoryAttribute("Text"), Description("Введенный пользователем текст"), ReadOnlyAttribute(false), DefaultValueAttribute("")]
-        public string USERTEXT { get; set; }
 
         private STSettings() { }
         public void RemoveSettings()
@@ -108,15 +106,6 @@ namespace ST.EplAddin.Footnote
                 MessageBox.Show($"Settings{KEY_STARTPOINTRADIUS} not found!", "Footnote addin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-            if (oSettings.ExistSetting(KEY_USERTEXT))
-            {
-                oSettings.DeleteSetting(KEY_USERTEXT);
-                MessageBox.Show($"Settings {KEY_USERTEXT} will be deleted", "Footnote addin", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show($"Settings{KEY_USERTEXT} not found!", "Footnote addin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
         }
 
         public void LoadSettings()
@@ -124,7 +113,7 @@ namespace ST.EplAddin.Footnote
             Eplan.EplApi.Base.Settings oSettings = new Eplan.EplApi.Base.Settings();
             if (oSettings.ExistSetting(KEY_LINEWIDTH))
             {
-                LINEWIDTH = oSettings.GetDoubleSetting(KEY_LINEWIDTH, 0);
+                LINEWIDTH = Math.Round(oSettings.GetDoubleSetting(KEY_LINEWIDTH, 0), 1);
             }
 
             if (oSettings.ExistSetting(KEY_TEXTHEIGHT))
@@ -150,10 +139,6 @@ namespace ST.EplAddin.Footnote
             {
                 STARTPOINTRADIUS = oSettings.GetDoubleSetting(KEY_STARTPOINTRADIUS, 0);
             }
-            if (oSettings.ExistSetting(KEY_USERTEXT))
-            {
-                USERTEXT = oSettings.GetStringSetting(KEY_USERTEXT, 0);
-            }
         }
 
         public void SaveSettings()
@@ -166,7 +151,7 @@ namespace ST.EplAddin.Footnote
                     new Range[] { new Range { FromValue = 0, ToValue = 32768 } },
                     ISettings.CreationFlag.Insert);
             }
-            oSettings.SetDoubleSetting(KEY_LINEWIDTH, LINEWIDTH, 0);
+            oSettings.SetDoubleSetting(KEY_LINEWIDTH, Math.Round(LINEWIDTH, 1), 0);
 
             if (!oSettings.ExistSetting(KEY_TEXTHEIGHT))
             {
@@ -211,16 +196,6 @@ namespace ST.EplAddin.Footnote
                     ISettings.CreationFlag.Insert);
             }
             oSettings.SetDoubleSetting(KEY_STARTPOINTRADIUS, STARTPOINTRADIUS, 0);
-
-
-            if (!oSettings.ExistSetting(KEY_USERTEXT))
-            {
-                oSettings.AddStringSetting(KEY_USERTEXT,
-                new string[] { USERTEXT },
-                new string[1],
-                    ISettings.CreationFlag.Insert);
-            }
-            oSettings.SetStringSetting(USERTEXT, KEY_USERTEXT, 0);
         }
     }
 }
