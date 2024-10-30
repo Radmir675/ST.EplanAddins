@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ST.EplAddin.Footnote.Views;
 
 namespace UnitTestProject12
 {
@@ -8,9 +9,9 @@ namespace UnitTestProject12
         [TestMethod]
         public void TestMethod1()
         {
+            PropertiesWindow propertiesWindow = new PropertiesWindow();
+            propertiesWindow.ShowDialog();
 
-            //Form1 form1 = new Form1();
-            //form1.ShowDialog();
         }
     }
 }
