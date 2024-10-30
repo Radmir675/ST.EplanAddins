@@ -34,10 +34,50 @@ namespace ST.EplAddin.Footnote.ProperyBrowser
         {
             var properties = Placement3D.FunctionDefinition.Properties.ExistingValues;
 
+            //List<Tuple<string, string>> placement3DProperties = Getplacement3DProperties();
+            List<Tuple<string, string>> articleProperties = GetArticleProperties();
+            //List<Tuple<string, string>> articleReferenceProperties = GetarticleReferenceProperties();
 
 
+            dataGridView1.DataSource = articleProperties;
+            var countResult = articleProperties.Count;
+            return;
+        }
+
+        private List<Tuple<string, string>> GetArticleProperties()
+        {
             List<Tuple<string, string>> result = new();
-            foreach (var property in Eplan.EplApi.DataModel.Properties.AllPlacement3DPropIDs)
+            foreach (var property in Properties.AllArticlePropIDs)
+            {
+                try
+                {
+                    //Article article = new Article(property);
+                    //bool IsIndexed = article.IsIndexed;
+                    //var fff = property.Definition.Name;
+                    //var ss = property.Definition.Id;
+                    //if (true /*&& !Placement3D.Properties[property].IsEmpty*/)
+                    //{
+
+                    //    var value = Placement3D.Properties[property];
+                    //    var name = property?.Definition.Name;
+                    //    result.Add(new Tuple<string, string>(name, value));
+                    //}
+
+                }
+                catch (System.Exception)
+                {
+
+
+                }
+            }
+
+            return result;
+        }
+
+        private List<Tuple<string, string>> Getplacement3DProperties()
+        {
+            List<Tuple<string, string>> result = new();
+            foreach (var property in Properties.AllPlacement3DPropIDs)
             {
                 try
                 {
@@ -60,9 +100,8 @@ namespace ST.EplAddin.Footnote.ProperyBrowser
 
                 }
             }
-            // var data = Placement3D.Properties[22074].ToMultiLangString().GetAsString();
-            dataGridView1.DataSource = result;
-            var countResult = result.Count;
+
+            return result;
         }
 
         private void cancel_button_Click(object sender, System.EventArgs e)
