@@ -12,8 +12,8 @@
         <Button DockPanel.Dock="Right"
                 x:Name="Delete"
                 HorizontalAlignment="Right">
-            <Image Source="{svgc:SvgImage Source=Icons/delete.svg, AppName=ST.EplAddin.Footnote}"
-                   Height="15" />
+            <!--<Image Source="{svgc:SvgImage Source=Icons/delete.svg, AppName=ST.EplAddin.Footnote}"
+                   Height="15" />-->
         </Button>
     </Grid>
 </Window>

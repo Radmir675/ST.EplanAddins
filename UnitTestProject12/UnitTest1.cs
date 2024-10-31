@@ -9,7 +9,7 @@ namespace UnitTestProject12
         [TestMethod]
         public void TestMethod1()
         {
-            var propertiesWindow = new FullPropertiesWindow();
+            var propertiesWindow = new PropertiesWindow();
             propertiesWindow.ShowDialog();
 
         }

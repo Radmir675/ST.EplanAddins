@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{39490899-7EE2-44E3-BAFF-A2640D3FD7B9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ST.EplAddin.FootNote</RootNamespace>
+    <AssemblyName>ST.EplAddin.FootNote</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CefSharp.Wpf, Version=76.1.90.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=AMD64" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Presentation" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PropertiesWindow.xaml.cs">
+      <DependentUpon>PropertiesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\add.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\arrow_downward.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\arrow_upward.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\block_.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\check.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\delete.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\format_align_center.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\format_align_left.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\format_align_right.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\format_paint.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\fx_function.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="PropertiesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DotNetProjects.SVGImage">
+      <Version>5.2.2</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
