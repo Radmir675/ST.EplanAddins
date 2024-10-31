@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ST.EplAddin.Footnote.Views"
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         mc:Ignorable="d"
-        Width="316"
+        Width="315"
         Title="Условный объект"
         ResizeMode="NoResize"
         Background="#f1f1f1"

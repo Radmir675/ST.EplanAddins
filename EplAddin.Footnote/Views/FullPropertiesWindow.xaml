@@ -9,6 +9,11 @@
         d:DesignHeight="450"
         d:DesignWidth="800">
     <Grid>
-
+        <Button DockPanel.Dock="Right"
+                x:Name="Delete"
+                HorizontalAlignment="Right">
+            <Image Source="{svgc:SvgImage Source=Icons/delete.svg, AppName=ST.EplAddin.Footnote}"
+                   Height="15" />
+        </Button>
     </Grid>
 </Window>
