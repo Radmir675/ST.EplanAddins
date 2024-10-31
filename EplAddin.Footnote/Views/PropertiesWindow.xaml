@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:ST.EplAddin.Footnote.Views"
-        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        xmlns:svg1="clr-namespace:SVGImage.SVG;assembly=DotNetProjects.SVGImage"
         mc:Ignorable="d"
         Width="316"
         Title="Условный объект"
@@ -12,6 +12,7 @@
         Background="#f1f1f1"
         Height="518">
 
+    
     <Window.Resources>
         <Style TargetType="Separator">
             <Setter Property="Height"
@@ -31,7 +32,14 @@
             <Setter Property="Button.Background"
                     Value="Transparent" />
         </Style>
+
+        <Style x:Key="image">
+            <!--<Setter Property="Image.SizeType"
+                    Value="SizeToContent" />-->
+
+        </Style>
         <Stretch x:Key="ImageBrushStretch1">Fill</Stretch>
+        
     </Window.Resources>
 
     <!--body-->
@@ -72,25 +80,43 @@
                                     <StackPanel DockPanel.Dock="Left"
                                                 Orientation="Horizontal">
                                         <Button Style="{StaticResource button_icon}">
-                                            <Image Source="{svgc:SvgImage Source=Icons/arrow_downward.svg, AppName=ST.EplAddin.Footnote}"
-                                                   Height="15"/>
+                                            <svg1:SVGImage 
+                                                           SizeType="SizeToContent"
+                                                           Source="/ST.EplAddin.Footnote;component/Icons/arrow_downward.svg "
+                                                           Margin="3"
+                                                           RenderTransformOrigin="0.5,0.5"
+                                                           VerticalContentAlignment="Center"
+                                                           HorizontalContentAlignment="Center"/>
+                                           
                                         </Button>
 
                                         <Button Style="{StaticResource button_icon}">
-                                            <Image Source="{svgc:SvgImage Source=Icons/arrow_upward.svg, AppName=ST.EplAddin.Footnote}"
-                                                   Height="15" />
+                                            <svg1:SVGImage SizeType="SizeToContent"
+                                                           Source="/ST.EplAddin.Footnote;component/Icons/arrow_upward.svg "
+                                                           Margin="3"
+                                                           RenderTransformOrigin="0.5,0.5"
+                                                           VerticalContentAlignment="Center"
+                                                           HorizontalContentAlignment="Center" />
                                         </Button>
                                         <Button Style="{StaticResource button_icon}">
-                                            <Image Source="{svgc:SvgImage Source=Icons/format_paint.svg, AppName=ST.EplAddin.Footnote}"
-                                                   Height="15" />
+                                            <svg1:SVGImage SizeType="SizeToContent"
+                                                           Source="/ST.EplAddin.Footnote;component/Icons/format_paint.svg "
+                                                           Margin="3"
+                                                           RenderTransformOrigin="0.5,0.5"
+                                                           VerticalContentAlignment="Center"
+                                                           HorizontalContentAlignment="Center" />
                                         </Button>
                                     </StackPanel>
                                     <Button DockPanel.Dock="Right"
                                             x:Name="Delete"
                                             Style="{StaticResource button_icon}"
                                             HorizontalAlignment="Right">
-                                        <Image Source="{svgc:SvgImage Source=Icons/delete.svg, AppName=ST.EplAddin.Footnote}"
-                                               Height="15" />
+                                        <svg1:SVGImage SizeType="SizeToContent"
+                                                       Source="/ST.EplAddin.Footnote;component/Icons/delete.svg "
+                                                       Margin="3"
+                                                       RenderTransformOrigin="0.5,0.5"
+                                                       VerticalContentAlignment="Center"
+                                                       HorizontalContentAlignment="Center" />
                                     </Button>
                                 </DockPanel>
                             </StackPanel>
@@ -139,33 +165,53 @@
                             <Button Width="20"
                                     Style="{StaticResource button_icon}"
                                     VerticalAlignment="Center">
-                                <Image Source="{svgc:SvgImage Source=Icons/format_align_left.svg, AppName=ST.EplAddin.Footnote}"
-                                       Height="13" />
+                                <svg1:SVGImage SizeType="SizeToContent"
+                                               Source="/ST.EplAddin.Footnote;component/Icons/format_align_left.svg "
+                                               Margin="3"
+                                               RenderTransformOrigin="0.5,0.5"
+                                               VerticalContentAlignment="Center"
+                                               HorizontalContentAlignment="Center" />
                             </Button>
                             <Button Width="20"
                                     Style="{StaticResource button_icon}"
                                     VerticalAlignment="Center">
-                                <Image Source="{svgc:SvgImage Source=Icons/format_align_center.svg, AppName=ST.EplAddin.Footnote}"
-                                       Height="13" />
+                                <svg1:SVGImage SizeType="SizeToContent"
+                                               Source="/ST.EplAddin.Footnote;component/Icons/format_align_center.svg "
+                                               Margin="3"
+                                               RenderTransformOrigin="0.5,0.5"
+                                               VerticalContentAlignment="Center"
+                                               HorizontalContentAlignment="Center" />
                             </Button>
                             <Button Width="20"
                                     VerticalAlignment="Center"
                                     Style="{StaticResource button_icon}">
-                                <Image Source="{svgc:SvgImage Source=Icons/format_align_right.svg, AppName=ST.EplAddin.Footnote}"
-                                       Height="13" />
+                                <svg1:SVGImage SizeType="SizeToContent"
+                                               Source="/ST.EplAddin.Footnote;component/Icons/format_align_right.svg "
+                                               Margin="3"
+                                               RenderTransformOrigin="0.5,0.5"
+                                               VerticalContentAlignment="Center"
+                                               HorizontalContentAlignment="Center" />
                             </Button>
                         </StackPanel>
                         <Button DockPanel.Dock="Right"
                                 Style="{StaticResource button_icon}"
                                 HorizontalAlignment="Right">
-                            <Image Source="{svgc:SvgImage Source=Icons/fx_function.svg, AppName=ST.EplAddin.Footnote}"
-                                   Height="13" />
+                            <svg1:SVGImage SizeType="SizeToContent"
+                                           Source="/ST.EplAddin.Footnote;component/Icons/fx_function.svg "
+                                           Margin="4"
+                                           RenderTransformOrigin="0.5,0.5"
+                                           VerticalContentAlignment="Center"
+                                           HorizontalContentAlignment="Center" />
                         </Button>
                         <Button DockPanel.Dock="Right"
                                 Style="{StaticResource button_icon}"
                                 HorizontalAlignment="Right">
-                            <Image Source="{svgc:SvgImage Source=Icons/add.svg, AppName=ST.EplAddin.Footnote}"
-                                   Height="13" />
+                            <svg1:SVGImage SizeType="SizeToContent"
+                                           Source="/ST.EplAddin.Footnote;component/Icons/add.svg "
+                                           Margin="4"
+                                           RenderTransformOrigin="0.5,0.5"
+                                           VerticalContentAlignment="Center"
+                                           HorizontalContentAlignment="Center" />
                         </Button>
                     </DockPanel>
                     <Separator />
@@ -216,18 +262,27 @@
                     <Button Grid.Column="0"
                             Width="auto">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="{svgc:SvgImage Source=Icons/check.svg, AppName=ST.EplAddin.Footnote}"
-                                   Height="13"
-                                   Margin="0,0,5,0" />
+                            <svg1:SVGImage SizeType="SizeToContent"
+                                           Source="/ST.EplAddin.Footnote;component/Icons/check.svg "
+                                           Margin="3"
+                                           RenderTransformOrigin="0.5,0.5"
+                                           VerticalContentAlignment="Center"
+                                           HorizontalContentAlignment="Center" 
+                                           Width="20"/>
                             <TextBlock Text="Ок" />
                         </StackPanel>
                     </Button>
                     <Button Grid.Column="2"
                             Width="auto">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="{svgc:SvgImage Source=Icons/block_.svg, AppName=ST.EplAddin.Footnote}"
-                                   Height="15"
-                                   Margin="0,0,5,0" />
+                            <svg1:SVGImage SizeType="SizeToContent"
+                                           Source="/ST.EplAddin.Footnote;component/Icons/block_.svg "
+                                           Margin="2"
+                                           RenderTransformOrigin="0.5,0.5"
+                                           VerticalContentAlignment="Center"
+                                           HorizontalContentAlignment="Center"
+                                           Width="20" />
+
                             <TextBlock Text="Отмена" />
                         </StackPanel>
                     </Button>
