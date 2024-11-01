@@ -5,7 +5,7 @@ using ST.EplAddin.FootNote.ProperyBrowser;
 using System;
 using Action = Eplan.EplApi.ApplicationFramework.Action;
 
-namespace ST.EplAddin.Footnote
+namespace ST.EplAddin.FootNote
 {
     class Footnote_SelectSameObjectsAction : IEplAction
     {

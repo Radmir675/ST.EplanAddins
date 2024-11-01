@@ -64,7 +64,7 @@
                                 <Image VerticalAlignment="Center"
                                        RenderOptions.BitmapScalingMode="HighQuality"
                                        HorizontalAlignment="Center"
-                                       Source="/ST.EplAddin.Footnote;component/Images/FootNoteItem.png" />
+                                       Source="/ST.EplAddin.FootNote;component/Images/FootNoteItem.png" />
                             </Grid>
                         </Border>
 
@@ -92,7 +92,7 @@
 
                                         <Button Style="{StaticResource button_icon}">
                                             <svg1:SVGImage SizeType="SizeToContent"
-                                                           Source="/ST.EplAddin.Footnote;component/Icons/arrow_upward.svg "
+                                                           Source="/ST.EplAddin.FootNote;component/Icons/arrow_upward.svg "
                                                            Margin="3"
                                                            RenderTransformOrigin="0.5,0.5"
                                                            VerticalContentAlignment="Center"
@@ -100,7 +100,7 @@
                                         </Button>
                                         <Button Style="{StaticResource button_icon}">
                                             <svg1:SVGImage SizeType="SizeToContent"
-                                                           Source="/ST.EplAddin.Footnote;component/Icons/format_paint.svg "
+                                                           Source="/ST.EplAddin.FootNote;component/Icons/format_paint.svg "
                                                            Margin="3"
                                                            RenderTransformOrigin="0.5,0.5"
                                                            VerticalContentAlignment="Center"
@@ -112,7 +112,7 @@
                                             Style="{StaticResource button_icon}"
                                             HorizontalAlignment="Right">
                                         <svg1:SVGImage SizeType="SizeToContent"
-                                                       Source="/ST.EplAddin.Footnote;component/Icons/delete.svg "
+                                                       Source="/ST.EplAddin.FootNote;component/Icons/delete.svg "
                                                        Margin="3"
                                                        RenderTransformOrigin="0.5,0.5"
                                                        VerticalContentAlignment="Center"
@@ -134,13 +134,13 @@
                                       SelectedIndex="0"
                                       VerticalContentAlignment="Center">
                                 <ComboBoxItem>
-                                    <Image Source="/ST.EplAddin.Footnote;component/Images/point.png"
+                                    <Image Source="/ST.EplAddin.FootNote;component/Images/point.png"
                                            RenderOptions.BitmapScalingMode="HighQuality"
                                            Width="50"
                                            Height="20" />
                                 </ComboBoxItem>
                                 <ComboBoxItem>
-                                    <Image Source="/ST.EplAddin.Footnote;component/Images/arrow.png"
+                                    <Image Source="/ST.EplAddin.FootNote;component/Images/arrow.png"
                                            RenderOptions.BitmapScalingMode="HighQuality"
                                            Width="50"
                                            Height="20"

@@ -119,9 +119,6 @@
     <Compile Include="Forms\SettingsDialogForm.Designer.cs">
       <DependentUpon>SettingsDialogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PropertiesWindow.xaml.cs">
-      <DependentUpon>PropertiesWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyBrowser\ContextActionEventListener.cs" />
     <Compile Include="PropertyBrowser\EplHelper.cs" />
@@ -170,10 +167,6 @@
     <Resource Include="Icons\fx_function.svg" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="PropertiesWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\FullPropertiesWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
