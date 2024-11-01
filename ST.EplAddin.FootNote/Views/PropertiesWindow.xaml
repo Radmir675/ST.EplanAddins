@@ -1,0 +1,293 @@
+﻿<Window x:Class="ST.EplAddin.FootNote.Views.PropertiesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:ST.EplAddin.FootNote.Views"
+        xmlns:svg1="clr-namespace:SVGImage.SVG;assembly=DotNetProjects.SVGImage"
+        mc:Ignorable="d"
+        Width="315"
+        Title="Условный объект"
+        ResizeMode="NoResize"
+        Background="#f1f1f1"
+        Height="518">
+
+    
+    <Window.Resources>
+        <Style TargetType="Separator">
+            <Setter Property="Height"
+                    Value="0.5" />
+            <Setter Property="BorderBrush"
+                    Value="#efefef" />
+            <Setter Property="Margin"
+                    Value="0,3" />
+        </Style>
+        <Style x:Key="button_icon">
+            <Setter Property="Button.Width"
+                    Value="23" />
+            <Setter Property="Button.Height"
+                    Value="23" />
+            <Setter Property="Button.BorderThickness"
+                    Value="0" />
+            <Setter Property="Button.Background"
+                    Value="Transparent" />
+        </Style>
+
+        <Style x:Key="image">
+            <!--<Setter Property="Image.SizeType"
+                    Value="SizeToContent" />-->
+
+        </Style>
+        <Stretch x:Key="ImageBrushStretch1">Fill</Stretch>
+        
+    </Window.Resources>
+
+    <!--body-->
+    <Border BorderThickness="2"
+            Padding="7"
+            BorderBrush="Transparent">
+        <Grid>
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top">
+                    <Grid Height="60px">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70px" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+                        <!--сюда вставить изображение-->
+                        <Border CornerRadius="10"
+                                BorderBrush="White"
+                                BorderThickness="1"
+                                Background="White">
+
+                            <Grid>
+                                <Image VerticalAlignment="Center"
+                                       RenderOptions.BitmapScalingMode="HighQuality"
+                                       HorizontalAlignment="Center"
+                                       Source="/ST.EplAddin.Footnote;component/Images/FootNoteItem.png" />
+                            </Grid>
+                        </Border>
+
+                        <DockPanel Grid.Column="1"
+                                   Margin="6,0,0,0">
+                            <TextBlock Text="Выноска"
+                                       DockPanel.Dock="Top" />
+                            <StackPanel DockPanel.Dock="Bottom"
+                                        Height="auto"
+                                        VerticalAlignment="Bottom">
+                                <!--закинуть сюда иконки-->
+                                <DockPanel Height="auto">
+                                    <StackPanel DockPanel.Dock="Left"
+                                                Orientation="Horizontal">
+                                        <Button Style="{StaticResource button_icon}">
+                                            <svg1:SVGImage 
+                                                           SizeType="SizeToContent"
+                                                           Source="/ST.EplAddin.FootNote;component/Icons/arrow_downward.svg "
+                                                           Margin="3"
+                                                           RenderTransformOrigin="0.5,0.5"
+                                                           VerticalContentAlignment="Center"
+                                                           HorizontalContentAlignment="Center"/>
+                                           
+                                        </Button>
+
+                                        <Button Style="{StaticResource button_icon}">
+                                            <svg1:SVGImage SizeType="SizeToContent"
+                                                           Source="/ST.EplAddin.Footnote;component/Icons/arrow_upward.svg "
+                                                           Margin="3"
+                                                           RenderTransformOrigin="0.5,0.5"
+                                                           VerticalContentAlignment="Center"
+                                                           HorizontalContentAlignment="Center" />
+                                        </Button>
+                                        <Button Style="{StaticResource button_icon}">
+                                            <svg1:SVGImage SizeType="SizeToContent"
+                                                           Source="/ST.EplAddin.Footnote;component/Icons/format_paint.svg "
+                                                           Margin="3"
+                                                           RenderTransformOrigin="0.5,0.5"
+                                                           VerticalContentAlignment="Center"
+                                                           HorizontalContentAlignment="Center" />
+                                        </Button>
+                                    </StackPanel>
+                                    <Button DockPanel.Dock="Right"
+                                            x:Name="Delete"
+                                            Style="{StaticResource button_icon}"
+                                            HorizontalAlignment="Right">
+                                        <svg1:SVGImage SizeType="SizeToContent"
+                                                       Source="/ST.EplAddin.Footnote;component/Icons/delete.svg "
+                                                       Margin="3"
+                                                       RenderTransformOrigin="0.5,0.5"
+                                                       VerticalContentAlignment="Center"
+                                                       HorizontalContentAlignment="Center" />
+                                    </Button>
+                                </DockPanel>
+                            </StackPanel>
+                        </DockPanel>
+                    </Grid>
+                    <Separator />
+                    <WrapPanel Orientation="Horizontal"
+                               Height="auto">
+                        <WrapPanel Orientation="Vertical">
+                            <TextBlock Text="Начало"
+                                       Margin="0,0,0,5" />
+                            <ComboBox Width="75"
+                                      MaxDropDownHeight="auto"
+                                      Height="32"
+                                      SelectedIndex="0"
+                                      VerticalContentAlignment="Center">
+                                <ComboBoxItem>
+                                    <Image Source="/ST.EplAddin.Footnote;component/Images/point.png"
+                                           RenderOptions.BitmapScalingMode="HighQuality"
+                                           Width="50"
+                                           Height="20" />
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    <Image Source="/ST.EplAddin.Footnote;component/Images/arrow.png"
+                                           RenderOptions.BitmapScalingMode="HighQuality"
+                                           Width="50"
+                                           Height="20"
+                                           Margin="5" />
+
+                                </ComboBoxItem>
+                            </ComboBox>
+                           
+                        </WrapPanel>
+
+
+
+                    </WrapPanel>
+                    <Separator />
+                    <TextBox Height="80"
+                             Margin="0,3,0,3"
+                             Text="Text" />
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Left"
+                                    Orientation="Horizontal"
+                                    Height="20">
+                            <Button Width="20"
+                                    Style="{StaticResource button_icon}"
+                                    VerticalAlignment="Center">
+                                <svg1:SVGImage SizeType="SizeToContent"
+                                               Source="/ST.EplAddin.FootNote;component/Icons/format_align_left.svg "
+                                               Margin="3"
+                                               RenderTransformOrigin="0.5,0.5"
+                                               VerticalContentAlignment="Center"
+                                               HorizontalContentAlignment="Center" />
+                            </Button>
+                            <Button Width="20"
+                                    Style="{StaticResource button_icon}"
+                                    VerticalAlignment="Center">
+                                <svg1:SVGImage SizeType="SizeToContent"
+                                               Source="/ST.EplAddin.FootNote;component/Icons/format_align_center.svg "
+                                               Margin="3"
+                                               RenderTransformOrigin="0.5,0.5"
+                                               VerticalContentAlignment="Center"
+                                               HorizontalContentAlignment="Center" />
+                            </Button>
+                            <Button Width="20"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource button_icon}">
+                                <svg1:SVGImage SizeType="SizeToContent"
+                                               Source="/ST.EplAddin.FootNote;component/Icons/format_align_right.svg "
+                                               Margin="3"
+                                               RenderTransformOrigin="0.5,0.5"
+                                               VerticalContentAlignment="Center"
+                                               HorizontalContentAlignment="Center" />
+                            </Button>
+                        </StackPanel>
+                        <Button DockPanel.Dock="Right"
+                                Style="{StaticResource button_icon}"
+                                HorizontalAlignment="Right">
+                            <svg1:SVGImage SizeType="SizeToContent"
+                                           Source="/ST.EplAddin.FootNote;component/Icons/fx_function.svg "
+                                           Margin="4"
+                                           RenderTransformOrigin="0.5,0.5"
+                                           VerticalContentAlignment="Center"
+                                           HorizontalContentAlignment="Center" />
+                        </Button>
+                        <Button DockPanel.Dock="Right"
+                                Style="{StaticResource button_icon}"
+                                HorizontalAlignment="Right">
+                            <svg1:SVGImage SizeType="SizeToContent"
+                                           Source="/ST.EplAddin.FootNote;component/Icons/add.svg "
+                                           Margin="4"
+                                           RenderTransformOrigin="0.5,0.5"
+                                           VerticalContentAlignment="Center"
+                                           HorizontalContentAlignment="Center" />
+                        </Button>
+                    </DockPanel>
+                    <Separator />
+                    <UniformGrid Rows="1"
+                                 Height="40">
+                        <StackPanel Margin="0,0,3,0">
+                            <TextBlock Text="Размер текста" />
+                            <TextBox />
+                        </StackPanel>
+                        <StackPanel Margin="0,0,3,0">
+                            <TextBlock Text="Цвет текста" />
+                            <Button Background="Red"
+                                    Height="18" />
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="Толщина линий" />
+                            <TextBox />
+                        </StackPanel>
+                    </UniformGrid>
+                    <Separator />
+                    <UniformGrid Rows="1"
+                                 Columns="3"
+                                 Height="40">
+                        <StackPanel Margin="0,0,3,0">
+                            <TextBlock Text="Радиус кружка" />
+                            <TextBox />
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="Цвет выноски" />
+                            <Button Background="Blue"
+                                    Height="18" />
+                        </StackPanel>
+                    </UniformGrid>
+                    <Separator />
+                    <CheckBox IsChecked="False"
+                              Content="Запомнить для последующих выносок"
+                              Margin="0,5,0,0" />
+                </StackPanel>
+                <!-- footer-->
+                <Grid DockPanel.Dock="Bottom"
+                      Height="20"
+                      VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0"
+                            Width="auto">
+                        <StackPanel Orientation="Horizontal">
+                            <svg1:SVGImage SizeType="SizeToContent"
+                                           Source="/ST.EplAddin.FootNote;component/Icons/check.svg "
+                                           Margin="3"
+                                           RenderTransformOrigin="0.5,0.5"
+                                           VerticalContentAlignment="Center"
+                                           HorizontalContentAlignment="Center" 
+                                           Width="20"/>
+                            <TextBlock Text="Ок" />
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Column="2"
+                            Width="auto">
+                        <StackPanel Orientation="Horizontal">
+                            <svg1:SVGImage SizeType="SizeToContent"
+                                           Source="/ST.EplAddin.FootNote;component/Icons/block_.svg "
+                                           Margin="2"
+                                           RenderTransformOrigin="0.5,0.5"
+                                           VerticalContentAlignment="Center"
+                                           HorizontalContentAlignment="Center"
+                                           Width="20" />
+
+                            <TextBlock Text="Отмена" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </DockPanel>
+        </Grid>
+    </Border>
+</Window>
