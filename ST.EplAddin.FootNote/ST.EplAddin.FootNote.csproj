@@ -10,6 +10,7 @@
     <RootNamespace>ST.EplAddin.FootNote</RootNamespace>
     <AssemblyName>ST.EplAddin.FootNote</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <LangVersion>9.0</LangVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -106,6 +107,12 @@
       <DependentUpon>PropertiesDialogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\PropertiesEplan.cs" />
+    <Compile Include="Forms\PropertySelectDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PropertySelectDialogForm.Designer.cs">
+      <DependentUpon>PropertySelectDialogForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SettingsDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -193,6 +200,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PropertiesDialogForm.resx">
       <DependentUpon>PropertiesDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PropertySelectDialogForm.resx">
+      <DependentUpon>PropertySelectDialogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SettingsDialogForm.resx">
       <DependentUpon>SettingsDialogForm.cs</DependentUpon>

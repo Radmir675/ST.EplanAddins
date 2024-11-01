@@ -1,6 +1,6 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 
-namespace ST.EplAddin.Footnote
+namespace ST.EplAddin.FootNote
 {
 
     /* TODO
