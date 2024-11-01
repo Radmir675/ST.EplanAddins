@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace ST.EplAddin.FootNote.ProperyBrowser
+namespace ST.EplAddin.FootNote
 {
     public partial class PropertySelectDialogForm : Form
     {
@@ -120,20 +120,7 @@ namespace ST.EplAddin.FootNote.ProperyBrowser
             treeView.Nodes.Add("id1", "2 часть");
         }
 
-        private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            TreeNode treeNode = e.Node;
-            if (treeNode == null) return;
-            CurrentSelection = treeNode.Text;// по name можно достать ID
-            if (CurrentSelection == "1 часть")
-            {
-                InitializeData();
-                // set the tree roots
-                this.treeListView.Roots = data;
 
-            }
-
-        }
 
         private void PropertySelectDialogForm_Load(object sender, System.EventArgs e)
         {
@@ -177,35 +164,6 @@ namespace ST.EplAddin.FootNote.ProperyBrowser
 
 
         // private methods
-        private void FillTree()
-        {
-            // set the delegate that the tree uses to know if a node is expandable
-            this.treeListView.CanExpandGetter = x => (x as Node).Children.Count > 0;
-            // set the delegate that the tree uses to know the children of a node
-            this.treeListView.ChildrenGetter = x => (x as Node).Children;
-
-            // create the tree columns and set the delegates to print the desired object proerty
-            var nameCol = new BrightIdeasSoftware.OLVColumn("Name", "Name");
-            nameCol.AspectGetter = x => (x as Node).Name;
-
-            var col1 = new BrightIdeasSoftware.OLVColumn("Column1", "Column1");
-            col1.AspectGetter = x => (x as Node).Column1;
-
-            var col2 = new BrightIdeasSoftware.OLVColumn("Column2", "Column2");
-            col2.AspectGetter = x => (x as Node).Column2;
-
-            var col3 = new BrightIdeasSoftware.OLVColumn("Column3", "Column3");
-            col3.AspectGetter = x => (x as Node).Column3;
-
-            // add the columns to the tree
-            this.treeListView.Columns.Add(nameCol);
-            this.treeListView.Columns.Add(col1);
-            this.treeListView.Columns.Add(col2);
-            this.treeListView.Columns.Add(col3);
-
-            // set the tree roots
-            this.treeListView.Roots = data;
-        }
 
         private void InitializeData()
         {

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using SVGImage.SVG;
+using System.Windows;
 
 namespace ST.EplAddin.FootNote.Views
 {
@@ -9,6 +10,7 @@ namespace ST.EplAddin.FootNote.Views
     {
         public FullPropertiesWindow()
         {
+            SVG sVG = new SVG();
             InitializeComponent();
         }
     }

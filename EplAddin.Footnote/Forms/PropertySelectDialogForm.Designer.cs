@@ -32,7 +32,6 @@
             this.treeView = new System.Windows.Forms.TreeView();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.treeListView = new BrightIdeasSoftware.TreeListView();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -45,7 +44,6 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.treeListView)).BeginInit();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -81,7 +79,6 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.treeListView);
             this.splitContainer1.Panel1.Controls.Add(this.treeView);
             this.splitContainer1.Panel1.Controls.Add(this.panel2);
             // 
@@ -94,19 +91,7 @@
             this.splitContainer1.TabIndex = 2;
             // 
             // treeListView
-            // 
-            this.treeListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeListView.CellEditUseWholeCell = false;
-            this.treeListView.HideSelection = false;
-            this.treeListView.Location = new System.Drawing.Point(24, 158);
-            this.treeListView.Name = "treeListView";
-            this.treeListView.ShowGroups = false;
-            this.treeListView.Size = new System.Drawing.Size(285, 357);
-            this.treeListView.TabIndex = 0;
-            this.treeListView.UseCompatibleStateImageBehavior = false;
-            this.treeListView.View = System.Windows.Forms.View.Details;
-            this.treeListView.VirtualMode = true;
-            // 
+         
             // panel2
             // 
             this.panel2.Controls.Add(this.label1);
@@ -197,7 +182,6 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.treeListView)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -220,8 +204,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button cancel_button;
         private System.Windows.Forms.Button ok_button;
-        private BrightIdeasSoftware.TreeListView treeListView123;
-        private BrightIdeasSoftware.TreeListView treeListView;
+      
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.BindingSource bindingSource1;
     }

@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ST.EplAddin.FootNote\ST.EplAddin.FootNote.csproj">
-      <Project>{39490899-7ee2-44e3-baff-a2640d3fd7b9}</Project>
+      <Project>{39490899-7EE2-44E3-BAFF-A2640D3FD7B9}</Project>
       <Name>ST.EplAddin.FootNote</Name>
     </ProjectReference>
   </ItemGroup>

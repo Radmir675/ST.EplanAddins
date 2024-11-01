@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ST.EplAddin.Footnote.Views;
+using ST.EplAddin.FootNote.Views;
 
 namespace UnitTestProject12
 {
