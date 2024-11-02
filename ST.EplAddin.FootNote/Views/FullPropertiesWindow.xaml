@@ -8,27 +8,38 @@
         xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
         mc:Ignorable="d"
         d:DesignHeight="450"
-        d:DesignWidth="800">
+        d:DesignWidth="800"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/ColorPicker;component/Styles/DefaultColorPickerStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <!--<colorpicker:StandardColorPicker Margin="320,15,260,10"
-                                         x:Name="standard_picker"
-                                         Style="{StaticResource DefaultColorPickerStyle}"
-                                         UseHintColor="True"
-                                         ColorState="{Binding ElementName=maindisplay, Path=ColorState, Mode=TwoWay, Delay=10}"
-                                         SecondColorState="{Binding ElementName=maindisplay, Path=SecondColorState, Mode=TwoWay}" />-->
-        <colorpicker:StandardColorPicker x:Name="main"
-                                         Width="200"
-                                         Height="380"
-                                         Margin="540,19,60,35" />
-       
+        <materialDesign:Card Padding="32"
+                             Margin="16">
+            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}">My First Material Design App</TextBlock>
+        </materialDesign:Card>
+
+        <Button Width="{StaticResource ButtonWidth}"
+                Content="_LIGHT"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                ToolTip="Resource name: MaterialDesignRaisedLightButton" />
+
 
     </Grid>
 </Window>

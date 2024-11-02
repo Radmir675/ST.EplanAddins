@@ -676,7 +676,7 @@ namespace ST.EplAddin.FootNote
                     case PropertiesList.AllAvailableProperties:
                         PropertySelectDialogForm propertySelectDialogForm = new PropertySelectDialogForm(placement3D);
                         propertySelectDialogForm.ShowDialog();
-
+                        result = "-1";
                         break;
 
                     case PropertiesList.User_defined:
