@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:ST.EplAddin.FootNote.Views"
         xmlns:svg1="clr-namespace:SVGImage.SVG;assembly=DotNetProjects.SVGImage"
+        xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
         mc:Ignorable="d"
         Width="315"
         Title="Условный объект"
@@ -13,8 +14,11 @@
         Height="518"
         MinHeight="250">
 
-
     <Window.Resources>
+
+       
+           
+   
         <Style TargetType="Separator">
             <Setter Property="Height"
                     Value="0.5" />
@@ -233,7 +237,8 @@
                         <UniformGrid Columns="1"
                                      Margin="0,0,3,0">
                             <TextBlock Text="Цвет текста" />
-                            <Button Background="Red" />
+                            <colorpicker:PortableColorPicker ColorState="{Binding ElementName=main, Path=ColorState, Mode=TwoWay}"/>
+
                         </UniformGrid>
                         <UniformGrid Columns="1">
                             <TextBlock Text="Толщина линий" />
@@ -252,8 +257,7 @@
                         <UniformGrid Columns="1"
                                      Margin="0,0,3,0">
                             <TextBlock Text="Цвет выноски" />
-                            <Button Background="Blue"
-                                    Height="18" />
+                            <colorpicker:PortableColorPicker ColorState="{Binding ElementName=main, Path=ColorState, Mode=TwoWay}" />
                         </UniformGrid>
                     </UniformGrid>
                     <Separator />

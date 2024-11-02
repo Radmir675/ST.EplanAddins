@@ -5,15 +5,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:ST.EplAddin.FootNote.Views"
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
         mc:Ignorable="d"
         d:DesignHeight="450"
         d:DesignWidth="800">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ColorPicker;component/Styles/DefaultColorPickerStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
-        <Button DockPanel.Dock="Right"
-                x:Name="Delete"
-                HorizontalAlignment="Right">
-            <!--<Image Source="{svgc:SvgImage Source=Icons/delete.svg, AppName=ST.EplAddin.FootNote}"
-                   Height="15" />-->
-        </Button>
+        <!--<colorpicker:StandardColorPicker Margin="320,15,260,10"
+                                         x:Name="standard_picker"
+                                         Style="{StaticResource DefaultColorPickerStyle}"
+                                         UseHintColor="True"
+                                         ColorState="{Binding ElementName=maindisplay, Path=ColorState, Mode=TwoWay, Delay=10}"
+                                         SecondColorState="{Binding ElementName=maindisplay, Path=SecondColorState, Mode=TwoWay}" />-->
+        <colorpicker:StandardColorPicker x:Name="main"
+                                         Width="200"
+                                         Height="380"
+                                         Margin="540,19,60,35" />
+       
+
     </Grid>
 </Window>
