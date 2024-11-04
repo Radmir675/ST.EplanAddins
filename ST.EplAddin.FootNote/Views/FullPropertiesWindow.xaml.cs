@@ -1,4 +1,5 @@
-﻿using SVGImage.SVG;
+﻿using System.IO;
+using System.Reflection;
 using System.Windows;
 
 namespace ST.EplAddin.FootNote.Views
@@ -10,7 +11,8 @@ namespace ST.EplAddin.FootNote.Views
     {
         public FullPropertiesWindow()
         {
-            SVG sVG = new SVG();
+            Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "MaterialDesignThemes.Wpf.dll"));
+            Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "MaterialDesignColors.dll"));
             InitializeComponent();
         }
     }
