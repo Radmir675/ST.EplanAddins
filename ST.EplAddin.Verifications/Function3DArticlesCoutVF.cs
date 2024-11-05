@@ -11,16 +11,13 @@ namespace ST.EplAddin.Verifications
         private int m_iMessageId = 30;
         public override void Execute(StorableObject storableObject)
         {
-            if (storableObject is not Function3D f) return;
-
-            if (storableObject is not Component c) return;
-
-            var ArticlesCount = f?.ArticleReferences.FirstOrDefault()?.Properties[20482].ToInt() ?? 0;
-
-            if (ArticlesCount > 1)
+            if (storableObject is Function3D f && storableObject is Component c)
             {
-
-                DoErrorMessage(storableObject, storableObject.Project, "");
+                var ArticlesCount = f?.ArticleReferences.FirstOrDefault()?.Properties[20482].ToInt() ?? 0;
+                if (ArticlesCount > 1)
+                {
+                    DoErrorMessage(storableObject, storableObject.Project, $"{c.VisibleName}");
+                }
             }
         }
 
@@ -44,7 +41,7 @@ namespace ST.EplAddin.Verifications
 
         public override string GetMessageText()
         {
-            return "Изделие расположенное на 3D представлено в количестве больше 1 %1!s!"; ;
+            return "Изделие расположенное на 3D представлено в количестве больше 1: %1!s!"; ;
         }
 
         public override void DoHelp()

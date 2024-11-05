@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
     <Compile Include="ArticleReferenceUnitCheckVF.cs" />
+    <Compile Include="CableConductorsCheckPartsVF.cs" />
     <Compile Include="Function3DArticlesCoutVF.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
