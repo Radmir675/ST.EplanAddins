@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace ST.EplAddin.Verifications
 {
-    public class Function3DArticlesCoutVerification : Eplan.EplApi.EServices.Verification
+    public class Function3DArticlesCoutVF : Verification
     {
         private int m_iMessageId = 30;
         public override void Execute(StorableObject storableObject)
@@ -19,8 +19,8 @@ namespace ST.EplAddin.Verifications
 
             if (ArticlesCount > 1)
             {
-                String msg = $"Изделие расположенное на 3D представлено в количестве {ArticlesCount} штук";
-                DoErrorMessage(storableObject, storableObject.Project, msg);
+
+                DoErrorMessage(storableObject, storableObject.Project, "");
             }
         }
 
@@ -31,7 +31,7 @@ namespace ST.EplAddin.Verifications
 
         public override void OnRegister(ref string strName, ref int iOrdinal)
         {
-            strName = "Проверка числа изделий на 3Д объектах (partCount=1)";
+            strName = "Function3DArticlesCoutVF";
             iOrdinal = 30;
             this.VerificationPermission = IVerification.Permission.OnlineOfflinePermitted;
             this.VerificationState = IVerification.VerificationState.OnlineOfflineState;
@@ -44,7 +44,7 @@ namespace ST.EplAddin.Verifications
 
         public override string GetMessageText()
         {
-            return "Function3DArticlesCoutVerification static text . %1!s!";
+            return "Изделие расположенное на 3D представлено в количестве больше 1 %1!s!"; ;
         }
 
         public override void DoHelp()
@@ -52,13 +52,13 @@ namespace ST.EplAddin.Verifications
             // TODO:  NewVerification.DoHelp implementation
         }
 
-        public override void OnRegister(ref String strCreator, ref Eplan.EplApi.EServices.IMessage.Region eRegion, ref int iMessageId, ref Eplan.EplApi.EServices.IMessage.Classification eClassification, ref int iOrdinal)
+        public override void OnRegister(ref String strCreator, ref IMessage.Region eRegion, ref int iMessageId, ref IMessage.Classification eClassification, ref int iOrdinal)
         {
             strCreator = "Scantronic";
             eRegion = IMessage.Region.Externals;
             iMessageId = m_iMessageId;
             eClassification = IMessage.Classification.Error;
-            iOrdinal = 20;
+            iOrdinal = 30;
         }
     }
 }
