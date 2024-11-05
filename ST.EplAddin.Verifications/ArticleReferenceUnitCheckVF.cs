@@ -10,7 +10,7 @@ namespace ST.EplAddin.Verifications
 {
     internal class ArticleReferenceUnitCheckVF : Verification
     {
-        private int m_iMessageId = 30;
+        private int m_iMessageId = 31;
         public override void DoHelp()
         {
 
@@ -24,10 +24,9 @@ namespace ST.EplAddin.Verifications
                 string pattern = @"^шт\.?$";
                 if (checkedArticle?.Properties[22028].ToInt() == (int)MDPartsDatabaseItem.Enums.ProductSubGroup.ElectricalCablePreFabricated)
                 {
-                    var unit = checkedArticle.Properties[22042].GetDisplayString().GetString(ISOCode.Language.L_ru_RU);
+                    var unit = checkedArticle.Properties[22042].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
                     if (!Regex.IsMatch(unit, pattern, RegexOptions.IgnoreCase)) //единица измерения
                     {
-                        var unit4 = checkedArticle.Properties[22042].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
                         DoErrorMessage(storableObject, storableObject.Project, $"{cable.Name}");
                     }
                 }
