@@ -31,6 +31,7 @@
             this.CommentText = new System.Windows.Forms.TextBox();
             this.Cancel_Button = new System.Windows.Forms.Button();
             this.Ok_Button = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // CommentText
@@ -63,6 +64,19 @@
             this.Ok_Button.TabIndex = 5;
             this.Ok_Button.Text = "Вставить";
             this.Ok_Button.UseVisualStyleBackColor = true;
+            this.Ok_Button.Click += new System.EventHandler(this.Ok_Button_Click);
+            // 
+            // button1
+            // 
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.button1.Location = new System.Drawing.Point(94, 208);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(148, 25);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "Свойства объекта";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.propertiesButton_Click);
             // 
             // Footnote_CustomTextForm
             // 
@@ -73,6 +87,7 @@
             this.ClientSize = new System.Drawing.Size(431, 244);
             this.Controls.Add(this.CommentText);
             this.Controls.Add(this.Cancel_Button);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.Ok_Button);
             this.Name = "Footnote_CustomTextForm";
             this.Text = "Footnote_CustomTextForm";
@@ -86,5 +101,6 @@
         private System.Windows.Forms.TextBox CommentText;
         private System.Windows.Forms.Button Cancel_Button;
         private System.Windows.Forms.Button Ok_Button;
+        private System.Windows.Forms.Button button1;
     }
 }

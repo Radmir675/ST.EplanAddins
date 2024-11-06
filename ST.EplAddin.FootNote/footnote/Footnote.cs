@@ -3,6 +3,7 @@ using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.E3D;
 using Eplan.EplApi.DataModel.Graphics;
 using NLog;
+using ST.EplAddin.FootNote.Forms;
 using ST.EplAddin.FootNote.ProperyBrowser;
 using System;
 using System.Collections.Generic;
@@ -676,6 +677,8 @@ namespace ST.EplAddin.FootNote
                     case PropertiesList.AllAvailableProperties:
                         PropertySelectDialogForm propertySelectDialogForm = new PropertySelectDialogForm(placement3D);
                         propertySelectDialogForm.ShowDialog();
+                        if (propertySelectDialogForm.DialogResult == DialogResult.OK)
+                            result = "-1";
                         result = "-1";
                         break;
 
@@ -701,7 +704,7 @@ namespace ST.EplAddin.FootNote
                         }
                         else
                         {
-                            Footnote_CustomTextForm form = new Footnote_CustomTextForm();
+                            Footnote_CustomTextForm form = new Footnote_CustomTextForm(placement3D);
                             form.ShowDialog();
                             if (form.DialogResult == DialogResult.OK)
                             {
@@ -785,7 +788,7 @@ namespace ST.EplAddin.FootNote
         private List<int> GetPropID(string inputText)
         {
             logger.Debug("");
-            string pattern = @"(?<=\{).*?(?=\})";
+            string pattern = @"(?<=\{).*?(?=\})";//{215421}слова{12211}
             Regex regex = new Regex(pattern);
             MatchCollection collection = regex.Matches(inputText);
 

@@ -127,7 +127,7 @@
     <Compile Include="Forms\PropertiesDialogForm.Designer.cs">
       <DependentUpon>PropertiesDialogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PropertiesEplan.cs" />
+    <Compile Include="Forms\PropertyEplan.cs" />
     <Compile Include="Forms\PropertySelectDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,6 +146,8 @@
     <Compile Include="PropertyBrowser\FigureConverter.cs" />
     <Compile Include="PropertyBrowser\FootnoteVerification.cs" />
     <Compile Include="PropertyBrowser\PropertiesList.cs" />
+    <Compile Include="PropertyBrowser\PropertiesProvider.cs" />
+    <Compile Include="PropertyBrowser\PropertiesStore.cs" />
     <Compile Include="PropertyBrowser\Settings.cs" />
     <Compile Include="Views\FullPropertiesWindow.xaml.cs">
       <DependentUpon>FullPropertiesWindow.xaml</DependentUpon>
