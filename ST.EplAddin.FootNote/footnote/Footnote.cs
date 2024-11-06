@@ -772,18 +772,19 @@ namespace ST.EplAddin.FootNote
         {
             //TODO:переписать под разные типы свойств
             logger.Debug("");
-            foreach (var property in propertiesId)
-            {
-                using (PropertyDefinition propertyDefinition = new PropertyDefinition(property))
-                {
-                    bool IsIndexed = propertyDefinition.IsIndexed;
-                    if (IsIndexed == false)
-                    {
-                        var propertyText = placement3D.Properties[property].ToString(ISOCode.Language.L_ru_RU);
-                        yield return propertyText;
-                    }
-                }
-            }
+            return new List<string>();
+            //foreach (var property in propertiesId)
+            //{
+            //    using (PropertyDefinition propertyDefinition = new PropertyDefinition(property))
+            //    {
+            //        bool IsIndexed = propertyDefinition.IsIndexed;
+            //        if (IsIndexed == false)
+            //        {
+            //            var propertyText = placement3D.Properties[property].ToString(ISOCode.Language.L_ru_RU);
+            //            yield return propertyText;
+            //        }
+            //    }
+            //}
         }
 
         private List<int> GetPropID(string inputText)

@@ -91,6 +91,7 @@
             this.Controls.Add(this.Ok_Button);
             this.Name = "Footnote_CustomTextForm";
             this.Text = "Footnote_CustomTextForm";
+            this.Load += new System.EventHandler(this.Footnote_CustomTextForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

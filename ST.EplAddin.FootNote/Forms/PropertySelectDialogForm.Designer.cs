@@ -87,8 +87,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer1.Size = new System.Drawing.Size(843, 798);
-            this.splitContainer1.SplitterDistance = 280;
+            this.splitContainer1.Size = new System.Drawing.Size(1004, 798);
+            this.splitContainer1.SplitterDistance = 434;
             this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -97,7 +97,7 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 74);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(280, 724);
+            this.treeView1.Size = new System.Drawing.Size(434, 724);
             this.treeView1.TabIndex = 3;
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             // 
@@ -108,7 +108,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(280, 74);
+            this.panel2.Size = new System.Drawing.Size(434, 74);
             this.panel2.TabIndex = 2;
             // 
             // tabControl1
@@ -119,7 +119,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(561, 621);
+            this.tabControl1.Size = new System.Drawing.Size(568, 689);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -129,7 +129,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage1.Size = new System.Drawing.Size(553, 595);
+            this.tabPage1.Size = new System.Drawing.Size(560, 663);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -141,7 +141,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(2, 2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(549, 591);
+            this.dataGridView1.Size = new System.Drawing.Size(556, 659);
             this.dataGridView1.TabIndex = 0;
             // 
             // panel1
@@ -149,15 +149,15 @@
             this.panel1.Controls.Add(this.cancel_button);
             this.panel1.Controls.Add(this.ok_button);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(5, 749);
+            this.panel1.Location = new System.Drawing.Point(5, 743);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(843, 54);
+            this.panel1.Size = new System.Drawing.Size(1004, 60);
             this.panel1.TabIndex = 3;
             // 
             // cancel_button
             // 
-            this.cancel_button.Location = new System.Drawing.Point(834, 14);
+            this.cancel_button.Location = new System.Drawing.Point(836, 14);
             this.cancel_button.Margin = new System.Windows.Forms.Padding(2);
             this.cancel_button.Name = "cancel_button";
             this.cancel_button.Size = new System.Drawing.Size(112, 34);
@@ -181,7 +181,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(853, 808);
+            this.ClientSize = new System.Drawing.Size(1014, 808);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.splitContainer1);
             this.Margin = new System.Windows.Forms.Padding(2);

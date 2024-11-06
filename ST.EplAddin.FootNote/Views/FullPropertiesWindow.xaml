@@ -7,16 +7,16 @@
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
         mc:Ignorable="d"
-        d:DesignHeight="450"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        d:DesignHeight="450">
+    <!--xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"-->
+        <!--TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper }"
         FontFamily="{DynamicResource MaterialDesignFont }"
-        Width="111">
+        Width="111">-->
 
     <Window.Resources>
         <ResourceDictionary  Source="/ST.EplAddin.FootNote;component/Dictionary.xaml" />
@@ -25,7 +25,7 @@
 
     <Grid>
 
-        <StackPanel>
+        <!--<StackPanel>
 
             <Button Content="LIGHT"
                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
@@ -40,7 +40,7 @@
                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                     Style="{StaticResource MaterialDesignFlatMidBgButton}"
                     ToolTip="MaterialDesignFlatMidButton" />
-        </StackPanel>
+        </StackPanel>-->
 
     </Grid>
 </Window>

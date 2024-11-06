@@ -30,10 +30,14 @@ namespace ST.EplAddin.FootNote.Forms
                 message = selectedRow.Cells[2].Value.ToString();
             }
             PropertySelectedEvent?.Invoke(this, message);
-            //this.Close();
             Close();
-
         }
+
+        public static int GetSubscriberCount()
+        {
+            return PropertySelectedEvent?.GetInvocationList().Length ?? 0;
+        }
+
         public void AppendText()
         {
             treeView1.Nodes.Add("id1", "Размещение изделия");

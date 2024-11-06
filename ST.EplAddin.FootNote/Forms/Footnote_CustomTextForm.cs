@@ -6,11 +6,11 @@ namespace ST.EplAddin.FootNote
 {
     public partial class Footnote_CustomTextForm : Form
     {
-        private readonly Placement3D placement3D;
+        private readonly Placement3D _placement3D;
         public Footnote_CustomTextForm()
         {
             InitializeComponent();
-            PropertySelectDialogForm.PropertySelectedEvent += PropertySelectDialogForm_PropertySelectedEvent;
+            var subscribersCount = PropertySelectDialogForm.GetSubscriberCount();
         }
 
         private void PropertySelectDialogForm_PropertySelectedEvent(object sender, string message)
@@ -26,7 +26,7 @@ namespace ST.EplAddin.FootNote
 
         public Footnote_CustomTextForm(Placement3D placement3D) : this()
         {
-            this.placement3D = placement3D;
+            this._placement3D = placement3D;
         }
         //public void ShowForm()
         //{
@@ -43,15 +43,20 @@ namespace ST.EplAddin.FootNote
 
         private void propertiesButton_Click(object sender, System.EventArgs e)
         {
-            PropertySelectDialogForm form = new PropertySelectDialogForm(placement3D);
+            PropertySelectDialogForm form = new PropertySelectDialogForm(_placement3D);
             form.ShowDialog(this);
             Update();
-
+            this.DialogResult = DialogResult.None;
         }
 
         private void Ok_Button_Click(object sender, System.EventArgs e)
         {
+            PropertySelectDialogForm.PropertySelectedEvent -= PropertySelectDialogForm_PropertySelectedEvent;
+        }
 
+        private void Footnote_CustomTextForm_Load(object sender, System.EventArgs e)
+        {
+            PropertySelectDialogForm.PropertySelectedEvent += PropertySelectDialogForm_PropertySelectedEvent;
         }
     }
 }
