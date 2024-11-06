@@ -30,7 +30,8 @@ namespace ST.EplAddin.FootNote.Forms
                 message = selectedRow.Cells[2].Value.ToString();
             }
             PropertySelectedEvent?.Invoke(this, message);
-            this.Close();
+            //this.Close();
+            Close();
 
         }
         public void AppendText()

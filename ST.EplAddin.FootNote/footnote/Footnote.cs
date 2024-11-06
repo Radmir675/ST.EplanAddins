@@ -770,6 +770,7 @@ namespace ST.EplAddin.FootNote
 
         private IEnumerable<string> GetValidPropertiesText(Placement3D placement3D, List<int> propertiesId)
         {
+            //TODO:переписать под разные типы свойств
             logger.Debug("");
             foreach (var property in propertiesId)
             {

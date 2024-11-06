@@ -1,6 +1,5 @@
 ﻿using Eplan.EplApi.DataModel.E3D;
 using ST.EplAddin.FootNote.Forms;
-using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace ST.EplAddin.FootNote
@@ -29,13 +28,13 @@ namespace ST.EplAddin.FootNote
         {
             this.placement3D = placement3D;
         }
-        public void ShowForm()
-        {
-            Process oCurrent = Process.GetCurrentProcess();
-            var eplanHandle = new WindowWrapper(oCurrent.MainWindowHandle);
-            Footnote_CustomTextForm dialog = new Footnote_CustomTextForm();
-            dialog.ShowDialog(eplanHandle);
-        }
+        //public void ShowForm()
+        //{
+        //    Process oCurrent = Process.GetCurrentProcess();
+        //    var eplanHandle = new WindowWrapper(oCurrent.MainWindowHandle);
+        //    Footnote_CustomTextForm dialog = new Footnote_CustomTextForm();
+        //    dialog.ShowDialog(eplanHandle);
+        //}
 
         public string GetUserText()
         {
@@ -45,7 +44,9 @@ namespace ST.EplAddin.FootNote
         private void propertiesButton_Click(object sender, System.EventArgs e)
         {
             PropertySelectDialogForm form = new PropertySelectDialogForm(placement3D);
-            form.ShowDialog();
+            form.ShowDialog(this);
+            Update();
+
         }
 
         private void Ok_Button_Click(object sender, System.EventArgs e)
