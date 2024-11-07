@@ -8,7 +8,7 @@ namespace ST.EplAddin.Verifications
 {
     internal class Wrong3DPlacementVF : Verification
     {
-        private int m_iMessageId = 33;
+        private const int m_iMessageId = 33;
         public override void DoHelp()
         {
         }
@@ -22,12 +22,11 @@ namespace ST.EplAddin.Verifications
                     bool isElectro = function3D.ArticleReferences[0]?.Properties.ARTICLE_PRODUCTTOPGROUP?.ToInt() == (int)ProductTopGroup.Electric;
                     if (isElectro)
                     {
-                        bool isTerminalDefinition = false;
                         if (storableObject is Placement3D placement3D)
                         {
-                            var producGroup = function3D.ArticleReferences[0]?.Properties.ARTICLE_PRODUCTGROUP.ToInt();//группа продуктов
+                            var productGroup = function3D.ArticleReferences[0]?.Properties.ARTICLE_PRODUCTGROUP.ToInt();//группа продуктов
 
-                            isTerminalDefinition = producGroup == (int)ProductGroup.ElectricalTerminal;
+                            bool isTerminalDefinition = productGroup == (int)ProductGroup.ElectricalTerminal;
                             if (!isTerminalDefinition)
                             {
                                 var name = placement3D.Properties[20002].ToString(ISOCode.Language.L_ru_RU);
