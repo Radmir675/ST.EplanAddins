@@ -32,7 +32,7 @@ namespace ST.EplAddin.Verifications
                             {
                                 var name = placement3D.Properties[20002].ToString(ISOCode.Language.L_ru_RU);
                                 var partNumber = function3D.ArticleReferences[0].Properties[20481];
-                                DoErrorMessage(storableObject, storableObject.Project, $"{partNumber + " " + name}");
+                                DoErrorMessage(storableObject, storableObject.Project, $"{partNumber + "|" + name}");
                             }
                         }
                     }
