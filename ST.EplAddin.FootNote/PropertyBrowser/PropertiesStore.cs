@@ -1,6 +1,5 @@
 ﻿using Eplan.EplApi.DataModel.E3D;
 using ST.EplAddin.FootNote.ProperyBrowser;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,66 +7,65 @@ namespace ST.EplAddin.FootNote.PropertyBrowser
 {
     internal class PropertiesStore
     {
-        private readonly PropertiesProvider propertiesProvider;
-        private List<PropertyEplan> articleReferenceProperties = new List<PropertyEplan>();
-        private List<PropertyEplan> articleProperties = new List<PropertyEplan>();
-        private List<PropertyEplan> placement3DProperties = new List<PropertyEplan>();
+        private readonly PropertiesProvider _propertiesProvider;
+        private List<PropertyEplan> _articleReferenceProperties;
+        private List<PropertyEplan> _articleProperties;
+        private List<PropertyEplan> _placement3DProperties;
 
         private Task ArticleReferenceTask { get; set; }
         private Task ArticlePropertiesTask { get; set; }
         private Task Placement3DTask { get; set; }
-        private Task DownLoadTask { get; set; }
         public List<PropertyEplan> ArticleReferenceProperties
         {
             get
             {
                 Task.WaitAll(ArticleReferenceTask);
-                return articleReferenceProperties;
+                return _articleReferenceProperties;
             }
-            set => articleReferenceProperties = value;
+            set => _articleReferenceProperties = value;
         }
         public List<PropertyEplan> ArticleProperties
         {
             get
             {
                 Task.WaitAll(ArticlePropertiesTask);
-                return articleProperties;
+                return _articleProperties;
             }
-            set => articleProperties = value;
+            set => _articleProperties = value;
         }
         public List<PropertyEplan> Placement3DProperties
         {
             get
             {
                 Task.WaitAll(Placement3DTask);
-                return placement3DProperties;
+                return _placement3DProperties;
             }
-            set => placement3DProperties = value;
+            set => _placement3DProperties = value;
         }
         public PropertiesStore(Placement3D placement3D)
         {
-            propertiesProvider = new PropertiesProvider(placement3D);
+            _propertiesProvider = new PropertiesProvider(placement3D);
             DownLoadAllAsync();
         }
         public void GetInstance()
         {
 
-            throw new NotImplementedException();
         }
         public void DownLoadAllAsync()
         {
+
             ArticleReferenceTask = Task.Run(() =>
-             {
-                 ArticleReferenceProperties = propertiesProvider.GetArticleReferenceProperties();
-             });
+            {
+                ArticleReferenceProperties = _propertiesProvider.GetArticleReferenceProperties();
+            });
             ArticlePropertiesTask = Task.Run(() =>
-             {
-                 ArticleProperties = propertiesProvider.GetArticleProperties();
-             });
+            {
+                ArticleProperties = _propertiesProvider.GetArticleProperties();
+            });
             Placement3DTask = Task.Run(() =>
-             {
-                 Placement3DProperties = propertiesProvider.GetPlacement3DProperties();
-             });
+            {
+                Placement3DProperties = _propertiesProvider.GetPlacement3DProperties();
+            });
 
         }
     }
