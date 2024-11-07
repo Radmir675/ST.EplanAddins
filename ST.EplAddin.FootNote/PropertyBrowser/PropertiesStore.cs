@@ -1,5 +1,6 @@
 ﻿using Eplan.EplApi.DataModel.E3D;
 using ST.EplAddin.FootNote.ProperyBrowser;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -47,6 +48,11 @@ namespace ST.EplAddin.FootNote.PropertyBrowser
         {
             propertiesProvider = new PropertiesProvider(placement3D);
             DownLoadAllAsync();
+        }
+        public void GetInstance()
+        {
+
+            throw new NotImplementedException();
         }
         public void DownLoadAllAsync()
         {
