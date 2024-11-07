@@ -25,27 +25,27 @@ namespace ST.EplAddin.FootNote
         //FootnoteItem cursor = null;
         public override bool IsAutorestartEnabled => true;
 
-        public void stateInit()
+        public void StateInit()
         {
             new Edit().ClearSelection();
             this.state = State.Init;
         }
 
-        public void stateSelection()
+        public void StateSelection()
         {
             this.state = State.Selection;
-            this.PromptForStatusLine = "Выберите объект пространаства листа.";
+            this.PromptForStatusLine = "Выберите объект пространства листа.";
         }
         /// <summary>
         /// Выбор точки на объекте
         /// </summary>
-        public void stateSourcePoint()
+        public void StateSourcePoint()
         {
             this.state = State.SourcePoint;
             this.PromptForStatusLine = "Выберите точку на объекте.";
         }
 
-        public void stateTargetPoint()
+        public void StateTargetPoint()
         {
             this.state = State.TargetPoint;
             this.PromptForStatusLine = "Выберите точку установки выноски.";
@@ -55,7 +55,7 @@ namespace ST.EplAddin.FootNote
                 SetRubberlineCursor();
         }
 
-        public void stateFinished()
+        public void StateFinished()
         {
             this.state = State.Finished;
             this.PromptForStatusLine = "Завершено.";
@@ -63,7 +63,7 @@ namespace ST.EplAddin.FootNote
             ClearCursor();
         }
 
-        public bool isViewPartSelected(StorableObject storableObject)
+        public bool IsViewPartSelected(StorableObject storableObject)
         {
             return (storableObject != null && storableObject is ViewPart);
         }
@@ -72,7 +72,7 @@ namespace ST.EplAddin.FootNote
         /// Получение ViewPart and vpartID
         /// </summary>
         /// <param name="storableObject"></param>
-        public void setSource(StorableObject storableObject)
+        public void SetSource(StorableObject storableObject)
         {
             if (storableObject != null && storableObject is ViewPart vPart)
             {
@@ -94,17 +94,17 @@ namespace ST.EplAddin.FootNote
             StorableObject storableObject = selectionSet.GetSelectedObject(true);
 
             //TODO: тут можно сделать выноски под любые типы ст
-            if (isViewPartSelected(storableObject))
+            if (IsViewPartSelected(storableObject))
             {
                 Trace.WriteLine("OnStart isViewPartSelected");
-                setSource(storableObject);//получили vPart
-                stateSourcePoint();//выбор точки на объекте
+                SetSource(storableObject);//получили vPart
+                StateSourcePoint();//выбор точки на объекте
                 return RequestCode.Point;
             }
             else
             {
                 Trace.WriteLine("OnStart Execute Nonselected");
-                stateSelection();
+                StateSelection();
                 return RequestCode.Select | RequestCode.NoPreselect | RequestCode.NoMultiSelect | RequestCode.Highlite | RequestCode.IgnoreGroup;
             }
         }
@@ -114,8 +114,8 @@ namespace ST.EplAddin.FootNote
             base.OnSelect(arrSelectedObjects, oContext);
 
             Trace.WriteLine("OnSelect");
-            stateSourcePoint();
-            setSource(arrSelectedObjects.FirstOrDefault());
+            StateSourcePoint();
+            SetSource(arrSelectedObjects.FirstOrDefault());
 
             return RequestCode.Point;
         }
@@ -127,14 +127,14 @@ namespace ST.EplAddin.FootNote
             if (state == State.SourcePoint)
             {
                 startPoint = oPosition.FinalPosition;
-                stateTargetPoint();
+                StateTargetPoint();
                 return RequestCode.Point;
             }
 
             if (state == State.TargetPoint)
             {
                 endPoint = oPosition.FinalPosition;
-                stateFinished();
+                StateFinished();
                 return RequestCode.Success;
             }
 
@@ -143,7 +143,7 @@ namespace ST.EplAddin.FootNote
 
         public override bool OnFilterElement(StorableObject oStorableObject)
         {
-            return oStorableObject is ViewPart ? true : false;
+            return oStorableObject is ViewPart;
         }
 
         public override void OnSuccess(InteractionContext oContext)
@@ -152,13 +152,13 @@ namespace ST.EplAddin.FootNote
             {
                 Trace.WriteLine("OnSuccess");
 
-                FootnoteItem note = new FootnoteItem(startPoint, endPoint);
+                var note = new FootnoteItem(startPoint, endPoint);
                 note.SetSourceObject(vpart);
                 note.Create(Page);
                 note.Serialize();
                 note.GroupWithViewPlacement(vpart.Group as ViewPlacement);
 
-                stateInit();
+                StateInit();
 
                 safetyPoint.Commit();
             }

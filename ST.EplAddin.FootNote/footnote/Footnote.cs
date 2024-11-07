@@ -201,7 +201,7 @@ namespace ST.EplAddin.FootNote
         }
 
         /// <summary>
-        /// Сериазизует поля помеченные [DataMember] в строку и записываетсодержимое в скрытый элемент jsontext
+        /// Сериазизует поля помеченные [DataMember] в строку и записывает содержимое в скрытый элемент jsontext
         /// </summary>
         /// <returns></returns>
         public String Serialize()
@@ -697,9 +697,9 @@ namespace ST.EplAddin.FootNote
                             }
                             break;
                         }
-                        if (label != null && label.Contents.GetStringToDisplay(ISOCode.Language.L_ru_RU) != "-1")
+                        if (label != null)
                         {
-                            result = label.Contents.GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                            result = label.Contents?.GetStringToDisplay(ISOCode.Language.L_ru_RU);
                             break;
                         }
                         else
@@ -719,6 +719,10 @@ namespace ST.EplAddin.FootNote
                                 {
                                     result = USERTEXT.Replace($"{{{propertiesId[i].ToString()}}}", validPropertiesText[i]);
                                 }
+                            }
+                            else
+                            {
+                                result = "-1";
                             }
                             form.Close();
                         }

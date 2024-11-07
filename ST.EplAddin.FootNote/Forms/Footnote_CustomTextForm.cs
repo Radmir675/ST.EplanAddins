@@ -58,5 +58,10 @@ namespace ST.EplAddin.FootNote
         {
             PropertySelectDialogForm.PropertySelectedEvent += PropertySelectDialogForm_PropertySelectedEvent;
         }
+
+        private void Cancel_Button_Click(object sender, System.EventArgs e)
+        {
+
+        }
     }
 }
