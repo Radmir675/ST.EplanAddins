@@ -1,7 +1,7 @@
-﻿using Eplan.EplApi.DataModel;
+﻿using Eplan.EplApi.Base;
+using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.E3D;
 using Eplan.EplApi.EServices;
-using System.Linq;
 using static Eplan.EplApi.MasterData.MDPartsDatabaseItem.Enums;
 
 namespace ST.EplAddin.Verifications
@@ -15,37 +15,25 @@ namespace ST.EplAddin.Verifications
 
         public override void Execute(StorableObject storableObject)
         {
-            if (storableObject is Function3D)
+            if (storableObject is Function3D function3D)
             {
-                var objProps = (MergedArticleReferencePropertyList)storableObject.Properties;
-
-                //Если только в 3Д проверить раздел изделия исключить электрику
-                int functionType = objProps.FUNC_TYPE.ToInt(); //3D: -8
-                if (functionType == -8)
+                if (!function3D.Properties.FUNC_ISPLACEDIN_CIRCUIT && !function3D.Properties.FUNC_ISPLACEDIN_OVERVIEW && !function3D.Properties.FUNC_ISPLACEDIN_SINGLELINE)
                 {
-                    bool isElectro = objProps.ARTICLE_PRODUCTTOPGROUP.ToInt() == (int)ProductTopGroup.Electric;
+                    bool isElectro = function3D.ArticleReferences[0]?.Properties.ARTICLE_PRODUCTTOPGROUP?.ToInt() == (int)ProductTopGroup.Electric;
                     if (isElectro)
                     {
-                        Placement3D placement3D = (storableObject as MergedArticleReference).GetRelatedObjects().OfType<Placement3D>().FirstOrDefault();
-                        Connection3D connection3D = (storableObject as MergedArticleReference).GetRelatedObjects().OfType<Connection3D>().FirstOrDefault();
-
                         bool isTerminalDefinition = false;
-                        bool is3DConnection = false;
-                        if (placement3D != null)
+                        if (storableObject is Placement3D placement3D)
                         {
-                            isTerminalDefinition = placement3D.Properties.FUNC_CATEGORY_GROUP_ID == "8/1/2"; //Размещение изделия, клеммник
-                        }
+                            var producGroup = function3D.ArticleReferences[0]?.Properties.ARTICLE_PRODUCTGROUP.ToInt();//группа продуктов
 
-                        if (connection3D != null) //3D Соединение
-                        {
-                            is3DConnection = true;
-                        }
-
-                        if (!isTerminalDefinition && !is3DConnection)
-                        {
-                            PropertyValue PARTNO = objProps.ARTICLEREF_PARTNO;
-                            var name = objProps.FUNC_DEVICETAG_MAINNAME.ToString();
-                            DoErrorMessage(storableObject, storableObject.Project, $"{PARTNO + name}");
+                            isTerminalDefinition = producGroup == (int)ProductGroup.ElectricalTerminal;
+                            if (!isTerminalDefinition)
+                            {
+                                var name = placement3D.Properties[20002].ToString(ISOCode.Language.L_ru_RU);
+                                var partNumber = function3D.ArticleReferences[0].Properties[20481];
+                                DoErrorMessage(storableObject, storableObject.Project, $"{partNumber + " " + name}");
+                            }
                         }
                     }
                 }
