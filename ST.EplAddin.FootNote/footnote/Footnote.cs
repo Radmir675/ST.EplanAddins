@@ -109,6 +109,8 @@ namespace ST.EplAddin.FootNote
         [Browsable(false)]
         public bool IsUserTextUpdated { get; set; } = false;
 
+        [Browsable(false)] public double PageScale { get; set; } = 1;
+
         [Browsable(false)]
         [Description("Текст выноски")]
         [CategoryAttribute("Text"), ReadOnlyAttribute(true), DefaultValueAttribute("")]
@@ -448,8 +450,11 @@ namespace ST.EplAddin.FootNote
 
         private double GetTextWidthBound()
         {
-            return label.GetBoundingBox()[1].X - label.GetBoundingBox()[0].X + TEXTHEIGHT;
+            PageScale = currentPage?.Properties.PAGE_SCALE;
+            return (label.GetBoundingBox()[1].X - label.GetBoundingBox()[0].X + TEXTHEIGHT) * PageScale;
         }
+
+
 
         private void SetPropertiesToLines()
         {
