@@ -90,6 +90,7 @@
     <Compile Include="AddinModule.cs" />
     <Compile Include="ArticleReferenceUnitCheckVF.cs" />
     <Compile Include="CableConductorsCheckPartsVF.cs" />
+    <Compile Include="ConnectionDesignationVF.cs" />
     <Compile Include="Function3DArticlesCoutVF.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Wrong3DPlacementVF.cs" />
