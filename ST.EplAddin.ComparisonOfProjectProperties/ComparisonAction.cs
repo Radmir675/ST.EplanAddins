@@ -57,7 +57,10 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                         result.Add(value.ToString(ISOCode.Language.L_ru_RU));
                     }
                 }
-                catch (Exception e) { }
+                catch (Exception e)
+                {
+                    result.Add(string.Empty);
+                }
 
             }
 

@@ -5,38 +5,92 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:ST.EplAddin.ComparisonOfProjectProperties"
         mc:Ignorable="d"
-        d:DesignHeight="450"
-        Width="325">
+        Width="495"
+        ResizeMode="CanResizeWithGrip"
+        Height="590">
 
     <Window.DataContext>
         <local:MainWindowVM></local:MainWindowVM>
     </Window.DataContext>
-    <Grid>
-        <DockPanel>
-            <UniformGrid Rows="1"
-                         DockPanel.Dock="Bottom"
-                         Height="30">
-                <Button />
-                <Button />
-                <Button />
-            </UniformGrid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <ListView x:Name="ListView1" Grid.Column="0">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Id"/>
-                            <GridViewColumn Header="Свойство"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-                <ListView x:Name="ListView2" Grid.Column="2"></ListView>
 
-            </Grid>
-        </DockPanel>
+    <Grid>
+        <Border Padding="15">
+            <DockPanel>
+                <!--Header-->
+                <StackPanel DockPanel.Dock="Top" Margin="0,0,0,7">
+                    <TextBlock Text="Фильтр" Margin="0,2,0,5"/>
+                    <ComboBox >
+
+                </ComboBox>
+
+                </StackPanel>
+                <!--Footer-->
+                <UniformGrid Rows="2"
+                             Columns="1"
+                             DockPanel.Dock="Bottom"
+                             Margin="0,5,0,0" Height="Auto">
+                    <CheckBox  Content="Показать только отличия"
+                               HorizontalAlignment="Left"
+                               VerticalContentAlignment="Center"
+                               FontSize="12"
+                               Margin="0,5,0,5" />
+                    <UniformGrid VerticalAlignment="Bottom"
+                                 Rows="1">
+                        <Button  Content="Ок"
+                                 Margin="0,0,5,0" />
+                        <Button Content="Отмена" />
+
+                    </UniformGrid>
+
+
+                </UniformGrid>
+                <!--Body-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Column="0"
+                              Grid.Row="1">
+                        <ListView.View>
+                            <GridView>
+                                    <GridViewColumn Header="Id" Width="70"/>
+                                <GridViewColumn Header="Свойство"
+                                                Width="160" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+
+                    <ListView Grid.Column="2"
+                              Grid.Row="1">
+
+                    </ListView>
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               Text="Система 1" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="2"
+                               Text="Система 2" />
+                    <StackPanel Grid.Row="1"
+                                Grid.Column="1"
+                                VerticalAlignment="Center">
+                        <Button Width="25"
+                                Height="25"
+                                Content="←" />
+                        <Button Width="25"
+                                Height="25"
+                                Content="→" />
+
+                    </StackPanel>
+                </Grid>
+            </DockPanel>
+        </Border>
     </Grid>
 </Window>
