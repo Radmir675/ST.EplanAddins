@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddin.CheckCableAcces
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddin.Verifications", "ST.EplAddin.Verifications\ST.EplAddin.Verifications.csproj", "{1D940482-3BC2-47BF-AA90-C0735555F948}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddin.ComparisonOfProjectProperties", "ST.EplAddin.ComparisonOfProjectProperties\ST.EplAddin.ComparisonOfProjectProperties.csproj", "{5AE25BDC-3A63-4B3E-9341-91BB25F1090A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,14 @@ Global
 		{1D940482-3BC2-47BF-AA90-C0735555F948}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1D940482-3BC2-47BF-AA90-C0735555F948}.Release|x64.ActiveCfg = Release|Any CPU
 		{1D940482-3BC2-47BF-AA90-C0735555F948}.Release|x64.Build.0 = Release|Any CPU
+		{5AE25BDC-3A63-4B3E-9341-91BB25F1090A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AE25BDC-3A63-4B3E-9341-91BB25F1090A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AE25BDC-3A63-4B3E-9341-91BB25F1090A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5AE25BDC-3A63-4B3E-9341-91BB25F1090A}.Debug|x64.Build.0 = Debug|Any CPU
+		{5AE25BDC-3A63-4B3E-9341-91BB25F1090A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AE25BDC-3A63-4B3E-9341-91BB25F1090A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AE25BDC-3A63-4B3E-9341-91BB25F1090A}.Release|x64.ActiveCfg = Release|Any CPU
+		{5AE25BDC-3A63-4B3E-9341-91BB25F1090A}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
