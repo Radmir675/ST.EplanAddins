@@ -9,6 +9,7 @@ namespace UnitTestProject12
         [TestMethod]
         public void StartForm()
         {
+
             MainWindow form = new MainWindow();
             form.ShowDialog();
 
