@@ -34,16 +34,21 @@ namespace EplAddin.ConnectionNumeration
         {
             string connectionNumeration = ConnectionPlacementSchemaAction.actionName;
             string cableNumeration = CableConnectionPlacementSchemaAction.actionName;
+
             Menu menu = new Menu();
-            numberOfPosition = menu.AddMainMenu("ST Add-ins", Menu.MainMenuName.eMainMenuUtilities, "Выравнивание соединений", connectionNumeration, "Статус", 1);
-            menu.AddMenuItem("Жилы кабеля", cableNumeration, "Статус", numberOfPosition, 1, false, false);
+            var menuId = menu.GetCustomMenuId("ST", null);
+            if (menuId == 0)
+                menuId = menu.AddMainMenu("ST", Menu.MainMenuName.eMainMenuUtilities, "None", "None", "Статус", 1);
+            uint subMenuID = menu.AddMenuItem(
+                "Жилы кабеля", cableNumeration, "", menuId, 0, false, false);
+            uint subMenuID1 = menu.AddMenuItem(
+                "Выравнивание соединений", cableNumeration, "", menuId, 0, false, false);
             return true;
         }
 
         public bool OnRegister(ref bool bLoadOnStart)
         {
             bLoadOnStart = true;
-            System.Windows.Forms.MessageBox.Show("AutoPosition Of Connections addin registred.");
             return true;
         }
 
