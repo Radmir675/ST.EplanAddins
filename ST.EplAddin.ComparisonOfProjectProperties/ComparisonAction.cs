@@ -23,6 +23,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             SelectionSet selectionSet = new SelectionSet();
             selectionSet.LockProjectByDefault = false;
             selectionSet.LockSelectionByDefault = false;
+            //TODO:здесь можно прописать чтобы указали путь до базового проекта
             if (selectionSet.SelectedProjects.Length != 2)
             {
                 return false;
@@ -61,6 +62,10 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             }
 
             return result;
+        }
+        private void CopyTo(PropertyValue propertyValueFrom, PropertyValue propertyValueTo)
+        {
+            propertyValueFrom.CopyTo(propertyValueTo);
         }
 
         public void GetActionProperties(ref ActionProperties actionProperties)
