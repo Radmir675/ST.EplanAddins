@@ -11,7 +11,6 @@ using System.Collections.Generic;
 namespace ST.EplAddin.ComparisonOfProjectProperties
 {
     public class ComparisonAction : IEplAction
-
     {
         private ProjectPropertyList propertiesValue1 { get; set; } = null;
         private ProjectPropertyList propertiesValue2 { get; set; } = null;
@@ -20,7 +19,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
             Name = actionName;
-            Ordinal = 32;
+            Ordinal = 99;
             return true;
         }
 
@@ -63,14 +62,15 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                     if (!value.IsEmpty)
                     {
                         var propertyValue = value.ToString(ISOCode.Language.L_ru_RU);
+                        var definitionName = value.Definition.Name;
                         var id = value.Id.AsInt;
 
-                        dictionary.Add(id, new PropertyData(id, propertyValue));
+                        dictionary.Add(id, new PropertyData(id, propertyValue, definitionName));
                     }
                 }
                 catch (Exception e)
                 {
-                    dictionary.Add(value.Id.AsInt, new PropertyData(value.Id.AsInt, string.Empty));
+                    dictionary.Add(value.Id.AsInt, new PropertyData(value.Id.AsInt, string.Empty, string.Empty));
                 }
 
             }

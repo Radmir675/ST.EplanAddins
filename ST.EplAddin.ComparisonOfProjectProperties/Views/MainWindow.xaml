@@ -76,12 +76,15 @@
                               ItemsSource="{Binding FirstPropertiesList}">
                         <ListView.View>
                             <GridView>
+                                <GridViewColumn Header="Имя"
+                                                Width="160"
+                                                DisplayMemberBinding="{Binding Value.DefinitionName}" />
+                                <GridViewColumn Header="Свойство"
+                                                Width="160"
+                                                DisplayMemberBinding="{Binding Value.Value}" />   
                                 <GridViewColumn Header="Id"
                                                 Width="70"
                                                 DisplayMemberBinding="{Binding Value.Id}" />
-                                <GridViewColumn Header="Свойство"
-                                                Width="160"
-                                                DisplayMemberBinding="{Binding Value.Value}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -93,12 +96,15 @@
                               ItemsSource="{Binding SecondPropertiesList}">
                         <ListView.View>
                             <GridView>
+                                <GridViewColumn Header="Имя"
+                                                Width="160"
+                                                DisplayMemberBinding="{Binding Value.DefinitionName}" />
+                                <GridViewColumn Header="Свойство"
+                                                Width="160"
+                                                DisplayMemberBinding="{Binding Value.Value}" /> 
                                 <GridViewColumn Header="Id"
                                                 Width="70"
                                                 DisplayMemberBinding="{Binding Value.Id}" />
-                                <GridViewColumn Header="Свойство"
-                                                Width="160"
-                                                DisplayMemberBinding="{Binding Value.Value}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
