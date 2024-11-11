@@ -10,6 +10,9 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
     public class ComparisonAction : IEplAction
 
     {
+        private ProjectPropertyList propertiesValue1 { get; set; } = null;
+        private ProjectPropertyList propertiesValue2 { get; set; } = null;
+
         public static string actionName = "ComparisonOfProjectProperties";
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
@@ -32,39 +35,41 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             var project2 = selectionSet.SelectedProjects[1];
 
 
-            var result1 = GetProjectValues(project1);
-            var result2 = GetProjectValues(project2);
-            if (result1.Count == result2.Count)
-            {
+            propertiesValue1 = project1.Properties;
+            propertiesValue2 = project2.Properties;
 
-            }
+            var result1 = GetProjectValues(propertiesValue1);
+            var result2 = GetProjectValues(propertiesValue2);
+
 
 
             return true;
         }
 
-        private List<PropertyValue> GetProjectValues(Project project1)
+        private Dictionary<int, PropertyData> GetProjectValues(ProjectPropertyList projectPropertyList)
         {
-            var project1Properties = project1.Properties;
-            var existingValues = project1Properties.ExistingValues;
-            var result = new List<PropertyValue>(20);
+            var existingValues = projectPropertyList.ExistingValues;
+            var dictionary = new Dictionary<int, PropertyData>();
             foreach (var value in existingValues)
             {
                 try
                 {
                     if (!value.IsEmpty)
                     {
-                        result.Add(value.ToString(ISOCode.Language.L_ru_RU));
+                        var propertyValue = value.ToString(ISOCode.Language.L_ru_RU);
+                        var id = value.Id.AsInt;
+
+                        dictionary.Add(id, new PropertyData(id, propertyValue));
                     }
                 }
                 catch (Exception e)
                 {
-                    result.Add(string.Empty);
+                    dictionary.Add(value.Id.AsInt, new PropertyData(value.Id.AsInt, string.Empty));
                 }
 
             }
 
-            return result;
+            return dictionary;
         }
         private void CopyTo(PropertyValue propertyValueFrom, PropertyValue propertyValueTo)
         {
