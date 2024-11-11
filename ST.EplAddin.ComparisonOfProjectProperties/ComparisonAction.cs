@@ -2,6 +2,9 @@
 using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
+using ST.EplAddin.ComparisonOfProjectProperties.Models;
+using ST.EplAddin.ComparisonOfProjectProperties.ViewModels;
+using ST.EplAddin.ComparisonOfProjectProperties.Views;
 using System;
 using System.Collections.Generic;
 

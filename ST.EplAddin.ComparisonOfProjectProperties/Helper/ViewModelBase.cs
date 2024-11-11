@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace ST.EplAddin.ComparisonOfProjectProperties
+namespace ST.EplAddin.ComparisonOfProjectProperties.Helper
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

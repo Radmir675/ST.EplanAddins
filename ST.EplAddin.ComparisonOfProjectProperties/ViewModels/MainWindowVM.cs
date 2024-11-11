@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using ST.EplAddin.ComparisonOfProjectProperties.Helper;
+using ST.EplAddin.ComparisonOfProjectProperties.Models;
+using System.Collections.Generic;
 
-namespace ST.EplAddin.ComparisonOfProjectProperties
+namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
 {
     internal class MainWindowVM : ViewModelBase
     {

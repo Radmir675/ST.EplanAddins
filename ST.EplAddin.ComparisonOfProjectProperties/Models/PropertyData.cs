@@ -1,4 +1,6 @@
-﻿namespace ST.EplAddin.ComparisonOfProjectProperties
+﻿using ST.EplAddin.ComparisonOfProjectProperties.Helper;
+
+namespace ST.EplAddin.ComparisonOfProjectProperties.Models
 {
     internal class PropertyData : ViewModelBase
     {
