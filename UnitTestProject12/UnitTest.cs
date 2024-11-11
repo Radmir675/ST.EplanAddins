@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ST.EplAddin.CheckCableAccesorities;
+using ST.EplAddin.ComparisonOfProjectProperties.Views;
 
 namespace UnitTestProject12
 {

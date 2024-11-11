@@ -13,7 +13,9 @@
 
     <Window.Resources>
         <converters:EnumToDisplayConverter x:Key="EnumDescriptionConverter"></converters:EnumToDisplayConverter>
+      
     </Window.Resources>
+
     <Window.DataContext>
         <viewModels:MainWindowVM></viewModels:MainWindowVM>
     </Window.DataContext>
@@ -26,10 +28,11 @@
                             Margin="0,0,0,7">
                     <TextBlock Text="Фильтр"
                                Margin="0,2,0,5" />
-                    <ComboBox ItemsSource="{x:Type models:ComparisonState}">
+                    <ComboBox ItemsSource="{Binding Source={x:Type models:ComparisonState}}"
+                              SelectedIndex="0">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter }}" />
+                                <TextBlock Text="{Binding  Converter={StaticResource EnumDescriptionConverter }}" />
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
@@ -103,11 +106,15 @@
                         <Button Width="25"
                                 Height="25"
                                 Content="←"
-                                x:Name="LeftSync_Button" />
+                                x:Name="LeftSync_Button"
+                                Background="Transparent"
+                                VerticalContentAlignment="Center"
+                                Margin="0,0,0,5"/>
                         <Button Width="25"
                                 Height="25"
                                 Content="→"
-                                x:Name="RightSync_Button" />
+                                x:Name="RightSync_Button" 
+                                Background="Transparent" />
 
                     </StackPanel>
                 </Grid>
