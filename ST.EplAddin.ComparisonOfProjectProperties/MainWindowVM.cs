@@ -12,6 +12,11 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             FirstPropertiesList = firstPropertiesList;
             SecondPropertiesList = secondPropertiesList;
         }
+
+        public MainWindowVM()
+        {
+
+        }
         public string SelectedObject { get; set; }
 
     }

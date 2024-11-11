@@ -17,18 +17,21 @@
         <Border Padding="15">
             <DockPanel>
                 <!--Header-->
-                <StackPanel DockPanel.Dock="Top" Margin="0,0,0,7">
-                    <TextBlock Text="Фильтр" Margin="0,2,0,5"/>
+                <StackPanel DockPanel.Dock="Top"
+                            Margin="0,0,0,7">
+                    <TextBlock Text="Фильтр"
+                               Margin="0,2,0,5" />
                     <ComboBox x:Name="filter_ComboBox">
 
-                </ComboBox>
+                    </ComboBox>
 
                 </StackPanel>
                 <!--Footer-->
                 <UniformGrid Rows="2"
                              Columns="1"
                              DockPanel.Dock="Bottom"
-                             Margin="0,5,0,0" Height="Auto">
+                             Margin="0,5,0,0"
+                             Height="Auto">
                     <CheckBox  Content="Показать только отличия"
                                HorizontalAlignment="Left"
                                VerticalContentAlignment="Center"
@@ -37,10 +40,10 @@
                     <UniformGrid VerticalAlignment="Bottom"
                                  Rows="1">
                         <Button  Content="Ок"
-                                 Margin="0,0,5,0" 
-                                 x:Name="OK_Button"/>
+                                 Margin="0,0,5,0"
+                                 x:Name="OK_Button" />
                         <Button Content="Отмена"
-                                x:Name="Close_Button"/>
+                                x:Name="Close_Button" />
 
                     </UniformGrid>
 
@@ -59,12 +62,16 @@
                     </Grid.RowDefinitions>
                     <ListView Grid.Column="0"
                               Grid.Row="1"
-                              x:Name="SystemOne_ListView">
+                              x:Name="SystemOne_ListView"
+                              ItemsSource="{Binding FirstPropertiesList}">
                         <ListView.View>
                             <GridView>
-                                    <GridViewColumn Header="Id" Width="70"/>
+                                <GridViewColumn Header="Id"
+                                                Width="70"
+                                                DisplayMemberBinding="{Binding Value.Id}" />
                                 <GridViewColumn Header="Свойство"
-                                                Width="160" />
+                                                Width="160"
+                                                DisplayMemberBinding="{Binding Value.Value}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -72,9 +79,9 @@
 
                     <ListView Grid.Column="2"
                               Grid.Row="1"
-                              x:Name="SystemTwo_ListView"/>
+                              x:Name="SystemTwo_ListView" />
 
-                    
+
 
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
@@ -88,7 +95,7 @@
                         <Button Width="25"
                                 Height="25"
                                 Content="←"
-                                x:Name="LeftSync_Button"/>
+                                x:Name="LeftSync_Button" />
                         <Button Width="25"
                                 Height="25"
                                 Content="→"

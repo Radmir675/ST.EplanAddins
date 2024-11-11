@@ -41,7 +41,8 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             var result1 = GetProjectValues(propertiesValue1);
             var result2 = GetProjectValues(propertiesValue2);
 
-
+            var MainWindowVM = new MainWindowVM(result1, result2);
+            var reShowDialog = new MainWindow().ShowDialog();
 
             return true;
         }
