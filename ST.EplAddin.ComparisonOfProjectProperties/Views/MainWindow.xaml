@@ -28,7 +28,7 @@
                             Margin="0,0,0,7">
                     <TextBlock Text="Фильтр"
                                Margin="0,2,0,5" />
-                    <ComboBox ItemsSource="{Binding Source={x:Type models:ComparisonState}}"
+                    <ComboBox ItemsSource="{Binding ComparisonStates}"
                               SelectedIndex="0">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
