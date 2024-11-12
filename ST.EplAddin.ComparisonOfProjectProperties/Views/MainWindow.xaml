@@ -73,7 +73,7 @@
                     <ListView Grid.Column="0"
                               Grid.Row="1"
                               x:Name="SystemOne_ListView"
-                              ItemsSource="{Binding FirstPropertiesList}">
+                              ItemsSource="{Binding FirstPropertiesCollectionView}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Имя"
@@ -93,7 +93,7 @@
                     <ListView Grid.Column="2"
                               Grid.Row="1"
                               x:Name="SystemTwo_ListView"
-                              ItemsSource="{Binding SecondPropertiesList}">
+                              ItemsSource="{Binding SecondPropertiesCollectionView}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Имя"
