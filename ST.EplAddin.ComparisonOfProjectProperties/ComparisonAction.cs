@@ -5,7 +5,6 @@ using Eplan.EplApi.HEServices;
 using ST.EplAddin.ComparisonOfProjectProperties.Models;
 using ST.EplAddin.ComparisonOfProjectProperties.ViewModels;
 using ST.EplAddin.ComparisonOfProjectProperties.Views;
-using System;
 using System.Collections.Generic;
 
 namespace ST.EplAddin.ComparisonOfProjectProperties
@@ -42,6 +41,8 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
 
             var result1 = GetProjectValues(propertiesValue1);
             var result2 = GetProjectValues(propertiesValue2);
+            var projectName1 = project1.ProjectName;
+            var projectName2 = project1.ProjectName;
 
             var mainWindowVm = new MainWindowVM(result1, result2);
             var mainWindow = new MainWindow();
@@ -57,22 +58,14 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             var dictionary = new Dictionary<int, PropertyData>();
             foreach (var value in existingValues)
             {
-                try
+                var propertyValue = value.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                if (!string.IsNullOrEmpty(propertyValue))
                 {
-                    if (!value.IsEmpty)
-                    {
-                        var propertyValue = value.ToString(ISOCode.Language.L_ru_RU);
-                        var definitionName = value.Definition.Name;
-                        var id = value.Id.AsInt;
+                    var definitionName = value.Definition.Name;
+                    var id = value.Id.AsInt;
 
-                        dictionary.Add(id, new PropertyData(id, propertyValue, definitionName));
-                    }
+                    dictionary.Add(id, new PropertyData(id, propertyValue, definitionName));
                 }
-                catch (Exception e)
-                {
-                    dictionary.Add(value.Id.AsInt, new PropertyData(value.Id.AsInt, string.Empty, string.Empty));
-                }
-
             }
 
             return dictionary;
