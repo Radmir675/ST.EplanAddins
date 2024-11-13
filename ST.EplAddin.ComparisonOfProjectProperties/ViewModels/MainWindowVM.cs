@@ -10,8 +10,8 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
 {
     internal class MainWindowVM : ViewModelBase
     {
-        private CollectionViewSource _firstPropertiesCollection;
-        private CollectionViewSource _secondPropertiesCollection;
+        private static CollectionViewSource _firstPropertiesCollection;
+        private static CollectionViewSource _secondPropertiesCollection;
 
         public IReadOnlyList<ComparisonState> ComparisonStates { get; set; }
         private ComparisonState _selectedState = ComparisonState.None;
@@ -32,7 +32,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
 
 
 
-        public ICollectionView FirstPropertiesCollectionView => _firstPropertiesCollection?.View ?? CollectionViewSource.GetDefaultView(_firstPropertiesCollection.Source);
+        public ICollectionView FirstPropertiesCollectionView => _firstPropertiesCollection.View;
 
         public ICollectionView SecondPropertiesCollectionView => _secondPropertiesCollection.View;
 
@@ -69,7 +69,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
                     }
                     break;
                 case ComparisonState.None:
-                    e.Accepted = true;
+                    e.Accepted = false;
 
                     break;
                 case ComparisonState.Similarity:

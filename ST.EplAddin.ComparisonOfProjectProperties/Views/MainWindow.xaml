@@ -22,20 +22,6 @@
     <Grid>
         <Border Padding="15">
             <DockPanel>
-                <!--Header-->
-                <StackPanel DockPanel.Dock="Top"
-                            Margin="0,0,0,7">
-                    <TextBlock Text="Фильтр"
-                               Margin="0,2,0,5" />
-                    <ComboBox ItemsSource="{Binding ComparisonStates}"
-                              SelectedItem="{Binding SelectedState}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding  Converter={StaticResource EnumDescriptionConverter }}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                </StackPanel>
                 <!--Footer-->
                 <UniformGrid Rows="2"
                              Columns="1"
@@ -47,11 +33,12 @@
                                VerticalContentAlignment="Center"
                                FontSize="12"
                                Margin="0,5,0,5" />
-                    <UniformGrid VerticalAlignment="Bottom"
+                    <UniformGrid VerticalAlignment="Bottom" HorizontalAlignment="Right"
                                  Rows="1">
                         <Button  Content="Ок"
                                  Margin="0,0,5,0"
-                                 x:Name="OK_Button" />
+                                 x:Name="OK_Button" 
+                                 Width="90"/>
                         <Button Content="Отмена"
                                 x:Name="Close_Button" />
 
@@ -67,11 +54,26 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto" />
-                        <RowDefinition />
+                        <RowDefinition Height="10*"/>
                     </Grid.RowDefinitions>
+                <!--Header-->
+                <StackPanel
+                    Grid.Row="0" Grid.Column="2" Margin="0,0,0,7">
+                    <TextBlock Text="Фильтр"
+                               Margin="0,2,0,5" />
+                    <ComboBox ItemsSource="{Binding ComparisonStates}"
+                              SelectedItem="{Binding SelectedState}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding  Converter={StaticResource EnumDescriptionConverter }}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
                     <ListView Grid.Column="0"
-                              Grid.Row="1"
+                              Grid.Row="2"
                               x:Name="SystemOne_ListView"
                               ItemsSource="{Binding FirstPropertiesCollectionView}">
                         <ListView.View>
@@ -91,7 +93,7 @@
 
 
                     <ListView Grid.Column="2"
-                              Grid.Row="1"
+                              Grid.Row="2"
                               x:Name="SystemTwo_ListView"
                               ItemsSource="{Binding SecondPropertiesCollectionView}">
                         <ListView.View>
@@ -111,13 +113,13 @@
 
 
 
-                    <TextBlock Grid.Row="0"
+                    <TextBlock Grid.Row="1"
                                Grid.Column="0"
                                Text="Система 1" />
-                    <TextBlock Grid.Row="0"
+                    <TextBlock Grid.Row="1"
                                Grid.Column="2"
                                Text="Система 2" />
-                    <StackPanel Grid.Row="1"
+                    <StackPanel Grid.Row="2"
                                 Grid.Column="1"
                                 VerticalAlignment="Center">
                         <Button Width="30"

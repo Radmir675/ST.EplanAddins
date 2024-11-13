@@ -24,9 +24,11 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            SelectionSet selectionSet = new SelectionSet();
-            selectionSet.LockProjectByDefault = false;
-            selectionSet.LockSelectionByDefault = false;
+            SelectionSet selectionSet = new SelectionSet
+            {
+                LockProjectByDefault = false,
+                LockSelectionByDefault = false
+            };
             //TODO:здесь можно прописать чтобы указали путь до базового проекта
             if (selectionSet.SelectedProjects.Length != 2)
             {
@@ -44,9 +46,11 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             var projectName1 = project1.ProjectName;
             var projectName2 = project1.ProjectName;
 
-            var mainWindowVm = new MainWindowVM(result1, result2);
-            var mainWindow = new MainWindow();
-            mainWindow.DataContext = mainWindowVm;
+
+            var mainWindow = new MainWindow
+            {
+                DataContext = new MainWindowVM(result1, result2)
+            };
             mainWindow.ShowDialog();
 
             return true;
