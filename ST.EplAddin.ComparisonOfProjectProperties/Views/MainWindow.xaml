@@ -23,25 +23,24 @@
         <Border Padding="15">
             <DockPanel>
                 <!--Footer-->
-                <UniformGrid Rows="2"
+                <UniformGrid Rows="1"
                              Columns="1"
                              DockPanel.Dock="Bottom"
-                             Margin="0,5,0,0"
-                             Height="Auto">
-                    <CheckBox  Content="Показать только отличия"
-                               HorizontalAlignment="Left"
-                               VerticalContentAlignment="Center"
-                               FontSize="12"
-                               Margin="0,5,0,5" />
-                    <UniformGrid VerticalAlignment="Bottom"
+                             Margin="0,10,0,0"
+                             Height="Auto"
+                             VerticalAlignment="Center">
+                  
+                    <UniformGrid VerticalAlignment="Center"
                                  HorizontalAlignment="Right"
                                  Rows="1">
                         <Button  Content="Ок"
                                  Margin="0,0,5,0"
                                  x:Name="OK_Button"
-                                 Width="90" />
+                                 Width="90" 
+                                 Command="{Binding OkCommand}"/>
                         <Button Content="Отмена"
-                                x:Name="Close_Button" />
+                                x:Name="Close_Button"
+                                IsCancel="True"/>
 
                     </UniformGrid>
 
@@ -80,14 +79,21 @@
                         <TextBlock Text="Путь базового проекта:"
                                    Margin="0,2,0,5" />
                         <Border>
-<Grid Height="25">
-<Grid.ColumnDefinitions>
-    <ColumnDefinition />
-    <ColumnDefinition Width="Auto"/>
-</Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Text="Path"  HorizontalAlignment="Stretch"/>
-                        <Button Grid.Column="1" HorizontalAlignment="Right" Width="Auto" Content="Выбрать" />
-</Grid>
+                            <Grid Height="25">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0"
+                                         Text="Path"
+                                         HorizontalAlignment="Stretch"
+                                         VerticalContentAlignment="Center"/>
+                                <Button Grid.Column="1"
+                                        HorizontalAlignment="Right"
+                                        Width="Auto"
+                                        Content="Выбрать"
+                                        Command="{Binding SelectPathCommand}"/>
+                            </Grid>
 
 
                         </Border>
@@ -147,12 +153,14 @@
                                 Content="→"
                                 x:Name="RightSync_Button"
                                 Background="Transparent"
+                                Command="{Binding ToRightSideCommand }"
                                 Margin="0,0,0,5" />
                         <Button Width="30"
                                 Height="30"
                                 Content="←"
                                 x:Name="LeftSync_Button"
                                 Background="Transparent"
+                                Command="{Binding ToLeftSideCommand}"
                                 VerticalContentAlignment="Center" />
 
                     </StackPanel>

@@ -47,5 +47,19 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.Models
             _id = id;
             _value = value;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            if (obj is PropertyData data)
+            {
+                data.DefinitionName = DefinitionName;
+                data.Id = Id;
+                data.Value = Value;
+                return true;
+            }
+
+            return false;
+        }
     }
 }

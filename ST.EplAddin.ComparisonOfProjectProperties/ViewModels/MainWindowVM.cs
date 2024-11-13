@@ -30,6 +30,8 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
                 _secondPropertiesCollection.View.Refresh();
             }
         }
+        public string LeftListViewSelection { get; set; }
+        public string RightListViewSelection { get; set; }
 
 
         public void GetFolderPath()
@@ -113,7 +115,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
                 return toRightSideCommand ??= new RelayCommand(obj =>
                 {
 
-                });
+                }, (obj) => RightListViewSelection != null);
             }
         }
         private RelayCommand toLeftSideCommand;
@@ -122,6 +124,17 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             get
             {
                 return toLeftSideCommand ??= new RelayCommand(obj =>
+                {
+
+                }, (obj) => LeftListViewSelection != null);
+            }
+        }
+        private RelayCommand okCommand;
+        public RelayCommand OkCommand
+        {
+            get
+            {
+                return okCommand ??= new RelayCommand(obj =>
                 {
 
                 });
