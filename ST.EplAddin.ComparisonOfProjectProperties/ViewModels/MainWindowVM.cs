@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
+using System.Windows.Forms;
 
 namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
 {
@@ -31,7 +32,12 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
         }
 
 
-
+        public void GetFolderPath()
+        {
+            FolderBrowserDialog openFileDlg = new FolderBrowserDialog();
+            var result = openFileDlg.ShowDialog();
+            var path = openFileDlg.SelectedPath;
+        }
         public ICollectionView FirstPropertiesCollectionView => _firstPropertiesCollection?.View;
 
         public ICollectionView SecondPropertiesCollectionView => _secondPropertiesCollection?.View;
@@ -85,5 +91,42 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             _firstPropertiesCollection ??= new CollectionViewSource();
             _secondPropertiesCollection ??= new CollectionViewSource();
         }
+
+        #region Commands
+        private RelayCommand selectPathCommand;
+
+        public RelayCommand SelectPathCommand
+        {
+            get
+            {
+                return selectPathCommand ??= new RelayCommand(obj =>
+                {
+                    GetFolderPath();
+                });
+            }
+        }
+        private RelayCommand toRightSideCommand;
+        public RelayCommand ToRightSideCommand
+        {
+            get
+            {
+                return toRightSideCommand ??= new RelayCommand(obj =>
+                {
+
+                });
+            }
+        }
+        private RelayCommand toLeftSideCommand;
+        public RelayCommand ToLeftSideCommand
+        {
+            get
+            {
+                return toLeftSideCommand ??= new RelayCommand(obj =>
+                {
+
+                });
+            }
+        }
+        #endregion
     }
 }

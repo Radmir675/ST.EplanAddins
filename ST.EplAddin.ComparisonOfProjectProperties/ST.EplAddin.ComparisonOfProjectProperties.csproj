@@ -10,7 +10,7 @@
     <RootNamespace>ST.EplAddin.ComparisonOfProjectProperties</RootNamespace>
     <AssemblyName>ST.EplAddin.ComparisonOfProjectProperties</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-	<LangVersion>9.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -88,6 +88,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -100,6 +101,7 @@
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
     <Compile Include="ComparisonAction.cs" />
+    <Compile Include="Helper\RelayCommand.cs" />
     <Compile Include="Models\ComparisonState.cs" />
     <Compile Include="Converters\EnumExtension.cs" />
     <Compile Include="Converters\EnumToDisplayConverter.cs" />

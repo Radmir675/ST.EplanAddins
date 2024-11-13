@@ -33,12 +33,13 @@
                                VerticalContentAlignment="Center"
                                FontSize="12"
                                Margin="0,5,0,5" />
-                    <UniformGrid VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                    <UniformGrid VerticalAlignment="Bottom"
+                                 HorizontalAlignment="Right"
                                  Rows="1">
                         <Button  Content="Ок"
                                  Margin="0,0,5,0"
-                                 x:Name="OK_Button" 
-                                 Width="90"/>
+                                 x:Name="OK_Button"
+                                 Width="90" />
                         <Button Content="Отмена"
                                 x:Name="Close_Button" />
 
@@ -54,24 +55,43 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="10*" />
                     </Grid.RowDefinitions>
-                <!--Header-->
-                <StackPanel
-                    Grid.Row="0" Grid.Column="2" Margin="0,0,0,7">
-                    <TextBlock Text="Фильтр"
-                               Margin="0,2,0,5" />
-                    <ComboBox ItemsSource="{Binding ComparisonStates}"
-                              SelectedItem="{Binding SelectedState}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding  Converter={StaticResource EnumDescriptionConverter }}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                </StackPanel>
+                    <!--Header-->
+                    <StackPanel Grid.Row="0"
+                                Grid.Column="2"
+                                Margin="0,0,0,7">
+                        <TextBlock Text="Фильтр"
+                                   Margin="0,2,0,5" />
+                        <ComboBox ItemsSource="{Binding ComparisonStates}"
+                                  SelectedItem="{Binding SelectedState}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding  Converter={StaticResource EnumDescriptionConverter }}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="0,0,0,7">
+                        <TextBlock Text="Путь базового проекта:"
+                                   Margin="0,2,0,5" />
+                        <Border>
+<Grid Height="25">
+<Grid.ColumnDefinitions>
+    <ColumnDefinition />
+    <ColumnDefinition Width="Auto"/>
+</Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" Text="Path"  HorizontalAlignment="Stretch"/>
+                        <Button Grid.Column="1" HorizontalAlignment="Right" Width="Auto" Content="Выбрать" />
+</Grid>
+
+
+                        </Border>
+                    </StackPanel>
                     <ListView Grid.Column="0"
                               Grid.Row="2"
                               x:Name="SystemOne_ListView"
@@ -83,7 +103,7 @@
                                                 DisplayMemberBinding="{Binding Value.DefinitionName}" />
                                 <GridViewColumn Header="Свойство"
                                                 Width="160"
-                                                DisplayMemberBinding="{Binding Value.Value}" />   
+                                                DisplayMemberBinding="{Binding Value.Value}" />
                                 <GridViewColumn Header="Id"
                                                 Width="70"
                                                 DisplayMemberBinding="{Binding Value.Id}" />
@@ -103,7 +123,7 @@
                                                 DisplayMemberBinding="{Binding Value.DefinitionName}" />
                                 <GridViewColumn Header="Свойство"
                                                 Width="160"
-                                                DisplayMemberBinding="{Binding Value.Value}" /> 
+                                                DisplayMemberBinding="{Binding Value.Value}" />
                                 <GridViewColumn Header="Id"
                                                 Width="70"
                                                 DisplayMemberBinding="{Binding Value.Id}" />
@@ -126,14 +146,14 @@
                                 Height="30"
                                 Content="→"
                                 x:Name="RightSync_Button"
-                                Background="Transparent" />
+                                Background="Transparent"
+                                Margin="0,0,0,5" />
                         <Button Width="30"
                                 Height="30"
                                 Content="←"
                                 x:Name="LeftSync_Button"
                                 Background="Transparent"
-                                VerticalContentAlignment="Center"
-                                Margin="0,0,0,5" />
+                                VerticalContentAlignment="Center" />
 
                     </StackPanel>
                 </Grid>
