@@ -85,7 +85,7 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <TextBox Grid.Column="0"
-                                         Text="Path"
+                                         Text="{Binding PathToBaseProject}"
                                          HorizontalAlignment="Stretch"
                                          VerticalContentAlignment="Center"/>
                                 <Button Grid.Column="1"
@@ -101,7 +101,7 @@
                     <ListView Grid.Column="0"
                               Grid.Row="2"
                               x:Name="SystemOne_ListView"
-                              ItemsSource="{Binding FirstPropertiesCollectionView}">
+                              ItemsSource="{Binding FirstListViewProperties}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Имя"
@@ -121,7 +121,7 @@
                     <ListView Grid.Column="2"
                               Grid.Row="2"
                               x:Name="SystemTwo_ListView"
-                              ItemsSource="{Binding SecondPropertiesCollectionView}">
+                              ItemsSource="{Binding SecondListViewProperties}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Имя"
@@ -141,10 +141,10 @@
 
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
-                               Text="Система 1" />
+                               Text="{Binding DataStorage.ProjectName1}" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="2"
-                               Text="Система 2" />
+                               Text="{Binding DataStorage.ProjectName2}" />
                     <StackPanel Grid.Row="2"
                                 Grid.Column="1"
                                 VerticalAlignment="Center">

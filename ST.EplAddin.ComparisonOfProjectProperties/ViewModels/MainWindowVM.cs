@@ -2,7 +2,6 @@
 using ST.EplAddin.ComparisonOfProjectProperties.Helper;
 using ST.EplAddin.ComparisonOfProjectProperties.Models;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Forms;
@@ -11,11 +10,21 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
 {
     internal class MainWindowVM : ViewModelBase
     {
-        private CollectionViewSource _firstPropertiesCollection;
-        private CollectionViewSource _secondPropertiesCollection;
+        public PropertiesDataStorage DataStorage { get; }
 
         public IReadOnlyList<ComparisonState> ComparisonStates { get; set; }
         private ComparisonState _selectedState = ComparisonState.None;
+
+        public string PathToBaseProject
+        {
+            get => _pathToBaseProject;
+            set
+            {
+                if (value == _pathToBaseProject) return;
+                _pathToBaseProject = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ComparisonState SelectedState
         {
@@ -27,43 +36,28 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             {
                 _selectedState = value;
                 OnPropertyChanged();
-                _secondPropertiesCollection.View.Refresh();
+
             }
         }
         public string LeftListViewSelection { get; set; }
         public string RightListViewSelection { get; set; }
+        public Dictionary<int, PropertyData> FirstListViewProperties { get; set; }
+        public Dictionary<int, PropertyData> SecondListViewProperties { get; set; }
 
-
+        public MainWindowVM(PropertiesDataStorage dataStorage) : this()
+        {
+            DataStorage = dataStorage;
+            FirstListViewProperties = dataStorage.GetData().First();
+            SecondListViewProperties = dataStorage.GetData().Last();
+        }
         public void GetFolderPath()
         {
             FolderBrowserDialog openFileDlg = new FolderBrowserDialog();
             var result = openFileDlg.ShowDialog();
-            var path = openFileDlg.SelectedPath;
+            PathToBaseProject = openFileDlg.SelectedPath;
+            //TODO:настроить выбор определенных объектов и их загрузку а в целом все отлично)
         }
-        public ICollectionView FirstPropertiesCollectionView => _firstPropertiesCollection?.View;
 
-        public ICollectionView SecondPropertiesCollectionView => _secondPropertiesCollection?.View;
-
-        public MainWindowVM(Dictionary<int, PropertyData> firstPropertiesList, Dictionary<int, PropertyData> secondPropertiesList) : this()
-        {
-
-            _firstPropertiesCollection = new CollectionViewSource
-            {
-                Source = firstPropertiesList
-            };
-            _secondPropertiesCollection = new CollectionViewSource
-            {
-                Source = secondPropertiesList
-            };
-            _firstPropertiesCollection.Filter += _firstPropertiesCollection_Filter;
-            _secondPropertiesCollection.Filter += _secondPropertiesCollection_Filter;
-        }
-        private void _firstPropertiesCollection_Filter(object sender, FilterEventArgs e)
-        {
-
-            e.Accepted = true;
-
-        }
 
         private void _secondPropertiesCollection_Filter(object sender, FilterEventArgs e)
         {
@@ -90,8 +84,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
         public MainWindowVM()
         {
             ComparisonStates = EnumExtension.GetValues<ComparisonState>().ToList();
-            _firstPropertiesCollection ??= new CollectionViewSource();
-            _secondPropertiesCollection ??= new CollectionViewSource();
+
         }
 
         #region Commands
@@ -130,6 +123,8 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             }
         }
         private RelayCommand okCommand;
+        private string _pathToBaseProject = "Path";
+
         public RelayCommand OkCommand
         {
             get

@@ -1,19 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using ST.EplAddin.ComparisonOfProjectProperties.Models;
+using System.Collections.Generic;
 
 namespace ST.EplAddin.ComparisonOfProjectProperties
 {
     internal class PropertiesDataStorage
     {
-        private List<Dictionary<int, string>> Data { get; set; }
+        public string ProjectName1 { get; set; } = "Система 1";
+        public string ProjectName2 { get; set; } = "Система 2";
+        private List<Dictionary<int, PropertyData>> Data { get; set; }
 
-
-        public PropertiesDataStorage(Dictionary<int, string> data1, Dictionary<int, string> data2)
+        public PropertiesDataStorage(Dictionary<int, PropertyData> data1, Dictionary<int, PropertyData> data2, string projectName1, string projectName2)
         {
-            Data = new List<Dictionary<int, string>>() { data1, data2 };
+            ProjectName1 = projectName1;
+            ProjectName2 = projectName2;
+            Data = new List<Dictionary<int, PropertyData>>() { data1, data2 };
         }
-        public List<Dictionary<int, string>> GetData()
+        public List<Dictionary<int, PropertyData>> GetData()
         {
-            return Data ?? new List<Dictionary<int, string>>();
+            return Data ?? new List<Dictionary<int, PropertyData>>();
         }
     }
 }

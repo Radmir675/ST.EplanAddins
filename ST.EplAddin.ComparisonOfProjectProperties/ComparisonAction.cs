@@ -44,12 +44,12 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             var result1 = GetProjectValues(propertiesValue1);
             var result2 = GetProjectValues(propertiesValue2);
             var projectName1 = project1.ProjectName;
-            var projectName2 = project1.ProjectName;
+            var projectName2 = project2.ProjectName;
 
-
+            var dataStorage = new PropertiesDataStorage(result1, result2, projectName1, projectName2);
             var mainWindow = new MainWindow
             {
-                DataContext = new MainWindowVM(result1, result2)
+                DataContext = new MainWindowVM(dataStorage)
             };
             mainWindow.ShowDialog();
 
