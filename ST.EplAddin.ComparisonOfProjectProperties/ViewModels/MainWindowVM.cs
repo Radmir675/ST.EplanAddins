@@ -10,8 +10,8 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
 {
     internal class MainWindowVM : ViewModelBase
     {
-        private static CollectionViewSource _firstPropertiesCollection;
-        private static CollectionViewSource _secondPropertiesCollection;
+        private CollectionViewSource _firstPropertiesCollection;
+        private CollectionViewSource _secondPropertiesCollection;
 
         public IReadOnlyList<ComparisonState> ComparisonStates { get; set; }
         private ComparisonState _selectedState = ComparisonState.None;
@@ -32,9 +32,9 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
 
 
 
-        public ICollectionView FirstPropertiesCollectionView => _firstPropertiesCollection.View;
+        public ICollectionView FirstPropertiesCollectionView => _firstPropertiesCollection?.View;
 
-        public ICollectionView SecondPropertiesCollectionView => _secondPropertiesCollection.View;
+        public ICollectionView SecondPropertiesCollectionView => _secondPropertiesCollection?.View;
 
         public MainWindowVM(Dictionary<int, PropertyData> firstPropertiesList, Dictionary<int, PropertyData> secondPropertiesList) : this()
         {
@@ -62,8 +62,9 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             switch (SelectedState)
             {
                 case ComparisonState.Difference:
-                    if (e.Item is Dictionary<int, PropertyData> data)
+                    if (e.Item is KeyValuePair<int, PropertyData> data)
                     {
+
                         e.Accepted = true;
 
                     }

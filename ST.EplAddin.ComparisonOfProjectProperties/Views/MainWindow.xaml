@@ -124,16 +124,16 @@
                                 VerticalAlignment="Center">
                         <Button Width="30"
                                 Height="30"
+                                Content="→"
+                                x:Name="RightSync_Button"
+                                Background="Transparent" />
+                        <Button Width="30"
+                                Height="30"
                                 Content="←"
                                 x:Name="LeftSync_Button"
                                 Background="Transparent"
                                 VerticalContentAlignment="Center"
                                 Margin="0,0,0,5" />
-                        <Button Width="30"
-                                Height="30"
-                                Content="→"
-                                x:Name="RightSync_Button"
-                                Background="Transparent" />
 
                     </StackPanel>
                 </Grid>
