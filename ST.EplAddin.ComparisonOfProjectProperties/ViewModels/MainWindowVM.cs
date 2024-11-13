@@ -82,6 +82,8 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
         public MainWindowVM()
         {
             ComparisonStates = EnumExtension.GetValues<ComparisonState>().ToList();
+            _firstPropertiesCollection ??= new CollectionViewSource();
+            _secondPropertiesCollection ??= new CollectionViewSource();
         }
     }
 }
