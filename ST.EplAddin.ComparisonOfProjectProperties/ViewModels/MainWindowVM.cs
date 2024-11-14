@@ -54,6 +54,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
 
         private void _firstPropertiesCollection_Filter(object sender, FilterEventArgs e)
         {
+
             FilterData(e, _secondListViewProperties2);
 
         }
