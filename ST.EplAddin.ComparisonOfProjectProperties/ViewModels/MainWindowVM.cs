@@ -2,7 +2,9 @@
 using ST.EplAddin.ComparisonOfProjectProperties.Helper;
 using ST.EplAddin.ComparisonOfProjectProperties.Models;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows.Data;
 using System.Windows.Forms;
 
 namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
@@ -38,55 +40,62 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
         public string LeftListViewSelection { get; set; }
         public string RightListViewSelection { get; set; }
 
-        public Dictionary<int, PropertyData> FirstListViewProperties
-        {
-            get => _firstListViewProperties;
-            set
-            {
-                if (Equals(value, _firstListViewProperties)) return;
-                _firstListViewProperties = value;
-                OnPropertyChanged();
-            }
-        }
+        private readonly Dictionary<int, PropertyData> _firstListViewProperties1;
 
-        public Dictionary<int, PropertyData> SecondListViewProperties
-        {
-            get => _secondListViewProperties;
-            set
-            {
-                if (Equals(value, _secondListViewProperties)) return;
-                _secondListViewProperties = value;
-                OnPropertyChanged();
-            }
-        }
+        private readonly Dictionary<int, PropertyData> _secondListViewProperties2;
 
+        private CollectionViewSource _firstPropertiesCollection;
+        private CollectionViewSource _secondPropertiesCollection;
+        public ICollectionView FirstPropertiesCollectionView => _firstPropertiesCollection?.View;
+
+        public ICollectionView SecondPropertiesCollectionView => _secondPropertiesCollection?.View;
 
         private void FilterData()
         {
 
+
+        }
+        private void _firstPropertiesCollection_Filter(object sender, FilterEventArgs e)
+        {
+
+            e.Accepted = true;
+
+        }
+
+        private void _secondPropertiesCollection_Filter(object sender, FilterEventArgs e)
+        {
             switch (SelectedState)
             {
-
                 case ComparisonState.Difference:
-
-                    break;
-                case ComparisonState.None:
-
-                    break;
-                case ComparisonState.Similarity:
-                    Dictionary<int, PropertyData> result = new Dictionary<int, PropertyData>();
-                    foreach (var item in FirstListViewProperties)
+                    if (e.Item is KeyValuePair<int, PropertyData> item)
                     {
-                        if (SecondListViewProperties.TryGetValue(item.Key, out PropertyData data))
+                        if (_firstListViewProperties1.TryGetValue(item.Key, out PropertyData data))
                         {
-                            if (data.Value == item.Value.Value)
+                            if (data.Value != item.Value.Value)
                             {
-                                result.Add(item.Key, item.Value);
+                                e.Accepted = true;
+                                break;
                             }
                         }
                     }
-                    FirstListViewProperties = result;
-                    SecondListViewProperties = result;
+
+                    e.Accepted = false;
+                    break;
+                case ComparisonState.None:
+                    e.Accepted = true;
+                    break;
+                case ComparisonState.Similarity:
+                    if (e.Item is KeyValuePair<int, PropertyData> item1)
+                    {
+                        if (_firstListViewProperties1.TryGetValue(item1.Key, out PropertyData data))
+                        {
+                            if (data.Value == item1.Value.Value)
+                            {
+                                e.Accepted = true;
+                            }
+                        }
+                        e.Accepted = false;
+                    }
                     break;
             }
         }
@@ -105,13 +114,25 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
         public MainWindowVM(PropertiesDataStorage dataStorage) : this()
         {
             DataStorage = dataStorage;
-            FirstListViewProperties = dataStorage.GetData().FirstOrDefault();
-            SecondListViewProperties = dataStorage.GetData().FirstOrDefault();
+            _firstListViewProperties1 = dataStorage.GetData().FirstOrDefault();
+            _secondListViewProperties2 = dataStorage.GetData().LastOrDefault();
+            _firstPropertiesCollection = new CollectionViewSource
+            {
+                Source = _firstListViewProperties1
+            };
+            _secondPropertiesCollection = new CollectionViewSource
+            {
+                Source = _secondListViewProperties2
+            };
 
+            _firstPropertiesCollection.Filter += _firstPropertiesCollection_Filter;
+            _secondPropertiesCollection.Filter += _secondPropertiesCollection_Filter;
         }
         public MainWindowVM()
         {
             ComparisonStates = EnumExtension.GetValues<ComparisonState>().ToList();
+            _firstPropertiesCollection ??= new CollectionViewSource();
+            _secondPropertiesCollection ??= new CollectionViewSource();
         }
         #endregion
 
