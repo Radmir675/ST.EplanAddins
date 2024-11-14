@@ -34,7 +34,8 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             {
                 _selectedState = value;
                 OnPropertyChanged();
-                FilterData();
+                FirstPropertiesCollectionView.Refresh();
+                SecondPropertiesCollectionView.Refresh();
             }
         }
         public string LeftListViewSelection { get; set; }
@@ -50,26 +51,26 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
 
         public ICollectionView SecondPropertiesCollectionView => _secondPropertiesCollection?.View;
 
-        private void FilterData()
-        {
 
-
-        }
         private void _firstPropertiesCollection_Filter(object sender, FilterEventArgs e)
         {
-
-            e.Accepted = true;
+            FilterData(e, _secondListViewProperties2);
 
         }
 
         private void _secondPropertiesCollection_Filter(object sender, FilterEventArgs e)
+        {
+            FilterData(e, _firstListViewProperties1);
+        }
+
+        private void FilterData(FilterEventArgs e, Dictionary<int, PropertyData> collectionViewBase)
         {
             switch (SelectedState)
             {
                 case ComparisonState.Difference:
                     if (e.Item is KeyValuePair<int, PropertyData> item)
                     {
-                        if (_firstListViewProperties1.TryGetValue(item.Key, out PropertyData data))
+                        if (collectionViewBase.TryGetValue(item.Key, out PropertyData data))
                         {
                             if (data.Value != item.Value.Value)
                             {
@@ -87,11 +88,12 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
                 case ComparisonState.Similarity:
                     if (e.Item is KeyValuePair<int, PropertyData> item1)
                     {
-                        if (_firstListViewProperties1.TryGetValue(item1.Key, out PropertyData data))
+                        if (collectionViewBase.TryGetValue(item1.Key, out PropertyData data))
                         {
                             if (data.Value == item1.Value.Value)
                             {
                                 e.Accepted = true;
+                                break;
                             }
                         }
                         e.Accepted = false;
@@ -99,6 +101,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
                     break;
             }
         }
+
         public void GetFolderPath()
         {
             OpenFileDialog openFileDlg = new OpenFileDialog();
