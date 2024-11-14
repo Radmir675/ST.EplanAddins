@@ -42,7 +42,7 @@ namespace EplAddin.ConnectionNumeration
             uint subMenuID = menu.AddMenuItem(
                 "Жилы кабеля", cableNumeration, "", menuId, 0, false, false);
             uint subMenuID1 = menu.AddMenuItem(
-                "Выравнивание соединений", cableNumeration, "", menuId, 0, false, false);
+                "Выравнивание соединений", connectionNumeration, "", menuId, 0, false, false);
             return true;
         }
 
