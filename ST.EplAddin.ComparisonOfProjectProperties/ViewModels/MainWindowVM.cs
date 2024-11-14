@@ -38,8 +38,24 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
                 SecondPropertiesCollectionView.Refresh();
             }
         }
-        public string LeftListViewSelection { get; set; }
-        public string RightListViewSelection { get; set; }
+
+        public KeyValuePair<int, PropertyData> LeftListViewSelection
+        {
+            get => _leftListViewSelection;
+            set
+            {
+                _leftListViewSelection = value;
+            }
+        }
+
+        public KeyValuePair<int, PropertyData> RightListViewSelection
+        {
+            get => _rightListViewSelection;
+            set
+            {
+                _rightListViewSelection = value;
+            }
+        }
 
         private readonly Dictionary<int, PropertyData> _firstListViewProperties1;
 
@@ -161,7 +177,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
                 return toRightSideCommand ??= new RelayCommand(obj =>
                 {
 
-                }, (obj) => RightListViewSelection != null);
+                }, (obj) => LeftListViewSelection.Value != null);
             }
         }
         private RelayCommand toLeftSideCommand;
@@ -172,13 +188,14 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
                 return toLeftSideCommand ??= new RelayCommand(obj =>
                 {
 
-                }, (obj) => LeftListViewSelection != null);
+                }, (obj) => RightListViewSelection.Value != null);
             }
         }
         private RelayCommand okCommand;
         private string _pathToBaseProject = "Path";
-        private Dictionary<int, PropertyData> _firstListViewProperties;
-        private Dictionary<int, PropertyData> _secondListViewProperties;
+        private KeyValuePair<int, PropertyData> _rightListViewSelection;
+        private KeyValuePair<int, PropertyData> _leftListViewSelection;
+
 
         public RelayCommand OkCommand
         {
