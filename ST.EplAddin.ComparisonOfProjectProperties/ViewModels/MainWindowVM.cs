@@ -3,7 +3,6 @@ using ST.EplAddin.ComparisonOfProjectProperties.Helper;
 using ST.EplAddin.ComparisonOfProjectProperties.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Data;
 using System.Windows.Forms;
 
 namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
@@ -11,10 +10,8 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
     internal class MainWindowVM : ViewModelBase
     {
         public PropertiesDataStorage DataStorage { get; }
-
         public IReadOnlyList<ComparisonState> ComparisonStates { get; set; }
         private ComparisonState _selectedState = ComparisonState.None;
-
         public string PathToBaseProject
         {
             get => _pathToBaseProject;
@@ -25,7 +22,6 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
                 OnPropertyChanged();
             }
         }
-
         public ComparisonState SelectedState
         {
             get
@@ -36,19 +32,63 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             {
                 _selectedState = value;
                 OnPropertyChanged();
-
+                FilterData();
             }
         }
         public string LeftListViewSelection { get; set; }
         public string RightListViewSelection { get; set; }
-        public Dictionary<int, PropertyData> FirstListViewProperties { get; set; }
-        public Dictionary<int, PropertyData> SecondListViewProperties { get; set; }
 
-        public MainWindowVM(PropertiesDataStorage dataStorage) : this()
+        public Dictionary<int, PropertyData> FirstListViewProperties
         {
-            DataStorage = dataStorage;
-            FirstListViewProperties = dataStorage.GetData().FirstOrDefault();
-            SecondListViewProperties = dataStorage.GetData().FirstOrDefault();
+            get => _firstListViewProperties;
+            set
+            {
+                if (Equals(value, _firstListViewProperties)) return;
+                _firstListViewProperties = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Dictionary<int, PropertyData> SecondListViewProperties
+        {
+            get => _secondListViewProperties;
+            set
+            {
+                if (Equals(value, _secondListViewProperties)) return;
+                _secondListViewProperties = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private void FilterData()
+        {
+
+            switch (SelectedState)
+            {
+
+                case ComparisonState.Difference:
+
+                    break;
+                case ComparisonState.None:
+
+                    break;
+                case ComparisonState.Similarity:
+                    Dictionary<int, PropertyData> result = new Dictionary<int, PropertyData>();
+                    foreach (var item in FirstListViewProperties)
+                    {
+                        if (SecondListViewProperties.TryGetValue(item.Key, out PropertyData data))
+                        {
+                            if (data.Value == item.Value.Value)
+                            {
+                                result.Add(item.Key, item.Value);
+                            }
+                        }
+                    }
+                    FirstListViewProperties = result;
+                    SecondListViewProperties = result;
+                    break;
+            }
         }
         public void GetFolderPath()
         {
@@ -59,38 +99,21 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             {
                 PathToBaseProject = openFileDlg.FileName;
             }
-
-            //TODO:настроить выбор определенных объектов и их загрузку а в целом все отлично)
         }
 
-
-        private void _secondPropertiesCollection_Filter(object sender, FilterEventArgs e)
+        #region Constructors
+        public MainWindowVM(PropertiesDataStorage dataStorage) : this()
         {
-            switch (SelectedState)
-            {
-                case ComparisonState.Difference:
-                    if (e.Item is KeyValuePair<int, PropertyData> data)
-                    {
+            DataStorage = dataStorage;
+            FirstListViewProperties = dataStorage.GetData().FirstOrDefault();
+            SecondListViewProperties = dataStorage.GetData().FirstOrDefault();
 
-                        e.Accepted = true;
-
-                    }
-                    break;
-                case ComparisonState.None:
-                    e.Accepted = false;
-
-                    break;
-                case ComparisonState.Similarity:
-                    break;
-            }
         }
-
-
         public MainWindowVM()
         {
             ComparisonStates = EnumExtension.GetValues<ComparisonState>().ToList();
-
         }
+        #endregion
 
         #region Commands
         private RelayCommand selectPathCommand;
@@ -129,6 +152,8 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
         }
         private RelayCommand okCommand;
         private string _pathToBaseProject = "Path";
+        private Dictionary<int, PropertyData> _firstListViewProperties;
+        private Dictionary<int, PropertyData> _secondListViewProperties;
 
         public RelayCommand OkCommand
         {
