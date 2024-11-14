@@ -101,7 +101,7 @@
                     <ListView Grid.Column="0"
                               Grid.Row="2"
                               x:Name="SystemOne_ListView"
-                              ItemsSource="{Binding FirstListViewProperties}">
+                              ItemsSource="{Binding FirstPropertiesCollectionView}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Имя"
@@ -121,7 +121,7 @@
                     <ListView Grid.Column="2"
                               Grid.Row="2"
                               x:Name="SystemTwo_ListView"
-                              ItemsSource="{Binding SecondListViewProperties}">
+                              ItemsSource="{Binding SecondPropertiesCollectionView}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Имя"
