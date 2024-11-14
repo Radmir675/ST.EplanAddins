@@ -47,14 +47,19 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
         public MainWindowVM(PropertiesDataStorage dataStorage) : this()
         {
             DataStorage = dataStorage;
-            FirstListViewProperties = dataStorage.GetData().First();
-            SecondListViewProperties = dataStorage.GetData().Last();
+            FirstListViewProperties = dataStorage.GetData().FirstOrDefault();
+            SecondListViewProperties = dataStorage.GetData().FirstOrDefault();
         }
         public void GetFolderPath()
         {
-            FolderBrowserDialog openFileDlg = new FolderBrowserDialog();
+            OpenFileDialog openFileDlg = new OpenFileDialog();
+            openFileDlg.Filter = "Обрабатываемые проекты(*.elk)|*.elk|Базовые проекты(*.zw9)|*.zw9";
             var result = openFileDlg.ShowDialog();
-            PathToBaseProject = openFileDlg.SelectedPath;
+            if (result == DialogResult.OK)
+            {
+                PathToBaseProject = openFileDlg.FileName;
+            }
+
             //TODO:настроить выбор определенных объектов и их загрузку а в целом все отлично)
         }
 
