@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         Width="824"
         ResizeMode="CanResizeWithGrip"
-        Height="758">
+        Height="758"
+        MouseDown="Window_MouseDown">
 
     <Window.Resources>
         <converters:EnumToDisplayConverter x:Key="EnumDescriptionConverter"></converters:EnumToDisplayConverter>
@@ -37,7 +38,8 @@
                                  Margin="0,0,5,0"
                                  x:Name="OK_Button"
                                  Width="90" 
-                                 Command="{Binding OkCommand}"/>
+                                 Command="{Binding OkCommand}"
+                                 Click="Accept_Click" />
                         <Button Content="Отмена"
                                 x:Name="Close_Button"
                                 IsCancel="True"/>
@@ -102,7 +104,9 @@
                               Grid.Row="2"
                               x:Name="SystemOne_ListView"
                               ItemsSource="{Binding FirstPropertiesCollectionView}"
-                              SelectedItem="{Binding LeftListViewSelection}">
+                              SelectedItem="{Binding LeftListViewSelection}"
+                              SelectionMode="Single"
+                             >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Имя"
@@ -123,7 +127,9 @@
                               Grid.Row="2"
                               x:Name="SystemTwo_ListView"
                               ItemsSource="{Binding SecondPropertiesCollectionView}"
-                              SelectedItem="{Binding RightListViewSelection}">
+                              SelectedItem="{Binding RightListViewSelection}"
+                              SelectionMode="Single"
+                            >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Имя"

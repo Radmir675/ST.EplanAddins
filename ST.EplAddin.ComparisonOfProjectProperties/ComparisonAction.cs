@@ -51,8 +51,27 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             {
                 DataContext = new MainWindowVM(dataStorage)
             };
-            mainWindow.ShowDialog();
-
+            var dialogResult = mainWindow.ShowDialog() ?? false;
+            if (dialogResult)
+            {
+                using (SafetyPoint safetyPoint = SafetyPoint.Create())
+                {
+                    using (UndoStep undo = new UndoManager().CreateUndoStep())
+                    {
+                        ChangesRecord changesRecord = new ChangesRecord();
+                        var recordChangesList = changesRecord.GetChangesList();
+                        foreach (var key in recordChangesList)
+                        {
+                            //TODO: проверить существует ли такой индекс
+                            var initialPropertyValue = propertiesValue1[key];
+                            var targetPropertyValue = propertiesValue2[key];
+                            CopyTo(initialPropertyValue, targetPropertyValue);
+                        }
+                        undo.SetUndoDescription($"Обновление свойств проекта {projectName2}");
+                    }
+                    safetyPoint.Commit();
+                }
+            }
             return true;
         }
 

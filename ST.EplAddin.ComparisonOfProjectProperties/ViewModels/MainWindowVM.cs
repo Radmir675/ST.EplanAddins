@@ -57,12 +57,13 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             }
         }
 
-        private readonly Dictionary<int, PropertyData> _firstListViewProperties1;
+        private Dictionary<int, PropertyData> _firstListViewProperties1;
 
-        private readonly Dictionary<int, PropertyData> _secondListViewProperties2;
+        private Dictionary<int, PropertyData> _secondListViewProperties2;
 
         private CollectionViewSource _firstPropertiesCollection;
         private CollectionViewSource _secondPropertiesCollection;
+        private readonly ChangesRecord changesRecord;
         public ICollectionView FirstPropertiesCollectionView => _firstPropertiesCollection?.View;
 
         public ICollectionView SecondPropertiesCollectionView => _secondPropertiesCollection?.View;
@@ -80,6 +81,21 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             FilterData(e, _firstListViewProperties1);
         }
 
+        private void Add(KeyValuePair<int, PropertyData> selection, Dictionary<int, PropertyData> targetCollection)
+        {
+            var result = targetCollection.TryGetValue(selection.Key, out PropertyData propertyData);
+            if (result)
+            {
+                if (propertyData.Value != selection.Value.Value)
+                {
+                    propertyData.Value = selection.Value.Value;
+                }
+            }
+            else
+            {
+                targetCollection.Add(selection.Key, selection.Value);
+            }
+        }
         private void FilterData(FilterEventArgs e, Dictionary<int, PropertyData> collectionViewBase)
         {
             switch (SelectedState)
@@ -119,6 +135,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             }
         }
 
+
         public void GetFolderPath()
         {
             OpenFileDialog openFileDlg = new OpenFileDialog();
@@ -144,9 +161,9 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             {
                 Source = _secondListViewProperties2
             };
-
             _firstPropertiesCollection.Filter += _firstPropertiesCollection_Filter;
             _secondPropertiesCollection.Filter += _secondPropertiesCollection_Filter;
+            changesRecord = new ChangesRecord();
         }
         public MainWindowVM()
         {
@@ -176,6 +193,8 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             {
                 return toRightSideCommand ??= new RelayCommand(obj =>
                 {
+                    Add(LeftListViewSelection, _secondListViewProperties2);
+                    changesRecord.Add(LeftListViewSelection.Key);
 
                 }, (obj) => LeftListViewSelection.Value != null);
             }
