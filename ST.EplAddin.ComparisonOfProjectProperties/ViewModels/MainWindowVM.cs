@@ -68,14 +68,10 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
 
         public ICollectionView SecondPropertiesCollectionView => _secondPropertiesCollection?.View;
 
-
         private void _firstPropertiesCollection_Filter(object sender, FilterEventArgs e)
         {
-
             FilterData(e, _secondListViewProperties2);
-
         }
-
         private void _secondPropertiesCollection_Filter(object sender, FilterEventArgs e)
         {
             FilterData(e, _firstListViewProperties1);
@@ -164,6 +160,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             _firstPropertiesCollection.Filter += _firstPropertiesCollection_Filter;
             _secondPropertiesCollection.Filter += _secondPropertiesCollection_Filter;
             changesRecord = new ChangesRecord();
+            changesRecord.RemoveAll();
         }
         public MainWindowVM()
         {

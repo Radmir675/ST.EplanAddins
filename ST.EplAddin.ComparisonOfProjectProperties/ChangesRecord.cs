@@ -23,5 +23,10 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                 changesRecord.Add(key);
             }
         }
+
+        public void RemoveAll()
+        {
+            changesRecord.Clear();
+        }
     }
 }

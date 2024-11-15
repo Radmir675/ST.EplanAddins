@@ -5,7 +5,9 @@ using Eplan.EplApi.HEServices;
 using ST.EplAddin.ComparisonOfProjectProperties.Models;
 using ST.EplAddin.ComparisonOfProjectProperties.ViewModels;
 using ST.EplAddin.ComparisonOfProjectProperties.Views;
+using System;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace ST.EplAddin.ComparisonOfProjectProperties
 {
@@ -65,7 +67,14 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                             //TODO: проверить существует ли такой индекс
                             var initialPropertyValue = propertiesValue1[key];
                             var targetPropertyValue = propertiesValue2[key];
-                            CopyTo(initialPropertyValue, targetPropertyValue);
+                            try
+                            {
+                                CopyTo(initialPropertyValue, targetPropertyValue);
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show($"Не удалось присвоить значение свойству {propertiesValue1[key].Definition.Name} | {key} ");
+                            }
                         }
                         undo.SetUndoDescription($"Обновление свойств проекта {projectName2}");
                     }

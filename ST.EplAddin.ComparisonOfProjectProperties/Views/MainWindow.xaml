@@ -162,7 +162,8 @@
                                 x:Name="RightSync_Button"
                                 Background="Transparent"
                                 Command="{Binding ToRightSideCommand}"
-                                Margin="0,0,0,5" />
+                                Margin="0,0,0,5"
+                                KeyUp="RightSync_Button_KeyUp" />
                         <Button Width="30"
                                 Height="30"
                                 Content="←"
