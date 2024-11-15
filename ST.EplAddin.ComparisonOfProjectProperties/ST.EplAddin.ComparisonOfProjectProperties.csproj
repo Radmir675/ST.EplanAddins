@@ -102,6 +102,7 @@
     <Compile Include="AddinModule.cs" />
     <Compile Include="ChangesRecord.cs" />
     <Compile Include="ComparisonAction.cs" />
+    <Compile Include="Converters\ColorConverter.cs" />
     <Compile Include="Helper\RelayCommand.cs" />
     <Compile Include="Models\ComparisonState.cs" />
     <Compile Include="Converters\EnumExtension.cs" />
