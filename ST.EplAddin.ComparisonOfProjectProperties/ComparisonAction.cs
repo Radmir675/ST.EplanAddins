@@ -3,11 +3,8 @@ using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
 using ST.EplAddin.ComparisonOfProjectProperties.Models;
-using ST.EplAddin.ComparisonOfProjectProperties.ViewModels;
-using ST.EplAddin.ComparisonOfProjectProperties.Views;
 using System;
 using System.Collections.Generic;
-using System.Windows;
 using Project = Eplan.EplApi.DataModel.Project;
 
 namespace ST.EplAddin.ComparisonOfProjectProperties
@@ -54,50 +51,55 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             var projectName1 = project1.ProjectName;
             var projectName2 = project2.ProjectName;
 
-            var dataStorage = new PropertiesDataStorage(result1, result2, projectName1, projectName2);
-            var mainWindow = new MainWindow
-            {
-                DataContext = new MainWindowVM(dataStorage)
-            };
-            var dialogResult = mainWindow.ShowDialog() ?? false;
-            if (dialogResult)
-            {
-                using (SafetyPoint safetyPoint = SafetyPoint.Create())
-                {
-                    using (UndoStep undo = new UndoManager().CreateUndoStep())
-                    {
-                        ChangesRecord changesRecord = new ChangesRecord();
-                        var recordChangesList = changesRecord.GetChangesList();
-                        foreach (var key in recordChangesList)
-                        {
-                            //TODO: проверить существует ли такой индекс
-                            var initialPropertyValue = propertiesValue1[key];
-                            var targetPropertyValue = propertiesValue2[key];
-                            try
-                            {
-                                CopyTo(initialPropertyValue, targetPropertyValue);
-                            }
-                            catch (Exception e)
-                            {
-                                MessageBox.Show($"Не удалось присвоить значение свойству {propertiesValue1[key].Definition.Name} | {key} ");
-                            }
-                        }
-                        undo.SetUndoDescription($"Обновление свойств проекта {projectName2}");
-                    }
-                    safetyPoint.Commit();
-                }
-            }
+            //var dataStorage = new PropertiesDataStorage(result1, result2, projectName1, projectName2);
+            //var mainWindow = new MainWindow
+            //{
+            //    DataContext = new MainWindowVM(dataStorage)
+            //};
+            //var dialogResult = mainWindow.ShowDialog() ?? false;
+            //if (dialogResult)
+            //{
+            //    using (SafetyPoint safetyPoint = SafetyPoint.Create())
+            //    {
+            //        using (UndoStep undo = new UndoManager().CreateUndoStep())
+            //        {
+            //            ChangesRecord changesRecord = new ChangesRecord();
+            //            var recordChangesList = changesRecord.GetChangesList();
+            //            foreach (var key in recordChangesList)
+            //            {
+            //                //TODO: проверить существует ли такой индекс
+            //                var initialPropertyValue = propertiesValue1[key];
+            //                var targetPropertyValue = propertiesValue2[key];
+            //                try
+            //                {
+            //                    CopyTo(initialPropertyValue, targetPropertyValue);
+            //                }
+            //                catch (Exception e)
+            //                {
+            //                    MessageBox.Show($"Не удалось присвоить значение свойству {propertiesValue1[key].Definition.Name} | {key} ");
+            //                }
+            //            }
+            //            undo.SetUndoDescription($"Обновление свойств проекта {projectName2}");
+            //        }
+            //        safetyPoint.Commit();
+            //    }
+            //}
             return true;
         }
 
-        private Dictionary<int, PropertyData> GetProjectValues(ProjectPropertyList projectPropertyList)
+        private Dictionary<string, PropertyData> GetProjectValues(ProjectPropertyList projectPropertyList)
         {
             var existingValues = projectPropertyList.ExistingValues;
-            var dictionary = new Dictionary<int, PropertyData>();
+            var dictionary = new Dictionary<string, PropertyData>();
             foreach (var value in existingValues)
             {
                 var propertyValue = value.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
                 var id = value.Id.AsInt;
+                if (id == 10618)
+                {
+                    var s = 1;
+                }
+
                 if (value.Indexes.Length > 0)
                 {
                     for (int i = 0; i < value.Indexes.Length; i++)
@@ -105,12 +107,11 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
 
                         try
                         {
-                            var propertyValue1 = value[i].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                            var propertyValue1 = value[value.Indexes[i]].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
                             if (!string.IsNullOrEmpty(propertyValue1))
                             {
-                                var definitionName = value[i].Definition.Name;
-                                var res = value[i].Definition.IsNamePart;
-                                dictionary.Add(id + i, new PropertyData(id, propertyValue, definitionName));
+                                var definitionName = value[value.Indexes[i]].Definition.Name;
+                                dictionary.Add($"{id}[{value.Indexes[i]}]", new PropertyData(id, propertyValue, definitionName));
                             }
 
                         }
@@ -124,7 +125,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                 {
                     var definitionName = value.Definition.Name;
                     var res = value.Definition.IsNamePart;
-                    dictionary.Add(id, new PropertyData(id, propertyValue, definitionName));
+                    dictionary.Add($"{id}", new PropertyData(id, propertyValue, definitionName));
                 }
 
             }
