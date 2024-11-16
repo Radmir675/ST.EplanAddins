@@ -31,31 +31,33 @@ namespace ST.EplAddin.Verifications
 
         public override void OnEndInspection()
         {
+            //может всею проверку сюда запихнуть?
         }
 
         public override void Execute(StorableObject storableObject)
         {
             if (IsDone) return;
-
-
             var currentProject = Project;
             PathToBaseProject = @"O:\Шаблоны\Базовый проект\BaseProject.edb\ProjectInfo.xml";
             if (!File.Exists(PathToBaseProject))
             {
-                var dialogResult = MessageBox.Show($"Базовый проект с шаблоном по пути {PathToBaseProject} не найден.\n Хотите указать путь к файлу?", "Error", MessageBoxButtons.OKCancel);
-                if (dialogResult == DialogResult.OK)
+                var dialogResult = MessageBox.Show($"Базовый проект с шаблоном по пути {PathToBaseProject} не найден.\n Хотите указать путь к файлу?", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                if (dialogResult != DialogResult.OK)
                 {
-                    var resultDialog = ShowFileDialog();
-                    if (resultDialog == false)
-                    {
-                        IsDone = true;
-                        return;
-                    }
+                    IsDone = true;
+                    return;
+                }
+
+                var resultDialog = ShowFileDialog();
+                if (resultDialog == false)
+                {
+                    IsDone = true;
+                    return;
                 }
             }
 
             var baseProjectЗProperties = ReadFile(PathToBaseProject).ToList();
-            var formatPropertiesOnl = baseProjectЗProperties.Where(x => x.Name.Contains("Формат "));
+            var formatPropertiesOnl = baseProjectЗProperties.Where(x => x.Name.Contains("Формат"));
             // CheckProperties(projectToCompare);
             IsDone = true;
         }
@@ -114,7 +116,7 @@ namespace ST.EplAddin.Verifications
         private bool ShowFileDialog()
         {
             OpenFileDialog openFileDlg = new OpenFileDialog();
-            openFileDlg.Filter = "Обрабатываемые проекты(*.elk)|*.elk";
+            openFileDlg.Filter = "ProjectInfo(*.xml)|*.xml";
             var result = openFileDlg.ShowDialog();
             if (result == DialogResult.OK)
             {
