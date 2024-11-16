@@ -26,8 +26,26 @@ namespace ST.EplAddin.Verifications
         {
         }
 
-        public override void Execute(StorableObject oObject1)
+        public override void Execute(StorableObject storableObject)
         {
+            var project = Project;
+            string strTmp = string.Empty;
+            PropertyValue oPropValue;
+
+            foreach (AnyPropertyId hPProp in Properties.AllProjectPropIDs)
+            {
+                // check if exists
+                if (!project.Properties[hPProp].IsEmpty)
+                {
+                    if (project.Properties[hPProp].Definition.Type == PropertyDefinition.PropertyType.String)
+                    {
+                        //read string property
+                        oPropValue = project.Properties[hPProp];
+                        strTmp = oPropValue.ToString();
+                        var res = project.Properties[hPProp].Definition.IsNamePart;
+                    }
+                }
+            }
 
         }
 
