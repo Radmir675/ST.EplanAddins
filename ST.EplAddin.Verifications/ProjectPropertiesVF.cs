@@ -1,6 +1,10 @@
 ﻿using Eplan.EplApi.DataModel;
 using Eplan.EplApi.EServices;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace ST.EplAddin.Verifications
 {
@@ -33,20 +37,59 @@ namespace ST.EplAddin.Verifications
         {
             if (IsDone) return;
 
-            var resultDialog = ShowFileDialog();
-            if (resultDialog == false)
+
+            var currentProject = Project;
+            PathToBaseProject = @"O:\Шаблоны\Базовый проект\BaseProject.edb\ProjectInfo.xml";
+            if (!File.Exists(PathToBaseProject))
             {
-                IsDone = true;
-                return;
+                var dialogResult = MessageBox.Show($"Базовый проект с шаблоном по пути {PathToBaseProject} не найден.\n Хотите указать путь к файлу?", "Error", MessageBoxButtons.OKCancel);
+                if (dialogResult == DialogResult.OK)
+                {
+                    var resultDialog = ShowFileDialog();
+                    if (resultDialog == false)
+                    {
+                        IsDone = true;
+                        return;
+                    }
+                }
             }
-            var projectToCompare = Project;
-            var baseProject = new ProjectManager().OpenProject(PathToBaseProject);
-            baseProject.Close();
-            IsDone = true;
+
+            var baseProjectЗProperties = ReadFile(PathToBaseProject).ToList();
+            var formatPropertiesOnl = baseProjectЗProperties.Where(x => x.Name.Contains("Формат "));
             // CheckProperties(projectToCompare);
+            IsDone = true;
         }
 
-        private void CheckProperties(Project projectToCompare)
+        private IEnumerable<ParsedProperty> ReadFile(string path)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.LoadXml(path);
+            XmlElement? xRoot = xDoc.DocumentElement;
+            if (xRoot != null)
+            {
+                foreach (XmlElement xnode in xRoot)
+                {
+                    // получаем атрибут name
+                    var name = xnode.Attributes.GetNamedItem("name");
+                    var id = xnode.Attributes.GetNamedItem("id");
+                    var index = xnode.Attributes.GetNamedItem("index");
+                    var type = xnode.Attributes.GetNamedItem("type");
+                    var value = xnode.InnerText;
+
+                    yield return new ParsedProperty()
+                    {
+                        Id = id.Value,
+                        Name = name.Value,
+                        Index = index.Value,
+                        Value = value,
+                        Type = type.Value
+                    };
+
+                }
+            }
+        }
+
+        private void CheckProperties(Project currentProject)
         {
             string strTmp = string.Empty;
             PropertyValue oPropValue;
@@ -54,14 +97,14 @@ namespace ST.EplAddin.Verifications
             foreach (AnyPropertyId hPProp in Properties.AllProjectPropIDs)
             {
                 // check if exists
-                if (!projectToCompare.Properties[hPProp].IsEmpty)
+                if (!currentProject.Properties[hPProp].IsEmpty)
                 {
-                    if (projectToCompare.Properties[hPProp].Definition.Type == PropertyDefinition.PropertyType.String)
+                    if (currentProject.Properties[hPProp].Definition.Type == PropertyDefinition.PropertyType.String)
                     {
                         //read string property
-                        oPropValue = projectToCompare.Properties[hPProp];
+                        oPropValue = currentProject.Properties[hPProp];
                         strTmp = oPropValue.ToString();
-                        var res = projectToCompare.Properties[hPProp].Definition.IsNamePart;
+                        var res = currentProject.Properties[hPProp].Definition.IsNamePart;
                     }
                 }
             }
@@ -71,7 +114,7 @@ namespace ST.EplAddin.Verifications
         private bool ShowFileDialog()
         {
             OpenFileDialog openFileDlg = new OpenFileDialog();
-            openFileDlg.Filter = "Обрабатываемые проекты(*.elk)|*.elk|Базовые проекты(*.zw9)|*.zw9";
+            openFileDlg.Filter = "Обрабатываемые проекты(*.elk)|*.elk";
             var result = openFileDlg.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -95,5 +138,15 @@ namespace ST.EplAddin.Verifications
         public override void DoHelp()
         {
         }
+    }
+
+
+    public class ParsedProperty
+    {
+        public string Name { get; set; }
+        public string Id { get; set; }
+        public string Index { get; set; }
+        public string Type { get; set; }
+        public string Value { get; set; }
     }
 }
