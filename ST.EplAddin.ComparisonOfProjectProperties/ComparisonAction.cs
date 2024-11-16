@@ -8,6 +8,7 @@ using ST.EplAddin.ComparisonOfProjectProperties.Views;
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using Project = Eplan.EplApi.DataModel.Project;
 
 namespace ST.EplAddin.ComparisonOfProjectProperties
 {
@@ -32,16 +33,21 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                 LockSelectionByDefault = false
             };
             //TODO:здесь можно прописать чтобы указали путь до базового проекта
-            if (selectionSet.SelectedProjects.Length != 2)
+            Project project2 = null;
+            if (selectionSet.SelectedProjects.Length == 2)
             {
-                return false;
+                project2 = selectionSet?.SelectedProjects[1];
+
             }
             var project1 = selectionSet.SelectedProjects[0];
-            var project2 = selectionSet.SelectedProjects[1];
-
-
             propertiesValue1 = project1.Properties;
+            if (selectionSet.SelectedProjects.Length == 1)
+            {
+                GetProjectValues(propertiesValue1);
+                return true;
+            }
             propertiesValue2 = project2.Properties;
+
 
             var result1 = GetProjectValues(propertiesValue1);
             var result2 = GetProjectValues(propertiesValue2);
@@ -91,13 +97,36 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             foreach (var value in existingValues)
             {
                 var propertyValue = value.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
-                if (!string.IsNullOrEmpty(propertyValue))
+                var id = value.Id.AsInt;
+                if (value.Indexes.Length > 0)
+                {
+                    for (int i = 0; i < value.Indexes.Length; i++)
+                    {
+
+                        try
+                        {
+                            var propertyValue1 = value[i].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                            if (!string.IsNullOrEmpty(propertyValue1))
+                            {
+                                var definitionName = value[i].Definition.Name;
+                                var res = value[i].Definition.IsNamePart;
+                                dictionary.Add(id + i, new PropertyData(id, propertyValue, definitionName));
+                            }
+
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
+                    }
+                }
+                else if (!string.IsNullOrEmpty(propertyValue))
                 {
                     var definitionName = value.Definition.Name;
-                    var id = value.Id.AsInt;
-
+                    var res = value.Definition.IsNamePart;
                     dictionary.Add(id, new PropertyData(id, propertyValue, definitionName));
                 }
+
             }
 
             return dictionary;
@@ -106,7 +135,37 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
         {
             propertyValueFrom.CopyTo(propertyValueTo);
         }
+        public void GetR(Project project)
+        {
+            List<(string, string, string, bool)> items = new();
+            foreach (AnyPropertyId hPProp in Properties.AllProjectPropIDs)
+            {
+                // check if exists
 
+                if (project.Properties[hPProp].Definition.Type == PropertyDefinition.PropertyType.String)
+                {
+                    try
+                    {
+                        //read string property
+                        var oPropValue = project.Properties[hPProp];
+                        var strTmp = oPropValue.ToString();
+                        var definitionName = hPProp.Definition.Name;
+                        var res = project.Properties[hPProp].Definition.IsNamePart;
+                        items.Add((strTmp, hPProp.ToString(), definitionName, res));
+
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                }
+                else
+                {
+                    var s = 123;
+                }
+
+            }
+        }
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
 
