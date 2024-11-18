@@ -1,10 +1,12 @@
-﻿using Eplan.EplApi.DataModel;
+﻿using Eplan.EplApi.Base;
+using Eplan.EplApi.DataModel;
 using Eplan.EplApi.EServices;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
+using StorableObject = Eplan.EplApi.DataModel.StorableObject;
 
 namespace ST.EplAddin.Verifications
 {
@@ -31,8 +33,9 @@ namespace ST.EplAddin.Verifications
 
         public override void OnEndInspection()
         {
-            //может все проверку сюда запихнуть?
+            IsDone = false;
         }
+
 
         public override void Execute(StorableObject storableObject)
         {
@@ -56,14 +59,55 @@ namespace ST.EplAddin.Verifications
                 }
             }
 
-            var baseProjectЗProperties = ReadFile(PathToBaseProject).ToList();
-            var formatPropertiesOnly = baseProjectЗProperties.Where(x => x.Name.Contains("Формат"));
-            // CheckProperties(projectToCompare);
-            IsDone = true;
+            var baseProjectЗProperties = ReadFile(PathToBaseProject);
+            var baseProjectFormatPropertiesOnly = FindFormatProperties(baseProjectЗProperties);
+            var currentProjectProperties = GetProjectValues(currentProject.Properties);
+            var currentProjectFormatPropertiesOnly = FindFormatProperties(currentProjectProperties);
+            try
+            {
+                Compare(baseProjectFormatPropertiesOnly, currentProjectFormatPropertiesOnly);
+                IsDone = true;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                IsDone = true;
+            }
         }
 
-        private IEnumerable<ParsedProperty> ReadFile(string path)
+        private Dictionary<PropertyKey, Property> FindFormatProperties(Dictionary<PropertyKey, Property> baseProjectЗProperties)
         {
+            var result = new Dictionary<PropertyKey, Property>();
+            foreach (var item in baseProjectЗProperties)
+            {
+                if (item.Value.Name.Contains("Формат"))
+                {
+                    result.Add(item.Key, item.Value);
+                }
+            }
+            return result;
+        }
+
+
+        private void Compare(Dictionary<PropertyKey, Property> baseProjectFormatPropertiesOnly,
+            Dictionary<PropertyKey, Property> currentProjectFormatPropertiesOnly)
+        {
+            foreach (var item in currentProjectFormatPropertiesOnly)
+            {
+                if (baseProjectFormatPropertiesOnly.TryGetValue(item.Key, out Property property))
+                {
+                    if (property.Value == item.Value.Value)
+                    {
+                        continue;
+                    }
+                }
+                DoErrorMessage(null, item.Value.Name + "[" + item.Value.Index + "]");
+            }
+        }
+
+        private Dictionary<PropertyKey, Property> ReadFile(string path)
+        {
+            Dictionary<PropertyKey, Property> result = new();
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(path);
             XmlElement? xRoot = xDoc.DocumentElement;
@@ -78,39 +122,76 @@ namespace ST.EplAddin.Verifications
                     var type = xnode.Attributes.GetNamedItem("type");
                     var value = xnode.InnerText;
 
-                    yield return new ParsedProperty()
+                    var propertyValue = new Property()
                     {
-                        Id = id.Value,
+                        Id = int.Parse(id.Value),
                         Name = name.Value,
-                        Index = index.Value,
+                        Index = int.Parse(index.Value),
                         Value = value,
                         Type = type.Value
                     };
-
+                    var propertyKey = new PropertyKey()
+                    {
+                        Id = int.Parse(id.Value),
+                        Index = int.Parse(index.Value)
+                    };
+                    result.Add(propertyKey, propertyValue);
                 }
             }
+            return result;
         }
 
-        private void CheckProperties(Project currentProject)
+        private Dictionary<PropertyKey, Property> GetProjectValues(ProjectPropertyList projectPropertyList)
         {
-            string strTmp = string.Empty;
-            PropertyValue oPropValue;
-
-            foreach (AnyPropertyId hPProp in Properties.AllProjectPropIDs)
+            var existingValues = projectPropertyList.ExistingValues;
+            var dictionary = new Dictionary<PropertyKey, Property>();
+            foreach (var value in existingValues)
             {
-                // check if exists
-                if (!currentProject.Properties[hPProp].IsEmpty)
+                var propertyValue = value.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                var id = value.Id.AsInt;
+
+                if (value.Indexes.Length > 0)
                 {
-                    if (currentProject.Properties[hPProp].Definition.Type == PropertyDefinition.PropertyType.String)
+                    for (int i = 0; i < value.Indexes.Length; i++)
                     {
-                        //read string property
-                        oPropValue = currentProject.Properties[hPProp];
-                        strTmp = oPropValue.ToString();
-                        var res = currentProject.Properties[hPProp].Definition.IsNamePart;
+                        try
+                        {
+                            var propertyValue1 = value[value.Indexes[i]].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                            if (!string.IsNullOrEmpty(propertyValue1))
+                            {
+                                var definitionName = value[value.Indexes[i]].Definition.Name;
+                                var index = int.Parse(value.Indexes[i].ToString());
+                                dictionary.Add(new PropertyKey(id, index), new Property()
+                                {
+                                    Name = definitionName,
+                                    Id = id,
+                                    Value = propertyValue1,
+                                    Index = index
+                                });
+                            }
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
                     }
                 }
+                else if (!string.IsNullOrEmpty(propertyValue))
+                {
+                    var definitionName = value.Definition.Name;
+                    var index = 0;
+                    dictionary.Add(new PropertyKey(id, index), new Property()
+                    {
+                        Name = definitionName,
+                        Id = id,
+                        Value = propertyValue,
+                        Index = index
+                    });
+                }
+
             }
-            IsDone = true;
+
+            return dictionary;
         }
 
         private bool ShowFileDialog()
@@ -142,13 +223,24 @@ namespace ST.EplAddin.Verifications
         }
     }
 
+    public struct PropertyKey
+    {
+        public int Id { get; set; }
+        public int Index { get; set; }
+        public PropertyKey(int id, int index)
+        {
+            Id = id;
+            Index = index;
+        }
+    }
 
-    public class ParsedProperty
+    public class Property
     {
         public string Name { get; set; }
-        public string Id { get; set; }
-        public string Index { get; set; }
+        public int Id { get; set; }
+        public int Index { get; set; }
         public string Type { get; set; }
         public string Value { get; set; }
     }
+
 }
