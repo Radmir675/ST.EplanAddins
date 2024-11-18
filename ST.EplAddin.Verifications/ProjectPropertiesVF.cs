@@ -4,6 +4,7 @@ using Eplan.EplApi.EServices;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 using StorableObject = Eplan.EplApi.DataModel.StorableObject;
@@ -15,6 +16,7 @@ namespace ST.EplAddin.Verifications
         private bool IsDone = false;
         private const int m_iMessageId = 36;
         private string PathToBaseProject;
+        private Dictionary<PropertyKey, Property> _errors;
         public override void OnRegister(ref string strName, ref int iOrdinal)
         {
             strName = "ProjectPropertiesVF";
@@ -25,7 +27,7 @@ namespace ST.EplAddin.Verifications
 
         public override string GetMessageText()
         {
-            return "Свойства текущего проекта отличаются от базового %1!s!";
+            return "Свойства проекта категории \"Формат\" текущего проекта отличаются от базового %1!s!";
         }
         public override void OnStartInspection(bool bOnline)
         {
@@ -34,6 +36,15 @@ namespace ST.EplAddin.Verifications
         public override void OnEndInspection()
         {
             IsDone = false;
+            ShowErrors();
+        }
+
+        private void ShowErrors()
+        {
+            foreach (var item in _errors)
+            {
+                DoErrorMessage(null, item.Value.Name + $"[{item.Value.Index}]" + " " + $"<{item.Value.Id}>");
+            }
         }
 
 
@@ -59,6 +70,8 @@ namespace ST.EplAddin.Verifications
                 }
             }
 
+            _errors = new Dictionary<PropertyKey, Property>();
+
             var baseProjectЗProperties = ReadFile(PathToBaseProject);
             var baseProjectFormatPropertiesOnly = FindFormatProperties(baseProjectЗProperties);
             var currentProjectProperties = GetProjectValues(currentProject.Properties);
@@ -73,6 +86,19 @@ namespace ST.EplAddin.Verifications
                 MessageBox.Show(e.Message);
                 IsDone = true;
             }
+            FindAbsenceProperties(baseProjectFormatPropertiesOnly, currentProjectFormatPropertiesOnly);
+        }
+
+        private void FindAbsenceProperties(Dictionary<PropertyKey, Property> baseProjectFormatPropertiesOnly, Dictionary<PropertyKey, Property> currentProjectProperties)
+        {
+            var result = baseProjectFormatPropertiesOnly.Except(currentProjectProperties, new PropertyComparer());
+            foreach (var item in result)
+            {
+                if (!_errors.ContainsKey(item.Key))
+                {
+                    _errors.Add(item.Key, item.Value);
+                }
+            }
         }
 
         private Dictionary<PropertyKey, Property> FindFormatProperties(Dictionary<PropertyKey, Property> baseProjectЗProperties)
@@ -80,7 +106,7 @@ namespace ST.EplAddin.Verifications
             var result = new Dictionary<PropertyKey, Property>();
             foreach (var item in baseProjectЗProperties)
             {
-                if (item.Value.Name.Contains("Формат"))
+                if (item.Value.Name.Contains("Свойство блока"))
                 {
                     result.Add(item.Key, item.Value);
                 }
@@ -101,7 +127,7 @@ namespace ST.EplAddin.Verifications
                         continue;
                     }
                 }
-                DoErrorMessage(null, item.Value.Name + "[" + item.Value.Index + "]");
+                _errors.Add(item.Key, item.Value);
             }
         }
 
@@ -243,4 +269,19 @@ namespace ST.EplAddin.Verifications
         public string Value { get; set; }
     }
 
+    public class PropertyComparer : IEqualityComparer<KeyValuePair<PropertyKey, Property>>
+    {
+        public bool Equals(KeyValuePair<PropertyKey, Property> x, KeyValuePair<PropertyKey, Property> y)
+        {
+            return x.Key.Id == y.Key.Id && x.Key.Index == y.Key.Index;
+        }
+
+        public int GetHashCode(KeyValuePair<PropertyKey, Property> obj)
+        {
+            unchecked
+            {
+                return 0; /*obj.Key.GetHashCode();*/
+            }
+        }
+    }
 }
