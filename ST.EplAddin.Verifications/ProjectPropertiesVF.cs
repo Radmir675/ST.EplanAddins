@@ -31,7 +31,7 @@ namespace ST.EplAddin.Verifications
 
         public override void OnEndInspection()
         {
-            //может всею проверку сюда запихнуть?
+            //может все проверку сюда запихнуть?
         }
 
         public override void Execute(StorableObject storableObject)
@@ -57,7 +57,7 @@ namespace ST.EplAddin.Verifications
             }
 
             var baseProjectЗProperties = ReadFile(PathToBaseProject).ToList();
-            var formatPropertiesOnl = baseProjectЗProperties.Where(x => x.Name.Contains("Формат"));
+            var formatPropertiesOnly = baseProjectЗProperties.Where(x => x.Name.Contains("Формат"));
             // CheckProperties(projectToCompare);
             IsDone = true;
         }
@@ -65,7 +65,7 @@ namespace ST.EplAddin.Verifications
         private IEnumerable<ParsedProperty> ReadFile(string path)
         {
             XmlDocument xDoc = new XmlDocument();
-            xDoc.LoadXml(path);
+            xDoc.Load(path);
             XmlElement? xRoot = xDoc.DocumentElement;
             if (xRoot != null)
             {
