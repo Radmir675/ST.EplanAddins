@@ -9,7 +9,8 @@
         Width="824"
         ResizeMode="CanResizeWithGrip"
         Height="758"
-        MouseDown="Window_MouseDown">
+        MouseDown="Window_MouseDown"
+        Title="Сравнение свойств проектов">
 
     <Window.Resources>
         <converters:EnumToDisplayConverter x:Key="EnumDescriptionConverter"></converters:EnumToDisplayConverter>
