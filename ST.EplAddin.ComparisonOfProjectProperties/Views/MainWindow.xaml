@@ -32,8 +32,11 @@
                              VerticalAlignment="Center">
                   
                     <UniformGrid VerticalAlignment="Center"
-                                 HorizontalAlignment="Right"
-                                 Rows="1">
+                                 HorizontalAlignment="Stretch"
+                                 Rows="2" >
+                        <CheckBox Content="Показать только форматы" IsChecked="{Binding Path=IsFormatsOnly}" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
                         <Button  Content="Ок"
                                  Margin="0,0,5,0"
                                  x:Name="OK_Button"
@@ -42,8 +45,9 @@
                                  Click="Accept_Click" />
                         <Button Content="Отмена"
                                 x:Name="Close_Button"
-                                IsCancel="True"/>
-
+                                IsCancel="True"
+                                Width="90" />
+                        </StackPanel>
                     </UniformGrid>
 
 
@@ -163,14 +167,16 @@
                                 Background="Transparent"
                                 Command="{Binding ToRightSideCommand}"
                                 Margin="0,0,0,5"
-                                KeyUp="RightSync_Button_KeyUp" />
+                                KeyUp="RightSync_Button_KeyUp" 
+                                IsEnabled="False"/>
                         <Button Width="30"
                                 Height="30"
                                 Content="←"
                                 x:Name="LeftSync_Button"
                                 Background="Transparent"
                                 Command="{Binding ToLeftSideCommand}"
-                                VerticalContentAlignment="Center" />
+                                VerticalContentAlignment="Center"
+                                IsEnabled="False" />
 
                     </StackPanel>
                 </Grid>

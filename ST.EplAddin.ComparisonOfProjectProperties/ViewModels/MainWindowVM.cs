@@ -64,6 +64,20 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
         private CollectionViewSource _firstPropertiesCollection;
         private CollectionViewSource _secondPropertiesCollection;
         private readonly ChangesRecord changesRecord;
+
+        public bool? IsFormatsOnly
+        {
+            get => _isFormatsOnly;
+            set
+            {
+                if (value == _isFormatsOnly) return;
+                _isFormatsOnly = value;
+                OnPropertyChanged();
+                FirstPropertiesCollectionView.Refresh();
+                SecondPropertiesCollectionView.Refresh();
+            }
+        }
+
         public ICollectionView FirstPropertiesCollectionView => _firstPropertiesCollection?.View;
 
         public ICollectionView SecondPropertiesCollectionView => _secondPropertiesCollection?.View;
@@ -71,10 +85,23 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
         private void _firstPropertiesCollection_Filter(object sender, FilterEventArgs e)
         {
             FilterData(e, _secondListViewProperties2);
+            FilterByFunctionName(e);
         }
+
+        private void FilterByFunctionName(FilterEventArgs e)
+        {
+            if (!IsFormatsOnly.HasValue || !IsFormatsOnly.Value) return;
+            if (e.Item is not KeyValuePair<int, PropertyData> item) return;
+            if (item.Value.DefinitionName.Contains("Свойство блока"))
+            {
+                e.Accepted = true;
+            }
+        }
+
         private void _secondPropertiesCollection_Filter(object sender, FilterEventArgs e)
         {
             FilterData(e, _firstListViewProperties1);
+            FilterByFunctionName(e);
         }
 
         private void Add(KeyValuePair<int, PropertyData> selection, Dictionary<int, PropertyData> targetCollection)
@@ -211,6 +238,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
         private string _pathToBaseProject = "Path";
         private KeyValuePair<int, PropertyData> _rightListViewSelection;
         private KeyValuePair<int, PropertyData> _leftListViewSelection;
+        private bool? _isFormatsOnly;
 
 
         public RelayCommand OkCommand

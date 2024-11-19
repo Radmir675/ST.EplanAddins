@@ -3,8 +3,11 @@ using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
 using ST.EplAddin.ComparisonOfProjectProperties.Models;
+using ST.EplAddin.ComparisonOfProjectProperties.ViewModels;
+using ST.EplAddin.ComparisonOfProjectProperties.Views;
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using Project = Eplan.EplApi.DataModel.Project;
 
 namespace ST.EplAddin.ComparisonOfProjectProperties
@@ -51,39 +54,39 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             var projectName1 = project1.ProjectName;
             var projectName2 = project2.ProjectName;
 
-            //var dataStorage = new PropertiesDataStorage(result1, result2, projectName1, projectName2);
-            //var mainWindow = new MainWindow
-            //{
-            //    DataContext = new MainWindowVM(dataStorage)
-            //};
-            //var dialogResult = mainWindow.ShowDialog() ?? false;
-            //if (dialogResult)
-            //{
-            //    using (SafetyPoint safetyPoint = SafetyPoint.Create())
-            //    {
-            //        using (UndoStep undo = new UndoManager().CreateUndoStep())
-            //        {
-            //            ChangesRecord changesRecord = new ChangesRecord();
-            //            var recordChangesList = changesRecord.GetChangesList();
-            //            foreach (var key in recordChangesList)
-            //            {
-            //                //TODO: проверить существует ли такой индекс
-            //                var initialPropertyValue = propertiesValue1[key];
-            //                var targetPropertyValue = propertiesValue2[key];
-            //                try
-            //                {
-            //                    CopyTo(initialPropertyValue, targetPropertyValue);
-            //                }
-            //                catch (Exception e)
-            //                {
-            //                    MessageBox.Show($"Не удалось присвоить значение свойству {propertiesValue1[key].Definition.Name} | {key} ");
-            //                }
-            //            }
-            //            undo.SetUndoDescription($"Обновление свойств проекта {projectName2}");
-            //        }
-            //        safetyPoint.Commit();
-            //    }
-            //}
+            var dataStorage = new PropertiesDataStorage(result1, result2, projectName1, projectName2);
+            var mainWindow = new MainWindow
+            {
+                DataContext = new MainWindowVM(dataStorage)
+            };
+            var dialogResult = mainWindow.ShowDialog() ?? false;
+            if (dialogResult)
+            {
+                using (SafetyPoint safetyPoint = SafetyPoint.Create())
+                {
+                    using (UndoStep undo = new UndoManager().CreateUndoStep())
+                    {
+                        ChangesRecord changesRecord = new ChangesRecord();
+                        var recordChangesList = changesRecord.GetChangesList();
+                        foreach (var key in recordChangesList)
+                        {
+                            //TODO: проверить существует ли такой индекс
+                            var initialPropertyValue = propertiesValue1[key];
+                            var targetPropertyValue = propertiesValue2[key];
+                            try
+                            {
+                                CopyTo(initialPropertyValue, targetPropertyValue);
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show($"Не удалось присвоить значение свойству {propertiesValue1[key].Definition.Name} | {key} ");
+                            }
+                        }
+                        undo.SetUndoDescription($"Обновление свойств проекта {projectName2}");
+                    }
+                    safetyPoint.Commit();
+                }
+            }
             return true;
         }
 
@@ -136,37 +139,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
         {
             propertyValueFrom.CopyTo(propertyValueTo);
         }
-        public void GetR(Project project)
-        {
-            List<(string, string, string, bool)> items = new();
-            foreach (AnyPropertyId hPProp in Properties.AllProjectPropIDs)
-            {
-                // check if exists
 
-                if (project.Properties[hPProp].Definition.Type == PropertyDefinition.PropertyType.String)
-                {
-                    try
-                    {
-                        //read string property
-                        var oPropValue = project.Properties[hPProp];
-                        var strTmp = oPropValue.ToString();
-                        var definitionName = hPProp.Definition.Name;
-                        var res = project.Properties[hPProp].Definition.IsNamePart;
-                        items.Add((strTmp, hPProp.ToString(), definitionName, res));
-
-                    }
-                    catch (Exception e)
-                    {
-
-                    }
-                }
-                else
-                {
-                    var s = 123;
-                }
-
-            }
-        }
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
 
