@@ -112,11 +112,30 @@
                               ItemsSource="{Binding FirstPropertiesCollectionView}"
                               SelectionMode="Single">
                               <!--SelectedItem="{Binding LeftListViewSelection}"-->
+
+                              <!--<ListView.Resources>
+                            <DataTemplate x:Key="NameViewTemplate">
+                                
+                                <TextBlock TextAlignment="Left">
+                                    <MultiBinding StringFormat="{0}, {1}">
+                                        <Binding />
+                                        <Binding Path="{TemplateBinding ValueSource }" />
+                                    </MultiBinding>
+                                </TextBlock>
+                            </DataTemplate>
+
+                        </ListView.Resources>-->
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Имя"
-                                                Width="160"
-                                                DisplayMemberBinding="{Binding Value.Name}" />
+                                                Width="160" 
+                                                DisplayMemberBinding="{Binding Value.Name}" >
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Value.Name}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                                 <GridViewColumn Header="Свойство"
                                                 Width="160"
                                                 DisplayMemberBinding="{Binding Value.Value}" />
