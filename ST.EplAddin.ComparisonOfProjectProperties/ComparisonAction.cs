@@ -49,6 +49,9 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
 
             var result1 = GetProjectValues(propertiesValue1);
             var result2 = GetProjectValues(propertiesValue2);
+
+
+
             var projectName1 = project1.ProjectName;
             var projectName2 = project2?.ProjectName;
 

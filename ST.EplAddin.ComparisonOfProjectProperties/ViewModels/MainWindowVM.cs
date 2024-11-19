@@ -75,23 +75,28 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
 
         private void _firstPropertiesCollection_Filter(object sender, FilterEventArgs e)
         {
+
             FilterData(e, _secondListViewProperties2);
+            if (e.Accepted == false) return;
             FilterByFunctionName(e);
         }
 
         private void FilterByFunctionName(FilterEventArgs e)
         {
             if (!IsFormatsOnly.HasValue || !IsFormatsOnly.Value) return;
-            if (e.Item is not KeyValuePair<int, Property> item) return;
+            if (e.Item is not KeyValuePair<PropertyKey, Property> item) return;
             if (item.Value.Name.Contains("Свойство блока"))
             {
                 e.Accepted = true;
+                return;
             }
+            e.Accepted = false;
         }
 
         private void _secondPropertiesCollection_Filter(object sender, FilterEventArgs e)
         {
             FilterData(e, _firstListViewProperties1);
+            if (e.Accepted == false) return;
             FilterByFunctionName(e);
         }
 
@@ -145,6 +150,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
                         }
                         e.Accepted = false;
                     }
+                    e.Accepted = false;
                     break;
             }
         }

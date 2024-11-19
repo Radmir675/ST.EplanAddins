@@ -109,14 +109,13 @@
                               Grid.Row="2"
                               x:Name="SystemOne_ListView"
                               ItemsSource="{Binding FirstPropertiesCollectionView}"
-                              SelectedItem="{Binding LeftListViewSelection}"
-                              SelectionMode="Single"
-                             >
+                              SelectionMode="Single">
+                              <!--SelectedItem="{Binding LeftListViewSelection}"-->
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Имя"
                                                 Width="160"
-                                                DisplayMemberBinding="{Binding Value.DefinitionName}" />
+                                                DisplayMemberBinding="{Binding Value.Name}" />
                                 <GridViewColumn Header="Свойство"
                                                 Width="160"
                                                 DisplayMemberBinding="{Binding Value.Value}" />
@@ -132,14 +131,13 @@
                               Grid.Row="2"
                               x:Name="SystemTwo_ListView"
                               ItemsSource="{Binding SecondPropertiesCollectionView}"
-                              SelectedItem="{Binding RightListViewSelection}"
-                              SelectionMode="Single"
-                            >
+                              SelectionMode="Single">
+                              <!--SelectedItem="{Binding RightListViewSelection}"-->
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Имя"
                                                 Width="160"
-                                                DisplayMemberBinding="{Binding Value.DefinitionName}" />
+                                                DisplayMemberBinding="{Binding Value.Name}" />
                                 <GridViewColumn Header="Свойство"
                                                 Width="160"
                                                 DisplayMemberBinding="{Binding Value.Value}" />
