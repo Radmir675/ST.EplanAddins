@@ -228,7 +228,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
         private RelayCommand okCommand;
         private string _pathToBaseProject = "Path";
         private KeyValuePair<PropertyKey, Property> _rightListViewSelection;
-        private KeyValuePair<int, Property> _leftListViewSelection;
+        private KeyValuePair<PropertyKey, Property> _leftListViewSelection;
         private bool? _isFormatsOnly;
 
 

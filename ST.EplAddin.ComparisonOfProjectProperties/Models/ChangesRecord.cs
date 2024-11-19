@@ -18,10 +18,10 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
         }
         public void Add(PropertyKey key)
         {
-            if (!changesRecord.Contains(key))
-            {
-                changesRecord.Add(key);
-            }
+            //if (!changesRecord.Contains(key))
+            //{
+            //    changesRecord.Add(key);
+            //}
         }
 
         public void RemoveAll()

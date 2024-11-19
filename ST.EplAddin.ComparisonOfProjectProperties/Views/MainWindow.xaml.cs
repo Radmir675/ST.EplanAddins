@@ -29,7 +29,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.Views
             {
                 foreach (var item in changedItems)
                 {
-                    var data = SystemTwo_ListView.ItemsSource.Cast<KeyValuePair<int, PropertyData>>();
+                    var data = SystemTwo_ListView.ItemsSource.Cast<KeyValuePair<int, Property>>();
 
                 }
             }

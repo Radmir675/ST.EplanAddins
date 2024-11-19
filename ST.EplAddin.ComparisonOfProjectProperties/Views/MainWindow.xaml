@@ -98,7 +98,8 @@
                                         HorizontalAlignment="Right"
                                         Width="Auto"
                                         Content="Выбрать"
-                                        Command="{Binding SelectPathCommand}"/>
+                                        Command="{Binding SelectPathCommand}"
+                                        IsEnabled="False"/>
                             </Grid>
 
 
@@ -153,10 +154,10 @@
 
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
-                               Text="{Binding DataStorage.ProjectName1}" />
+                               Text="{Binding DataStorage.ProjectName1,FallbackValue=Проект 1}" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="2"
-                               Text="{Binding DataStorage.ProjectName2}" />
+                               Text="{Binding DataStorage.ProjectName2, FallbackValue=Проект 2}" />
                     <StackPanel Grid.Row="2"
                                 Grid.Column="1"
                                 VerticalAlignment="Center">
