@@ -15,6 +15,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
     {
         private ProjectPropertyList propertiesValue1 { get; set; } = null;
         private ProjectPropertyList propertiesValue2 { get; set; } = null;
+        Progress progress;
 
         public static string actionName = "ComparisonOfProjectProperties";
         public bool OnRegister(ref string Name, ref int Ordinal)
@@ -47,13 +48,26 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             propertiesValue2 = project2?.Properties;
 
 
-            var result1 = GetProjectValues(propertiesValue1);
-            var result2 = GetProjectValues(propertiesValue2);
-
-            //cюда надо докинуть заполнение
-
             var projectName1 = project1.ProjectName;
             var projectName2 = project2?.ProjectName;
+
+            progress = new Progress("Progress");
+            progress.SetTitle("Свойства проекта");
+            progress.SetActionText($"Чтение свойств проекта {projectName1}");
+            progress.SetAllowCancel(false);
+            progress.SetAskOnCancel(true);
+            progress.ShowImmediately();
+            progress.SetNeededSteps(project1.Properties.ExistingValues.Length + project2.Properties.ExistingValues.Length);
+
+            progress.SetNeededParts(2);
+            progress.ShowLevel(2);
+            var result1 = GetProjectValues(propertiesValue1);
+
+            progress.EndPart();
+            progress.SetActionText($"Чтение свойств проекта {projectName2}");
+            var result2 = GetProjectValues(propertiesValue2);
+            progress.EndPart(true);
+
 
             var dataStorage = new PropertiesDataStorage(result1, result2, projectName1, projectName2);
             var mainWindow = new MainWindow
@@ -138,7 +152,9 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                         Value = propertyValue,
                         Index = index
                     });
+                    progress.Step(1);
                 }
+                progress.Step(1);
             }
             return dictionary;
         }
