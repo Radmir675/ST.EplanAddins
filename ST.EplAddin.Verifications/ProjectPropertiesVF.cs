@@ -21,8 +21,8 @@ namespace ST.EplAddin.Verifications
         {
             strName = "ProjectPropertiesVF";
             iOrdinal = 30;
-            this.VerificationPermission = IVerification.Permission.OnlineOfflinePermitted;
-            this.VerificationState = IVerification.VerificationState.OnlineOfflineState;
+            VerificationPermission = IVerification.Permission.OnlineOfflinePermitted;
+            VerificationState = IVerification.VerificationState.OnlineOfflineState;
         }
 
         public override string GetMessageText()
@@ -47,7 +47,6 @@ namespace ST.EplAddin.Verifications
             }
         }
 
-
         public override void Execute(StorableObject storableObject)
         {
             if (IsDone) return;
@@ -55,7 +54,11 @@ namespace ST.EplAddin.Verifications
             PathToBaseProject = @"O:\Шаблоны\Базовый проект\BaseProject.edb\ProjectInfo.xml";
             if (!File.Exists(PathToBaseProject))
             {
-                var dialogResult = MessageBox.Show($"Базовый проект с шаблоном по пути {PathToBaseProject} не найден.\n Хотите указать путь к файлу?", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                var dialogResult = MessageBox.Show(
+                    $"Базовый проект с шаблоном по пути {PathToBaseProject} не найден.\n Хотите указать путь к файлу?",
+                    "Error",
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Error);
                 if (dialogResult != DialogResult.OK)
                 {
                     IsDone = true;
@@ -113,7 +116,6 @@ namespace ST.EplAddin.Verifications
             }
             return result;
         }
-
 
         private void Compare(Dictionary<PropertyKey, Property> baseProjectFormatPropertiesOnly,
             Dictionary<PropertyKey, Property> currentProjectFormatPropertiesOnly)
@@ -214,9 +216,7 @@ namespace ST.EplAddin.Verifications
                         Index = index
                     });
                 }
-
             }
-
             return dictionary;
         }
 
@@ -243,10 +243,7 @@ namespace ST.EplAddin.Verifications
             iOrdinal = 20;
         }
 
-
-        public override void DoHelp()
-        {
-        }
+        public override void DoHelp() { }
     }
 
     public struct PropertyKey

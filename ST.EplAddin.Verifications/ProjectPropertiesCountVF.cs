@@ -4,8 +4,9 @@ using System;
 
 namespace ST.EplAddin.Verifications
 {
-    internal class ProjectPropertiesCountVF : Verification
+    internal class EmptyVF : Verification
     {
+        //ProjectPropertiesCountVF
         private const int m_iMessageId = 37;
         public override void OnRegister(ref string strName, ref int iOrdinal)
         {
