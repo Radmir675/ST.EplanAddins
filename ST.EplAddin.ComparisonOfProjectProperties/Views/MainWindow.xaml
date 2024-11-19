@@ -128,11 +128,14 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Имя"
-                                                Width="160" 
-                                                DisplayMemberBinding="{Binding Value.Name}" >
+                                                Width="160" >
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Value.Name}"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Value.Name}" />   
+                                                <TextBlock Text="{Binding Value.Index,StringFormat=[{0}]}"/>
+                                            </StackPanel>
+                                           
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
