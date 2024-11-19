@@ -26,10 +26,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
         }
         public ComparisonState SelectedState
         {
-            get
-            {
-                return _selectedState;
-            }
+            get => _selectedState;
             set
             {
                 _selectedState = value;
@@ -39,27 +36,21 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             }
         }
 
-        public KeyValuePair<int, PropertyData> LeftListViewSelection
+        public KeyValuePair<PropertyKey, PropertyData> LeftListViewSelection
         {
             get => _leftListViewSelection;
-            set
-            {
-                _leftListViewSelection = value;
-            }
+            set => _leftListViewSelection = value;
         }
 
-        public KeyValuePair<int, PropertyData> RightListViewSelection
+        public KeyValuePair<PropertyKey, PropertyData> RightListViewSelection
         {
             get => _rightListViewSelection;
-            set
-            {
-                _rightListViewSelection = value;
-            }
+            set => _rightListViewSelection = value;
         }
 
-        private Dictionary<int, PropertyData> _firstListViewProperties1;
+        private Dictionary<PropertyKey, Property> _firstListViewProperties1;
 
-        private Dictionary<int, PropertyData> _secondListViewProperties2;
+        private Dictionary<PropertyKey, Property> _secondListViewProperties2;
 
         private CollectionViewSource _firstPropertiesCollection;
         private CollectionViewSource _secondPropertiesCollection;
@@ -104,27 +95,27 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             FilterByFunctionName(e);
         }
 
-        private void Add(KeyValuePair<int, PropertyData> selection, Dictionary<int, PropertyData> targetCollection)
-        {
-            var result = targetCollection.TryGetValue(selection.Key, out PropertyData propertyData);
-            if (result)
-            {
-                if (propertyData.Value != selection.Value.Value)
-                {
-                    propertyData.Value = selection.Value.Value;
-                }
-            }
-            else
-            {
-                targetCollection.Add(selection.Key, selection.Value);
-            }
-        }
-        private void FilterData(FilterEventArgs e, Dictionary<int, PropertyData> collectionViewBase)
+        //private void Add(KeyValuePair<PropertyKey, PropertyData> selection, Dictionary<PropertyKey, Property> targetCollection)
+        //{
+        //    var result = targetCollection.TryGetValue(selection.Key, out PropertyData propertyData);
+        //    if (result)
+        //    {
+        //        if (propertyData.Value != selection.Value.Value)
+        //        {
+        //            propertyData.Value = selection.Value.Value;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        targetCollection.Add(selection.Key, selection.Value);
+        //    }
+        //}
+        private void FilterData(FilterEventArgs e, Dictionary<PropertyKey, PropertyData> collectionViewBase)
         {
             switch (SelectedState)
             {
                 case ComparisonState.Difference:
-                    if (e.Item is KeyValuePair<int, PropertyData> item)
+                    if (e.Item is KeyValuePair<PropertyKey, PropertyData> item)
                     {
                         if (collectionViewBase.TryGetValue(item.Key, out PropertyData data))
                         {
@@ -142,7 +133,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
                     e.Accepted = true;
                     break;
                 case ComparisonState.Similarity:
-                    if (e.Item is KeyValuePair<int, PropertyData> item1)
+                    if (e.Item is KeyValuePair<PropertyKey, PropertyData> item1)
                     {
                         if (collectionViewBase.TryGetValue(item1.Key, out PropertyData data))
                         {
@@ -217,8 +208,8 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             {
                 return toRightSideCommand ??= new RelayCommand(obj =>
                 {
-                    Add(LeftListViewSelection, _secondListViewProperties2);
-                    changesRecord.Add(LeftListViewSelection.Key);
+                    //Add(LeftListViewSelection, _secondListViewProperties2);
+                    //changesRecord.Add(LeftListViewSelection.Key);
 
                 }, (obj) => LeftListViewSelection.Value != null);
             }
@@ -236,7 +227,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
         }
         private RelayCommand okCommand;
         private string _pathToBaseProject = "Path";
-        private KeyValuePair<int, PropertyData> _rightListViewSelection;
+        private KeyValuePair<PropertyKey, PropertyData> _rightListViewSelection;
         private KeyValuePair<int, PropertyData> _leftListViewSelection;
         private bool? _isFormatsOnly;
 

@@ -16,7 +16,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             changesRecord ??= new List<int>();
 
         }
-        public void Add(int key)
+        public void Add(PropertyKey key)
         {
             if (!changesRecord.Contains(key))
             {

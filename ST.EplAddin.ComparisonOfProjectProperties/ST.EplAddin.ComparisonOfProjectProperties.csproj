@@ -101,18 +101,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
-    <Compile Include="ChangesRecord.cs" />
+    <Compile Include="Models\ChangesRecord.cs" />
     <Compile Include="ComparisonAction.cs" />
+    <Compile Include="Models\Property.cs" />
     <Compile Include="Converters\ColorConverter.cs" />
     <Compile Include="Helper\RelayCommand.cs" />
     <Compile Include="Models\ComparisonState.cs" />
     <Compile Include="Converters\EnumExtension.cs" />
     <Compile Include="Converters\EnumToDisplayConverter.cs" />
+    <Compile Include="Models\PropertyComparer.cs" />
+    <Compile Include="Models\PropertyKey.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainWindowVM.cs" />
-    <Compile Include="PropertiesDataStorage.cs" />
+    <Compile Include="Models\PropertiesDataStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\PropertyData.cs" />
     <Compile Include="Helper\ViewModelBase.cs" />

@@ -7,12 +7,11 @@ using ST.EplAddin.ComparisonOfProjectProperties.ViewModels;
 using ST.EplAddin.ComparisonOfProjectProperties.Views;
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using Project = Eplan.EplApi.DataModel.Project;
 
 namespace ST.EplAddin.ComparisonOfProjectProperties
 {
-    public class ComparisonAction : IEplAction
+    public partial class ComparisonAction : IEplAction
     {
         private ProjectPropertyList propertiesValue1 { get; set; } = null;
         private ProjectPropertyList propertiesValue2 { get; set; } = null;
@@ -32,7 +31,6 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                 LockProjectByDefault = false,
                 LockSelectionByDefault = false
             };
-            //TODO:здесь можно прописать чтобы указали путь до базового проекта
             Project project2 = null;
             if (selectionSet.SelectedProjects.Length == 2)
             {
@@ -46,13 +44,13 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                 GetProjectValues(propertiesValue1);
                 return true;
             }
-            propertiesValue2 = project2.Properties;
+            propertiesValue2 = project2?.Properties;
 
 
             var result1 = GetProjectValues(propertiesValue1);
             var result2 = GetProjectValues(propertiesValue2);
             var projectName1 = project1.ProjectName;
-            var projectName2 = project2.ProjectName;
+            var projectName2 = project2?.ProjectName;
 
             var dataStorage = new PropertiesDataStorage(result1, result2, projectName1, projectName2);
             var mainWindow = new MainWindow
@@ -60,65 +58,67 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                 DataContext = new MainWindowVM(dataStorage)
             };
             var dialogResult = mainWindow.ShowDialog() ?? false;
-            if (dialogResult)
-            {
-                using (SafetyPoint safetyPoint = SafetyPoint.Create())
-                {
-                    using (UndoStep undo = new UndoManager().CreateUndoStep())
-                    {
-                        ChangesRecord changesRecord = new ChangesRecord();
-                        var recordChangesList = changesRecord.GetChangesList();
-                        foreach (var key in recordChangesList)
-                        {
-                            //TODO: проверить существует ли такой индекс
-                            var initialPropertyValue = propertiesValue1[key];
-                            var targetPropertyValue = propertiesValue2[key];
-                            try
-                            {
-                                CopyTo(initialPropertyValue, targetPropertyValue);
-                            }
-                            catch (Exception e)
-                            {
-                                MessageBox.Show($"Не удалось присвоить значение свойству {propertiesValue1[key].Definition.Name} | {key} ");
-                            }
-                        }
-                        undo.SetUndoDescription($"Обновление свойств проекта {projectName2}");
-                    }
-                    safetyPoint.Commit();
-                }
-            }
+
+
+            //if (dialogResult)
+            //{
+            //    using (SafetyPoint safetyPoint = SafetyPoint.Create())
+            //    {
+            //        using (UndoStep undo = new UndoManager().CreateUndoStep())
+            //        {
+            //            ChangesRecord changesRecord = new ChangesRecord();
+            //            var recordChangesList = changesRecord.GetChangesList();
+            //            foreach (var key in recordChangesList)
+            //            {
+            //                //TODO: проверить существует ли такой индекс
+            //                var initialPropertyValue = propertiesValue1[key];
+            //                var targetPropertyValue = propertiesValue2[key];
+            //                try
+            //                {
+            //                    CopyTo(initialPropertyValue, targetPropertyValue);
+            //                }
+            //                catch (Exception e)
+            //                {
+            //                    MessageBox.Show($"Не удалось присвоить значение свойству {propertiesValue1[key].Definition.Name} | {key} ");
+            //                }
+            //            }
+            //            undo.SetUndoDescription($"Обновление свойств проекта {projectName2}");
+            //        }
+            //        safetyPoint.Commit();
+            //    }
+            //}
             return true;
         }
-
-        private Dictionary<string, PropertyData> GetProjectValues(ProjectPropertyList projectPropertyList)
+        private Dictionary<PropertyKey, Property> GetProjectValues(ProjectPropertyList projectPropertyList)
         {
             var existingValues = projectPropertyList.ExistingValues;
-            var dictionary = new Dictionary<string, PropertyData>();
+            var dictionary = new Dictionary<PropertyKey, Property>();
             foreach (var value in existingValues)
             {
                 var propertyValue = value.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
                 var id = value.Id.AsInt;
-                if (id == 10618)
-                {
-                    var s = 1;
-                }
 
                 if (value.Indexes.Length > 0)
                 {
                     for (int i = 0; i < value.Indexes.Length; i++)
                     {
-
                         try
                         {
                             var propertyValue1 = value[value.Indexes[i]].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
                             if (!string.IsNullOrEmpty(propertyValue1))
                             {
                                 var definitionName = value[value.Indexes[i]].Definition.Name;
-                                dictionary.Add($"{id}[{value.Indexes[i]}]", new PropertyData(id, propertyValue, definitionName));
+                                var index = int.Parse(value.Indexes[i].ToString());
+                                dictionary.Add(new PropertyKey(id, index), new Property()
+                                {
+                                    Name = definitionName,
+                                    Id = id,
+                                    Value = propertyValue1,
+                                    Index = index
+                                });
                             }
-
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
 
                         }
@@ -127,14 +127,21 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                 else if (!string.IsNullOrEmpty(propertyValue))
                 {
                     var definitionName = value.Definition.Name;
-                    var res = value.Definition.IsNamePart;
-                    dictionary.Add($"{id}", new PropertyData(id, propertyValue, definitionName));
+                    var index = 0;
+                    dictionary.Add(new PropertyKey(id, index), new Property()
+                    {
+                        Name = definitionName,
+                        Id = id,
+                        Value = propertyValue,
+                        Index = index
+                    });
                 }
-
             }
-
             return dictionary;
         }
+
+
+
         private void CopyTo(PropertyValue propertyValueFrom, PropertyValue propertyValueTo)
         {
             propertyValueFrom.CopyTo(propertyValueTo);
