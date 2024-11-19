@@ -36,13 +36,13 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             }
         }
 
-        public KeyValuePair<PropertyKey, PropertyData> LeftListViewSelection
+        public KeyValuePair<PropertyKey, Property> LeftListViewSelection
         {
             get => _leftListViewSelection;
             set => _leftListViewSelection = value;
         }
 
-        public KeyValuePair<PropertyKey, PropertyData> RightListViewSelection
+        public KeyValuePair<PropertyKey, Property> RightListViewSelection
         {
             get => _rightListViewSelection;
             set => _rightListViewSelection = value;
@@ -82,8 +82,8 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
         private void FilterByFunctionName(FilterEventArgs e)
         {
             if (!IsFormatsOnly.HasValue || !IsFormatsOnly.Value) return;
-            if (e.Item is not KeyValuePair<int, PropertyData> item) return;
-            if (item.Value.DefinitionName.Contains("Свойство блока"))
+            if (e.Item is not KeyValuePair<int, Property> item) return;
+            if (item.Value.Name.Contains("Свойство блока"))
             {
                 e.Accepted = true;
             }
@@ -95,29 +95,29 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
             FilterByFunctionName(e);
         }
 
-        //private void Add(KeyValuePair<PropertyKey, PropertyData> selection, Dictionary<PropertyKey, Property> targetCollection)
-        //{
-        //    var result = targetCollection.TryGetValue(selection.Key, out PropertyData propertyData);
-        //    if (result)
-        //    {
-        //        if (propertyData.Value != selection.Value.Value)
-        //        {
-        //            propertyData.Value = selection.Value.Value;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        targetCollection.Add(selection.Key, selection.Value);
-        //    }
-        //}
-        private void FilterData(FilterEventArgs e, Dictionary<PropertyKey, PropertyData> collectionViewBase)
+        private void Add(KeyValuePair<PropertyKey, Property> selection, Dictionary<PropertyKey, Property> targetCollection)
+        {
+            var result = targetCollection.TryGetValue(selection.Key, out Property propertyData);
+            if (result)
+            {
+                if (propertyData.Value != selection.Value.Value)
+                {
+                    propertyData.Value = selection.Value.Value;
+                }
+            }
+            else
+            {
+                targetCollection.Add(selection.Key, selection.Value);
+            }
+        }
+        private void FilterData(FilterEventArgs e, Dictionary<PropertyKey, Property> collectionViewBase)
         {
             switch (SelectedState)
             {
                 case ComparisonState.Difference:
-                    if (e.Item is KeyValuePair<PropertyKey, PropertyData> item)
+                    if (e.Item is KeyValuePair<PropertyKey, Property> item)
                     {
-                        if (collectionViewBase.TryGetValue(item.Key, out PropertyData data))
+                        if (collectionViewBase.TryGetValue(item.Key, out Property data))
                         {
                             if (data.Value != item.Value.Value)
                             {
@@ -133,9 +133,9 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
                     e.Accepted = true;
                     break;
                 case ComparisonState.Similarity:
-                    if (e.Item is KeyValuePair<PropertyKey, PropertyData> item1)
+                    if (e.Item is KeyValuePair<PropertyKey, Property> item1)
                     {
-                        if (collectionViewBase.TryGetValue(item1.Key, out PropertyData data))
+                        if (collectionViewBase.TryGetValue(item1.Key, out Property data))
                         {
                             if (data.Value == item1.Value.Value)
                             {
@@ -227,8 +227,8 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
         }
         private RelayCommand okCommand;
         private string _pathToBaseProject = "Path";
-        private KeyValuePair<PropertyKey, PropertyData> _rightListViewSelection;
-        private KeyValuePair<int, PropertyData> _leftListViewSelection;
+        private KeyValuePair<PropertyKey, Property> _rightListViewSelection;
+        private KeyValuePair<int, Property> _leftListViewSelection;
         private bool? _isFormatsOnly;
 
 

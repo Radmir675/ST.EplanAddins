@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ST.EplAddin.ComparisonOfProjectProperties
+namespace ST.EplAddin.ComparisonOfProjectProperties.Models
 {
     public class PropertyComparer : IEqualityComparer<KeyValuePair<PropertyKey, Property>>
     {
