@@ -1,5 +1,4 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
-using System.Windows.Forms;
 using Menu = Eplan.EplApi.Gui.Menu;
 namespace ST.EplAddin.CheckCableAccesorities
 {
@@ -29,7 +28,6 @@ namespace ST.EplAddin.CheckCableAccesorities
         public bool OnRegister(ref bool bLoadOnStart)
         {
             bLoadOnStart = true;
-            MessageBox.Show("Check cable accesorities addin is implemented");
             return true;
         }
 
