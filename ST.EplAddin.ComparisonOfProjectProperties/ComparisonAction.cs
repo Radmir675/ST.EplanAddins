@@ -7,7 +7,7 @@ using ST.EplAddin.ComparisonOfProjectProperties.ViewModels;
 using ST.EplAddin.ComparisonOfProjectProperties.Views;
 using System;
 using System.Collections.Generic;
-using Project = Eplan.EplApi.DataModel.Project;
+using System.Windows.Forms;
 
 namespace ST.EplAddin.ComparisonOfProjectProperties
 {
@@ -32,19 +32,11 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                 LockProjectByDefault = false,
                 LockSelectionByDefault = false
             };
-            Project project2 = null;
-            if (selectionSet.SelectedProjects.Length == 2)
-            {
-                project2 = selectionSet?.SelectedProjects[1];
+            if (selectionSet.SelectedProjects.Length != 2) return false;
 
-            }
             var project1 = selectionSet.SelectedProjects[0];
+            var project2 = selectionSet.SelectedProjects[1];
             propertiesValue1 = project1.Properties;
-            if (selectionSet.SelectedProjects.Length == 1)
-            {
-                GetProjectValues(propertiesValue1);
-                return true;
-            }
             propertiesValue2 = project2?.Properties;
 
 
@@ -77,33 +69,33 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             var dialogResult = mainWindow.ShowDialog() ?? false;
 
 
-            //if (dialogResult)
-            //{
-            //    using (SafetyPoint safetyPoint = SafetyPoint.Create())
-            //    {
-            //        using (UndoStep undo = new UndoManager().CreateUndoStep())
-            //        {
-            //            ChangesRecord changesRecord = new ChangesRecord();
-            //            var recordChangesList = changesRecord.GetChangesList();
-            //            foreach (var key in recordChangesList)
-            //            {
-            //                //TODO: проверить существует ли такой индекс
-            //                var initialPropertyValue = propertiesValue1[key];
-            //                var targetPropertyValue = propertiesValue2[key];
-            //                try
-            //                {
-            //                    CopyTo(initialPropertyValue, targetPropertyValue);
-            //                }
-            //                catch (Exception e)
-            //                {
-            //                    MessageBox.Show($"Не удалось присвоить значение свойству {propertiesValue1[key].Definition.Name} | {key} ");
-            //                }
-            //            }
-            //            undo.SetUndoDescription($"Обновление свойств проекта {projectName2}");
-            //        }
-            //        safetyPoint.Commit();
-            //    }
-            //}
+            if (projectName1 == "dc")
+            {
+                using (SafetyPoint safetyPoint = SafetyPoint.Create())
+                {
+                    using (UndoStep undo = new UndoManager().CreateUndoStep())
+                    {
+                        ChangesRecord changesRecord = new ChangesRecord();
+                        var recordChangesList = changesRecord.GetChangesList();
+                        foreach (var key in recordChangesList)
+                        {
+                            //TODO: проверить существует ли такой индекс
+                            var initialPropertyValue = propertiesValue1[key];
+                            var targetPropertyValue = propertiesValue2[key];
+                            try
+                            {
+                                CopyTo(initialPropertyValue, targetPropertyValue);
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show($"Не удалось присвоить значение свойству {propertiesValue1[key].Definition.Name} | {key} ");
+                            }
+                        }
+                        undo.SetUndoDescription($"Обновление свойств проекта {projectName2}");
+                    }
+                    safetyPoint.Commit();
+                }
+            }
             return true;
         }
         private Dictionary<PropertyKey, Property> GetProjectValues(ProjectPropertyList projectPropertyList)
