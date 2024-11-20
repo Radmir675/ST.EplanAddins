@@ -12,6 +12,11 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
 
         public bool OnInit()
         {
+            return true;
+        }
+
+        public bool OnInitGui()
+        {
             Menu menu = new Menu();
             var menuId = menu.GetCustomMenuId("ST", null);
             if (menuId == 0)
@@ -19,11 +24,6 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             uint subMenuID = menu.AddMenuItem(
                 "Сравнение свойств проектов", ComparisonAction.actionName, "", menuId, 0, false, false);
 
-            return true;
-        }
-
-        public bool OnInitGui()
-        {
             return true;
         }
         public bool OnRegister(ref bool bLoadOnStart)
