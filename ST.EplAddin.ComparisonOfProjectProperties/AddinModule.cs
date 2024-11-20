@@ -1,10 +1,11 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
-using Menu = Eplan.EplApi.Gui.Menu;
-namespace ST.EplAddin.CheckCableAccesorities
+using Eplan.EplApi.Gui;
+
+namespace ST.EplAddin.ComparisonOfProjectProperties
 {
-    internal class CheckCableAccesoritiesAddinModule : IEplAddIn
+    public class AddinModule : IEplAddIn
     {
-        public bool OnExit()
+        public bool OnUnregister()
         {
             return true;
         }
@@ -21,17 +22,17 @@ namespace ST.EplAddin.CheckCableAccesorities
             if (menuId == 0)
                 menuId = menu.AddMainMenu("ST", Menu.MainMenuName.eMainMenuUtilities, "None", "None", "Статус", 1);
             uint subMenuID = menu.AddMenuItem(
-             "Проверка изделий кабеля", CheckCableAccesoritiesAction.actionName, "", menuId, 0, false, false);
+                "Сравнение свойств проектов", ComparisonAction.actionName, "", menuId, 0, false, false);
+
             return true;
         }
-
         public bool OnRegister(ref bool bLoadOnStart)
         {
             bLoadOnStart = true;
             return true;
         }
 
-        public bool OnUnregister()
+        public bool OnExit()
         {
             return true;
         }

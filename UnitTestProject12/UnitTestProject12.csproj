@@ -63,9 +63,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ST.EplAddin.CheckCableAccesorities\ST.EplAddin.CheckCableAccesorities.csproj">
-      <Project>{faf80570-eb59-4d1c-91b0-77109af8b601}</Project>
-      <Name>ST.EplAddin.CheckCableAccesorities</Name>
+    <ProjectReference Include="..\ST.EplAddin.ComparisonOfProjectProperties\ST.EplAddin.ComparisonOfProjectProperties.csproj">
+      <Project>{5ae25bdc-3a63-4b3e-9341-91bb25f1090a}</Project>
+      <Name>ST.EplAddin.ComparisonOfProjectProperties</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
