@@ -270,7 +270,7 @@
                         </UniformGrid>
                         <UniformGrid Columns="1"
                                      Margin="0,0,3,0">
-                            <TextBlock Text="Цвет текста" />
+                            <TextBlock Text="Цвет текста"/>
                             <colorpicker:PortableColorPicker ColorState="{Binding ElementName=main, Path=ColorState, Mode=TwoWay}" />
                         </UniformGrid>
                         <UniformGrid Columns="1">
@@ -281,10 +281,10 @@
                     <Separator />
                     <UniformGrid Rows="1"
                                  Columns="3"
-                                 Height="40">
+                                 Height="45">
                         <UniformGrid Columns="1"
                                      Margin="0,0,3,0">
-                            <TextBlock Text="Радиус кружка" />
+                            <TextBlock Text="Радиус кружка"/>
                             <TextBox />
                         </UniformGrid>
                         <UniformGrid Columns="1"
