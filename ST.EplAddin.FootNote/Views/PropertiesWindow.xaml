@@ -15,8 +15,6 @@
         MinHeight="250">
 
     <Window.Resources>
-
-        <!--<ResourceDictionary Source="pack://application:,,,/ST.EplAddin.FootNote;component/Dictionary.xaml" />-->
         <Style TargetType="Separator">
             <Setter Property="Height"
                     Value="0.5" />
@@ -35,14 +33,21 @@
             <Setter Property="Button.Background"
                     Value="Transparent" />
         </Style>
-
-        <!--<Style x:Key="image">
-            <Setter Property="Image.SizeType"
-                    Value="SizeToContent" />-->
-
-        <!--</Style>
-        <Stretch x:Key="ImageBrushStretch1">Fill</Stretch>-->
-
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5"
+                                Background="DarkGray"
+                                BorderThickness="1"
+                                Padding="2">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <!--body-->
@@ -150,7 +155,7 @@
                                            Width="50"
                                            Height="20" />
                                 </ComboBoxItem>
-                                <ComboBoxItem >
+                                <ComboBoxItem>
                                     <Image Source="../Images/arrow.png"
                                            RenderOptions.BitmapScalingMode="HighQuality"
                                            Width="50"
@@ -235,7 +240,7 @@
                         <UniformGrid Columns="1"
                                      Margin="0,0,3,0">
                             <TextBlock Text="Цвет текста" />
-                            <colorpicker:PortableColorPicker ColorState="{Binding ElementName=main, Path=ColorState, Mode=TwoWay}"/>
+                            <colorpicker:PortableColorPicker ColorState="{Binding ElementName=main, Path=ColorState, Mode=TwoWay}" />
 
                         </UniformGrid>
                         <UniformGrid Columns="1">
