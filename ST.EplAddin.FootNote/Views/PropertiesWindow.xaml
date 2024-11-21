@@ -23,7 +23,7 @@
             <Setter Property="Margin"
                     Value="0,3" />
         </Style>
-        <Style x:Key="button_icon">
+        <Style x:Key="button_icon" >
             <Setter Property="Button.Width"
                     Value="23" />
             <Setter Property="Button.Height"
@@ -32,7 +32,11 @@
                     Value="0" />
             <Setter Property="Button.Background"
                     Value="Transparent" />
+        </Style>
 
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
         </Style>
 
         <Style TargetType="{x:Type Button}">
@@ -40,8 +44,8 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border CornerRadius="5"
-                                Background="DarkGray"
-                                BorderThickness="1"
+                              BorderBrush="DarkGray"
+                                BorderThickness="1.5"
                                 Padding="2">
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center" />
@@ -52,22 +56,23 @@
         </Style>
 
         <Style TargetType="{x:Type TextBox}">
-          <Style.Resources>
-              <Style TargetType="Border">
-                  <Setter Property="CornerRadius" Value="3" />
-              </Style>
-          </Style.Resources>
-      </Style>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius"
+                            Value="3" />
+                </Style>
+            </Style.Resources>
+        </Style>
 
-<Style TargetType="{x:Type ComboBox}">
+        <Style TargetType="{x:Type ComboBox}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ComboBox">
                         <Border CornerRadius="2"
                                 BorderThickness="2"
-                                BorderBrush="Gray">
-                            <ContentPresenter/>
-                           
+                                BorderBrush="DarkGray">
+                            <ContentPresenter />
+
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -106,7 +111,8 @@
                                 <Image VerticalAlignment="Center"
                                        RenderOptions.BitmapScalingMode="HighQuality"
                                        HorizontalAlignment="Center"
-                                       Source="/ST.EplAddin.FootNote;component/Images/FootNoteItem.png" />
+                                       Source="/ST.EplAddin.FootNote;component/Images/FootNoteItem.png"
+                                       Width="50" />
                             </Grid>
                         </Border>
 
@@ -174,12 +180,6 @@
                                       Height="32"
                                       SelectedIndex="1"
                                       VerticalContentAlignment="Center">
-                                <!--<ComboBox.Style>
-                                    <Style>
-                                        <Setter Property="Border.CornerRadius"
-                                                Value="5" />
-                                    </Style>
-                                </ComboBox.Style>-->
                                 <ComboBoxItem>
                                     <Image Source="/ST.EplAddin.FootNote;component/Images/point.png"
                                            RenderOptions.BitmapScalingMode="HighQuality"
@@ -194,7 +194,11 @@
 
                                 </ComboBoxItem>
                             </ComboBox>
-
+                            <ComboBox Height="30">
+                                <ComboBoxItem>
+                                    <TextBox Text="="></TextBox>
+                                </ComboBoxItem>
+                            </ComboBox>
                         </WrapPanel>
 
 
@@ -203,7 +207,9 @@
                     <Separator />
                     <TextBox Height="80"
                              Margin="0,3,0,3"
-                             Text="Text" />
+                             Text="Text" 
+                             TextWrapping="Wrap"
+                             VerticalScrollBarVisibility="Auto" Padding="3"/>
                     <DockPanel>
                         <StackPanel DockPanel.Dock="Left"
                                     Orientation="Horizontal"
@@ -270,7 +276,7 @@
                         </UniformGrid>
                         <UniformGrid Columns="1"
                                      Margin="0,0,3,0">
-                            <TextBlock Text="Цвет текста"/>
+                            <TextBlock Text="Цвет текста" />
                             <colorpicker:PortableColorPicker ColorState="{Binding ElementName=main, Path=ColorState, Mode=TwoWay}" />
                         </UniformGrid>
                         <UniformGrid Columns="1">
@@ -284,7 +290,7 @@
                                  Height="45">
                         <UniformGrid Columns="1"
                                      Margin="0,0,3,0">
-                            <TextBlock Text="Радиус кружка"/>
+                            <TextBlock Text="Радиус кружка" />
                             <TextBox />
                         </UniformGrid>
                         <UniformGrid Columns="1"
