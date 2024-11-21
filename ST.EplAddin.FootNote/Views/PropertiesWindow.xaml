@@ -23,7 +23,7 @@
             <Setter Property="Margin"
                     Value="0,3" />
         </Style>
-        <Style x:Key="button_icon" >
+        <Style x:Key="button_icon">
             <Setter Property="Button.Width"
                     Value="23" />
             <Setter Property="Button.Height"
@@ -44,7 +44,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border CornerRadius="5"
-                              BorderBrush="DarkGray"
+                                BorderBrush="DarkGray"
                                 BorderThickness="1.5"
                                 Padding="2">
                             <ContentPresenter HorizontalAlignment="Center"
@@ -62,21 +62,6 @@
                             Value="3" />
                 </Style>
             </Style.Resources>
-        </Style>
-
-        <Style TargetType="{x:Type ComboBox}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ComboBox">
-                        <Border CornerRadius="2"
-                                BorderThickness="2"
-                                BorderBrush="DarkGray">
-                            <ContentPresenter />
-
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
         </Style>
     </Window.Resources>
 
@@ -194,11 +179,7 @@
 
                                 </ComboBoxItem>
                             </ComboBox>
-                            <ComboBox Height="30">
-                                <ComboBoxItem>
-                                    <TextBox Text="="></TextBox>
-                                </ComboBoxItem>
-                            </ComboBox>
+
                         </WrapPanel>
 
 
@@ -207,43 +188,78 @@
                     <Separator />
                     <TextBox Height="80"
                              Margin="0,3,0,3"
-                             Text="Text" 
+                             Text="Text"
                              TextWrapping="Wrap"
-                             VerticalScrollBarVisibility="Auto" Padding="3"/>
+                             VerticalScrollBarVisibility="Auto"
+                             Padding="3"  />
                     <DockPanel>
-                        <StackPanel DockPanel.Dock="Left"
+                        <StackPanel HorizontalAlignment="Left"
                                     Orientation="Horizontal"
-                                    Height="20">
-                            <Button Width="20"
-                                    Style="{StaticResource button_icon}"
                                     VerticalAlignment="Center">
+                            <StackPanel.Resources>
+                                <Style x:Key="Flag"
+                                       TargetType="RadioButton">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsChecked"
+                                                 Value="True">
+                                            <Setter Property="BorderBrush"
+                                                    Value="LightBlue" />
+                                            <Setter Property="BorderThickness"
+                                                    Value="2" />
+                                        </Trigger>
+
+                                    </Style.Triggers>
+
+
+                                    <Setter Property="Height"
+                                            Value="20" />
+                                    <Setter Property="Width"
+                                            Value="20" />
+                                    <Setter Property="BorderBrush"
+                                            Value="Transparent" />
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="RadioButton">
+                                                <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        Background="Transparent">
+
+                                                    <ContentPresenter />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </StackPanel.Resources>
+                            <RadioButton Style="{StaticResource Flag}"
+                                         GroupName="TextAlign">
                                 <svg1:SVGImage SizeType="SizeToContent"
                                                Source="/ST.EplAddin.FootNote;component/Icons/format_align_left.svg "
-                                               Margin="3"
+                                               Margin="2"
+                                               BorderThickness="0"
                                                RenderTransformOrigin="0.5,0.5"
                                                VerticalContentAlignment="Center"
                                                HorizontalContentAlignment="Center" />
-                            </Button>
-                            <Button Width="20"
-                                    Style="{StaticResource button_icon}"
-                                    VerticalAlignment="Center">
+                            </RadioButton>
+                            <RadioButton Style="{StaticResource Flag}"
+                                         GroupName="TextAlign">
                                 <svg1:SVGImage SizeType="SizeToContent"
                                                Source="/ST.EplAddin.FootNote;component/Icons/format_align_center.svg "
-                                               Margin="3"
+                                               Margin="2"
                                                RenderTransformOrigin="0.5,0.5"
                                                VerticalContentAlignment="Center"
                                                HorizontalContentAlignment="Center" />
-                            </Button>
-                            <Button Width="20"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource button_icon}">
+                            </RadioButton>
+                            <RadioButton Style="{StaticResource Flag}"
+                                         GroupName="TextAlign">
                                 <svg1:SVGImage SizeType="SizeToContent"
                                                Source="/ST.EplAddin.FootNote;component/Icons/format_align_right.svg "
-                                               Margin="3"
+                                               Margin="2"
                                                RenderTransformOrigin="0.5,0.5"
                                                VerticalContentAlignment="Center"
                                                HorizontalContentAlignment="Center" />
-                            </Button>
+                            </RadioButton>
                         </StackPanel>
                         <Button DockPanel.Dock="Right"
                                 Style="{StaticResource button_icon}"
@@ -302,9 +318,12 @@
                     <Separator />
                     <CheckBox IsChecked="False"
                               Content="Запомнить для последующих выносок"
-                              Margin="0,5,0,0" />
+                              Margin="0,5,0,0"
+                              IsThreeState="False" />
+
                 </StackPanel>
             </ScrollViewer>
+
             <!-- footer-->
             <Grid Grid.Row="1"
                   Height="22"
@@ -329,7 +348,8 @@
                     </StackPanel>
                 </Button>
                 <Button Grid.Column="2"
-                        Width="auto">
+                        Width="auto"
+                        IsCancel="True">
                     <StackPanel Orientation="Horizontal">
                         <svg1:SVGImage SizeType="SizeToContent"
                                        Source="/ST.EplAddin.FootNote;component/Icons/block_.svg "
