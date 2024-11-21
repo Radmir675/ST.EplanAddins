@@ -32,7 +32,9 @@
                     Value="0" />
             <Setter Property="Button.Background"
                     Value="Transparent" />
+
         </Style>
+
         <Style TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -43,6 +45,29 @@
                                 Padding="2">
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}">
+          <Style.Resources>
+              <Style TargetType="Border">
+                  <Setter Property="CornerRadius" Value="3" />
+              </Style>
+          </Style.Resources>
+      </Style>
+
+<Style TargetType="{x:Type ComboBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Border CornerRadius="2"
+                                BorderThickness="2"
+                                BorderBrush="Gray">
+                            <ContentPresenter/>
+                           
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -149,6 +174,12 @@
                                       Height="32"
                                       SelectedIndex="1"
                                       VerticalContentAlignment="Center">
+                                <!--<ComboBox.Style>
+                                    <Style>
+                                        <Setter Property="Border.CornerRadius"
+                                                Value="5" />
+                                    </Style>
+                                </ComboBox.Style>-->
                                 <ComboBoxItem>
                                     <Image Source="/ST.EplAddin.FootNote;component/Images/point.png"
                                            RenderOptions.BitmapScalingMode="HighQuality"
@@ -241,7 +272,6 @@
                                      Margin="0,0,3,0">
                             <TextBlock Text="Цвет текста" />
                             <colorpicker:PortableColorPicker ColorState="{Binding ElementName=main, Path=ColorState, Mode=TwoWay}" />
-
                         </UniformGrid>
                         <UniformGrid Columns="1">
                             <TextBlock Text="Толщина линий" />
