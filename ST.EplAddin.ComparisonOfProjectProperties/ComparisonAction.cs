@@ -111,25 +111,18 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                 {
                     for (int i = 0; i < value.Indexes.Length; i++)
                     {
-                        try
+                        var propertyValue1 = value[value.Indexes[i]].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                        if (!string.IsNullOrEmpty(propertyValue1))
                         {
-                            var propertyValue1 = value[value.Indexes[i]].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
-                            if (!string.IsNullOrEmpty(propertyValue1))
+                            var definitionName = value[value.Indexes[i]].Definition.Name;
+                            var index = int.Parse(value.Indexes[i].ToString());
+                            dictionary.Add(new PropertyKey(id, index), new Property()
                             {
-                                var definitionName = value[value.Indexes[i]].Definition.Name;
-                                var index = int.Parse(value.Indexes[i].ToString());
-                                dictionary.Add(new PropertyKey(id, index), new Property()
-                                {
-                                    Name = definitionName,
-                                    Id = id,
-                                    Value = propertyValue1,
-                                    Index = index
-                                });
-                            }
-                        }
-                        catch (Exception)
-                        {
-
+                                Name = definitionName,
+                                Id = id,
+                                Value = propertyValue1,
+                                Index = index
+                            });
                         }
                     }
                 }
@@ -144,7 +137,6 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                         Value = propertyValue,
                         Index = index
                     });
-                    progress.Step(1);
                 }
                 progress.Step(1);
             }
