@@ -101,7 +101,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
         private Dictionary<PropertyKey, Property> GetProjectValues(ProjectPropertyList projectPropertyList)
         {
             var existingValues = projectPropertyList.ExistingValues;
-            var dictionary = new Dictionary<PropertyKey, Property>();
+            var dictionary = new Dictionary<PropertyKey, Property>(existingValues.Length);
             foreach (var value in existingValues)
             {
                 var propertyValue = value.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
