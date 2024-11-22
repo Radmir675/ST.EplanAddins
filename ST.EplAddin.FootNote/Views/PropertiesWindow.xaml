@@ -60,11 +60,15 @@
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius"
                             Value="3" />
-
-                    <!--VerticalContentAlignment="Center"></Setter> FontSize="14"-->
                 </Style>
             </Style.Resources>
+            <Setter Property="FontSize" Value="14"/>
         </Style>
+
+        <!--<Style x:Key="sgf">
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center" />-->
+        <!--</Style>-->
 
 
     </Window.Resources>
@@ -198,7 +202,8 @@
                              VerticalScrollBarVisibility="Auto"
                              Padding="3"
                              FontSize="14"
-                             AcceptsReturn="True" />
+                             AcceptsReturn="True"
+                             SpellCheck.IsEnabled="True" Language="ru-ru"/>
                     <DockPanel Margin="0,5,0,0">
                         <StackPanel HorizontalAlignment="Left"
                                     Orientation="Horizontal"
