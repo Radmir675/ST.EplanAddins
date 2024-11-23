@@ -106,36 +106,41 @@
 
                         </Border>
                     </StackPanel>
-                    <ListView Grid.Column="0"
+                    <DataGrid Grid.Column="0"
                               Grid.Row="2"
                               x:Name="SystemOne_ListView"
                               ItemsSource="{Binding FirstPropertiesCollectionView}"
-                              SelectionMode="Single">
-                              <!--SelectedItem="{Binding LeftListViewSelection}"-->
+                              SelectionMode="Single"
+                              ColumnWidth="*"
+                              AutoGenerateColumns="False"
+                              VerticalGridLinesBrush="Transparent"
+                              CanUserDeleteRows="False"
+                              HorizontalGridLinesBrush="Transparent"
+                              Background="Transparent">
 
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Имя"
-                                                Width="160" >
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding Path=Value.Name}" />   
-                                                <TextBlock Text="{Binding Value.Index,StringFormat=[{0}]}"/>
-                                            </StackPanel>
-                                           
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="Свойство"
-                                                Width="160"
-                                                DisplayMemberBinding="{Binding Value.Value}" />
-                                <GridViewColumn Header="Id"
-                                                Width="70"
-                                                DisplayMemberBinding="{Binding Value.Id}" />
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                        <!--SelectedItem="{Binding LeftListViewSelection}"-->
+
+                      <DataGrid.Columns>
+                          <DataGridTemplateColumn Header="Имя" Width="Auto" CanUserResize="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                  <DataTemplate>
+                                      <StackPanel Orientation="Horizontal">
+                                          <TextBlock Text="{Binding Path=Value.Name}" />
+                                          <TextBlock Text="{Binding Value.Index,StringFormat=[{0}]}" />
+                                      </StackPanel>
+                                  </DataTemplate>
+                              </DataGridTemplateColumn.CellTemplate>
+                          </DataGridTemplateColumn>
+
+                            <DataGridTextColumn Header="Свойство"
+                                                Width="2*"
+                                                MinWidth="80"
+                                                Binding="{Binding Value.Value}" />
+                            <DataGridTextColumn Header="Id"  MinWidth="50"
+                                                Binding="{Binding Value.Id}" />
+
+                        </DataGrid.Columns>
+                    </DataGrid>
 
 
                     <ListView Grid.Column="2"

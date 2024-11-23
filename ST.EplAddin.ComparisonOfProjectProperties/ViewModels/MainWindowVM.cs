@@ -228,7 +228,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
                 return toLeftSideCommand ??= new RelayCommand(obj =>
                 {
 
-                }, (obj) => RightListViewSelection.Value != null);
+                });
             }
         }
         private RelayCommand okCommand;
