@@ -121,7 +121,7 @@
                         <!--SelectedItem="{Binding LeftListViewSelection}"-->
 
                       <DataGrid.Columns>
-                          <DataGridTemplateColumn Header="Имя" Width="Auto" CanUserResize="True">
+                          <DataGridTemplateColumn Header="Имя" Width="Auto" MinWidth="180" CanUserResize="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                   <DataTemplate>
                                       <StackPanel Orientation="Horizontal">
