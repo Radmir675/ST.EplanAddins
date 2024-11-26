@@ -17,6 +17,7 @@ namespace ST.EplAddin.PlcEdit.Forms
         public ExchangeMode SelectedMode { get; }
         public List<CsvFileDataModelViews> CsvFileDataModelViews { get; set; }
         public static event EventHandler OkEvent;
+        public static event EventHandler StartRewriting;
         private bool IsFileUploaded = false;
 
         /// <summary>
@@ -202,6 +203,7 @@ namespace ST.EplAddin.PlcEdit.Forms
                 {
                     case ExchangeMode.Import:
                         var checkedRows = CsvFileDataModelViews.Where(x => x.IsChecked);
+                        StartRewriting?.Invoke(this, EventArgs.Empty);
                         foreach (var checkedRow in checkedRows)
                         {
                             var elementPosition = CsvFileDataModelViews.IndexOf(checkedRow);

@@ -5,6 +5,7 @@ using ST.EplAddin.PlcEdit.Helpers;
 using ST.EplAddin.PlcEdit.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -55,6 +56,7 @@ namespace ST.EplAddin.PlcEdit
             ImportCsvForm.ImportCsvData += ImportCsvForm_ImportCsvData;
             LoadTemplateForm.TemplateAction += LoadTemplateForm_TemplateAction;
             ComparingForm.OkEvent += ComparingForm_OkEvent;
+            ComparingForm.StartRewriting += ComparingForm_StartRewriting; ;
             TemplatesData.GetInstance();
             PathEvent?.Invoke(this, pathToSaveTemplate);
             Templates = TemplatesData.GetInstance().GetTemplates();
@@ -64,10 +66,25 @@ namespace ST.EplAddin.PlcEdit
             PLCAdressToolStripMenuItem.Checked = Properties.Settings.Default.IsRewritePLCAdress;
         }
 
+        private void ComparingForm_StartRewriting(object sender, EventArgs e)
+        {
+            PlcDataModelView.ForEach(x => x.PropertyChanged += Res_PropertyChanged);
+        }
+
+        private void Res_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var item = sender as PlcDataModelView;
+            var indexRow = PlcDataModelView.IndexOf(item);
+            //var indexColumn = dataGridView.Columns[e.PropertyName]?.Index;
+            if (indexRow == -1) return;
+            dataGridView[e.PropertyName, indexRow].Style.BackColor = Color.Yellow;
+        }
+
         private void ComparingForm_OkEvent(object sender, EventArgs e)
         {
             dataGridView.EndEdit();
             dataGridView.Refresh();
+            PlcDataModelView.ForEach(x => x.PropertyChanged -= Res_PropertyChanged);
         }
 
         private void ImportCsvForm_ImportCsvData(object sender, List<CsvFileDataModelView> e)
@@ -136,7 +153,6 @@ namespace ST.EplAddin.PlcEdit
             }
             catch (Exception)
             {
-                //не найдена зависиосить на сборку                
             }
         }
 
@@ -522,11 +538,7 @@ namespace ST.EplAddin.PlcEdit
 
         private void dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (e == null || e.RowIndex == -1)
-            {
-                return;
-            }
-            dataGridView[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Yellow;
+
         }
 
         private void dropDownList_SelectedIndexChanged(object sender, EventArgs e)
@@ -780,6 +792,35 @@ namespace ST.EplAddin.PlcEdit
         private void ManagePlcForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Properties.Settings.Default.FormLocation = this.Location;
+        }
+
+        private string cellValue = string.Empty;
+
+
+        private string GetValue(DataGridViewCellEventArgs e)
+        {
+            return dataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString() ?? string.Empty;
+        }
+        private string GetValue(DataGridViewCellCancelEventArgs e)
+        {
+            return dataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString() ?? string.Empty;
+        }
+
+
+        private void dataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e == null || e.RowIndex == -1) return;
+
+            var currentCellValue = GetValue(e);
+            if (currentCellValue != cellValue)
+            {
+                dataGridView[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Yellow;
+            }
+        }
+
+        private void dataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            cellValue = GetValue(e);
         }
     }
 }

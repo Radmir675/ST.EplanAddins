@@ -230,6 +230,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ViewModelBase.cs" />
     <Compile Include="View\CsvFileDataModelViews.cs" />
     <Compile Include="View\PlcDataView.cs" />
   </ItemGroup>
