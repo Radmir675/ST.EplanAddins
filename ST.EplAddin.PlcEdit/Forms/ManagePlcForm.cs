@@ -24,10 +24,11 @@ namespace ST.EplAddin.PlcEdit
         public static event EventHandler<string> PathEvent;
         public static event EventHandler<IEnumerable<StorableObject>> ShowSearch;
         private List<PlcDataModelView> PlcDataModelView { get; set; }
-        public int InitialFormWidth { get; set; }
         private List<int> LastSelectedRow { get; set; } = new List<int>();
         public string TemplateName { get; set; }
         public List<Template> Templates { get; set; }
+
+        private string cellValue = string.Empty;
 
         public DataGridViewRow[] SelectedRows
         {
@@ -60,7 +61,7 @@ namespace ST.EplAddin.PlcEdit
             TemplatesData.GetInstance();
             PathEvent?.Invoke(this, pathToSaveTemplate);
             Templates = TemplatesData.GetInstance().GetTemplates();
-            TryDowmLoadTemplates(pathToSaveTemplate);
+            UpdateTemplates();
             FastInput.Checked = Properties.Settings.Default.FastInputChecked;
             SymbolicAdressToolStripMenuItem.Checked = Properties.Settings.Default.IsRewriteSymbolicAdress;
             PLCAdressToolStripMenuItem.Checked = Properties.Settings.Default.IsRewritePLCAdress;
@@ -68,10 +69,10 @@ namespace ST.EplAddin.PlcEdit
 
         private void ComparingForm_StartRewriting(object sender, EventArgs e)
         {
-            PlcDataModelView.ForEach(x => x.PropertyChanged += Res_PropertyChanged);
+            PlcDataModelView.ForEach(x => x.PropertyChanged += ChangeCellColor);
         }
 
-        private void Res_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ChangeCellColor(object sender, PropertyChangedEventArgs e)
         {
             var item = sender as PlcDataModelView;
             var indexRow = PlcDataModelView.IndexOf(item);
@@ -84,7 +85,7 @@ namespace ST.EplAddin.PlcEdit
         {
             dataGridView.EndEdit();
             dataGridView.Refresh();
-            PlcDataModelView.ForEach(x => x.PropertyChanged -= Res_PropertyChanged);
+            PlcDataModelView.ForEach(x => x.PropertyChanged -= ChangeCellColor);
         }
 
         private void ImportCsvForm_ImportCsvData(object sender, List<CsvFileDataModelView> e)
@@ -536,11 +537,6 @@ namespace ST.EplAddin.PlcEdit
             return result;
         }
 
-        private void dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void dropDownList_SelectedIndexChanged(object sender, EventArgs e)
         {
             TemplateName = dropDownList.SelectedItem.ToString();
@@ -560,13 +556,12 @@ namespace ST.EplAddin.PlcEdit
             dropDownList.Items.Add(e.FileName);
             dropDownList.SelectedItem = e.FileName;
         }
-        private void TryDowmLoadTemplates(string pathToSaveTemplate)
+        private void UpdateTemplates()
         {
-            foreach (var template in Templates)
-            {
-                if (!dropDownList.Items.Contains(template.FileName))
-                    dropDownList.Items.Add(template.FileName);
-            }
+            dropDownList.Items.Clear();
+            dropDownList.Items.AddRange(TemplatesData.GetInstance().GetTemplates()?.Select(x => x.FileName)?.ToArray());
+            TemplateName = null;
+
         }
         private void dataGridView_KeyDown(object sender, KeyEventArgs e)
         {
@@ -793,10 +788,6 @@ namespace ST.EplAddin.PlcEdit
         {
             Properties.Settings.Default.FormLocation = this.Location;
         }
-
-        private string cellValue = string.Empty;
-
-
         private string GetValue(DataGridViewCellEventArgs e)
         {
             return dataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString() ?? string.Empty;
@@ -821,6 +812,32 @@ namespace ST.EplAddin.PlcEdit
         private void dataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             cellValue = GetValue(e);
+        }
+
+        private void rename_button_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(TemplateName)) return;
+
+            var renameForm = new RenameForm(TemplateName);
+            var dialogResult = renameForm.ShowDialog();
+            if (dialogResult == DialogResult.Cancel) return;
+            var newName = RenameForm.Path;
+            var result = TemplatesData.GetInstance().Rename(TemplateName, newName);
+            if (result)
+            {
+                MessageBox.Show("File successfully  renamed!", "Rename", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+            UpdateTemplates();
+            dropDownList.SelectedItem = newName;
+
+        }
+
+        private void remove_button_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(TemplateName)) return;
+            TemplatesData.GetInstance().Delete(TemplateName);
+            UpdateTemplates();
         }
     }
 }

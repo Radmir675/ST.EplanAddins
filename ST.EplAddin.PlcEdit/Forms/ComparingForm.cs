@@ -178,7 +178,7 @@ namespace ST.EplAddin.PlcEdit.Forms
 
         private List<CsvFileDataModelViews> GetDataWithTemplateBorders(List<CsvFileDataModelViews> items)
         {
-            var template = TemplatesData.GetInstance().TryGetTemplateByName(TemplateName);
+            var template = TemplatesData.GetInstance().TryGetByName(TemplateName);
             if (template == null)
             {
                 MessageBox.Show("Шаблон не найден", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -235,13 +235,13 @@ namespace ST.EplAddin.PlcEdit.Forms
 
         private List<CsvFileDataModelView> GetDataToExport()
         {
-            var template = TemplatesData.GetInstance().TryGetTemplateByName(TemplateName);
+            var template = TemplatesData.GetInstance().TryGetByName(TemplateName);
             if (template == null)
             {
                 MessageBox.Show("Шаблон не найден");
                 return null;
             }
-            var templatePath = TemplatesData.GetInstance().TryGetTemplatePath(TemplateName);
+            var templatePath = TemplatesData.GetInstance().TryGetPath(TemplateName);
             if (string.IsNullOrEmpty(templatePath))
             {
                 MessageBox.Show("Фаил не найден!");

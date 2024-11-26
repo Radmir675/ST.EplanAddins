@@ -1,7 +1,6 @@
 ﻿namespace ST.EplAddin.PlcEdit.Model
 {
     public class Template
-
     {
         public Template(int indexFirstRow, int indexLastRow, string fileName)
         {

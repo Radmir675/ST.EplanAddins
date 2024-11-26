@@ -31,13 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.sourceDataGridView = new System.Windows.Forms.DataGridView();
             this.targetDataGridView = new System.Windows.Forms.DataGridView();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.ok_button = new System.Windows.Forms.Button();
-            this.Upload_doc_button = new System.Windows.Forms.Button();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.checkBox = new System.Windows.Forms.CheckBox();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.isCheckedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.symbolicAdressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bitNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,15 +39,22 @@
             this.pLCAdressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deviceNameShortDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.csvFileDataModelViewsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.ok_button = new System.Windows.Forms.Button();
+            this.Upload_doc_button = new System.Windows.Forms.Button();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.checkBox = new System.Windows.Forms.CheckBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.sourceDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.targetDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewsBindingSource)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // sourceDataGridView
@@ -89,89 +89,6 @@
             this.targetDataGridView.Name = "targetDataGridView";
             this.targetDataGridView.Size = new System.Drawing.Size(742, 703);
             this.targetDataGridView.TabIndex = 1;
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Controls.Add(this.comboBox1);
-            this.flowLayoutPanel1.Controls.Add(this.ok_button);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 703);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(678, 26);
-            this.flowLayoutPanel1.TabIndex = 2;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(3, 3);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 1;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // ok_button
-            // 
-            this.ok_button.Location = new System.Drawing.Point(130, 3);
-            this.ok_button.Name = "ok_button";
-            this.ok_button.Size = new System.Drawing.Size(75, 23);
-            this.ok_button.TabIndex = 2;
-            this.ok_button.Text = "OK";
-            this.ok_button.UseVisualStyleBackColor = true;
-            this.ok_button.Click += new System.EventHandler(this.ok_button_Click);
-            // 
-            // Upload_doc_button
-            // 
-            this.Upload_doc_button.Location = new System.Drawing.Point(3, 3);
-            this.Upload_doc_button.Name = "Upload_doc_button";
-            this.Upload_doc_button.Size = new System.Drawing.Size(194, 23);
-            this.Upload_doc_button.TabIndex = 0;
-            this.Upload_doc_button.Text = "Upload document to compare";
-            this.Upload_doc_button.UseVisualStyleBackColor = true;
-            this.Upload_doc_button.Click += new System.EventHandler(this.Upload_doc_button_Click);
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Controls.Add(this.Upload_doc_button);
-            this.flowLayoutPanel2.Controls.Add(this.checkBox);
-            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 703);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(742, 26);
-            this.flowLayoutPanel2.TabIndex = 3;
-            // 
-            // checkBox
-            // 
-            this.checkBox.AutoSize = true;
-            this.checkBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkBox.Location = new System.Drawing.Point(203, 3);
-            this.checkBox.Name = "checkBox";
-            this.checkBox.Size = new System.Drawing.Size(67, 23);
-            this.checkBox.TabIndex = 4;
-            this.checkBox.Text = "SelectAll";
-            this.checkBox.UseVisualStyleBackColor = true;
-            this.checkBox.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.AutoScroll = true;
-            this.splitContainer1.Panel1.Controls.Add(this.sourceDataGridView);
-            this.splitContainer1.Panel1.Controls.Add(this.flowLayoutPanel1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.AutoScroll = true;
-            this.splitContainer1.Panel2.Controls.Add(this.targetDataGridView);
-            this.splitContainer1.Panel2.Controls.Add(this.flowLayoutPanel2);
-            this.splitContainer1.Size = new System.Drawing.Size(1425, 729);
-            this.splitContainer1.SplitterDistance = 678;
-            this.splitContainer1.SplitterWidth = 5;
-            this.splitContainer1.TabIndex = 4;
             // 
             // isCheckedDataGridViewCheckBoxColumn
             // 
@@ -225,6 +142,89 @@
             // 
             this.csvFileDataModelViewsBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.View.CsvFileDataModelViews);
             // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.comboBox1);
+            this.flowLayoutPanel1.Controls.Add(this.ok_button);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 703);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(678, 26);
+            this.flowLayoutPanel1.TabIndex = 2;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(3, 3);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 1;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // ok_button
+            // 
+            this.ok_button.Location = new System.Drawing.Point(130, 3);
+            this.ok_button.Name = "ok_button";
+            this.ok_button.Size = new System.Drawing.Size(75, 23);
+            this.ok_button.TabIndex = 2;
+            this.ok_button.Text = "OK";
+            this.ok_button.UseVisualStyleBackColor = true;
+            this.ok_button.Click += new System.EventHandler(this.ok_button_Click);
+            // 
+            // Upload_doc_button
+            // 
+            this.Upload_doc_button.Location = new System.Drawing.Point(3, 3);
+            this.Upload_doc_button.Name = "Upload_doc_button";
+            this.Upload_doc_button.Size = new System.Drawing.Size(194, 23);
+            this.Upload_doc_button.TabIndex = 0;
+            this.Upload_doc_button.Text = "Load file";
+            this.Upload_doc_button.UseVisualStyleBackColor = true;
+            this.Upload_doc_button.Click += new System.EventHandler(this.Upload_doc_button_Click);
+            // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Controls.Add(this.Upload_doc_button);
+            this.flowLayoutPanel2.Controls.Add(this.checkBox);
+            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 703);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(742, 26);
+            this.flowLayoutPanel2.TabIndex = 3;
+            // 
+            // checkBox
+            // 
+            this.checkBox.AutoSize = true;
+            this.checkBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkBox.Location = new System.Drawing.Point(203, 3);
+            this.checkBox.Name = "checkBox";
+            this.checkBox.Size = new System.Drawing.Size(67, 23);
+            this.checkBox.TabIndex = 4;
+            this.checkBox.Text = "SelectAll";
+            this.checkBox.UseVisualStyleBackColor = true;
+            this.checkBox.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.AutoScroll = true;
+            this.splitContainer1.Panel1.Controls.Add(this.sourceDataGridView);
+            this.splitContainer1.Panel1.Controls.Add(this.flowLayoutPanel1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.AutoScroll = true;
+            this.splitContainer1.Panel2.Controls.Add(this.targetDataGridView);
+            this.splitContainer1.Panel2.Controls.Add(this.flowLayoutPanel2);
+            this.splitContainer1.Size = new System.Drawing.Size(1425, 729);
+            this.splitContainer1.SplitterDistance = 678;
+            this.splitContainer1.SplitterWidth = 5;
+            this.splitContainer1.TabIndex = 4;
+            // 
             // ComparingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -236,6 +236,7 @@
             this.Load += new System.EventHandler(this.ComparingForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.sourceDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.targetDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewsBindingSource)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel2.PerformLayout();
@@ -243,7 +244,6 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewsBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -47,7 +47,7 @@ namespace ST.EplAddin.PlcEdit.Forms
             var fullPath = Path.Combine(pathToSaveTemplate, fileNameWithType);
             CsvConverter csvConverter = new CsvConverter(fullPath);
             csvConverter.SaveFile(dataInTable);
-            this.Close();
+            Close();
         }
 
         private void LoadTemplateForm_Load(object sender, EventArgs e)

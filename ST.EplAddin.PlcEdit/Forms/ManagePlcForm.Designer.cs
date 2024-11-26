@@ -56,6 +56,7 @@
             this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.rename_button = new System.Windows.Forms.Button();
             this.loadTemplate_button = new System.Windows.Forms.Button();
             this.dropDownList = new System.Windows.Forms.ComboBox();
             this.export_button = new System.Windows.Forms.Button();
@@ -76,6 +77,7 @@
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.reviewPLC_button = new System.Windows.Forms.Button();
             this.FastInput = new System.Windows.Forms.CheckBox();
+            this.remove_button = new System.Windows.Forms.Button();
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource)).BeginInit();
@@ -193,7 +195,6 @@
             this.dataGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView_CellBeginEdit);
             this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellClick);
             this.dataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellEndEdit);
-            this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellValueChanged);
             this.dataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView_CurrentCellDirtyStateChanged);
             this.dataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView_KeyDown);
             this.dataGridView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dataGridView_MouseUp);
@@ -322,6 +323,8 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoSize = true;
+            this.flowLayoutPanel1.Controls.Add(this.remove_button);
+            this.flowLayoutPanel1.Controls.Add(this.rename_button);
             this.flowLayoutPanel1.Controls.Add(this.loadTemplate_button);
             this.flowLayoutPanel1.Controls.Add(this.dropDownList);
             this.flowLayoutPanel1.Controls.Add(this.export_button);
@@ -330,9 +333,19 @@
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(396, 29);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(558, 29);
             this.flowLayoutPanel1.TabIndex = 5;
             this.flowLayoutPanel1.WrapContents = false;
+            // 
+            // rename_button
+            // 
+            this.rename_button.Location = new System.Drawing.Point(399, 3);
+            this.rename_button.Name = "rename_button";
+            this.rename_button.Size = new System.Drawing.Size(75, 23);
+            this.rename_button.TabIndex = 7;
+            this.rename_button.Text = "Rename";
+            this.rename_button.UseVisualStyleBackColor = true;
+            this.rename_button.Click += new System.EventHandler(this.rename_button_Click);
             // 
             // loadTemplate_button
             // 
@@ -572,6 +585,16 @@
             this.FastInput.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.FastInput.UseVisualStyleBackColor = true;
             // 
+            // remove_button
+            // 
+            this.remove_button.Location = new System.Drawing.Point(480, 3);
+            this.remove_button.Name = "remove_button";
+            this.remove_button.Size = new System.Drawing.Size(75, 23);
+            this.remove_button.TabIndex = 8;
+            this.remove_button.Text = "Remove";
+            this.remove_button.UseVisualStyleBackColor = true;
+            this.remove_button.Click += new System.EventHandler(this.remove_button_Click);
+            // 
             // ManagePlcForm
             // 
             this.AcceptButton = this.Ok_button;
@@ -654,5 +677,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FunctionDefinition;
         private System.Windows.Forms.DataGridViewTextBoxColumn SymbolicAdressDefined;
         private System.Windows.Forms.DataGridViewTextBoxColumn FunctionType;
+        private System.Windows.Forms.Button rename_button;
+        private System.Windows.Forms.Button remove_button;
     }
 }
