@@ -30,13 +30,16 @@ namespace ST.EplAddin.PlcEdit.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.Rename = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
             this.pathTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // Rename
@@ -63,8 +66,9 @@ namespace ST.EplAddin.PlcEdit.Forms
             // 
             this.pathTextBox.Location = new System.Drawing.Point(56, 66);
             this.pathTextBox.Name = "pathTextBox";
-            this.pathTextBox.Size = new System.Drawing.Size(598, 20);
+            this.pathTextBox.Size = new System.Drawing.Size(581, 20);
             this.pathTextBox.TabIndex = 1;
+            this.pathTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.pathTextBox_Validating);
             // 
             // label1
             // 
@@ -97,6 +101,11 @@ namespace ST.EplAddin.PlcEdit.Forms
             this.panel1.Size = new System.Drawing.Size(659, 29);
             this.panel1.TabIndex = 4;
             // 
+            // errorProvider
+            // 
+            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider.ContainerControl = this;
+            // 
             // RenameForm
             // 
             this.AcceptButton = this.Rename;
@@ -108,12 +117,13 @@ namespace ST.EplAddin.PlcEdit.Forms
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pathTextBox);
-            ((Control)this).Name = "RenameForm";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "RenameForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "RenameForm";
-            this.TopMost = true;
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -127,5 +137,6 @@ namespace ST.EplAddin.PlcEdit.Forms
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel1;
+        private ErrorProvider errorProvider;
     }
 }

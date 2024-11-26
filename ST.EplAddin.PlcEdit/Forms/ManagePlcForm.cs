@@ -655,14 +655,6 @@ namespace ST.EplAddin.PlcEdit
             Properties.Settings.Default.FastInputChecked = FastInput.Checked;
         }
 
-        private void dataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-        {
-            if (dataGridView.IsCurrentCellDirty)
-            {
-                dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            }
-        }
-
         private void dataGridView_MouseUp(object sender, MouseEventArgs e)
         {
             UpdateButtonsState();

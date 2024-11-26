@@ -14,12 +14,34 @@ namespace ST.EplAddin.PlcEdit.Forms
         }
         private void Rename_Click(object sender, System.EventArgs e)
         {
-            if (!string.IsNullOrEmpty(pathTextBox.Text) && _templateName != pathTextBox.Text)
+            if (string.IsNullOrEmpty(errorProvider.GetError(pathTextBox)))
             {
                 this.DialogResult = DialogResult.OK;
                 Path = pathTextBox.Text;
                 Close();
             }
+        }
+
+        private void pathTextBox_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(pathTextBox.Text))
+            {
+                //pathTextBox.Focus();
+                errorProvider.SetError(pathTextBox, "Value is empty");
+                e.Cancel = false;
+            }
+            else if (_templateName == pathTextBox.Text)
+            {
+                //pathTextBox.Focus();
+                errorProvider.SetError(pathTextBox, "Value the same of primary");
+                e.Cancel = false;
+            }
+            else
+            {
+                errorProvider.Clear();
+
+            }
+
         }
     }
 }
