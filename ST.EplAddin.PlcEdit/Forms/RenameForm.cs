@@ -26,20 +26,19 @@ namespace ST.EplAddin.PlcEdit.Forms
         {
             if (string.IsNullOrEmpty(pathTextBox.Text))
             {
-                //pathTextBox.Focus();
+                pathTextBox.Focus();
                 errorProvider.SetError(pathTextBox, "Value is empty");
                 e.Cancel = false;
             }
             else if (_templateName == pathTextBox.Text)
             {
-                //pathTextBox.Focus();
+                pathTextBox.Focus();
                 errorProvider.SetError(pathTextBox, "Value the same of primary");
                 e.Cancel = false;
             }
             else
             {
                 errorProvider.Clear();
-
             }
 
         }
