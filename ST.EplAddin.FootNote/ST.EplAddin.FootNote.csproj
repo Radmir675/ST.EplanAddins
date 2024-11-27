@@ -104,7 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
-    <Compile Include="footnote\Footnote.cs" />
+    <Compile Include="footnote\FootNote.cs" />
     <Compile Include="footnote\Footnote_DragIteraction.cs" />
     <Compile Include="footnote\Footnote_InsertAction.cs" />
     <Compile Include="footnote\Footnote_InsertInteraction.cs" />
@@ -149,6 +149,8 @@
     <Compile Include="PropertyBrowser\PropertiesProvider.cs" />
     <Compile Include="PropertyBrowser\PropertiesStore.cs" />
     <Compile Include="PropertyBrowser\Settings.cs" />
+    <Compile Include="App.cs" />
+    <Compile Include="ShadowCopyPath.cs" />
     <Compile Include="Views\FullPropertiesWindow.xaml.cs">
       <DependentUpon>FullPropertiesWindow.xaml</DependentUpon>
     </Compile>

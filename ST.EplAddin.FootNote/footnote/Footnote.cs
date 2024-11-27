@@ -12,6 +12,7 @@ using System.ComponentModel.Design;
 using System.Drawing.Design;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
@@ -165,16 +166,37 @@ namespace ST.EplAddin.FootNote
         [Description("Индекс размещаемого свойства")]
         [Category("Text"), DefaultValue(PropertiesList.P20450)]
         #endregion
+        private void LoadReferencedAssembly(Assembly assembly)
+        {
+            foreach (AssemblyName name in assembly.GetReferencedAssemblies())
+            {
+                if (!AppDomain.CurrentDomain.GetAssemblies().Any(a => a.FullName == name.FullName))
+                {
+                    this.LoadReferencedAssembly(Assembly.Load(name));
+                }
+            }
+        }
 
         public FootnoteItem()
         {
             PropertiesDialogForm.ApplyEventClick += ResetLabelText;
             GetLoggerConfig();
+
+
         }
         public FootnoteItem(PointD startPoint, PointD endPoint) : this()
         {
             StartPosition = startPoint;
             FinishPosition = endPoint;
+            ShadowCopyPath shadowCopyPath = new();
+            shadowCopyPath.OnBeforeInit();
+            //var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
+            //var loadedPaths = loadedAssemblies.Select(a => a.Location).ToArray();
+            //var name = loadedAssemblies.Where(x => x.FullName.Contains("ColorPicker")).ToList();
+            //var referencedPaths = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll");
+            //var toLoad = referencedPaths.Where(r => !loadedPaths.Contains(r, StringComparer.InvariantCultureIgnoreCase)).ToList();
+
+            // toLoad.ForEach(path => loadedAssemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(path))));
 
         }
 
