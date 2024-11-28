@@ -9,10 +9,11 @@
         mc:Ignorable="d"
         Width="394"
         Title="Условный объект"
-        ResizeMode="CanResizeWithGrip"
+        ResizeMode="NoResize"
         Background="#f1f1f1"
         Height="664"
-        MinHeight="300">
+        MinHeight="300"
+        >
 
     <Window.Resources>
         <Style TargetType="Separator">
@@ -65,10 +66,11 @@
             <Setter Property="FontSize" Value="14"/>
         </Style>
 
-        <!--<Style x:Key="sgf">
+        <Style TargetType="{x:Type TextBox}" x:Key="VerticalAlignContent" 
+               BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="VerticalContentAlignment"
-                    Value="Center" />-->
-        <!--</Style>-->
+                    Value="Center" />
+        </Style>
 
 
     </Window.Resources>
@@ -301,7 +303,7 @@
                                      Margin="0,0,6,0">
                             <TextBlock Text="Размер текста"
                                        FontSize="14" />
-                            <TextBox />
+                            <TextBox Style="{StaticResource VerticalAlignContent}"/>
                         </UniformGrid>
                         <UniformGrid Columns="1"
                                      Margin="0,0,0,0">
@@ -313,7 +315,7 @@
                                      Margin="6,0,0,0">
                             <TextBlock Text="Толщина линий"
                                        FontSize="14" />
-                            <TextBox />
+                            <TextBox Style="{StaticResource VerticalAlignContent}" />
                         </UniformGrid>
                     </UniformGrid>
                     <Separator Margin="0,12,0,3" />
@@ -324,7 +326,7 @@
                                      Margin="0,0,6,0">
                             <TextBlock Text="Радиус кружка"
                                        FontSize="14" />
-                            <TextBox />
+                            <TextBox Style="{StaticResource VerticalAlignContent}" />
                         </UniformGrid>
                         <UniformGrid Columns="1">
                             <TextBlock Text="Цвет выноски"
