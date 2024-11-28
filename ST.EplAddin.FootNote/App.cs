@@ -34,7 +34,7 @@ namespace ST.EplAddin.FootNote
 
             if (name.Contains("Eplan")) return false;
             if (name.Contains("EplAddin")) return false;
-            if (!loadedPaths.Contains(reference, StringComparer.InvariantCultureIgnoreCase)) return false;
+            if (loadedPaths.Contains(reference, StringComparer.InvariantCultureIgnoreCase)) return false;
 
             return true;
         }
