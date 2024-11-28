@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -11,48 +9,26 @@ namespace ST.EplAddin.FootNote
     {
         public void Initialize()
         {
-            ShadowCopyPath shadowCopyPath = new();
-            var path = shadowCopyPath.GetOriginalAssemblyPath();
-            AssemblyLoader.LoadWithDependencies(path);
+            LoadAssemblies();
         }
-        public static class AssemblyLoader
+        private void LoadAssemblies()
         {
-            private static readonly ConcurrentDictionary<string, bool> AssemblyDirectories = new ConcurrentDictionary<string, bool>();
-
-            static AssemblyLoader()
+            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
+            var loadedPaths = loadedAssemblies.Select(a => a.Location).ToArray();
+            var referencedPaths = Directory.GetFiles(assemblyFolder!, "*.dll");
+            var toLoad = referencedPaths.Where(r =>
             {
-                AssemblyDirectories[GetExecutingAssemblyDirectory()] = true;
-                AppDomain.CurrentDomain.AssemblyResolve += ResolveAssembly;
-
-            }
-
-            public static Assembly LoadWithDependencies(string assemblyPath)
-            {
-                AssemblyDirectories[Path.GetDirectoryName(assemblyPath)] = true;
-                return Assembly.LoadFile(assemblyPath);
-            }
-
-            private static Assembly ResolveAssembly(object sender, ResolveEventArgs args)
-            {
-                string dependentAssemblyName = args.Name.Split(',')[0] + ".dll";
-                List<string> directoriesToScan = AssemblyDirectories.Keys.ToList();
-
-                foreach (string directoryToScan in directoriesToScan)
+                if (!r.Contains("Eplan") && !loadedPaths.Contains(r, StringComparer.InvariantCultureIgnoreCase))
                 {
-                    string dependentAssemblyPath = Path.Combine(directoryToScan, dependentAssemblyName);
-                    if (File.Exists(dependentAssemblyPath))
-                        return LoadWithDependencies(dependentAssemblyPath);
+                    return true;
                 }
-                return null;
-            }
+                return false;
 
-            private static string GetExecutingAssemblyDirectory()
-            {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                var uri = new UriBuilder(codeBase);
-                string path = Uri.UnescapeDataString(uri.Path);
-                return Path.GetDirectoryName(path);
-            }
+
+            }).ToList();
+
+            toLoad.ForEach(path => loadedAssemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(path))));
         }
     }
 }

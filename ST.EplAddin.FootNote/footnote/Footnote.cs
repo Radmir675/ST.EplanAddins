@@ -5,6 +5,7 @@ using Eplan.EplApi.DataModel.Graphics;
 using NLog;
 using ST.EplAddin.FootNote.Forms;
 using ST.EplAddin.FootNote.ProperyBrowser;
+using ST.EplAddin.FootNote.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -188,28 +189,13 @@ namespace ST.EplAddin.FootNote
         {
             StartPosition = startPoint;
             FinishPosition = endPoint;
-            LoadAssemblies();
+            App app = new();
+            app.Initialize();
+            var result = new PropertiesWindow().ShowDialog();
+
         }
 
-        private static void LoadAssemblies()
-        {
-            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
-            var loadedPaths = loadedAssemblies.Select(a => a.Location).ToArray();
-            var referencedPaths = Directory.GetFiles(assemblyFolder!, "*.dll");
-            var toLoad = referencedPaths.Where(r =>
-            {
-                if (!r.StartsWith("Eplan") && !loadedPaths.Contains(r, StringComparer.InvariantCultureIgnoreCase))
-                {
-                    return false;
-                }
 
-                return true;
-
-            }).ToList();
-
-            toLoad.ForEach(path => loadedAssemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(path))));
-        }
 
         private void GetLoggerConfig()
         {

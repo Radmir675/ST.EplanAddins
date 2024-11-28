@@ -5,7 +5,6 @@ namespace ST.EplAddin.FootNote
 
     /* TODO
     -добавить обработку присвоения формата
-    -добавить текст сверху и снизу
     -добавить иконку
     -добавить UNDO
     +добавить в настройки отображение курсора нормальный упрощенный
@@ -34,8 +33,8 @@ namespace ST.EplAddin.FootNote
             uint MenuIDPopupComments = oMenu.AddPopupMenuItem(
                 "Сноски >", "Вставить сноску", "XGedStartInteractionAction /Name:XGedFootnote",
                 "Выберите объект на пространстве листа", 37265, 0, false, false);
-
             oMenu.AddMenuItem("Параметры", "FootnoteSettings", "Настройки выносок", MenuIDPopupComments, 1, true, false);
+            App app = new();
 
             return true;
         }
