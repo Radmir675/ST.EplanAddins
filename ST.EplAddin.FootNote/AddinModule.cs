@@ -24,6 +24,7 @@ namespace ST.EplAddin.FootNote
             m_oTrace = new Eplan.EplApi.Base.TraceListener();
             System.Diagnostics.Trace.Listeners.Add(m_oTrace);
             m_ContextActionEventListener = new ContextActionEventListener();
+            App app = new();//загрузка всего необходимого для программы
             return true;
         }
 
@@ -34,7 +35,7 @@ namespace ST.EplAddin.FootNote
                 "Сноски >", "Вставить сноску", "XGedStartInteractionAction /Name:XGedFootnote",
                 "Выберите объект на пространстве листа", 37265, 0, false, false);
             oMenu.AddMenuItem("Параметры", "FootnoteSettings", "Настройки выносок", MenuIDPopupComments, 1, true, false);
-            App app = new();
+
 
             return true;
         }

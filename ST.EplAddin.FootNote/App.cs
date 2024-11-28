@@ -7,7 +7,7 @@ namespace ST.EplAddin.FootNote
 {
     internal class App
     {
-        public void Initialize()
+        public App()
         {
             LoadAssemblies();
         }
@@ -17,18 +17,26 @@ namespace ST.EplAddin.FootNote
             var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
             var loadedPaths = loadedAssemblies.Select(a => a.Location).ToArray();
             var referencedPaths = Directory.GetFiles(assemblyFolder!, "*.dll");
-            var toLoad = referencedPaths.Where(r =>
+            var toLoad = referencedPaths.Where(reference => CheckDll(reference, loadedPaths)).ToList();
+            try
             {
-                if (!r.Contains("Eplan") && !loadedPaths.Contains(r, StringComparer.InvariantCultureIgnoreCase))
-                {
-                    return true;
-                }
-                return false;
+                toLoad.ForEach(path => loadedAssemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(path))));
+            }
+            catch (Exception e)
+            {
+                //listener есть
+            }
+        }
 
+        private bool CheckDll(string reference, string[] loadedPaths)
+        {
+            var name = Path.GetFileName(reference);
 
-            }).ToList();
+            if (name.Contains("Eplan")) return false;
+            if (name.Contains("EplAddin")) return false;
+            if (!loadedPaths.Contains(reference, StringComparer.InvariantCultureIgnoreCase)) return false;
 
-            toLoad.ForEach(path => loadedAssemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(path))));
+            return true;
         }
     }
 }

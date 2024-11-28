@@ -13,7 +13,6 @@ using System.ComponentModel.Design;
 using System.Drawing.Design;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
@@ -167,16 +166,6 @@ namespace ST.EplAddin.FootNote
         [Description("Индекс размещаемого свойства")]
         [Category("Text"), DefaultValue(PropertiesList.P20450)]
         #endregion
-        private void LoadReferencedAssembly(Assembly assembly)
-        {
-            foreach (AssemblyName name in assembly.GetReferencedAssemblies())
-            {
-                if (!AppDomain.CurrentDomain.GetAssemblies().Any(a => a.FullName == name.FullName))
-                {
-                    this.LoadReferencedAssembly(Assembly.Load(name));
-                }
-            }
-        }
 
         public FootnoteItem()
         {
@@ -189,12 +178,9 @@ namespace ST.EplAddin.FootNote
         {
             StartPosition = startPoint;
             FinishPosition = endPoint;
-            App app = new();
-            app.Initialize();
             var result = new PropertiesWindow().ShowDialog();
 
         }
-
 
 
         private void GetLoggerConfig()
