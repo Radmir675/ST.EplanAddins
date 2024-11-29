@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace ST.EplAddin.FootNote
 {
-    internal class App
+    public class App
     {
         public App()
         {
