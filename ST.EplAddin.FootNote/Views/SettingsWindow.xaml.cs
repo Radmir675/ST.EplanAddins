@@ -37,7 +37,7 @@ namespace ST.EplAddin.FootNote.Views
                 case WindowState.Normal:
                     MaximizeProgram.Content = "🗗";
                     WindowState = WindowState.Maximized;
-                    TitleDrawBar.CornerRadius = new CornerRadius(0);
+                    //  TitleDrawBar.CornerRadius = new CornerRadius(0);
                     break;
             }
         }
