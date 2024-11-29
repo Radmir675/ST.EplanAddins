@@ -53,7 +53,7 @@
                 </UniformGrid>
                 <Grid HorizontalAlignment="Left"
                       VerticalAlignment="Center"
-                      MouseLeftButtonDown="DrawWindow_MouseLeftButtonDown">
+                     >
                     <Label x:Name="MainTitle"
                            Foreground="#FF828282"
                            Content="TITLE__PLACEHOLDER" 

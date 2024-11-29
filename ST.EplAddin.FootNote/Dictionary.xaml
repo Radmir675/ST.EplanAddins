@@ -35,7 +35,7 @@
                         <Storyboard>
                             <ColorAnimation Storyboard.TargetName="ButtonBackground"
                                             Storyboard.TargetProperty="Color"
-                                            To="Gray"
+                                            To="LightGray"
                                             Duration="0:0:0.1" />
                         </Storyboard>
                     </VisualState>
@@ -84,7 +84,7 @@
                         <Storyboard>
                             <ColorAnimation Storyboard.TargetName="ButtonBackground"
                                             Storyboard.TargetProperty="Color"
-                                            To="Red"
+                                            To="DarkRed"
                                             Duration="0:0:0.1" />
                         </Storyboard>
                     </VisualState>
