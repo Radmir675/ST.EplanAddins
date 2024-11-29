@@ -29,7 +29,7 @@
                     VerticalAlignment="Top"
                     MinHeight="40"
                     UseLayoutRounding="False"
-                    MouseLeftButtonDown="DrawWindow_MouseLeftButtonDown" />
+                    MouseLeftButtonDown="DrawWindow_MouseLeftButtonDown" >
             <Grid>
                 <UniformGrid Width="135"
                       Height="30" Rows="1" Columns="3"
@@ -37,41 +37,30 @@
                       HorizontalAlignment="Right"
                       Margin="0,-3,0,0"  >
                     <Button Template="{StaticResource ButtonTemplateDefault}"
+                            Style="{StaticResource DefaultButton}"
                             Click="Minimize_Program"
-                            Width="25"
-                            Height="25"
-                            Content="🗕"
-                            Background="{x:Null}"
-                         
-                            Foreground="Black"
-                            BorderBrush="{x:Null}" />
+                            Content="🗕"/>
                     <Button Template="{StaticResource ButtonTemplateDefault}"
+                            Style="{StaticResource DefaultButton}"
                             x:Name="MaximizeProgram"
                             Click="Maximize_Program"
-                            Width="25"
-                            Height="25"
                             Content="🗖"
-                            Margin="0,1,0,0"
-                            Background="{x:Null}"
-                            Foreground="Black"
-                            BorderBrush="{x:Null}" />
+                            Margin="0,1,0,0"/>
                     <Button Template="{StaticResource ButtonTemplateRed}"
+                            Style="{StaticResource DefaultButton}"
                             Click="Close_Program"
-                            Width="25"
-                            Height="25"
-                            Content="🗙"
-                            Background="{x:Null}"
-                            Foreground="Black"
-                            BorderBrush="{x:Null}" />
+                            Content="🗙"/>
                 </UniformGrid>
                 <Grid HorizontalAlignment="Left"
-                      VerticalAlignment="Top"
+                      VerticalAlignment="Center"
                       MouseLeftButtonDown="DrawWindow_MouseLeftButtonDown">
                     <Label x:Name="MainTitle"
                            Foreground="#FF828282"
-                           Content="TITLE__PLACEHOLDER" />
+                           Content="TITLE__PLACEHOLDER" 
+                           Margin="5,0,0,0"/>
                 </Grid>
             </Grid>
+                </Border>
             <!--Body-->
             <Grid Margin="0,47,0,0">
                 <TextBlock Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
