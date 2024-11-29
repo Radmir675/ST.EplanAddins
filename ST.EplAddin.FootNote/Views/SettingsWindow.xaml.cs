@@ -14,6 +14,7 @@ namespace ST.EplAddin.FootNote.Views
 
         }
 
+        #region WindowButtons
         private void Minimize_Program(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
@@ -56,6 +57,7 @@ namespace ST.EplAddin.FootNote.Views
                     break;
             }
         }
+        #endregion
     }
 }
 

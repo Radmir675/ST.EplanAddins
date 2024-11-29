@@ -10,10 +10,9 @@
         Width="394"
         Title="Условный объект"
         ResizeMode="NoResize"
-        Background="#f1f1f1"
+        Background="WhiteSmoke"
         Height="664"
-        MinHeight="300"
-        >
+        MinHeight="300">
 
     <Window.Resources>
         <Style TargetType="Separator">
