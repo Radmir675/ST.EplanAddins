@@ -14,8 +14,10 @@ namespace UnitTestProject12
             new System.Windows.Application();
 
             var app = new App();
-            SettingsWindow settingsWindow = new SettingsWindow();
-            settingsWindow.ShowDialog();
+            PropertiesWindow propertiesWindow = new PropertiesWindow();
+            propertiesWindow.ShowDialog();
+            //SettingsWindow settingsWindow = new SettingsWindow();
+            //settingsWindow.ShowDialog();
         }
     }
 }
