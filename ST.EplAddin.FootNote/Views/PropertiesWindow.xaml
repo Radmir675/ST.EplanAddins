@@ -45,19 +45,19 @@
         </Style>
 
         <Style TargetType="{x:Type Button}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border CornerRadius="5"
-                                BorderBrush="DarkGray"
-                                BorderThickness="1.5"
-                                Padding="2">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="3"/>
+                </Style>
+            </Style.Resources>
+               <Style.Triggers>
+                   <Trigger Property="IsPressed"
+                            Value="True">
+                       <Setter Property="FontSize"
+                               Value="14" />
+                   </Trigger>
+            </Style.Triggers>
+
         </Style>
 
         <Style TargetType="{x:Type TextBox}">
@@ -67,6 +67,13 @@
                             Value="3" />
                 </Style>
             </Style.Resources>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver"
+                             Value="True">
+                        <Setter Property="BorderBrush"
+                                Value="Red" />
+                    </Trigger>
+                </Style.Triggers>
             <Setter Property="FontSize"
                     Value="14" />
         </Style>
@@ -76,9 +83,8 @@
                BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="VerticalContentAlignment"
                     Value="Center" />
+           
         </Style>
-
-
 
     </Window.Resources>
 
