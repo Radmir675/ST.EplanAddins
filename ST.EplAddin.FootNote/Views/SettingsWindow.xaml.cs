@@ -45,6 +45,7 @@ namespace ST.EplAddin.FootNote.Views
         private void Maximize_Program(object sender, RoutedEventArgs e)
         {
             WindowNormalMaximize();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
 
         private void DrawWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

@@ -7,12 +7,13 @@ namespace UnitTestProject12
     [TestClass]
     public class UnitTest1
     {
+
         [TestMethod]
         public void TestMethod1()
         {
-            //var propertiesWindow = new PropertiesWindow();
-            //propertiesWindow.ShowDialog();
-            App app = new App();
+            new System.Windows.Application();
+
+            var app = new App();
             SettingsWindow settingsWindow = new SettingsWindow();
             settingsWindow.ShowDialog();
         }
