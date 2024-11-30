@@ -259,5 +259,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Fonts\Skolar PE Variable Italic.ttf" />
+    <Resource Include="Fonts\Skolar PE Variable Regular.ttf" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

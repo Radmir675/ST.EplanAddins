@@ -70,8 +70,7 @@
                             Content="🗙"/>
                 </UniformGrid>
                 <Grid HorizontalAlignment="Left"
-                      VerticalAlignment="Center"
-                     >
+                      VerticalAlignment="Center">
                     <Label x:Name="MainTitle"
                            Foreground="#FF828282"
                            Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}},Path=Title}"
