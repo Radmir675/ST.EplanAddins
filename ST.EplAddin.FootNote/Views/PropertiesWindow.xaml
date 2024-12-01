@@ -47,15 +47,16 @@
         <Style TargetType="{x:Type Button}">
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="3"/>
+                    <Setter Property="CornerRadius"
+                            Value="3" />
                 </Style>
             </Style.Resources>
-               <Style.Triggers>
-                   <Trigger Property="IsPressed"
-                            Value="True">
-                       <Setter Property="FontSize"
-                               Value="14" />
-                   </Trigger>
+            <Style.Triggers>
+                <Trigger Property="IsPressed"
+                         Value="True">
+                    <Setter Property="FontSize"
+                            Value="14" />
+                </Trigger>
             </Style.Triggers>
 
         </Style>
@@ -67,13 +68,13 @@
                             Value="3" />
                 </Style>
             </Style.Resources>
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver"
-                             Value="True">
-                        <Setter Property="BorderBrush"
-                                Value="Red" />
-                    </Trigger>
-                </Style.Triggers>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"
+                         Value="True">
+                    <Setter Property="BorderBrush"
+                            Value="Red" />
+                </Trigger>
+            </Style.Triggers>
             <Setter Property="FontSize"
                     Value="14" />
         </Style>
@@ -83,7 +84,7 @@
                BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="VerticalContentAlignment"
                     Value="Center" />
-           
+
         </Style>
 
     </Window.Resources>
@@ -96,260 +97,261 @@
         <Grid>
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                           CanContentScroll="True">
-            <StackPanel>
-                <Separator Margin="0,0,0,15" />
-                <Grid Height="60px">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="70px" />
-                        <ColumnDefinition Width="2*" />
-                    </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <Separator Margin="0,0,0,15" />
+                    <Grid Height="60px">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70px" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
 
-                    <Border CornerRadius="10"
-                            BorderBrush="White"
-                            BorderThickness="1"
-                            Background="White">
+                        <Border CornerRadius="10"
+                                BorderBrush="White"
+                                BorderThickness="1"
+                                Background="White">
 
-                        <Grid>
-                            <Image VerticalAlignment="Center"
-                                   RenderOptions.BitmapScalingMode="HighQuality"
-                                   HorizontalAlignment="Center"
-                                   Source="/ST.EplAddin.FootNote;component/Images/FootNoteItem.png"
-                                   Width="50" />
-                        </Grid>
-                    </Border>
+                            <Grid>
+                                <Image VerticalAlignment="Center"
+                                       RenderOptions.BitmapScalingMode="HighQuality"
+                                       HorizontalAlignment="Center"
+                                       Source="/ST.EplAddin.FootNote;component/Images/FootNoteItem.png"
+                                       Width="50" />
+                            </Grid>
+                        </Border>
 
-                    <DockPanel Grid.Column="1"
-                               Margin="6,0,0,0">
-                        <TextBlock Text="Выноска"
-                                   FontSize="14"
-                                   DockPanel.Dock="Top"
-                                   Foreground="Gray" />
-                        <UniformGrid DockPanel.Dock="Bottom"
-                                     Height="auto"
-                                     Rows="1"
-                                     VerticalAlignment="Bottom">
-                            <!--закинуть сюда иконки-->
+                        <DockPanel Grid.Column="1"
+                                   Margin="6,0,0,0">
+                            <TextBlock Text="Выноска"
+                                       FontSize="14"
+                                       DockPanel.Dock="Top"
+                                       Foreground="Gray" />
+                            <UniformGrid DockPanel.Dock="Bottom"
+                                         Height="auto"
+                                         Rows="1"
+                                         VerticalAlignment="Bottom">
+                                <!--закинуть сюда иконки-->
 
-                            <UniformGrid Rows="1"
-                                         HorizontalAlignment="Left">
+                                <UniformGrid Rows="1"
+                                             HorizontalAlignment="Left">
 
-                                <Button Style="{StaticResource button_icon}">
+                                    <Button Style="{StaticResource button_icon}">
+                                        <svg1:SVGImage SizeType="SizeToContent"
+                                                       Source="/ST.EplAddin.FootNote;component/Icons/arrow_downward.svg "
+                                                       Margin="3"
+                                                       RenderTransformOrigin="0.5,0.5"
+                                                       VerticalContentAlignment="Center"
+                                                       HorizontalContentAlignment="Center" />
+                                    </Button>
+
+                                    <Button Style="{StaticResource button_icon}">
+                                        <svg1:SVGImage SizeType="SizeToContent"
+                                                       Source="/ST.EplAddin.FootNote;component/Icons/arrow_upward.svg "
+                                                       Margin="3"
+                                                       RenderTransformOrigin="0.5,0.5"
+                                                       VerticalContentAlignment="Center"
+                                                       HorizontalContentAlignment="Center" />
+                                    </Button>
+                                    <Button Style="{StaticResource button_icon}">
+                                        <svg1:SVGImage SizeType="SizeToContent"
+                                                       Source="/ST.EplAddin.FootNote;component/Icons/format_paint.svg "
+                                                       Margin="3"
+                                                       RenderTransformOrigin="0.5,0.5"
+                                                       VerticalContentAlignment="Center"
+                                                       HorizontalContentAlignment="Center" />
+                                    </Button>
+                                </UniformGrid>
+
+                                <Button x:Name="Delete"
+                                        Style="{StaticResource button_icon}"
+                                        HorizontalAlignment="Right">
                                     <svg1:SVGImage SizeType="SizeToContent"
-                                                   Source="/ST.EplAddin.FootNote;component/Icons/arrow_downward.svg "
+                                                   Source="/ST.EplAddin.FootNote;component/Icons/delete.svg "
                                                    Margin="3"
                                                    RenderTransformOrigin="0.5,0.5"
                                                    VerticalContentAlignment="Center"
                                                    HorizontalContentAlignment="Center" />
                                 </Button>
 
-                                <Button Style="{StaticResource button_icon}">
-                                    <svg1:SVGImage SizeType="SizeToContent"
-                                                   Source="/ST.EplAddin.FootNote;component/Icons/arrow_upward.svg "
-                                                   Margin="3"
-                                                   RenderTransformOrigin="0.5,0.5"
-                                                   VerticalContentAlignment="Center"
-                                                   HorizontalContentAlignment="Center" />
-                                </Button>
-                                <Button Style="{StaticResource button_icon}">
-                                    <svg1:SVGImage SizeType="SizeToContent"
-                                                   Source="/ST.EplAddin.FootNote;component/Icons/format_paint.svg "
-                                                   Margin="3"
-                                                   RenderTransformOrigin="0.5,0.5"
-                                                   VerticalContentAlignment="Center"
-                                                   HorizontalContentAlignment="Center" />
-                                </Button>
                             </UniformGrid>
+                        </DockPanel>
+                    </Grid>
+                    <Separator Margin="0,12,0,5" />
 
-                            <Button x:Name="Delete"
-                                    Style="{StaticResource button_icon}"
-                                    HorizontalAlignment="Right">
+                    <WrapPanel Orientation="Vertical"
+                               Height="65">
+                        <TextBlock Text="Начало"
+                                   FontSize="14"
+                                   Margin="0,0,0,5" />
+                        <ComboBox Width="75"
+                                  Height="32"
+                                  SelectedIndex="1"
+                                  VerticalContentAlignment="Center">
+                            <ComboBoxItem>
+                                <Image Source="/ST.EplAddin.FootNote;component/Images/point.png"
+                                       RenderOptions.BitmapScalingMode="HighQuality"
+                                       Width="50"
+                                       Height="20" />
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <Image Source="../Images/arrow.png"
+                                       RenderOptions.BitmapScalingMode="HighQuality"
+                                       Width="50"
+                                       Height="20" />
+                            </ComboBoxItem>
+                        </ComboBox>
+                    </WrapPanel>
+
+                    <Separator Margin="0,3,0,12" />
+                    <TextBox Height="80"
+                             Text="Text"
+                             TextWrapping="Wrap"
+                             VerticalScrollBarVisibility="Auto"
+                             Padding="3"
+                             FontSize="14"
+                             AcceptsReturn="True"
+                             SpellCheck.IsEnabled="True"
+                             Language="ru-ru"
+                             FontFamily="Exo 2" />
+                    <DockPanel Margin="0,10,0,0">
+                        <StackPanel HorizontalAlignment="Left"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    Height="25">
+                            <StackPanel.Resources>
+                                <Style x:Key="Flag"
+                                       TargetType="RadioButton">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsChecked"
+                                                 Value="True">
+                                            <Setter Property="BorderBrush"
+                                                    Value="LightBlue" />
+                                            <Setter Property="BorderThickness"
+                                                    Value="1.5" />
+                                        </Trigger>
+
+                                    </Style.Triggers>
+
+
+                                    <Setter Property="Height"
+                                            Value="20" />
+                                    <Setter Property="Width"
+                                            Value="20" />
+                                    <Setter Property="BorderBrush"
+                                            Value="Transparent" />
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="RadioButton">
+                                                <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        Background="Transparent">
+
+                                                    <ContentPresenter />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </StackPanel.Resources>
+                            <RadioButton Style="{StaticResource Flag}"
+                                         GroupName="TextAlign">
                                 <svg1:SVGImage SizeType="SizeToContent"
-                                               Source="/ST.EplAddin.FootNote;component/Icons/delete.svg "
-                                               Margin="3"
+                                               Source="/ST.EplAddin.FootNote;component/Icons/format_align_left.svg "
+                                               Margin="1"
+                                               BorderThickness="0"
                                                RenderTransformOrigin="0.5,0.5"
                                                VerticalContentAlignment="Center"
                                                HorizontalContentAlignment="Center" />
-                            </Button>
+                            </RadioButton>
+                            <RadioButton Style="{StaticResource Flag}"
+                                         GroupName="TextAlign">
+                                <svg1:SVGImage SizeType="SizeToContent"
+                                               Source="/ST.EplAddin.FootNote;component/Icons/format_align_center.svg "
+                                               Margin="1"
+                                               RenderTransformOrigin="0.5,0.5"
+                                               VerticalContentAlignment="Center"
+                                               HorizontalContentAlignment="Center" />
+                            </RadioButton>
+                            <RadioButton Style="{StaticResource Flag}"
+                                         GroupName="TextAlign">
+                                <svg1:SVGImage SizeType="SizeToContent"
+                                               Source="/ST.EplAddin.FootNote;component/Icons/format_align_right.svg "
+                                               Margin="1"
+                                               RenderTransformOrigin="0.5,0.5"
+                                               VerticalContentAlignment="Center"
+                                               HorizontalContentAlignment="Center" />
+                            </RadioButton>
+                        </StackPanel>
+                        <Button DockPanel.Dock="Right"
+                                Background="White"
+                                Width="35"
+                                HorizontalAlignment="Right"
+                                Foreground="Gray"
+                                FontFamily="Exo 2 SemiBold">
+                            +m²
+                        </Button>
 
-                        </UniformGrid>
+                        <Button DockPanel.Dock="Right"
+                                Style="{StaticResource button_icon}"
+                                HorizontalAlignment="Right"
+                                Margin="0,0,6,0" Foreground="Gray">
+                            <svg1:SVGImage SizeType="SizeToContent"
+                                           Source="/ST.EplAddin.FootNote;component/Icons/add.svg "
+                                           Margin="2"
+                                           RenderTransformOrigin="0.5,0.5"
+                                           VerticalContentAlignment="Center"
+                                           HorizontalContentAlignment="Center" />
+                        </Button>
                     </DockPanel>
-                </Grid>
-                <Separator Margin="0,12,0,5"/>
-
-                <WrapPanel Orientation="Vertical"
-                           Height="65">
-                    <TextBlock Text="Начало"
-                               FontSize="14"
-                               Margin="0,0,0,5" />
-                    <ComboBox Width="75"
-                              Height="32"
-                              SelectedIndex="1"
-                              VerticalContentAlignment="Center">
-                        <ComboBoxItem>
-                            <Image Source="/ST.EplAddin.FootNote;component/Images/point.png"
-                                   RenderOptions.BitmapScalingMode="HighQuality"
-                                   Width="50"
-                                   Height="20" />
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            <Image Source="../Images/arrow.png"
-                                   RenderOptions.BitmapScalingMode="HighQuality"
-                                   Width="50"
-                                   Height="20" />
-                        </ComboBoxItem>
-                    </ComboBox>
-                </WrapPanel>
-
-                <Separator Margin="0,3,0,12" />
-                <TextBox Height="80"
-                         Text="Text"
-                         TextWrapping="Wrap"
-                         VerticalScrollBarVisibility="Auto"
-                         Padding="3"
-                         FontSize="14"
-                         AcceptsReturn="True"
-                         SpellCheck.IsEnabled="True"
-                         Language="ru-ru"
-                         FontFamily="Exo 2"/>
-                <DockPanel Margin="0,5,0,0">
-                    <StackPanel HorizontalAlignment="Left"
-                                Orientation="Horizontal"
-                                VerticalAlignment="Center">
-                        <StackPanel.Resources>
-                            <Style x:Key="Flag"
-                                   TargetType="RadioButton">
-                                <Style.Triggers>
-                                    <Trigger Property="IsChecked"
-                                             Value="True">
-                                        <Setter Property="BorderBrush"
-                                                Value="LightBlue" />
-                                        <Setter Property="BorderThickness"
-                                                Value="2" />
-                                    </Trigger>
-
-                                </Style.Triggers>
-
-
-                                <Setter Property="Height"
-                                        Value="20" />
-                                <Setter Property="Width"
-                                        Value="20" />
-                                <Setter Property="BorderBrush"
-                                        Value="Transparent" />
-
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="RadioButton">
-                                            <Border BorderThickness="{TemplateBinding BorderThickness}"
-                                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                                    Background="Transparent">
-
-                                                <ContentPresenter />
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </StackPanel.Resources>
-                        <RadioButton Style="{StaticResource Flag}"
-                                     GroupName="TextAlign">
-                            <svg1:SVGImage SizeType="SizeToContent"
-                                           Source="/ST.EplAddin.FootNote;component/Icons/format_align_left.svg "
-                                           Margin="2"
-                                           BorderThickness="0"
-                                           RenderTransformOrigin="0.5,0.5"
-                                           VerticalContentAlignment="Center"
-                                           HorizontalContentAlignment="Center" />
-                        </RadioButton>
-                        <RadioButton Style="{StaticResource Flag}"
-                                     GroupName="TextAlign">
-                            <svg1:SVGImage SizeType="SizeToContent"
-                                           Source="/ST.EplAddin.FootNote;component/Icons/format_align_center.svg "
-                                           Margin="2"
-                                           RenderTransformOrigin="0.5,0.5"
-                                           VerticalContentAlignment="Center"
-                                           HorizontalContentAlignment="Center" />
-                        </RadioButton>
-                        <RadioButton Style="{StaticResource Flag}"
-                                     GroupName="TextAlign">
-                            <svg1:SVGImage SizeType="SizeToContent"
-                                           Source="/ST.EplAddin.FootNote;component/Icons/format_align_right.svg "
-                                           Margin="2"
-                                           RenderTransformOrigin="0.5,0.5"
-                                           VerticalContentAlignment="Center"
-                                           HorizontalContentAlignment="Center" />
-                        </RadioButton>
-                    </StackPanel>
-                    <Button DockPanel.Dock="Right"
-                            Style="{StaticResource button_icon}"
-                            HorizontalAlignment="Right">
-                        <svg1:SVGImage SizeType="SizeToContent"
-                                       Source="/ST.EplAddin.FootNote;component/Icons/fx_function.svg "
-                                       Margin="4"
-                                       RenderTransformOrigin="0.5,0.5"
-                                       VerticalContentAlignment="Center"
-                                       HorizontalContentAlignment="Center" />
-                    </Button>
-                    <Button DockPanel.Dock="Right"
-                            Style="{StaticResource button_icon}"
-                            HorizontalAlignment="Right">
-                        <svg1:SVGImage SizeType="SizeToContent"
-                                       Source="/ST.EplAddin.FootNote;component/Icons/add.svg "
-                                       Margin="4"
-                                       RenderTransformOrigin="0.5,0.5"
-                                       VerticalContentAlignment="Center"
-                                       HorizontalContentAlignment="Center" />
-                    </Button>
-                </DockPanel>
-                <Separator Margin="0,12,0,3" />
-                <UniformGrid Rows="1"
-                             Height="60">
-                    <UniformGrid Columns="1"
-                                 Margin="0,0,6,0">
-                        <TextBlock Text="Размер текста"
-                                   FontSize="14" />
-                        <TextBox Style="{StaticResource VerticalAlignContent}" />
+                    <Separator Margin="0,10,0,3" />
+                    <UniformGrid Rows="1"
+                                 Height="60">
+                        <UniformGrid Columns="1"
+                                     Margin="0,0,6,0">
+                            <TextBlock Text="Размер текста"
+                                       FontSize="14" />
+                            <TextBox Style="{StaticResource VerticalAlignContent}" />
+                        </UniformGrid>
+                        <UniformGrid Columns="1"
+                                     Margin="0,0,0,0">
+                            <TextBlock Text="Цвет текста"
+                                       FontSize="14" />
+                            <colorpicker:PortableColorPicker ColorState="{Binding ElementName=main, Path=ColorState, Mode=TwoWay}" />
+                        </UniformGrid>
+                        <UniformGrid Columns="1"
+                                     Margin="6,0,0,0">
+                            <TextBlock Text="Толщина линий"
+                                       FontSize="14" />
+                            <TextBox Style="{StaticResource VerticalAlignContent}" />
+                        </UniformGrid>
                     </UniformGrid>
-                    <UniformGrid Columns="1"
-                                 Margin="0,0,0,0">
-                        <TextBlock Text="Цвет текста"
-                                   FontSize="14" />
-                        <colorpicker:PortableColorPicker ColorState="{Binding ElementName=main, Path=ColorState, Mode=TwoWay}" />
+                    <Separator Margin="0,12,0,3" />
+                    <UniformGrid Rows="1"
+                                 Columns="3"
+                                 Height="60">
+                        <UniformGrid Columns="1"
+                                     Margin="0,0,6,0">
+                            <TextBlock Text="Радиус кружка"
+                                       FontSize="14" />
+                            <TextBox Style="{StaticResource VerticalAlignContent}" />
+                        </UniformGrid>
+                        <UniformGrid Columns="1">
+                            <TextBlock Text="Цвет выноски"
+                                       FontSize="14" />
+                            <colorpicker:PortableColorPicker ColorState="{Binding ElementName=main, Path=ColorState, Mode=TwoWay}" />
+                        </UniformGrid>
+                        <UniformGrid Columns="1"
+                                     Margin="6,0,0,0" />
                     </UniformGrid>
-                    <UniformGrid Columns="1"
-                                 Margin="6,0,0,0">
-                        <TextBlock Text="Толщина линий"
-                                   FontSize="14" />
-                        <TextBox Style="{StaticResource VerticalAlignContent}" />
-                    </UniformGrid>
-                </UniformGrid>
-                <Separator Margin="0,12,0,3" />
-                <UniformGrid Rows="1"
-                             Columns="3"
-                             Height="60">
-                    <UniformGrid Columns="1"
-                                 Margin="0,0,6,0">
-                        <TextBlock Text="Радиус кружка"
-                                   FontSize="14" />
-                        <TextBox Style="{StaticResource VerticalAlignContent}" />
-                    </UniformGrid>
-                    <UniformGrid Columns="1">
-                        <TextBlock Text="Цвет выноски"
-                                   FontSize="14" />
-                        <colorpicker:PortableColorPicker ColorState="{Binding ElementName=main, Path=ColorState, Mode=TwoWay}" />
-                    </UniformGrid>
-                    <UniformGrid Columns="1"
-                                 Margin="6,0,0,0" />
-                </UniformGrid>
-                <Separator Margin="0,12,0,3" />
-                <CheckBox IsChecked="False"
-                          Content="Запомнить для последующих выносок"
-                          FontSize="14"
-                          Margin="0,5,0,5"
-                          IsThreeState="False"
-                          Foreground="Gray"
-                          FontFamily="Exo 2 Medium" />
-            </StackPanel>
+                    <Separator Margin="0,12,0,3" />
+                    <CheckBox IsChecked="False"
+                              Content="Запомнить для последующих выносок"
+                              FontSize="14"
+                              Margin="0,5,0,5"
+                              IsThreeState="False"
+                              Foreground="Gray"
+                              FontFamily="Exo 2 Medium" />
+                </StackPanel>
 
             </ScrollViewer>
 
