@@ -150,6 +150,7 @@
     <Compile Include="PropertyBrowser\PropertiesStore.cs" />
     <Compile Include="PropertyBrowser\Settings.cs" />
     <Compile Include="App.cs" />
+    <Compile Include="ViewModels\PropertiesWindowVM.cs" />
     <Compile Include="Views\FullPropertiesWindow.xaml.cs">
       <DependentUpon>FullPropertiesWindow.xaml</DependentUpon>
     </Compile>
