@@ -13,7 +13,7 @@ namespace ST.EplAddin.FootNote
         public App()
         {
             LoadAssemblies();
-            Services.GetRequiredService<PropertiesWindow>().ShowDialog(); //чтобы стартануть надо сделать вот так
+            //Services.GetRequiredService<PropertiesWindow>().ShowDialog(); //чтобы стартануть надо сделать вот так
         }
         private void LoadAssemblies()
         {
