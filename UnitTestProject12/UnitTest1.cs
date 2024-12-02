@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ST.EplAddin.FootNote;
-using ST.EplAddin.FootNote.Views;
 
 namespace UnitTestProject12
 {
@@ -14,8 +13,9 @@ namespace UnitTestProject12
             new System.Windows.Application();
 
             var app = new App();
-            PropertiesWindow propertiesWindow = new PropertiesWindow();
-            propertiesWindow.ShowDialog();
+
+            //PropertiesWindow propertiesWindow = new PropertiesWindow();
+            //propertiesWindow.ShowDialog();
             //SettingsWindow settingsWindow = new SettingsWindow();
             //settingsWindow.ShowDialog();
         }

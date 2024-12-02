@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ST.EplAddin.FootNote.ViewModels;
+using ST.EplAddin.FootNote.Views;
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -10,6 +13,7 @@ namespace ST.EplAddin.FootNote
         public App()
         {
             LoadAssemblies();
+            Services.GetRequiredService<PropertiesWindow>().ShowDialog(); //чтобы стартануть надо сделать вот так
         }
         private void LoadAssemblies()
         {
@@ -37,6 +41,22 @@ namespace ST.EplAddin.FootNote
             if (loadedPaths.Contains(reference, StringComparer.InvariantCultureIgnoreCase)) return false;
 
             return true;
+        }
+
+        private static IServiceProvider? _services;
+        public static IServiceProvider Services => _services ??= InitializeServices().BuildServiceProvider();
+        public static IServiceCollection InitializeServices()
+        {
+            var services = new ServiceCollection();
+            services.AddTransient<PropertiesWindowVM>();
+
+            services.AddTransient(S =>
+            {
+                var model = Services.GetRequiredService<PropertiesWindowVM>();
+                var window = new PropertiesWindow { DataContext = model };
+                return window;
+            });
+            return services;
         }
     }
 }
