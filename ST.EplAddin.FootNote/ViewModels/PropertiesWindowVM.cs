@@ -6,6 +6,7 @@ namespace ST.EplAddin.FootNote.ViewModels
 {
     internal class PropertiesWindowVM
     {
+        public string Title { get; set; } = "Условный объект";
         private void ShowCharacterMap()
         {
             try
