@@ -287,7 +287,7 @@
                                 Background="White"
                                 Width="35"
                                 HorizontalAlignment="Right"
-                                Foreground="Gray"
+                                Foreground="Black"
                                 FontFamily="Exo 2 SemiBold">
                             +m²
                         </Button>

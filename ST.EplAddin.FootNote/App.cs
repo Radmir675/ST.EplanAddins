@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using ST.EplAddin.FootNote.Services;
+using ST.EplAddin.FootNote.Services.Implementations;
 using ST.EplAddin.FootNote.ViewModels;
 using ST.EplAddin.FootNote.Views;
 using System;
@@ -13,8 +15,15 @@ namespace ST.EplAddin.FootNote
         public App()
         {
             LoadAssemblies();
-            //Services.GetRequiredService<PropertiesWindow>().ShowDialog(); //чтобы стартануть надо сделать вот так
+            StartWindow();
         }
+
+        private void StartWindow()
+        {
+            Services.GetRequiredService<PropertiesWindow>().ShowDialog(); //чтобы стартануть надо сделать вот так
+        }
+
+        #region CheckAssemblies
         private void LoadAssemblies()
         {
             string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -43,12 +52,19 @@ namespace ST.EplAddin.FootNote
             return true;
         }
 
+
+
+        #endregion
+
+        #region Services
+
         private static IServiceProvider? _services;
         public static IServiceProvider Services => _services ??= InitializeServices().BuildServiceProvider();
         public static IServiceCollection InitializeServices()
         {
             var services = new ServiceCollection();
             services.AddTransient<PropertiesWindowVM>();
+            services.AddTransient<IWindowsServiceDialog, WindowsDialog>();
 
             services.AddTransient(S =>
             {
@@ -56,7 +72,10 @@ namespace ST.EplAddin.FootNote
                 var window = new PropertiesWindow { DataContext = model };
                 return window;
             });
+
             return services;
+
+            #endregion
         }
     }
 }

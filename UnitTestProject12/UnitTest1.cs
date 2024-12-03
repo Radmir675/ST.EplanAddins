@@ -8,16 +8,13 @@ namespace UnitTestProject12
     {
 
         [TestMethod]
-        public void TestMethod1()
+        public void TestMethod()
         {
             new System.Windows.Application();
-
             var app = new App();
 
-            //PropertiesWindow propertiesWindow = new PropertiesWindow();
-            //propertiesWindow.ShowDialog();
-            //SettingsWindow settingsWindow = new SettingsWindow();
-            //settingsWindow.ShowDialog();
+
+
         }
     }
 }
