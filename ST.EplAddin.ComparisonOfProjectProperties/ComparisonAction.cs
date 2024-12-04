@@ -129,8 +129,17 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
 
 
                     int lastindex = value.LastUsedIndex;
-                    for (int i = 0; i < lastindex; i++)
+
+
+                    foreach (var ind in value.Indexes)
                     {
+                        var idxVal = value[ind];
+                        //  }
+
+                        //   (int i = 0; i < lastindex; i++)
+
+                        //       for (int i = 0; i < lastindex; i++)
+                        //  {
 
                         // if (i + 1 != value.Indexes[i])
                         // {
@@ -143,7 +152,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                         // var va3 = value[i+1];
 
 
-                        var idxVal = value[i + 1];//value[value.Indexes[i]];
+                        //  var idxVal = value[i + 1];//value[value.Indexes[i]];
 
                         if (!idxVal.IsEmpty)
                         {
