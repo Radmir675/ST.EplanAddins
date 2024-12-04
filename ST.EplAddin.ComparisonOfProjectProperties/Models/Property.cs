@@ -1,8 +1,6 @@
-﻿using ST.EplAddin.ComparisonOfProjectProperties.Helper;
-
-namespace ST.EplAddin.ComparisonOfProjectProperties.Models
+﻿namespace ST.EplAddin.ComparisonOfProjectProperties.Models
 {
-    public class Property : ViewModelBase
+    public class Property /*: ViewModelBase*/
     {
         public string Name { get; set; }
         public int Id { get; set; }
