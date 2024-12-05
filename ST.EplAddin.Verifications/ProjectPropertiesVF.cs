@@ -169,10 +169,12 @@ namespace ST.EplAddin.Verifications
             return result;
         }
 
+
         private Dictionary<PropertyKey, Property> GetProjectValues(ProjectPropertyList projectPropertyList)
         {
             var existingValues = projectPropertyList.ExistingValues;
-            var dictionary = new Dictionary<PropertyKey, Property>();
+            var dictionary = new Dictionary<PropertyKey, Property>(existingValues.Length);
+
             foreach (var value in existingValues)
             {
                 var propertyValue = value.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
@@ -180,15 +182,18 @@ namespace ST.EplAddin.Verifications
 
                 if (value.Indexes.Length > 0)
                 {
-                    for (int i = 0; i < value.Indexes.Length; i++)
+                    foreach (var ind in value.Indexes)
                     {
-                        try
+                        var idxVal = value[ind];
+
+                        if (!idxVal.IsEmpty)
                         {
-                            var propertyValue1 = value[value.Indexes[i]].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                            var propertyValue1 = idxVal.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
                             if (!string.IsNullOrEmpty(propertyValue1))
                             {
-                                var definitionName = value[value.Indexes[i]].Definition.Name;
-                                var index = int.Parse(value.Indexes[i].ToString());
+                                var definitionName = idxVal.Definition.Name;
+
+                                var index = int.Parse((ind + 1).ToString());
                                 dictionary.Add(new PropertyKey(id, index), new Property()
                                 {
                                     Name = definitionName,
@@ -197,10 +202,6 @@ namespace ST.EplAddin.Verifications
                                     Index = index
                                 });
                             }
-                        }
-                        catch (Exception e)
-                        {
-
                         }
                     }
                 }
@@ -213,13 +214,12 @@ namespace ST.EplAddin.Verifications
                         Name = definitionName,
                         Id = id,
                         Value = propertyValue,
-                        Index = index
                     });
                 }
             }
+
             return dictionary;
         }
-
         private bool ShowFileDialog()
         {
             OpenFileDialog openFileDlg = new OpenFileDialog();
