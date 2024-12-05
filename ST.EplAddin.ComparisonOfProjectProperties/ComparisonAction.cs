@@ -6,6 +6,7 @@ using ST.EplAddin.ComparisonOfProjectProperties.Models;
 using ST.EplAddin.ComparisonOfProjectProperties.ViewModels;
 using ST.EplAddin.ComparisonOfProjectProperties.Views;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace ST.EplAddin.ComparisonOfProjectProperties
 {
@@ -31,7 +32,11 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                 LockProjectByDefault = false,
                 LockSelectionByDefault = false
             };
-            if (selectionSet.SelectedProjects.Length != 2) return false;
+            if (selectionSet.SelectedProjects.Length != 2)
+            {
+                MessageBox.Show("Выберите 2 проекта для сравнения!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
 
             var project1 = selectionSet.SelectedProjects[0];
             var project2 = selectionSet.SelectedProjects[1];
@@ -91,7 +96,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                             {
                                 var definitionName = idxVal.Definition.Name;
 
-                                var index = int.Parse(ind + 1.ToString());
+                                var index = int.Parse((ind + 1).ToString());
                                 dictionary.Add(new PropertyKey(id, index), new Property()
                                 {
                                     Name = definitionName,
@@ -112,7 +117,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                         Name = definitionName,
                         Id = id,
                         Value = propertyValue,
-                        Index = index
+                        //Index = index
                     });
                 }
                 progress.Step(1);
