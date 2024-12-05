@@ -1,4 +1,5 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
+using Eplan.EplApi.Base;
 using Eplan.EplApi.HEServices;
 
 namespace ST.EplAddin.UserConfigurationService
@@ -22,6 +23,14 @@ namespace ST.EplAddin.UserConfigurationService
                 LockProjectByDefault = false,
                 LockSelectionByDefault = false
             };
+
+            SchemeSetting oSchemeSetting = new SchemeSetting();
+            oSchemeSetting.Init("USER.DXF.SCHEMES");
+            string strSchemeName = "DXFSchemeToSelect";
+            if (oSchemeSetting.CheckIfSchemeExists(strSchemeName))
+            {
+
+            }
 
             return true;
 
