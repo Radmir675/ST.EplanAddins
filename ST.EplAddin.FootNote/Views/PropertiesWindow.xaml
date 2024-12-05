@@ -362,7 +362,9 @@
                          Height="23"
                          VerticalAlignment="Bottom">
                 <Button Content="По умолчанию"
-                        Margin="0,0,5,0" />
+                        Margin="0,0,5,0"
+                        Foreground="Gray"
+                        FontFamily="Exo 2 SemiBold" />
                 <Button Width="auto">
                     <StackPanel Orientation="Horizontal">
                         <svg1:SVGImage SizeType="SizeToContent"
