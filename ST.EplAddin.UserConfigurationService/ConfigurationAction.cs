@@ -1,5 +1,6 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.Base;
+using System.Collections.Specialized;
 
 namespace ST.EplAddin.UserConfigurationService
 {
@@ -24,17 +25,20 @@ namespace ST.EplAddin.UserConfigurationService
 
         private static void SetPartsDatabase()
         {
+            var collection = new StringCollection();
+
             SchemeSetting oSchemeSetting = new SchemeSetting();
-            oSchemeSetting.Init("USER.ModalDialogs.PathsScheme");
-            // string strSchemeName = "Google_Drive_Config";
-            string strSchemeName = "Standard";
-            var s = oSchemeSetting.GetNodeHandle();
-            var t = s.GetParentNode().GetNodePath();
-            if (oSchemeSetting.CheckIfSchemeExists(strSchemeName))
-            {
-                oSchemeSetting.SetLastUsed(strSchemeName);
-                var res = oSchemeSetting.GetLastUsed();
-            }
+            oSchemeSetting.Init("USER.PartSelectionGui.DataSourceScheme");
+            var count = oSchemeSetting.GetCount();
+            SettingNode settingNode = new SettingNode("USER.PartSelectionGui.DataSourceScheme");
+            settingNode.GetListOfNodes(ref collection, false);
+
+
+
+
+
+
+
         }
 
         private void SetDataBaseCatalogue()
