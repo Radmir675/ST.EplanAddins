@@ -25,15 +25,33 @@ namespace ST.EplAddin.UserConfigurationService
             };
 
             SchemeSetting oSchemeSetting = new SchemeSetting();
-            oSchemeSetting.Init("USER.DXF.SCHEMES");
-            string strSchemeName = "DXFSchemeToSelect";
+            oSchemeSetting.Init("USER.ModalDialogs.PathsScheme");
+            string strSchemeName = "Google_Drive_Config";
+            // string strSchemeName1 = "Standart";
+            var reas = oSchemeSetting.GetName();
+            var t = oSchemeSetting.GetLocalizedNameSettingPath();
             if (oSchemeSetting.CheckIfSchemeExists(strSchemeName))
             {
-
+                oSchemeSetting.SetScheme("Google_Drive_Config");
             }
+
+
+            SetDataBaseCatalogue();
 
             return true;
 
+        }
+
+        private void SetDataBaseCatalogue()
+        {
+            SchemeSetting oSchemeSetting = new SchemeSetting();
+            oSchemeSetting.Init("USER.PartSelectionGui.DataSourceScheme");
+            string strSchemeName = "Google_Drive_Config";
+
+            if (oSchemeSetting.CheckIfSchemeExists(strSchemeName))
+            {
+                oSchemeSetting.SetScheme(strSchemeName);
+            }
         }
 
         public void GetActionProperties(ref ActionProperties actionProperties)
