@@ -5,13 +5,13 @@ using Eplan.EplApi.HEServices;
 using ST.EplAddin.ComparisonOfProjectProperties.Models;
 using ST.EplAddin.ComparisonOfProjectProperties.ViewModels;
 using ST.EplAddin.ComparisonOfProjectProperties.Views;
-using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace ST.EplAddin.ComparisonOfProjectProperties
 {
-    public partial class ComparisonAction : IEplAction
+    //TODO:Посмотреть что будет если максимум 99
+    public class ComparisonAction : IEplAction
     {
         private ProjectPropertyList propertiesValue1 { get; set; } = null;
         private ProjectPropertyList propertiesValue2 { get; set; } = null;
@@ -32,7 +32,11 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                 LockProjectByDefault = false,
                 LockSelectionByDefault = false
             };
-            if (selectionSet.SelectedProjects.Length != 2) return false;
+            if (selectionSet.SelectedProjects.Length != 2)
+            {
+                MessageBox.Show("Выберите 2 проекта для сравнения!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
 
             var project1 = selectionSet.SelectedProjects[0];
             var project2 = selectionSet.SelectedProjects[1];
@@ -67,41 +71,13 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                 DataContext = new MainWindowVM(dataStorage)
             };
             var dialogResult = mainWindow.ShowDialog() ?? false;
-
-
-            if (projectName1 == "dc")
-            {
-                using (SafetyPoint safetyPoint = SafetyPoint.Create())
-                {
-                    using (UndoStep undo = new UndoManager().CreateUndoStep())
-                    {
-                        ChangesRecord changesRecord = new ChangesRecord();
-                        var recordChangesList = changesRecord.GetChangesList();
-                        foreach (var key in recordChangesList)
-                        {
-                            //TODO: проверить существует ли такой индекс
-                            var initialPropertyValue = propertiesValue1[key];
-                            var targetPropertyValue = propertiesValue2[key];
-                            try
-                            {
-                                CopyTo(initialPropertyValue, targetPropertyValue);
-                            }
-                            catch (Exception e)
-                            {
-                                MessageBox.Show($"Не удалось присвоить значение свойству {propertiesValue1[key].Definition.Name} | {key} ");
-                            }
-                        }
-                        undo.SetUndoDescription($"Обновление свойств проекта {projectName2}");
-                    }
-                    safetyPoint.Commit();
-                }
-            }
             return true;
         }
         private Dictionary<PropertyKey, Property> GetProjectValues(ProjectPropertyList projectPropertyList)
         {
             var existingValues = projectPropertyList.ExistingValues;
             var dictionary = new Dictionary<PropertyKey, Property>(existingValues.Length);
+
             foreach (var value in existingValues)
             {
                 var propertyValue = value.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
@@ -109,20 +85,26 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
 
                 if (value.Indexes.Length > 0)
                 {
-                    for (int i = 0; i < value.Indexes.Length; i++)
+                    foreach (var ind in value.Indexes)
                     {
-                        var propertyValue1 = value[value.Indexes[i]].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
-                        if (!string.IsNullOrEmpty(propertyValue1))
+                        var idxVal = value[ind];
+
+                        if (!idxVal.IsEmpty)
                         {
-                            var definitionName = value[value.Indexes[i]].Definition.Name;
-                            var index = int.Parse(value.Indexes[i].ToString());
-                            dictionary.Add(new PropertyKey(id, index), new Property()
+                            var propertyValue1 = idxVal.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                            if (!string.IsNullOrEmpty(propertyValue1))
                             {
-                                Name = definitionName,
-                                Id = id,
-                                Value = propertyValue1,
-                                Index = index
-                            });
+                                var definitionName = idxVal.Definition.Name;
+
+                                var index = int.Parse((ind + 1).ToString());
+                                dictionary.Add(new PropertyKey(id, index), new Property()
+                                {
+                                    Name = definitionName,
+                                    Id = id,
+                                    Value = propertyValue1,
+                                    Index = index
+                                });
+                            }
                         }
                     }
                 }
@@ -135,11 +117,12 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                         Name = definitionName,
                         Id = id,
                         Value = propertyValue,
-                        Index = index
+                        //Index = index
                     });
                 }
                 progress.Step(1);
             }
+
             return dictionary;
         }
 

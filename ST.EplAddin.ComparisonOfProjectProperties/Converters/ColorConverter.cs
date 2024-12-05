@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ST.EplAddin.ComparisonOfProjectProperties.Models;
+using System;
 using System.Globalization;
 using System.Windows.Data;
 

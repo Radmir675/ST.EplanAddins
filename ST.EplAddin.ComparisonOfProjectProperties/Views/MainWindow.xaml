@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:viewModels="clr-namespace:ST.EplAddin.ComparisonOfProjectProperties.ViewModels"
         xmlns:converters="clr-namespace:ST.EplAddin.ComparisonOfProjectProperties.Converters"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Width="824"
         ResizeMode="CanResizeWithGrip"
@@ -135,7 +136,7 @@
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding Path=Value.Name}" />
-                                            <TextBlock Text="{Binding Value.Index,StringFormat=[{0}]}" />
+                                            <TextBlock Text="{Binding Value.Index,StringFormat=[{0}], TargetNullValue={x:Static system:String.Empty}}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -177,7 +178,7 @@
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding Path=Value.Name}" />
-                                            <TextBlock Text="{Binding Value.Index,StringFormat=[{0}]}" />
+                                            <TextBlock Text="{Binding Value.Index,StringFormat=[{0}], TargetNullValue={x:Static system:String.Empty}}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
