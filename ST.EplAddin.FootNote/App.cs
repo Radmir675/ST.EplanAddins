@@ -17,9 +17,9 @@ namespace ST.EplAddin.FootNote
         public App()
         {
             LoadAssemblies();
-            //  LoadAppDictionary();
-            StartWindow();
         }
+
+        #region DELETE
         private void LoadAppDictionary()
         {
             var resourceDictionary = new ResourceDictionary
@@ -28,16 +28,12 @@ namespace ST.EplAddin.FootNote
             };
 
         }
-
-        public static void GetApplicationName()
-        {
-            var res = Application.Current;
-        }
-
-        private void StartWindow()
+        void StartWindow()
         {
             Services.GetRequiredService<PropertiesWindow>().ShowDialog(); //чтобы стартануть надо сделать вот так
         }
+
+        #endregion
 
         #region CheckAssemblies
         private void LoadAssemblies()
@@ -76,7 +72,7 @@ namespace ST.EplAddin.FootNote
 
         private static IServiceProvider? _services;
         public static IServiceProvider Services => _services ??= InitializeServices().BuildServiceProvider();
-        public static IServiceCollection InitializeServices()
+        private static IServiceCollection InitializeServices()
         {
             var services = new ServiceCollection();
             services.AddTransient<PropertiesWindowVM>();
