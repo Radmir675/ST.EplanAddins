@@ -11,29 +11,32 @@ using System.Windows;
 
 namespace ST.EplAddin.FootNote
 {
-    public class App
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : Application
     {
-
+        private static ResourceDictionary resourceDictionary;
         public App()
         {
             LoadAssemblies();
-            //  LoadAppDictionary();
+            LoadAppDictionary();
             StartWindow();
         }
+
         private void LoadAppDictionary()
         {
-            var resourceDictionary = new ResourceDictionary
+            resourceDictionary = new ResourceDictionary
             {
                 Source = new Uri(("/ST.EplAddin.FootNote;component/PropertiesWindowDictionary.xaml"), UriKind.RelativeOrAbsolute)
             };
 
         }
 
-        public static void GetApplicationName()
-        {
-            var res = Application.Current;
-        }
-
+        //protected override void OnStartup(StartupEventArgs e)
+        //{
+        //    base.OnStartup(e);
+        //}
         private void StartWindow()
         {
             Services.GetRequiredService<PropertiesWindow>().ShowDialog(); //чтобы стартануть надо сделать вот так
@@ -93,5 +96,9 @@ namespace ST.EplAddin.FootNote
 
             #endregion
         }
+
+
     }
 }
+
+

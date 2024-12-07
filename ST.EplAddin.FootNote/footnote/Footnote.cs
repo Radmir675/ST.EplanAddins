@@ -5,7 +5,6 @@ using Eplan.EplApi.DataModel.Graphics;
 using NLog;
 using ST.EplAddin.FootNote.Forms;
 using ST.EplAddin.FootNote.ProperyBrowser;
-using ST.EplAddin.FootNote.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -178,7 +177,8 @@ namespace ST.EplAddin.FootNote
         {
             StartPosition = startPoint;
             FinishPosition = endPoint;
-            var result = new PropertiesWindow().ShowDialog();
+            App.GetApplicationName();
+            // var result = new PropertiesWindow().ShowDialog(); 
 
         }
 

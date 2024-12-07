@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
+    <Compile Include="App.cs" />
     <Compile Include="footnote\FootNote.cs" />
     <Compile Include="footnote\Footnote_DragIteraction.cs" />
     <Compile Include="footnote\Footnote_InsertAction.cs" />
@@ -150,7 +151,6 @@
     <Compile Include="PropertyBrowser\PropertiesProvider.cs" />
     <Compile Include="PropertyBrowser\PropertiesStore.cs" />
     <Compile Include="PropertyBrowser\Settings.cs" />
-    <Compile Include="App.cs" />
     <Compile Include="Services\Implementations\WindowsDialog.cs" />
     <Compile Include="Services\IWindowsServiceDialog.cs" />
     <Compile Include="ViewModels\PropertiesWindowVM.cs" />
@@ -201,6 +201,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Dictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PropertiesWindowDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
