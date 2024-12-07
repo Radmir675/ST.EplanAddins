@@ -6,6 +6,7 @@ using ST.EplAddin.ComparisonOfProjectProperties.Models;
 using ST.EplAddin.ComparisonOfProjectProperties.ViewModels;
 using ST.EplAddin.ComparisonOfProjectProperties.Views;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ST.EplAddin.ComparisonOfProjectProperties
@@ -48,9 +49,10 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             var projectName2 = project2?.ProjectName;
 
             progress = new Progress("Progress");
+
             progress.SetTitle("Свойства проекта");
             progress.SetActionText($"Чтение свойств проекта {projectName1}");
-            progress.SetAllowCancel(false);
+            progress.SetAllowCancel(true);
             progress.SetAskOnCancel(true);
             progress.ShowImmediately();
             progress.SetNeededSteps(project1.Properties.ExistingValues.Length + project2.Properties.ExistingValues.Length);
@@ -80,10 +82,9 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
 
             foreach (var value in existingValues)
             {
-                var propertyValue = value.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
                 var id = value.Id.AsInt;
 
-                if (value.Indexes.Length > 0)
+                if (value.Indexes.Any())
                 {
                     foreach (var ind in value.Indexes)
                     {
@@ -92,24 +93,30 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                         if (!idxVal.IsEmpty)
                         {
                             var propertyValue1 = idxVal.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
-                            if (!string.IsNullOrEmpty(propertyValue1))
-                            {
-                                var definitionName = idxVal.Definition.Name;
+                            if (!string.IsNullOrEmpty(propertyValue1)) continue;
 
-                                var index = int.Parse((ind + 1).ToString());
-                                dictionary.Add(new PropertyKey(id, index), new Property()
-                                {
-                                    Name = definitionName,
-                                    Id = id,
-                                    Value = propertyValue1,
-                                    Index = index
-                                });
-                            }
+                            var definitionName = idxVal.Definition.Name;
+
+                            var index = int.Parse((ind + 1).ToString());
+                            dictionary.Add(new PropertyKey(id, index), new Property()
+                            {
+                                Name = definitionName,
+                                Id = id,
+                                Value = propertyValue1,
+                                Index = index
+                            });
+
+
                         }
+
                     }
+
                 }
-                else if (!string.IsNullOrEmpty(propertyValue))
+                else
                 {
+                    var propertyValue = value.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                    if (string.IsNullOrEmpty(propertyValue)) continue;
+
                     var definitionName = value.Definition.Name;
                     var index = 0;
                     dictionary.Add(new PropertyKey(id, index), new Property()
@@ -117,10 +124,11 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                         Name = definitionName,
                         Id = id,
                         Value = propertyValue,
-                        //Index = index
                     });
                 }
                 progress.Step(1);
+                if (progress.Canceled()) break;
+
             }
 
             return dictionary;
