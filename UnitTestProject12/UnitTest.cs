@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ST.EplAddin.ComparisonOfProjectProperties.Views;
+using ST.EplAddin.UserConfigurationService.Views;
 
 namespace UnitTestProject12
 {
@@ -10,8 +10,7 @@ namespace UnitTestProject12
         public void StartForm()
         {
 
-            MainWindow form = new MainWindow();
-            form.ShowDialog();
+            new ConfigurationView().ShowDialog();
 
         }
     }

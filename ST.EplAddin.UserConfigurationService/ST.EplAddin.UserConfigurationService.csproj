@@ -73,9 +73,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\create.png" />
-    <Content Include="Resources\remove.png" />
-    <Content Include="Resources\save.png" />
+    <Resource Include="Resources\create.png" />
+    <Resource Include="Resources\remove.png" />
+    <Resource Include="Resources\save.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

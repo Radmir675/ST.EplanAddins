@@ -67,6 +67,10 @@
       <Project>{5ae25bdc-3a63-4b3e-9341-91bb25f1090a}</Project>
       <Name>ST.EplAddin.ComparisonOfProjectProperties</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ST.EplAddin.UserConfigurationService\ST.EplAddin.UserConfigurationService.csproj">
+      <Project>{96fff25e-579e-412e-b8b7-eb7825a8db58}</Project>
+      <Name>ST.EplAddin.UserConfigurationService</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
