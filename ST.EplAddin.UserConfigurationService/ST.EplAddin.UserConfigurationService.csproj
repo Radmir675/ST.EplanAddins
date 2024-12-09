@@ -62,12 +62,19 @@
     <Compile Include="Views\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SchemesView.xaml.cs">
+      <DependentUpon>SchemesView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ConfigurationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SchemesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
