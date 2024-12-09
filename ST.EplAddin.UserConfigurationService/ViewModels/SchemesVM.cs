@@ -1,7 +1,6 @@
 ﻿namespace ST.EplAddin.UserConfigurationService.ViewModels
 {
-    internal class ConfigurationVM : ViewModel
+    internal class SchemesVM : ViewModel
     {
-
     }
 }

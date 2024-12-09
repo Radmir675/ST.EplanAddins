@@ -56,10 +56,10 @@
                            Text="Описание:" VerticalAlignment="Top"/>
                 <TextBlock Grid.Row="2"
                            Grid.Column="0"
-                           Text="Основные данные системы:" />
+                           Text="База данных изделий:" />
                 <TextBlock Grid.Row="3"
                            Grid.Column="0"
-                           Text="Управление правами:"/>
+                           Text="Каталоги:"/>
 
                 <Grid Grid.Row="0"
                       Grid.Column="1">

@@ -59,6 +59,8 @@
     <Compile Include="ConfigurationAction.cs" />
     <Compile Include="ViewModels\ConfigurationVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\SchemesVM.cs" />
+    <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
     </Compile>
