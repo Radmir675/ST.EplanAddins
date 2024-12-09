@@ -78,7 +78,8 @@
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center">
                         <Button Margin="7,0,2,0"
-                                ToolTip="Создать">
+                                ToolTip="Создать"
+                                Command="{Binding CreateCommand}">
                             <Image Source="../Resources/create.png"
                                    Width="15" Height="15"/>
                         </Button>

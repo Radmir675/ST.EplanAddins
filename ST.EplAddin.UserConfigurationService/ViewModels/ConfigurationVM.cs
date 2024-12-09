@@ -1,4 +1,5 @@
 ﻿using ST.EplAddin.UserConfigurationService.Models;
+using ST.EplAddin.UserConfigurationService.Views;
 using System.Collections.ObjectModel;
 
 namespace ST.EplAddin.UserConfigurationService.ViewModels
@@ -10,7 +11,9 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
         public string CurrentDatabase { get; set; }
         public ObservableCollection<string> AllCatalogs { get; set; }
         public ObservableCollection<string> AllDatabases { get; set; }
+
         private RelayCommand _okCommand;
+        private RelayCommand _createCommand;
 
 
         public ConfigurationVM(UserConfigurationShemes userConfiguration)
@@ -31,6 +34,16 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                 {
                     UserConfiguration.CurrentCatalog = CurrentCatalog;
                     UserConfiguration.CurrentDatabase = CurrentDatabase;
+                });
+            }
+        }
+        public RelayCommand CreateCommand
+        {
+            get
+            {
+                return _okCommand ??= new RelayCommand(obj =>
+                {
+                    var result = new SchemesView() { DataContext = new Schema() }.ShowDialog();
                 });
             }
         }
