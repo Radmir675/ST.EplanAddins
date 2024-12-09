@@ -11,11 +11,10 @@ namespace ST.EplAddin.UserConfigurationService
 {
     public class ConfigurationAction : IEplAction
     {
-
         private const string _catalogPath = "USER.ModalDialogs.PathsScheme";
         private const string _databasePath = "USER.PartSelectionGui.DataSourceScheme";
-        private UserConfigurationShemes shemes = new();
         public static string actionName = "UserConfigurationService";
+        private UserConfigurationShemes shemes = new();
 
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
@@ -32,11 +31,9 @@ namespace ST.EplAddin.UserConfigurationService
             GetCurrentCatalog();
 
             var dialogResult = new ConfigurationView() { DataContext = new ConfigurationVM(shemes) }.ShowDialog();
-            if (dialogResult.HasValue && dialogResult.Value == true)
-            {
-                SetDatabase();
-                SetCatalogData();
-            }
+            if (!dialogResult.HasValue || dialogResult.Value != true) return true;
+            SetDatabase();
+            SetCatalogData();
             return true;
         }
 

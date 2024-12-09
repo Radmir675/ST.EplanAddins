@@ -1,13 +1,11 @@
 ﻿using ST.EplAddin.UserConfigurationService.Models;
 using System.Collections.ObjectModel;
-using EventHandler = System.EventHandler;
 
 namespace ST.EplAddin.UserConfigurationService.ViewModels
 {
     internal class ConfigurationVM : ViewModel
     {
-        public event EventHandler OkEvent;
-        public UserConfigurationShemes _userConfigurationShemes { get; set; }
+        public UserConfigurationShemes UserConfiguration { get; set; }
         public string CurrentCatalog { get; set; }
         public string CurrentDatabase { get; set; }
         public ObservableCollection<string> AllCatalogs { get; set; }
@@ -15,14 +13,14 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
         private RelayCommand _okCommand;
 
 
-        public ConfigurationVM(UserConfigurationShemes userConfigurationShemes)
+        public ConfigurationVM(UserConfigurationShemes userConfiguration)
         {
-            _userConfigurationShemes = userConfigurationShemes;
+            UserConfiguration = userConfiguration;
 
-            CurrentCatalog = userConfigurationShemes.CurrentCatalog;
-            CurrentDatabase = userConfigurationShemes.CurrentDatabase;
-            AllCatalogs = _userConfigurationShemes.Catalogs;
-            AllDatabases = userConfigurationShemes.DatabaseList;
+            CurrentCatalog = userConfiguration.CurrentCatalog;
+            CurrentDatabase = userConfiguration.CurrentDatabase;
+            AllCatalogs = UserConfiguration.Catalogs;
+            AllDatabases = userConfiguration.DatabaseList;
         }
         public ConfigurationVM() { }
         public RelayCommand OkCommand
@@ -31,9 +29,8 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
             {
                 return _okCommand ??= new RelayCommand(obj =>
                 {
-                    _userConfigurationShemes.CurrentCatalog = CurrentCatalog;
-                    _userConfigurationShemes.CurrentDatabase = CurrentDatabase;
-
+                    UserConfiguration.CurrentCatalog = CurrentCatalog;
+                    UserConfiguration.CurrentDatabase = CurrentDatabase;
                 });
             }
         }
