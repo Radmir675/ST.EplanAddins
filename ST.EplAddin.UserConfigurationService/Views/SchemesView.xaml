@@ -3,17 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:vm="clr-namespace:ST.EplAddin.UserConfigurationService.ViewModels"
         mc:Ignorable="d"
         Height="400"
         Width="500"
         ResizeMode="NoResize"
         Title="Новая схема">
+
+    <Window.DataContext>
+        <vm:SchemesVM />
+    </Window.DataContext>
+
     <Border Padding="20">
         <StackPanel>
             <TextBlock Text="Схема:" />
 
             <ListView Height="150"
-                      Margin="0,5,0,22" HorizontalContentAlignment="Left">
+                      Margin="0,5,0,22"
+                      HorizontalContentAlignment="Left"
+                      ItemsSource="{Binding Collection}"
+                      SelectedItem="{Binding SelectedItem}">
 
                 <ListView.Resources>
                     <DataTemplate x:Key="Templ">
@@ -30,26 +39,26 @@
 
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=Title}"
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}"
                                         Header="Имя"
                                         Width="230"
-                                        HeaderContainerStyle="{StaticResource HeaderStyle}"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=Company}"
+                                        HeaderContainerStyle="{StaticResource HeaderStyle}" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Description}"
                                         Width="250"
                                         Header="Описание"
-                                        HeaderContainerStyle="{StaticResource HeaderStyle}"/>
+                                        HeaderContainerStyle="{StaticResource HeaderStyle}" />
                     </GridView>
                 </ListView.View>
             </ListView>
 
             <Grid Margin="0,0,0,25">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition /> 
+                    <ColumnDefinition />
                     <ColumnDefinition Width="300" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="21" />
-                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="15" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
@@ -58,15 +67,25 @@
                 <TextBlock Grid.Column="0"
                            Grid.Row="2"
                            Text="Описание:" />
-                <TextBox Grid.Row="0" Grid.Column="1"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Height="60"/>
+                <TextBox Grid.Row="0"
+                         Grid.Column="1"
+                         Text="{Binding SelectedItem.Name}" />
+                <TextBox Grid.Row="2"
+                         Grid.Column="1"
+                         Height="60"
+                         Text="{Binding SelectedItem.Description}" />
             </Grid>
-            <UniformGrid Rows="1" HorizontalAlignment="Right" >
-                <Button Content="Ок" Width="123" Height="25" Margin="0,0,15,0"/>
+            <UniformGrid Rows="1"
+                         HorizontalAlignment="Right">
+                <Button Content="Ок"
+                        Width="123"
+                        Height="25"
+                        Margin="0,0,15,0" />
                 <Button Content="Отмена"
                         Width="123"
-                        Height="25" 
-                        IsCancel="True"/>
+                        Height="25"
+                        IsCancel="True" 
+                        Command="{Binding OkCommand}"/>
             </UniformGrid>
 
         </StackPanel>
