@@ -33,7 +33,7 @@
             <Setter Property="VerticalAlignment"
                     Value="Center"/>
             <Setter Property="FontSize"
-                    Value="14" />
+                    Value="13" />
         </Style>
     </Window.Resources>
 
@@ -96,11 +96,13 @@
 
                 <ComboBox Grid.Row="2"
                           Grid.Column="1"
-                          ItemsSource="{Binding _userConfigurationShemes.DatabaseList}" />
+                          ItemsSource="{Binding AllDatabases}"
+                          SelectedItem="{Binding CurrentDatabase}"/>
 
                 <ComboBox Grid.Row="3"
                           Grid.Column="1"
-                          ItemsSource="{Binding _userConfigurationShemes.Catalogs}"/>
+                          ItemsSource="{Binding AllCatalogs}"
+                          SelectedItem="{Binding CurrentCatalog,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <StackPanel Grid.Row="4" 
                             Grid.Column="1" 
                             Orientation="Horizontal"

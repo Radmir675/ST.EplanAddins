@@ -1,6 +1,7 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.Base;
 using ST.EplAddin.UserConfigurationService.Models;
+using ST.EplAddin.UserConfigurationService.ViewModels;
 using ST.EplAddin.UserConfigurationService.Views;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -30,7 +31,7 @@ namespace ST.EplAddin.UserConfigurationService
             GetCurrentDatabase();
             GetCurrentCatalog();
 
-            var dialogResult = new ConfigurationView() { DataContext = shemes }.ShowDialog();
+            var dialogResult = new ConfigurationView() { DataContext = new ConfigurationVM(shemes) }.ShowDialog();
             if (dialogResult.HasValue && dialogResult.Value == true)
             {
                 SetDatabase();
