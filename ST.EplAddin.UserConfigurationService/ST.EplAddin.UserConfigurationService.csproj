@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
     <Compile Include="ConfigurationAction.cs" />
+    <Compile Include="Models\UserConfigurationShemes.cs" />
     <Compile Include="Models\Schema.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModels\ConfigurationVM.cs" />

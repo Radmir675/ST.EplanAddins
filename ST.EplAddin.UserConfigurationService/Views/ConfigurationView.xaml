@@ -3,12 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:vm="clr-namespace:ST.EplAddin.UserConfigurationService.ViewModels"
         mc:Ignorable="d"
         Height="340"
         Width="800"
         Title="Конфигурация системы"
         ResizeMode="NoResize">
     <!--Оставить только кнопку закрытия-->
+    <Window.DataContext>
+        <vm:ConfigurationVM />
+    </Window.DataContext>
 
     <Window.Resources>
         <Style TargetType="{x:Type ComboBox}">
@@ -91,10 +95,12 @@
                          Grid.Column="1" />
 
                 <ComboBox Grid.Row="2"
-                          Grid.Column="1" />
+                          Grid.Column="1"
+                          ItemsSource="{Binding _userConfigurationShemes.DatabaseList}" />
 
                 <ComboBox Grid.Row="3"
-                          Grid.Column="1" />
+                          Grid.Column="1"
+                          ItemsSource="{Binding _userConfigurationShemes.Catalogs}"/>
                 <StackPanel Grid.Row="4" 
                             Grid.Column="1" 
                             Orientation="Horizontal"
