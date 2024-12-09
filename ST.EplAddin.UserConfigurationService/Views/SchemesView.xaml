@@ -13,13 +13,39 @@
             <TextBlock Text="Схема:" />
 
             <ListView Height="150"
-                      Margin="0,5,0,22"/>
+                      Margin="0,5,0,22" HorizontalContentAlignment="Left">
+
+                <ListView.Resources>
+                    <DataTemplate x:Key="Templ">
+                        <TextBlock HorizontalAlignment="Left"
+                                   Text="{Binding}" />
+                    </DataTemplate>
+                    <Style x:Key="HeaderStyle"
+                           TargetType="GridViewColumnHeader">
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Left" />
+                    </Style>
+
+                </ListView.Resources>
+
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Title}"
+                                        Header="Имя"
+                                        Width="230"
+                                        HeaderContainerStyle="{StaticResource HeaderStyle}"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Company}"
+                                        Width="250"
+                                        Header="Описание"
+                                        HeaderContainerStyle="{StaticResource HeaderStyle}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
 
             <Grid Margin="0,0,0,25">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.6*" /> 
-               
-                    <ColumnDefinition />
+                    <ColumnDefinition /> 
+                    <ColumnDefinition Width="300" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="21" />
@@ -39,7 +65,8 @@
                 <Button Content="Ок" Width="123" Height="25" Margin="0,0,15,0"/>
                 <Button Content="Отмена"
                         Width="123"
-                        Height="25" />
+                        Height="25" 
+                        IsCancel="True"/>
             </UniformGrid>
 
         </StackPanel>
