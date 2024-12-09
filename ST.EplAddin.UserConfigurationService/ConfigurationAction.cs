@@ -1,12 +1,19 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.Base;
+using ST.EplAddin.UserConfigurationService.Models;
+using ST.EplAddin.UserConfigurationService.Views;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 
 namespace ST.EplAddin.UserConfigurationService
 {
     public class ConfigurationAction : IEplAction
     {
 
+        private const string _catalogPath = "USER.ModalDialogs.PathsScheme";
+        private const string _databasePath = "USER.PartSelectionGui.DataSourceScheme";
+        private UserConfigurationShemes shemes = new();
         public static string actionName = "UserConfigurationService";
 
         public bool OnRegister(ref string Name, ref int Ordinal)
@@ -18,44 +25,78 @@ namespace ST.EplAddin.UserConfigurationService
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            SetPartsDatabase();
-            SetDataBaseCatalogue();
+            GetCatalogData();
+            GetPartsDatabase();
+            GetCurrentDatabase();
+            GetCurrentCatalog();
+
+            var dialogResult = new ConfigurationView() { DataContext = shemes }.ShowDialog();
+            if (dialogResult.HasValue && dialogResult.Value == true)
+            {
+                SetDatabase();
+                SetCatalogData();
+            }
             return true;
         }
 
-        private static void SetPartsDatabase()
+        #region DataBase
+        private void GetPartsDatabase()
         {
             var collection = new StringCollection();
-
-            SchemeSetting oSchemeSetting = new SchemeSetting();
-            oSchemeSetting.Init("USER.PartSelectionGui.DataSourceScheme");
-            var count = oSchemeSetting.GetCount();
-            SettingNode settingNode = new SettingNode("USER.PartSelectionGui.DataSourceScheme");
+            SettingNode settingNode = new SettingNode(_databasePath);
             settingNode.GetListOfNodes(ref collection, false);
-
-
-
-
-
-
+            shemes.DatabaseList = new ObservableCollection<string>(collection.Cast<string>());
 
         }
 
-        private void SetDataBaseCatalogue()
+        public void GetCurrentDatabase()
         {
             SchemeSetting oSchemeSetting = new SchemeSetting();
-            oSchemeSetting.Init("USER.PartSelectionGui.DataSourceScheme");
-            string strSchemeName = "Google_Drive_Config";
+            oSchemeSetting.Init(_databasePath);
+            shemes.CurrentDatabase = oSchemeSetting.GetLastUsed();
+        }
 
-            if (oSchemeSetting.CheckIfSchemeExists(strSchemeName))
+        private void SetDatabase()
+        {
+            SchemeSetting oSchemeSetting = new SchemeSetting();
+            oSchemeSetting.Init(_databasePath);
+            if (oSchemeSetting.CheckIfSchemeExists(shemes.CurrentDatabase))
             {
-                oSchemeSetting.SetLastUsed(strSchemeName);
+                oSchemeSetting.SetLastUsed(shemes.CurrentDatabase);
             }
         }
+        #endregion
+
+        #region Catalog
+
+        private void GetCatalogData()
+        {
+            var collection = new StringCollection();
+            SettingNode settingNode = new SettingNode((_catalogPath));
+            settingNode.GetListOfNodes(ref collection, false);
+            shemes.Catalogs = new ObservableCollection<string>(collection.Cast<string>());
+        }
+
+        private void SetCatalogData()
+        {
+            SchemeSetting oSchemeSetting = new SchemeSetting();
+            oSchemeSetting.Init(_catalogPath);
+            if (oSchemeSetting.CheckIfSchemeExists(shemes.CurrentCatalog))
+            {
+                oSchemeSetting.SetLastUsed(shemes.CurrentCatalog);
+            }
+        }
+        public void GetCurrentCatalog()
+        {
+            SchemeSetting oSchemeSetting = new SchemeSetting();
+            oSchemeSetting.Init(_catalogPath);
+            shemes.CurrentCatalog = oSchemeSetting.GetLastUsed();
+        }
+        #endregion
 
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
-            throw new System.NotImplementedException();
+
         }
     }
 }
