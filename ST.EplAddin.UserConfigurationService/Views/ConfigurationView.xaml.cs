@@ -11,5 +11,10 @@ namespace ST.EplAddin.UserConfigurationService.Views
         {
             InitializeComponent();
         }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+        }
     }
 }

@@ -47,7 +47,6 @@ namespace ST.EplAddin.UserConfigurationService
             SettingNode settingNode = new SettingNode(_databasePath);
             settingNode.GetListOfNodes(ref collection, false);
             shemes.DatabaseList = new ObservableCollection<string>(collection.Cast<string>());
-
         }
 
         public void GetCurrentDatabase()
