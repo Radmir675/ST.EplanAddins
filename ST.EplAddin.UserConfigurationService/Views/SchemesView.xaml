@@ -8,7 +8,8 @@
         Height="400"
         Width="500"
         ResizeMode="NoResize"
-        Title="Новая схема">
+        Title="Новая схема"
+        WindowStartupLocation="CenterOwner">
 
     <Window.DataContext>
         <vm:SchemesVM />

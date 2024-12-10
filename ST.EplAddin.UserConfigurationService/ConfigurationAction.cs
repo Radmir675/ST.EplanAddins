@@ -31,7 +31,7 @@ namespace ST.EplAddin.UserConfigurationService
             GetCurrentCatalog();
 
             var dialogResult = new ConfigurationView() { DataContext = new ConfigurationVM(shemes) }.ShowDialog();
-            if (!dialogResult.HasValue || dialogResult.Value != true) return true;
+            if (!dialogResult.HasValue || dialogResult.Value != true) return false;
             SetDatabase();
             SetCatalogData();
             return true;
