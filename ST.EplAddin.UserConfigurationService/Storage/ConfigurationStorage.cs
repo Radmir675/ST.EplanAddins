@@ -1,16 +1,16 @@
 ﻿using ST.EplAddin.UserConfigurationService.Models;
-using System.Collections.Generic;
+using ST.EplAddin.UserConfigurationService.Services;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace ST.EplAddin.UserConfigurationService.Storage
 {
     internal class ConfigurationStorage
     {
-        private List<Scheme> _schemes;
+        private ObservableCollection<Scheme> _schemes;
         public ConfigurationStorage()
         {
-            _schemes = new List<Scheme>();
-            //инициализировать _schemes
+            _schemes = GetData();
         }
         public void Save(Scheme scheme)
         {
@@ -23,6 +23,7 @@ namespace ST.EplAddin.UserConfigurationService.Storage
             else
             {
                 _schemes.Add(scheme);
+                JsonProvider<Scheme>.SaveData(_schemes);
             }
         }
 
@@ -36,9 +37,10 @@ namespace ST.EplAddin.UserConfigurationService.Storage
         }
 
 
-        public List<Scheme> GetData()
+        public ObservableCollection<Scheme> GetData()
         {
-            return _schemes ?? new List<Scheme>();
+            var _schemes = JsonProvider<ObservableCollection<Scheme>>.GetData();
+            return _schemes ??= new ObservableCollection<Scheme>();
         }
     }
 }

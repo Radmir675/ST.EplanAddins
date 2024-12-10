@@ -39,7 +39,6 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                         Name = Name
                     };
                     configurationStorage.Save(newScheme);
-                    //нужно закрыть форму и оповестить всех;
                 });
             }
         }
