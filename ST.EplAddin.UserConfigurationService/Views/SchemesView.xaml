@@ -70,23 +70,24 @@
                            Text="Описание:" />
                 <TextBox Grid.Row="0"
                          Grid.Column="1"
-                         Text="{Binding SelectedItem.Name}" />
+                         Text="{Binding Name}" />
                 <TextBox Grid.Row="2"
                          Grid.Column="1"
                          Height="60"
-                         Text="{Binding SelectedItem.Description}" />
+                         Text="{Binding Description}" />
             </Grid>
             <UniformGrid Rows="1"
                          HorizontalAlignment="Right">
                 <Button Content="Ок"
                         Width="123"
                         Height="25"
-                        Margin="0,0,15,0" />
+                        Margin="0,0,10,0"
+                        Command="{Binding OkCommand}" />
                 <Button Content="Отмена"
                         Width="123"
                         Height="25"
-                        IsCancel="True" 
-                        Command="{Binding OkCommand}"/>
+                        IsCancel="True"
+                        HorizontalAlignment="Right" />
             </UniformGrid>
 
         </StackPanel>
