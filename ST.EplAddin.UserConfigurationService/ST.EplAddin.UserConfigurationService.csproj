@@ -62,7 +62,7 @@
     <Compile Include="AddinModule.cs" />
     <Compile Include="ConfigurationAction.cs" />
     <Compile Include="Models\UserConfigurationShemes.cs" />
-    <Compile Include="Models\Schema.cs" />
+    <Compile Include="Models\Scheme.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Storage\ConfigurationStorage.cs" />
     <Compile Include="ViewModels\ConfigurationVM.cs" />

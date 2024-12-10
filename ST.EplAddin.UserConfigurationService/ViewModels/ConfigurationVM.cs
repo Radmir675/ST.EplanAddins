@@ -1,6 +1,7 @@
 ﻿using ST.EplAddin.UserConfigurationService.Models;
 using ST.EplAddin.UserConfigurationService.Storage;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ST.EplAddin.UserConfigurationService.ViewModels
 {
@@ -10,10 +11,10 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
         private readonly ConfigurationStorage storage;
         public string CurrentCatalog { get; set; }
         public string CurrentDatabase { get; set; }
-        public string SelectedSheme { get; set; }
+        public string SelectedSсheme { get; set; }
         public ObservableCollection<string> AllCatalogs { get; set; }
         public ObservableCollection<string> AllDatabases { get; set; }
-        public ObservableCollection<string> ShemesCollection { get; set; }
+        public ObservableCollection<string> SсhemesCollection { get; set; }
 
         public ConfigurationVM(UserConfigurationShemes userConfiguration)
         {
@@ -24,8 +25,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
             CurrentDatabase = userConfiguration.CurrentDatabase;
             AllCatalogs = UserConfiguration.Catalogs;
             AllDatabases = userConfiguration.DatabaseList;
-            ShemesCollection = storage.GetData();
-
+            SсhemesCollection = new ObservableCollection<string>(storage.GetData().Select(x => x.Name));
         }
         public ConfigurationVM() { }
 
@@ -52,7 +52,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
             {
                 return _createCommand ??= new RelayCommand(obj =>
                 {
-                    storage.Add();
+                    storage.Save(SelectedSсheme);
                 });
             }
         }
@@ -62,7 +62,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
             {
                 return _removeCommand ??= new RelayCommand(obj =>
                 {
-                    storage.Remove(SelectedSheme);
+                    storage.Remove(SelectedSсheme);
                 });
             }
         }

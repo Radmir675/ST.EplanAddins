@@ -5,8 +5,8 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
 {
     internal class SchemesVM : ViewModel
     {
-        public ObservableCollection<Schema> Collection { get; set; } = new();
-        public Schema SelectedItem { get; set; }
+        public ObservableCollection<Scheme> Collection { get; set; } = new();
+        public Scheme SelectedItem { get; set; }
         public RelayCommand OkCommand { get; set; }
 
     }

@@ -74,8 +74,8 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <ComboBox VerticalContentAlignment="Center"
-                              ItemsSource="{Binding ShemesCollection}"
-                              SelectedItem="{Binding SelectedSheme}"/>
+                              ItemsSource="{Binding SсhemesCollection}"
+                              SelectedItem="{Binding SelectedSсheme}"/>
                     <StackPanel Grid.Column="1"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center">

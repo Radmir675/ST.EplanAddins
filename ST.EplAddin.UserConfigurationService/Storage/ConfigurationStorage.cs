@@ -5,17 +5,17 @@ namespace ST.EplAddin.UserConfigurationService.Storage
 {
     internal class ConfigurationStorage
     {
-        private List<Schema> _schemas;
+        private List<Scheme> _schemes;
         public ConfigurationStorage()
         {
             //инициализировать
         }
-        public void Save()
+        public void Save(Scheme scheme)
         {
 
         }
 
-        public void Remove()
+        public void Remove(string Name)
         {
 
         }
@@ -24,9 +24,9 @@ namespace ST.EplAddin.UserConfigurationService.Storage
         {
 
         }
-        public void GetData()
+        public List<Scheme> GetData()
         {
-
+            return _schemes;
         }
     }
 }
