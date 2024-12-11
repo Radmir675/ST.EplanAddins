@@ -11,6 +11,8 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
         public string Description { get; set; }
         public string Name { get; set; }
 
+        public ObservableCollection<Scheme> elements { get; set; }
+
         public SchemesVM()
         {
 
@@ -19,6 +21,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
         {
             _catalog = catalog;
             _database = database;
+            elements = ConfigurationStorage.Instance.GetAll();
         }
 
         public ObservableCollection<Scheme> Collection { get; set; } = new();
