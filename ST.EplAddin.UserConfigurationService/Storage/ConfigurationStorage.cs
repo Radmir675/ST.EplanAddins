@@ -22,14 +22,19 @@ namespace ST.EplAddin.UserConfigurationService.Storage
             var schemeInStorage = _schemes.FirstOrDefault(x => x.Name == scheme.Name);
             if (schemeInStorage != null)
             {
+                schemeInStorage.Description = scheme.Description;
                 schemeInStorage.Catalog = scheme.Catalog;
                 schemeInStorage.Database = scheme.Database;
-            }
-            else
-            {
-                _schemes.Add(scheme);
                 JsonProvider<Scheme>.SaveData(_schemes);
             }
+            else if (!string.IsNullOrEmpty(scheme.Name))
+            {
+                _schemes.Add(scheme);
+            }
+            //TODO:Проверить так ли это
+            JsonProvider<Scheme>.SaveData(_schemes);
+
+
         }
 
         public void Remove(string Name)
