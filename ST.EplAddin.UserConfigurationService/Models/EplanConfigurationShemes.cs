@@ -2,7 +2,7 @@
 
 namespace ST.EplAddin.UserConfigurationService.Models
 {
-    internal class UserConfigurationShemes
+    internal class EplanConfigurationShemes
     {
         public ObservableCollection<string> Catalogs { get; set; }
         public ObservableCollection<string> DatabaseList { get; set; }

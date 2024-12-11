@@ -34,5 +34,17 @@ namespace ST.EplAddin.UserConfigurationService.Properties {
                 this["Configurations"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastScheme {
+            get {
+                return ((string)(this["LastScheme"]));
+            }
+            set {
+                this["LastScheme"] = value;
+            }
+        }
     }
 }

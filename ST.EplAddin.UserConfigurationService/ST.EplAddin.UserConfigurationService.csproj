@@ -64,7 +64,7 @@
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
     <Compile Include="ConfigurationAction.cs" />
-    <Compile Include="Models\UserConfigurationShemes.cs" />
+    <Compile Include="Models\EplanConfigurationShemes.cs" />
     <Compile Include="Models\Scheme.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

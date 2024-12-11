@@ -14,7 +14,7 @@ namespace ST.EplAddin.UserConfigurationService
         private const string _catalogPath = "USER.ModalDialogs.PathsScheme";
         private const string _databasePath = "USER.PartSelectionGui.DataSourceScheme";
         public static string actionName = "UserConfigurationService";
-        private UserConfigurationShemes shemes = new();
+        private EplanConfigurationShemes shemes = new();
 
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
