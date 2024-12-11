@@ -85,7 +85,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                 return _removeCommand ??= new RelayCommand(obj =>
                 {
                     storage.Remove(SelectedSсheme);
-                });
+                }, (_) => SelectedSсheme != null);
             }
         }
         public RelayCommand SaveCommand
