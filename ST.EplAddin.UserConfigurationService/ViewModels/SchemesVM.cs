@@ -30,7 +30,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
             {
                 return _okCommand ??= new RelayCommand(obj =>
                 {
-                    ConfigurationStorage configurationStorage = new();
+                    var configurationStorage = ConfigurationStorage.Instance;
                     var newScheme = new Scheme()
                     {
                         Catalog = _catalog,
@@ -39,7 +39,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                         Name = Name
                     };
                     configurationStorage.Save(newScheme);
-                });
+                }, (_) => !ConfigurationStorage.Instance.TryGetSchemeByName(Name, out Scheme sheme));
             }
         }
 

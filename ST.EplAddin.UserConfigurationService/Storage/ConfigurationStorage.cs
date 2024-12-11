@@ -8,14 +8,22 @@ namespace ST.EplAddin.UserConfigurationService.Storage
 {
     internal class ConfigurationStorage
     {
-        private ObservableCollection<Scheme> _schemes = new();
-        public ConfigurationStorage()
+        private ObservableCollection<Scheme> _schemes;
+        private static ConfigurationStorage _instance;
+
+        public static ConfigurationStorage Instance
+        {
+            get => _instance ??= new ConfigurationStorage();
+            set => _instance = value;
+        }
+
+        private ConfigurationStorage()
         {
             Initialize();
         }
         private void Initialize()
         {
-            _schemes = JsonProvider<ObservableCollection<Scheme>>.GetData();
+            _schemes = JsonProvider<ObservableCollection<Scheme>>.GetData() ?? new ObservableCollection<Scheme>();
         }
         public void Save(Scheme scheme)
         {
@@ -25,21 +33,19 @@ namespace ST.EplAddin.UserConfigurationService.Storage
                 schemeInStorage.Description = scheme.Description;
                 schemeInStorage.Catalog = scheme.Catalog;
                 schemeInStorage.Database = scheme.Database;
-                JsonProvider<Scheme>.SaveData(_schemes);
+
             }
-            else if (!string.IsNullOrEmpty(scheme.Name))
+            else if (!string.IsNullOrEmpty(scheme.Name) && !_schemes.Any(x => x.Name.Contains(scheme.Name)))
             {
                 _schemes.Add(scheme);
             }
-            //TODO:Проверить так ли это
+
             JsonProvider<Scheme>.SaveData(_schemes);
-
-
         }
 
         public void Remove(string Name)
         {
-            var itemToRemove = _schemes.SingleOrDefault(x => x.Name == Name);
+            var itemToRemove = _schemes.FirstOrDefault(x => x.Name == Name);
             if (itemToRemove != null)
             {
                 _schemes.Remove(itemToRemove);
@@ -63,11 +69,12 @@ namespace ST.EplAddin.UserConfigurationService.Storage
 
         public ObservableCollection<Scheme> GetAll()
         {
+            //   var dd = JsonProvider<ObservableCollection<Scheme>>.GetData();
             return _schemes;
         }
         public bool TryGetSchemeByName(string Name, out Scheme scheme)
         {
-            scheme = _schemes.SingleOrDefault(x => x.Name == Name);
+            scheme = _schemes.FirstOrDefault(x => x.Name == Name);
             return scheme != null;
         }
     }
