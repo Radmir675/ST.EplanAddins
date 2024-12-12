@@ -61,10 +61,9 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
             {
                 Catalog = EplanConfiguration.CurrentCatalog,
                 Database = EplanConfiguration.CurrentDatabase,
-                Description = "",
+                Description = "Не определено",
                 Name = "Не определено"
             };
-            // SсhemesCollection.Add(newS);
             return newS;
         }
         #region Commands
