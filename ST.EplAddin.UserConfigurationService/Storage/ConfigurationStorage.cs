@@ -1,16 +1,31 @@
 ﻿using ST.EplAddin.UserConfigurationService.Models;
 using ST.EplAddin.UserConfigurationService.Services;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace ST.EplAddin.UserConfigurationService.Storage
 {
-    internal class ConfigurationStorage
+    public class ConfigurationStorage
     {
         private ObservableCollection<Scheme> _schemes;
         private static ConfigurationStorage _instance;
-        public static ConfigurationStorage Instance => _instance ??= new ConfigurationStorage();
+        private static object syncRoot = new Object();
+        public static ConfigurationStorage Instance()
+        {
+            if (_instance == null)
+            {
+                lock (syncRoot)
+                {
+                    if (_instance == null)
+                        _instance = new ConfigurationStorage();
+                }
+            }
+
+            return _instance;
+
+        }
 
         private ConfigurationStorage()
         {
@@ -73,6 +88,12 @@ namespace ST.EplAddin.UserConfigurationService.Storage
 
         public ObservableCollection<Scheme> GetAll()
         {
+            if (_schemes.Count == 0)
+            {
+                Initialize();
+            }
+
+
             return _schemes;
         }
         public bool TryGetSchemeByName(string Name, out Scheme scheme)

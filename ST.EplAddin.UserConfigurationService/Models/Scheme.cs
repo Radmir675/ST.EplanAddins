@@ -1,6 +1,6 @@
 ﻿namespace ST.EplAddin.UserConfigurationService.Models
 {
-    internal class Scheme()
+    public class Scheme()
     {
 
 

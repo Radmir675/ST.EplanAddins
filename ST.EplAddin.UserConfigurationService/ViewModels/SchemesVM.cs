@@ -21,7 +21,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
         {
             _catalog = catalog;
             _database = database;
-            Collection = ConfigurationStorage.Instance.GetAll();
+            Collection = ConfigurationStorage.Instance().GetAll();
         }
 
         public ObservableCollection<Scheme> Collection { get; set; } = new();
@@ -46,7 +46,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
             {
                 return _okCommand ??= new RelayCommand(obj =>
                 {
-                    var configurationStorage = ConfigurationStorage.Instance;
+                    var configurationStorage = ConfigurationStorage.Instance();
                     var newScheme = new Scheme()
                     {
                         Catalog = _catalog,
