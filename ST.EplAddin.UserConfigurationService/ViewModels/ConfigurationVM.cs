@@ -10,10 +10,6 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
     internal class ConfigurationVM : ViewModel
     {
         public EplanConfigurationShemes EplanConfiguration { get; set; }
-
-
-
-
         public Scheme CurrentScheme
         {
             get => _currentScheme;
@@ -24,12 +20,8 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                 OnPropertyChanged();
             }
         }
-
-
-
         public ObservableCollection<string> AllCatalogs { get; set; }
         public ObservableCollection<string> AllDatabases { get; set; }
-
         public ObservableCollection<Scheme> SсhemesCollection
         {
             get => _sсhemesCollection;
@@ -41,10 +33,9 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
 
             }
         }
-
+        public ConfigurationVM() { }
         public ConfigurationVM(EplanConfigurationShemes eplanConfiguration)
         {
-
             EplanConfiguration = eplanConfiguration;
             AllCatalogs = EplanConfiguration.Catalogs;
             AllDatabases = EplanConfiguration.DatabaseList;
@@ -66,16 +57,11 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                 Catalog = EplanConfiguration.CurrentCatalog,
                 Database = EplanConfiguration.CurrentDatabase,
                 Description = "",
+                Name = "Не определено"
             };
             SсhemesCollection.Add(newS);
             return newS;
         }
-
-        public ConfigurationVM()
-        {
-
-        }
-
         #region Commands
 
         private RelayCommand _okCommand;
@@ -84,7 +70,6 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
         private RelayCommand _saveCommand;
         private Scheme _currentScheme;
         private ObservableCollection<Scheme> _sсhemesCollection = new();
-
 
         public RelayCommand OkCommand
         {
@@ -123,11 +108,10 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
 
         private void UpdateCollectionStorage()
         {
-            SсhemesCollection.Clear();
-            var storageElements = ConfigurationStorage.Instance().GetAll();
-            foreach (var item in storageElements)
+            SсhemesCollection = ConfigurationStorage.Instance().GetAll();
+            if (SсhemesCollection.Count == 0)
             {
-                SсhemesCollection.Add(item);
+                SetUndefined();
             }
         }
 
@@ -137,20 +121,17 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
             {
                 return _removeCommand ??= new RelayCommand(obj =>
                 {
-
-
                     var result = MessageBox.Show(
-                        "Вы действительно хотите обновить данные схему?",
+                        "Вы действительно хотите удалить данную схему?",
                         "Обновление",
                         MessageBoxButton.OKCancel,
                         MessageBoxImage.Question);
                     if (result == MessageBoxResult.OK)
                         ConfigurationStorage.Instance().Remove(CurrentScheme);
                     UpdateCollectionStorage();
-                    CurrentScheme = SсhemesCollection.FirstOrDefault();
+                    CurrentScheme = SсhemesCollection?.FirstOrDefault();
                 }, (_) =>
                     SсhemesCollection.Contains(CurrentScheme) && CurrentScheme != null);
-
             }
         }
         public RelayCommand SaveCommand
@@ -159,19 +140,12 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
             {
                 return _saveCommand ??= new RelayCommand(obj =>
                 {
-                    var schame = CurrentScheme;
-                    var result = MessageBox.Show(
-                        "Вы действительно хотите обновить данные схему?",
-                        "Обновление",
-                        MessageBoxButton.OKCancel,
-                        MessageBoxImage.Question);
-                    if (result == MessageBoxResult.OK)
-                    {
-                        ConfigurationStorage.Instance().Save(CurrentScheme);
-                    }
+                    var currentSchemeName = CurrentScheme.Name;
+                    ConfigurationStorage.Instance().Save(CurrentScheme);
                     UpdateCollectionStorage();
-                    CurrentScheme = schame;
-                });
+                    ConfigurationStorage.Instance().TryGetSchemeByName(currentSchemeName, out Scheme newScheme);
+                    CurrentScheme = newScheme;
+                }, (_) => SсhemesCollection.Any(x => x.Name == CurrentScheme?.Name));
             }
         }
 

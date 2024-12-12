@@ -1,6 +1,7 @@
 ﻿using ST.EplAddin.UserConfigurationService.Models;
 using ST.EplAddin.UserConfigurationService.Storage;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ST.EplAddin.UserConfigurationService.ViewModels
 {
@@ -10,13 +11,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
         private readonly string _database;
         public string Description { get; set; }
         public string Name { get; set; }
-
-
-
-        public SchemesVM()
-        {
-
-        }
+        public SchemesVM() { }
         public SchemesVM(string catalog, string database)
         {
             _catalog = catalog;
@@ -55,7 +50,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                         Name = Name
                     };
                     configurationStorage.Save(newScheme);
-                });
+                }, (_) => Collection.Any(x => x.Name != Name) && !string.IsNullOrEmpty(Name));
             }
         }
 

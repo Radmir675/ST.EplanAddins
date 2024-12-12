@@ -1,7 +1,6 @@
 ﻿using ST.EplAddin.UserConfigurationService.Models;
 using ST.EplAddin.UserConfigurationService.Services;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -22,9 +21,7 @@ namespace ST.EplAddin.UserConfigurationService.Storage
                         _instance = new ConfigurationStorage();
                 }
             }
-
             return _instance;
-
         }
 
         private ConfigurationStorage()
@@ -64,36 +61,15 @@ namespace ST.EplAddin.UserConfigurationService.Storage
         }
         public void Remove(Scheme scheme)
         {
-
             if (scheme != null)
             {
                 _schemes.Remove(scheme);
             }
             JsonProvider<Scheme>.SaveData(_schemes);
         }
-        public void Remove(List<string> names)
-        {
-            foreach (var name in names)
-            {
-                var itemToRemove = _schemes.SingleOrDefault(x => x.Name == name);
-                if (itemToRemove != null)
-                {
-                    _schemes.Remove(itemToRemove);
-                }
-
-            }
-            JsonProvider<Scheme>.SaveData(_schemes);
-        }
-
 
         public ObservableCollection<Scheme> GetAll()
         {
-            if (_schemes.Count == 0)
-            {
-                Initialize();
-            }
-
-
             return _schemes;
         }
         public bool TryGetSchemeByName(string Name, out Scheme scheme)
