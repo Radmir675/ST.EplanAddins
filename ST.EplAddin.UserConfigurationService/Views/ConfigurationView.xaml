@@ -9,7 +9,7 @@
         Width="800"
         Title="Конфигурация системы"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterScreen">
 
     <!--Оставить только кнопку закрытия-->
     <Window.DataContext>

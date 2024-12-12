@@ -79,7 +79,6 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                 {
                     EplanConfiguration.CurrentCatalog = CurrentScheme.Catalog; //установка каталогов для Eplan
                     EplanConfiguration.CurrentDatabase = CurrentScheme.Database;
-                    ConfigurationStorage.Instance().Save(CurrentScheme);
                     Properties.Settings.Default.LastScheme = CurrentScheme.Name;
                 });
             }
