@@ -64,7 +64,7 @@
                     <ListView.View>
 
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding Path=.Name}"
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Name}"
                                             Header="Имя"
                                             Width="230"
                                             HeaderContainerStyle="{StaticResource HeaderStyle}" />
