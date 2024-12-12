@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:vm="clr-namespace:ST.EplAddin.UserConfigurationService.ViewModels"
+        xmlns:interact="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Height="410"
         Width="500"
@@ -19,7 +20,8 @@
     <Border Padding="20">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="2.5*" MinHeight="180"/>
+                <RowDefinition Height="2.5*"
+                               MinHeight="180" />
                 <RowDefinition Height="1.5*" />
                 <RowDefinition Height="0.5*" />
             </Grid.RowDefinitions>
@@ -31,24 +33,36 @@
                           Margin="0,5,0,20"
                           HorizontalContentAlignment="Left"
                           ItemsSource="{Binding Collection}"
-                        SelectedItem="{Binding SelectedItem, 
+                          SelectedItem="{Binding SelectedItem, 
                     UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
-                 <!--Сюда нужен <Trigger></Trigger>-->
-
+                    <!--Сюда нужен <Trigger></Trigger>-->
                     <ListView.Resources>
-                        <DataTemplate x:Key="Templ">
-                            <TextBlock HorizontalAlignment="Left"
-                                       Text="{Binding}" />
-                        </DataTemplate>
                         <Style x:Key="HeaderStyle"
                                TargetType="GridViewColumnHeader">
                             <Setter Property="HorizontalContentAlignment"
                                     Value="Left" />
                         </Style>
-
                     </ListView.Resources>
+                   <!--<ListView.Triggers>
+                       <EventTrigger RoutedEvent="MouseEnter">
+                            
+                              
+                           
+                       </EventTrigger>
+                   </ListView.Triggers>-->
 
+                    <!--<ListView.InputBindings>
+                        <interact:Interaction.Triggers>
+                            <interact:EventTrigger EventName="Click">
+                                <interact:ChangePropertyAction TargetObject="{Binding Description}"
+                                                               PropertyName="Text"
+                                                               Value="1" />
+                            </interact:EventTrigger>
+
+                        </interact:Interaction.Triggers>
+                    </ListView.InputBindings>-->
                     <ListView.View>
+
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding Path=.Name}"
                                             Header="Имя"

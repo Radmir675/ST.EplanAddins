@@ -36,17 +36,18 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
         public ConfigurationVM() { }
         public ConfigurationVM(EplanConfigurationShemes eplanConfiguration)
         {
+            storage = ConfigurationStorage.Instance();
             EplanConfiguration = eplanConfiguration;
             AllCatalogs = EplanConfiguration.Catalogs;
             AllDatabases = EplanConfiguration.DatabaseList;
-            SсhemesCollection = ConfigurationStorage.Instance().GetAll();
+            SсhemesCollection = storage.GetAll();
             CurrentScheme = SetLastSelectedScheme();
         }
 
         private Scheme SetLastSelectedScheme()
         {
             var schemeName = Properties.Settings.Default.LastScheme;
-            var isExist = ConfigurationStorage.Instance().TryGetSchemeByName(schemeName, out var reScheme);
+            var isExist = storage.TryGetSchemeByName(schemeName, out var reScheme);
             return isExist ? reScheme : SetUndefined();
         }
 
@@ -70,6 +71,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
         private RelayCommand _saveCommand;
         private Scheme _currentScheme;
         private ObservableCollection<Scheme> _sсhemesCollection = new();
+        private readonly ConfigurationStorage storage;
 
         public RelayCommand OkCommand
         {
@@ -98,7 +100,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
 
                     UpdateCollectionStorage();
 
-                    var isExist = ConfigurationStorage.Instance().TryGetSchemeByName(viewModel.Name, out Scheme newScheme);
+                    var isExist = storage.TryGetSchemeByName(viewModel.Name, out Scheme newScheme);
                     if (!isExist) return;
                     CurrentScheme = newScheme;
                 });
@@ -107,7 +109,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
 
         private void UpdateCollectionStorage()
         {
-            SсhemesCollection = ConfigurationStorage.Instance().GetAll();
+            SсhemesCollection = storage.GetAll();
             if (SсhemesCollection.Count == 0)
             {
                 SetUndefined();
@@ -126,7 +128,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                         MessageBoxButton.OKCancel,
                         MessageBoxImage.Question);
                     if (result == MessageBoxResult.OK)
-                        ConfigurationStorage.Instance().Remove(CurrentScheme);
+                        storage.Remove(CurrentScheme);
                     UpdateCollectionStorage();
                     CurrentScheme = SсhemesCollection?.FirstOrDefault();
                 }, (_) =>
@@ -140,9 +142,9 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                 return _saveCommand ??= new RelayCommand(obj =>
                 {
                     var currentSchemeName = CurrentScheme.Name;
-                    ConfigurationStorage.Instance().Save(CurrentScheme);
+                    storage.Save(CurrentScheme);
                     UpdateCollectionStorage();
-                    ConfigurationStorage.Instance().TryGetSchemeByName(currentSchemeName, out Scheme newScheme);
+                    storage.TryGetSchemeByName(currentSchemeName, out Scheme newScheme);
                     CurrentScheme = newScheme;
                 }, (_) => SсhemesCollection.Any(x => x.Name == CurrentScheme?.Name));
             }
