@@ -52,6 +52,15 @@ namespace ST.EplAddin.UserConfigurationService.Storage
             }
             JsonProvider<Scheme>.SaveData(_schemes);
         }
+        public void Remove(Scheme scheme)
+        {
+
+            if (scheme != null)
+            {
+                _schemes.Remove(scheme);
+            }
+            JsonProvider<Scheme>.SaveData(_schemes);
+        }
         public void Remove(List<string> names)
         {
             foreach (var name in names)

@@ -8,9 +8,9 @@
         Height="340"
         Width="800"
         Title="Конфигурация системы"
-        ResizeMode="NoResize" 
+        ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner">
-     
+
     <!--Оставить только кнопку закрытия-->
     <Window.DataContext>
         <vm:ConfigurationVM />
@@ -26,14 +26,14 @@
             <Setter Property="Width"
                     Value="24" />
             <Setter Property="Height"
-                    Value="24" /> 
+                    Value="24" />
             <Setter Property="BorderBrush"
                     Value="Gray" />
         </Style>
 
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="VerticalAlignment"
-                    Value="Center"/>
+                    Value="Center" />
             <Setter Property="FontSize"
                     Value="13" />
         </Style>
@@ -59,13 +59,14 @@
                            Text="Конфигурация:" />
                 <TextBlock Grid.Row="1"
                            Grid.Column="0"
-                           Text="Описание:" VerticalAlignment="Top"/>
+                           Text="Описание:"
+                           VerticalAlignment="Top" />
                 <TextBlock Grid.Row="2"
                            Grid.Column="0"
                            Text="База данных изделий:" />
                 <TextBlock Grid.Row="3"
                            Grid.Column="0"
-                           Text="Каталоги:"/>
+                           Text="Каталоги:" />
 
                 <Grid Grid.Row="0"
                       Grid.Column="1">
@@ -75,7 +76,8 @@
                     </Grid.ColumnDefinitions>
                     <ComboBox VerticalContentAlignment="Center"
                               ItemsSource="{Binding SсhemesCollection}"
-                              SelectedItem="{Binding SelectedSсheme, UpdateSourceTrigger=PropertyChanged, Mode=Default}"/>
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding CurrentScheme, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     <StackPanel Grid.Column="1"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center">
@@ -83,7 +85,8 @@
                                 ToolTip="Создать"
                                 Command="{Binding CreateCommand}">
                             <Image Source="../Resources/create.png"
-                                   Width="15" Height="15"/>
+                                   Width="15"
+                                   Height="15" />
                         </Button>
                         <Button Margin="2,0,2,0"
                                 ToolTip="Сохранить"
@@ -99,32 +102,36 @@
                 </Grid>
 
                 <TextBox Grid.Row="1"
-                         Grid.Column="1" 
+                         Grid.Column="1"
                          IsReadOnly="True"
-                         Text="{Binding Description}"/>
+                         Text="{Binding CurrentScheme.Description}" />
 
                 <ComboBox Grid.Row="2"
                           Grid.Column="1"
                           ItemsSource="{Binding AllDatabases}"
-                          SelectedItem="{Binding CurrentDatabase}"/>
+                          SelectedItem="{Binding CurrentScheme.Database
+                                    }" />
 
                 <ComboBox Grid.Row="3"
                           Grid.Column="1"
                           ItemsSource="{Binding AllCatalogs}"
-                          SelectedItem="{Binding CurrentCatalog,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                <StackPanel Grid.Row="4" 
-                            Grid.Column="1" 
+                          SelectedItem="{Binding CurrentScheme.Catalog,
+                                        UpdateSourceTrigger=PropertyChanged, Mode=TwoWay
+                                       }"
+                          />
+                <StackPanel Grid.Row="4"
+                            Grid.Column="1"
                             Orientation="Horizontal"
                             HorizontalAlignment="Right">
                     <Button Content="Ок"
                             Width="90"
-                            Margin="0,0,10,0" 
+                            Margin="0,0,10,0"
                             IsDefault="True"
                             Click="ButtonBase_OnClick"
-                            Command="{Binding OkCommand}"/>
+                            Command="{Binding OkCommand}" />
                     <Button Content="Отменить"
-                            Width="90" 
-                            IsCancel="True"/>
+                            Width="90"
+                            IsCancel="True" />
                 </StackPanel>
             </Grid>
         </Border>

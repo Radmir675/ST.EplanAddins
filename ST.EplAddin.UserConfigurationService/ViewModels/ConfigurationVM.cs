@@ -12,86 +12,46 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
         public EplanConfigurationShemes EplanConfiguration { get; set; }
         private readonly ConfigurationStorage storage;
 
-        public string CurrentCatalog
-        {
-            get => _currentCatalog;
-            set
-            {
-                if (value == _currentCatalog) return;
-                _currentCatalog = value;
-                OnPropertyChanged();
-                //OnPropertyChanged(nameof(OkCommand));
-                //OnPropertyChanged(nameof(CreateCommand));
-            }
-        }
 
-        public string CurrentDatabase
-        {
-            get => _currentDatabase;
-            set
-            {
-                if (value == _currentDatabase) return;
-                _currentDatabase = value;
-                OnPropertyChanged();
-                //OnPropertyChanged(nameof(OkCommand));
-                //OnPropertyChanged(nameof(CreateCommand));
-            }
-        }
 
-        public string Description
+        public Scheme CurrentScheme
         {
-            get => _description;
+            get => _currentScheme;
             set
             {
-                if (value == _description) return;
-                _description = value;
+                if (Equals(value, _currentScheme)) return;
+                _currentScheme = value;
                 OnPropertyChanged();
             }
         }
 
-        public string SelectedSсheme
-        {
-            get => _selectedSсheme;
-            set
-            {
-                UpdateSchemeSettings(value);
-                if (!string.IsNullOrEmpty(value))
-                {
-                    _selectedSсheme = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
 
-        private void UpdateSchemeSettings(string name)
-        {
-            var result = storage.TryGetSchemeByName(name, out var scheme);
-            if (result == false)
-            {
-                _selectedSсheme = "Не определено";
-                CurrentCatalog = EplanConfiguration.CurrentCatalog;
-                CurrentDatabase = EplanConfiguration.CurrentDatabase;
-                Description = "";
-                return;
-            }
-
-            CurrentCatalog = scheme.Catalog;
-            CurrentDatabase = scheme.Database;
-            Description = scheme?.Description ?? "";
-        }
 
         public ObservableCollection<string> AllCatalogs { get; set; }
         public ObservableCollection<string> AllDatabases { get; set; }
-        public ObservableCollection<string> SсhemesCollection { get; set; } = new();
+        public ObservableCollection<Scheme> SсhemesCollection { get; set; } = new();
 
         public ConfigurationVM(EplanConfigurationShemes eplanConfiguration)
         {
             storage = ConfigurationStorage.Instance;
             EplanConfiguration = eplanConfiguration;
-            SelectedSсheme = Properties.Settings.Default.LastScheme;
+            CurrentScheme = SetLastSelectedScheme();
             AllCatalogs = EplanConfiguration.Catalogs;
-            AllDatabases = eplanConfiguration.DatabaseList;
-            SсhemesCollection = new ObservableCollection<string>(storage.GetAll().Select(x => x.Name));
+            AllDatabases = EplanConfiguration.DatabaseList;
+            SсhemesCollection = new ObservableCollection<Scheme>(storage.GetAll());
+        }
+
+        private Scheme SetLastSelectedScheme()
+        {
+            var schemeName = Properties.Settings.Default.LastScheme;
+            var isExist = storage.TryGetSchemeByName(schemeName, out var reScheme);
+            return isExist ? reScheme : new Scheme()
+            {
+                Catalog = EplanConfiguration.CurrentCatalog,
+                Database = EplanConfiguration.CurrentDatabase,
+                Description = "",
+                Name = "Не определено"
+            };
         }
 
         public ConfigurationVM()
@@ -105,10 +65,9 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
         private RelayCommand _createCommand;
         private RelayCommand _removeCommand;
         private RelayCommand _saveCommand;
-        private string _selectedSсheme;
-        private string _description;
-        private string _currentCatalog;
-        private string _currentDatabase;
+        private Scheme _currentScheme;
+
+
 
         public RelayCommand OkCommand
         {
@@ -116,10 +75,10 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
             {
                 return _okCommand ??= new RelayCommand(obj =>
                 {
-                    EplanConfiguration.CurrentCatalog = CurrentCatalog;
-                    EplanConfiguration.CurrentDatabase = CurrentDatabase;
-                    ConfigurationStorage.Instance.Save(GetCurrentConfiguration());
-                    Properties.Settings.Default.LastScheme = SelectedSсheme;
+                    EplanConfiguration.CurrentCatalog = CurrentScheme.Catalog; //установка каталогов для Eplan
+                    EplanConfiguration.CurrentDatabase = CurrentScheme.Database;
+                    ConfigurationStorage.Instance.Save(CurrentScheme);
+                    Properties.Settings.Default.LastScheme = CurrentScheme.Name;
                 });
             }
         }
@@ -129,7 +88,11 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
             {
                 return _createCommand ??= new RelayCommand(obj =>
                 {
-                    var viewModel = new SchemesVM(CurrentCatalog, CurrentDatabase);
+                    var viewModel = new Scheme()
+                    {
+                        Catalog = CurrentScheme.Catalog,
+                        Database = CurrentScheme.Database
+                    };
                     var dialogResult = new SchemesView()
                     {
                         DataContext = viewModel
@@ -137,7 +100,12 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                     if (dialogResult != null && dialogResult.Value == true)
                     {
                         UpdateCollectionStorage();
-                        SelectedSсheme = viewModel.Name;
+
+                        var isExist = storage.TryGetSchemeByName(viewModel.Name, out Scheme newScheme);
+                        if (isExist)
+                        {
+                            CurrentScheme = newScheme;
+                        }
                     }
                 });
             }
@@ -146,7 +114,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
         private void UpdateCollectionStorage()
         {
             SсhemesCollection.Clear();
-            var storageElements = storage.GetAll().Select(x => x.Name);
+            var storageElements = storage.GetAll();
             foreach (var item in storageElements)
             {
                 SсhemesCollection.Add(item);
@@ -167,11 +135,11 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                         MessageBoxButton.OKCancel,
                         MessageBoxImage.Question);
                     if (result == MessageBoxResult.OK)
-                        storage.Remove(SelectedSсheme);
+                        storage.Remove(CurrentScheme);
                     UpdateCollectionStorage();
-                    SelectedSсheme = SсhemesCollection.FirstOrDefault();
+                    CurrentScheme = SсhemesCollection.FirstOrDefault();
                 }, (_) =>
-                    SсhemesCollection.Contains(SelectedSсheme) && !string.IsNullOrEmpty(SelectedSсheme));
+                    SсhemesCollection.Contains(CurrentScheme) && CurrentScheme != null);
 
             }
         }
@@ -181,7 +149,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
             {
                 return _saveCommand ??= new RelayCommand(obj =>
                 {
-                    var newScheme = GetCurrentConfiguration();
+
                     var result = MessageBox.Show(
                         "Вы действительно хотите обновить данные схему?",
                         "Обновление",
@@ -189,26 +157,15 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                         MessageBoxImage.Question);
                     if (result == MessageBoxResult.OK)
                     {
-                        storage.Save(newScheme);
+                        storage.Save(CurrentScheme);
                     }
                     UpdateCollectionStorage();
-                    SelectedSсheme = newScheme.Name;
                 }, (_) =>
-                    SсhemesCollection.Contains(SelectedSсheme) && !string.IsNullOrEmpty(SelectedSсheme));
+                    SсhemesCollection.Contains(CurrentScheme) && CurrentScheme != null);
             }
         }
 
         #endregion
-        private Scheme GetCurrentConfiguration()
-        {
-            var newScheme = new Scheme()
-            {
-                Catalog = CurrentCatalog,
-                Database = CurrentDatabase,
-                Description = Description,
-                Name = SelectedSсheme
-            };
-            return newScheme;
-        }
+
     }
 }
