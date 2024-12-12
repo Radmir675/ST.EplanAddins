@@ -1,0 +1,112 @@
+﻿<Window x:Class="ST.EplAddin.UserConfigurationService.Views.SchemesView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:vm="clr-namespace:ST.EplAddin.UserConfigurationService.ViewModels"
+        mc:Ignorable="d"
+        Height="410"
+        Width="500"
+        ResizeMode="NoResize"
+        Title="Новая схема"
+        WindowStartupLocation="CenterOwner">
+
+    <Window.DataContext>
+        <vm:SchemesVM />
+    </Window.DataContext>
+
+
+    <Border Padding="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2.5*" MinHeight="180"/>
+                <RowDefinition Height="1.5*" />
+                <RowDefinition Height="0.5*" />
+            </Grid.RowDefinitions>
+            <StackPanel>
+
+                <TextBlock Text="Схема:" />
+
+                <ListView Height="150"
+                          Margin="0,5,0,20"
+                          HorizontalContentAlignment="Left"
+                          ItemsSource="{Binding elements}"
+                        SelectedItem="{Binding SelectedItem}">
+                 <!--Сюда нужен <Trigger></Trigger>-->
+
+                    <ListView.Resources>
+                        <DataTemplate x:Key="Templ">
+                            <TextBlock HorizontalAlignment="Left"
+                                       Text="{Binding}" />
+                        </DataTemplate>
+                        <Style x:Key="HeaderStyle"
+                               TargetType="GridViewColumnHeader">
+                            <Setter Property="HorizontalContentAlignment"
+                                    Value="Left" />
+                        </Style>
+
+                    </ListView.Resources>
+
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=.Name}"
+                                            Header="Имя"
+                                            Width="230"
+                                            HeaderContainerStyle="{StaticResource HeaderStyle}" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Description}"
+                                            Width="250"
+                                            Header="Описание"
+                                            HeaderContainerStyle="{StaticResource HeaderStyle}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="300" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="21" />
+                    <RowDefinition Height="15" />
+                    <RowDefinition Height="Auto" />
+
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="Имя:" />
+                <TextBlock Grid.Column="0"
+                           Grid.Row="2"
+                           Text="Описание:" />
+                <TextBox Grid.Row="0"
+                         Grid.Column="1"
+                         Text="{Binding Name}" />
+                <TextBox Grid.Row="2"
+                         Grid.Column="1"
+                         Height="60"
+                         Text="{Binding Description}" />
+            </Grid>
+            <UniformGrid Rows="1"
+                         Grid.Row="2"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Bottom"
+                         MinHeight="25">
+                <Button Content="Ок"
+                        Width="123"
+                        Height="25"
+                        Margin="0,0,10,0"
+                        Command="{Binding OkCommand}"
+                        Click="Button_Click" />
+                <Button Content="Отмена"
+                        Width="123"
+                        Height="25"
+                        IsCancel="True"
+                        HorizontalAlignment="Right" />
+            </UniformGrid>
+
+        </Grid>
+    </Border>
+
+</Window>
