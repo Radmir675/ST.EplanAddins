@@ -30,8 +30,9 @@
                 <ListView Height="150"
                           Margin="0,5,0,20"
                           HorizontalContentAlignment="Left"
-                          ItemsSource="{Binding elements}"
-                        SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
+                          ItemsSource="{Binding Collection}"
+                        SelectedItem="{Binding SelectedItem, 
+                    UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
                  <!--Сюда нужен <Trigger></Trigger>-->
 
                     <ListView.Resources>
@@ -82,11 +83,11 @@
                            Text="Описание:" />
                 <TextBox Grid.Row="0"
                          Grid.Column="1"
-                         Text="{Binding SelectedItem.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" />
                 <TextBox Grid.Row="2"
                          Grid.Column="1"
                          Height="60"
-                         Text="{Binding SelectedItem.Description}" />
+                         Text="{Binding Description}" />
             </Grid>
             <UniformGrid Rows="1"
                          Grid.Row="2"

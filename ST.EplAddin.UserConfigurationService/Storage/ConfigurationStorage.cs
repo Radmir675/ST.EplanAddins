@@ -10,12 +10,7 @@ namespace ST.EplAddin.UserConfigurationService.Storage
     {
         private ObservableCollection<Scheme> _schemes;
         private static ConfigurationStorage _instance;
-
-        public static ConfigurationStorage Instance
-        {
-            get => _instance ??= new ConfigurationStorage();
-            set => _instance = value;
-        }
+        public static ConfigurationStorage Instance => _instance ??= new ConfigurationStorage();
 
         private ConfigurationStorage()
         {
@@ -35,7 +30,7 @@ namespace ST.EplAddin.UserConfigurationService.Storage
                 schemeInStorage.Database = scheme.Database;
 
             }
-            else if (!string.IsNullOrEmpty(scheme.Name) && !_schemes.Any(x => x.Name.Contains(scheme.Name)))
+            else if (!string.IsNullOrEmpty(scheme.Name) && !_schemes.Contains(scheme))
             {
                 _schemes.Add(scheme);
             }
@@ -78,7 +73,6 @@ namespace ST.EplAddin.UserConfigurationService.Storage
 
         public ObservableCollection<Scheme> GetAll()
         {
-            //   var dd = JsonProvider<ObservableCollection<Scheme>>.GetData();
             return _schemes;
         }
         public bool TryGetSchemeByName(string Name, out Scheme scheme)

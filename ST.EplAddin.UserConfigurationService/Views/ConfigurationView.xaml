@@ -75,9 +75,14 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <ComboBox VerticalContentAlignment="Center"
-                              ItemsSource="{Binding SсhemesCollection}"
-                              DisplayMemberPath="Name"
-                              SelectedItem="{Binding CurrentScheme, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                              ItemsSource="{Binding SсhemesCollection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                              SelectedItem="{Binding CurrentScheme, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                     <StackPanel Grid.Column="1"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center">
