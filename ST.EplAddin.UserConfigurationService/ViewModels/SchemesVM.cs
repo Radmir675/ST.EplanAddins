@@ -25,8 +25,21 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
         }
 
         public ObservableCollection<Scheme> Collection { get; set; } = new();
-        public Scheme SelectedItem { get; set; }
+
+        public Scheme SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                if (Equals(value, _selectedItem)) return;
+                _selectedItem = value;
+                OnPropertyChanged();
+            }
+        }
+
         private RelayCommand _okCommand;
+        private Scheme _selectedItem;
+
         public RelayCommand OkCommand
         {
             get
@@ -42,7 +55,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                         Name = Name
                     };
                     configurationStorage.Save(newScheme);
-                }, (_) => !ConfigurationStorage.Instance.TryGetSchemeByName(Name, out Scheme sheme));
+                }, (_) => ConfigurationStorage.Instance.TryGetSchemeByName(Name, out Scheme sheme));
             }
         }
 

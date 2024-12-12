@@ -54,10 +54,10 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
             get => _selectedSсheme;
             set
             {
+                UpdateSchemeSettings(value);
                 if (!string.IsNullOrEmpty(value))
                 {
                     _selectedSсheme = value;
-                    UpdateSchemeSettings(value);
                     OnPropertyChanged();
                 }
             }
