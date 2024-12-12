@@ -11,8 +11,31 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
         private readonly string _database;
 
         public readonly ConfigurationStorage storage;
-        public string Description { get; set; }
-        public string Name { get; set; }
+
+        public string Description
+        {
+            get => _description;
+            set
+            {
+                if (value == _description) return;
+                _description = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(OkCommand));
+            }
+        }
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (value == _name) return;
+                _name = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(OkCommand));
+            }
+        }
+
         public SchemesVM() { }
         public SchemesVM(string catalog, string database)
         {
@@ -31,12 +54,17 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
             {
                 if (Equals(value, _selectedItem)) return;
                 _selectedItem = value;
+                Name = _selectedItem?.Name;
+                Description = _selectedItem?.Description;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(OkCommand));
             }
         }
 
         private RelayCommand _okCommand;
         private Scheme _selectedItem;
+        private string _name;
+        private string _description;
 
         public RelayCommand OkCommand
         {
@@ -52,7 +80,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                         Name = Name
                     };
                     storage.Save(newScheme);
-                }, (_) => Collection.Any(x => x.Name != Name) && !string.IsNullOrEmpty(Name));
+                }, (_) => !Collection.Select(x => x.Name).Contains(Name) && !string.IsNullOrEmpty(Name));
             }
         }
 

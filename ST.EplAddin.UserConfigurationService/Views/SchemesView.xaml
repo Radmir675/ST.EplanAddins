@@ -4,7 +4,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:vm="clr-namespace:ST.EplAddin.UserConfigurationService.ViewModels"
-        xmlns:interact="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Height="410"
         Width="500"
@@ -15,7 +14,6 @@
     <Window.DataContext>
         <vm:SchemesVM />
     </Window.DataContext>
-
 
     <Border Padding="20">
         <Grid>
@@ -35,32 +33,14 @@
                           ItemsSource="{Binding Collection}"
                           SelectedItem="{Binding SelectedItem, 
                     UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
-                    <!--Сюда нужен <Trigger></Trigger>-->
                     <ListView.Resources>
                         <Style x:Key="HeaderStyle"
                                TargetType="GridViewColumnHeader">
                             <Setter Property="HorizontalContentAlignment"
                                     Value="Left" />
                         </Style>
+
                     </ListView.Resources>
-                   <!--<ListView.Triggers>
-                       <EventTrigger RoutedEvent="MouseEnter">
-                            
-                              
-                           
-                       </EventTrigger>
-                   </ListView.Triggers>-->
-
-                    <!--<ListView.InputBindings>
-                        <interact:Interaction.Triggers>
-                            <interact:EventTrigger EventName="Click">
-                                <interact:ChangePropertyAction TargetObject="{Binding Description}"
-                                                               PropertyName="Text"
-                                                               Value="1" />
-                            </interact:EventTrigger>
-
-                        </interact:Interaction.Triggers>
-                    </ListView.InputBindings>-->
                     <ListView.View>
 
                         <GridView>
@@ -76,7 +56,6 @@
                     </ListView.View>
                 </ListView>
             </StackPanel>
-
 
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -97,7 +76,7 @@
                            Text="Описание:" />
                 <TextBox Grid.Row="0"
                          Grid.Column="1"
-                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" />
+                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <TextBox Grid.Row="2"
                          Grid.Column="1"
                          Height="60"

@@ -48,6 +48,10 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
         {
             var schemeName = Properties.Settings.Default.LastScheme;
             var isExist = storage.TryGetSchemeByName(schemeName, out var reScheme);
+            if (EplanConfiguration.CurrentCatalog != reScheme?.Catalog || EplanConfiguration.CurrentDatabase != reScheme?.Database)
+            {
+                isExist = false;
+            }
             return isExist ? reScheme : SetUndefined();
         }
 
@@ -60,7 +64,7 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                 Description = "",
                 Name = "Не определено"
             };
-            SсhemesCollection.Add(newS);
+            // SсhemesCollection.Add(newS);
             return newS;
         }
         #region Commands
@@ -131,6 +135,10 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                         storage.Remove(CurrentScheme);
                     UpdateCollectionStorage();
                     CurrentScheme = SсhemesCollection?.FirstOrDefault();
+                    if (CurrentScheme == null)
+                    {
+                        CurrentScheme = SetUndefined();
+                    }
                 }, (_) =>
                     SсhemesCollection.Contains(CurrentScheme) && CurrentScheme != null);
             }
