@@ -9,17 +9,18 @@
         Width="500"
         ResizeMode="NoResize"
         Title="Новая схема"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        Background="#f0f0f0">
 
     <Window.DataContext>
         <vm:SchemesVM />
     </Window.DataContext>
 
-
     <Border Padding="20">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="2.5*" MinHeight="180"/>
+                <RowDefinition Height="2.5*"
+                               MinHeight="180" />
                 <RowDefinition Height="1.5*" />
                 <RowDefinition Height="0.5*" />
             </Grid.RowDefinitions>
@@ -30,15 +31,10 @@
                 <ListView Height="150"
                           Margin="0,5,0,20"
                           HorizontalContentAlignment="Left"
-                          ItemsSource="{Binding elements}"
-                        SelectedItem="{Binding SelectedItem}">
-                 <!--Сюда нужен <Trigger></Trigger>-->
-
+                          ItemsSource="{Binding Collection}"
+                          SelectedItem="{Binding SelectedItem, 
+                    UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
                     <ListView.Resources>
-                        <DataTemplate x:Key="Templ">
-                            <TextBlock HorizontalAlignment="Left"
-                                       Text="{Binding}" />
-                        </DataTemplate>
                         <Style x:Key="HeaderStyle"
                                TargetType="GridViewColumnHeader">
                             <Setter Property="HorizontalContentAlignment"
@@ -46,10 +42,10 @@
                         </Style>
 
                     </ListView.Resources>
-
                     <ListView.View>
+
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding Path=.Name}"
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Name}"
                                             Header="Имя"
                                             Width="230"
                                             HeaderContainerStyle="{StaticResource HeaderStyle}" />
@@ -61,7 +57,6 @@
                     </ListView.View>
                 </ListView>
             </StackPanel>
-
 
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -82,7 +77,7 @@
                            Text="Описание:" />
                 <TextBox Grid.Row="0"
                          Grid.Column="1"
-                         Text="{Binding Name}" />
+                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <TextBox Grid.Row="2"
                          Grid.Column="1"
                          Height="60"

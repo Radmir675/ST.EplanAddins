@@ -1,6 +1,7 @@
 ﻿using ST.EplAddin.UserConfigurationService.Models;
 using ST.EplAddin.UserConfigurationService.Storage;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ST.EplAddin.UserConfigurationService.ViewModels
 {
@@ -8,32 +9,69 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
     {
         private readonly string _catalog;
         private readonly string _database;
-        public string Description { get; set; }
-        public string Name { get; set; }
 
-        public ObservableCollection<Scheme> elements { get; set; }
+        public readonly ConfigurationStorage storage;
 
-        public SchemesVM()
+        public string Description
         {
-
+            get => _description;
+            set
+            {
+                if (value == _description) return;
+                _description = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(OkCommand));
+            }
         }
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (value == _name) return;
+                _name = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(OkCommand));
+            }
+        }
+
+        public SchemesVM() { }
         public SchemesVM(string catalog, string database)
         {
             _catalog = catalog;
             _database = database;
-            elements = ConfigurationStorage.Instance.GetAll();
+            storage = ConfigurationStorage.Instance();
+            Collection = storage.GetAll();
         }
 
         public ObservableCollection<Scheme> Collection { get; set; } = new();
-        public Scheme SelectedItem { get; set; }
+
+        public Scheme SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                if (Equals(value, _selectedItem)) return;
+                _selectedItem = value;
+                Name = _selectedItem?.Name;
+                Description = _selectedItem?.Description;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(OkCommand));
+            }
+        }
+
         private RelayCommand _okCommand;
+        private Scheme _selectedItem;
+        private string _name;
+        private string _description;
+
         public RelayCommand OkCommand
         {
             get
             {
                 return _okCommand ??= new RelayCommand(obj =>
                 {
-                    var configurationStorage = ConfigurationStorage.Instance;
                     var newScheme = new Scheme()
                     {
                         Catalog = _catalog,
@@ -41,8 +79,8 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
                         Description = Description,
                         Name = Name
                     };
-                    configurationStorage.Save(newScheme);
-                }, (_) => !ConfigurationStorage.Instance.TryGetSchemeByName(Name, out Scheme sheme));
+                    storage.Save(newScheme);
+                }, (_) => !Collection.Select(x => x.Name).Contains(Name) && !string.IsNullOrEmpty(Name));
             }
         }
 

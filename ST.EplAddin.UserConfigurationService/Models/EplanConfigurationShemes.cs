@@ -6,8 +6,8 @@ namespace ST.EplAddin.UserConfigurationService.Models
     {
         public ObservableCollection<string> Catalogs { get; set; }
         public ObservableCollection<string> DatabaseList { get; set; }
-        public string CurrentCatalog;
-        public string CurrentDatabase;
+        public string CurrentCatalog { get; set; }
+        public string CurrentDatabase { get; set; }
 
     }
 }
