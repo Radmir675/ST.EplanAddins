@@ -93,7 +93,8 @@
                         Height="25"
                         Margin="0,0,10,0"
                         Command="{Binding OkCommand}"
-                        Click="Button_Click" />
+                        Click="Button_Click" 
+                        IsDefault="True"/>
                 <Button Content="Отмена"
                         Width="123"
                         Height="25"
