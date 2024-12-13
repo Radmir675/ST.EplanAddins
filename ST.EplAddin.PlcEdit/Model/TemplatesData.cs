@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -8,11 +9,7 @@ namespace ST.EplAddin.PlcEdit.Model
     {
         private static List<Template> Templates { get; set; } = new();
         private static string SavePath { get; set; }
-        private TemplatesData()
-        {
-
-        }
-
+        private TemplatesData() { }
         static TemplatesData()
         {
             ManagePlcForm.PathEvent += ManagePlcForm_PathEvent;
@@ -20,7 +17,7 @@ namespace ST.EplAddin.PlcEdit.Model
         private static void ManagePlcForm_PathEvent(object sender, string e)
         {
             SavePath = e;
-            ReadFilesFromFolder();
+            ScanTemplates();
         }
 
         private static TemplatesData Instance { get; set; }
@@ -36,10 +33,9 @@ namespace ST.EplAddin.PlcEdit.Model
         }
         public List<Template> GetTemplates()
         {
-            ReadFilesFromFolder();
             return Templates;
         }
-        private static void ReadFilesFromFolder()
+        private static void ScanTemplates()
         {
             Templates.Clear();
             var files = Directory.GetFiles(SavePath);
@@ -51,16 +47,51 @@ namespace ST.EplAddin.PlcEdit.Model
                 Templates.Add(new Template(minRow, maxRow, fileName));
             }
         }
-        public Template TryGetTemplateByName(string selectedTemplateName)
+        public Template TryGetByName(string selectedTemplateName)
         {
             var result = Templates.FirstOrDefault(x => x.FileName == selectedTemplateName);
             return result;
         }
-        public string TryGetTemplatePath(string templateName)
+        public string TryGetPath(string templateName)
         {
             var result = Directory.GetFiles(SavePath, $"{templateName}*").FirstOrDefault();
             return result;
         }
 
+        public bool Rename(string templateName, string newName)
+        {
+            try
+            {
+                var oldPath = TryGetPath(templateName);
+                var newPath = Path.Combine(SavePath, newName);
+                File.Move(oldPath, newPath);
+                ScanTemplates();
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+        }
+
+        public bool Delete(string templateName)
+        {
+            try
+            {
+                string path = TryGetPath(templateName);
+                FileInfo fileInfo = new FileInfo(path);
+                if (fileInfo.Exists)
+                {
+                    fileInfo.Delete();
+                }
+                ScanTemplates();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }
