@@ -9,7 +9,8 @@
         Width="800"
         Title="Конфигурация системы"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="#f0f0f0">
 
     <!--Оставить только кнопку закрытия-->
     <Window.DataContext>
@@ -108,8 +109,8 @@
 
                 <TextBox Grid.Row="1"
                          Grid.Column="1"
-                         IsReadOnly="True"
-                         Text="{Binding CurrentScheme.Description}" />
+                         Text="{Binding CurrentScheme.Description}" 
+                         Background="White"/>
 
                 <ComboBox Grid.Row="2"
                           Grid.Column="1"
