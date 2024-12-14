@@ -17,6 +17,7 @@ namespace ST.EplAddin.FootNote
         public App()
         {
             LoadAssemblies();
+            StartWindow();
         }
 
         #region DELETE

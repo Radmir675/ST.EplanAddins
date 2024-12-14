@@ -16,7 +16,7 @@
         MinHeight="300">
 
     <Window.Resources>
-      <ResourceDictionary Source="../PropertiesWindowDictionary.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="../PropertiesWindowDictionary.xaml"></ResourceDictionary>
 
     </Window.Resources>
 
@@ -91,17 +91,30 @@
                                                        HorizontalContentAlignment="Center" />
                                     </Button>
                                 </UniformGrid>
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Right">
 
-                                <Button x:Name="Delete"
-                                        Style="{StaticResource button_icon}"
-                                        HorizontalAlignment="Right">
-                                    <svg1:SVGImage SizeType="SizeToContent"
-                                                   Source="/ST.EplAddin.FootNote;component/Icons/delete.svg "
-                                                   Margin="3"
-                                                   RenderTransformOrigin="0.5,0.5"
-                                                   VerticalContentAlignment="Center"
-                                                   HorizontalContentAlignment="Center" />
-                                </Button>
+                                    <Button x:Name="Reset"
+                                            Style="{StaticResource button_icon}"
+                                            HorizontalAlignment="Right">
+                                        <svg1:SVGImage SizeType="SizeToContent"
+                                                       Source="/ST.EplAddin.FootNote;component/Icons/reset.svg"
+                                                       Margin="3"
+                                                       RenderTransformOrigin="0.5,0.5"
+                                                       VerticalContentAlignment="Center"
+                                                       HorizontalContentAlignment="Center" />
+                                    </Button>
+                                    <Button x:Name="Delete"
+                                            Style="{StaticResource button_icon}"
+                                            HorizontalAlignment="Right">
+                                        <svg1:SVGImage SizeType="SizeToContent"
+                                                       Source="/ST.EplAddin.FootNote;component/Icons/delete.svg "
+                                                       Margin="3"
+                                                       RenderTransformOrigin="0.5,0.5"
+                                                       VerticalContentAlignment="Center"
+                                                       HorizontalContentAlignment="Center" />
+                                    </Button>
+                                </StackPanel>
 
                             </UniformGrid>
                         </DockPanel>
@@ -188,7 +201,7 @@
                                          GroupName="TextAlign">
                                 <svg1:SVGImage SizeType="SizeToContent"
                                                Source="/ST.EplAddin.FootNote;component/Icons/format_align_left.svg "
-                                               Margin="1"
+                                               Margin="1.5"
                                                BorderThickness="0"
                                                RenderTransformOrigin="0.5,0.5"
                                                VerticalContentAlignment="Center"
@@ -198,7 +211,7 @@
                                          GroupName="TextAlign">
                                 <svg1:SVGImage SizeType="SizeToContent"
                                                Source="/ST.EplAddin.FootNote;component/Icons/format_align_center.svg "
-                                               Margin="1"
+                                               Margin="1.5"
                                                RenderTransformOrigin="0.5,0.5"
                                                VerticalContentAlignment="Center"
                                                HorizontalContentAlignment="Center" />
@@ -207,7 +220,7 @@
                                          GroupName="TextAlign">
                                 <svg1:SVGImage SizeType="SizeToContent"
                                                Source="/ST.EplAddin.FootNote;component/Icons/format_align_right.svg "
-                                               Margin="1"
+                                               Margin="1.5"
                                                RenderTransformOrigin="0.5,0.5"
                                                VerticalContentAlignment="Center"
                                                HorizontalContentAlignment="Center" />
@@ -225,10 +238,11 @@
                         <Button DockPanel.Dock="Right"
                                 Style="{StaticResource button_icon}"
                                 HorizontalAlignment="Right"
-                                Margin="0,0,6,0" Foreground="Gray">
+                                Margin="0,0,6,0"
+                                Foreground="Gray">
                             <svg1:SVGImage SizeType="SizeToContent"
                                            Source="/ST.EplAddin.FootNote;component/Icons/add.svg "
-                                           Margin="2"
+                                           Margin="4"
                                            RenderTransformOrigin="0.5,0.5"
                                            VerticalContentAlignment="Center"
                                            HorizontalContentAlignment="Center" />
@@ -291,10 +305,7 @@
                          Rows="1"
                          Height="23"
                          VerticalAlignment="Bottom">
-                <Button Content="По умолчанию"
-                        Margin="0,0,5,0"
-                        Foreground="Gray"
-                        FontFamily="Exo 2 SemiBold" />
+               
                 <Button Width="auto">
                     <StackPanel Orientation="Horizontal">
                         <svg1:SVGImage SizeType="SizeToContent"

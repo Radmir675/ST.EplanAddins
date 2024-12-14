@@ -275,7 +275,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icons\reset.svg" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Fonts\Skolar PE Variable Italic.ttf" />
     <Resource Include="Fonts\Skolar PE Variable Regular.ttf" />
