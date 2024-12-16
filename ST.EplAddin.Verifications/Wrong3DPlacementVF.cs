@@ -19,19 +19,23 @@ namespace ST.EplAddin.Verifications
             {
                 if (!function3D.Properties.FUNC_ISPLACEDIN_CIRCUIT && !function3D.Properties.FUNC_ISPLACEDIN_OVERVIEW && !function3D.Properties.FUNC_ISPLACEDIN_SINGLELINE)
                 {
-                    bool isElectro = function3D.ArticleReferences[0]?.Properties.ARTICLE_PRODUCTTOPGROUP?.ToInt() == (int)ProductTopGroup.Electric;
-                    if (isElectro)
+                    if (function3D.ArticleReferences.Length == 0) return;
+                    foreach (var article in function3D.ArticleReferences)
                     {
-                        if (storableObject is Placement3D placement3D)
+                        bool isElectro = article?.Properties.ARTICLE_PRODUCTTOPGROUP?.ToInt() == (int)ProductTopGroup.Electric;
+                        if (isElectro)
                         {
-                            var productGroup = function3D.ArticleReferences[0]?.Properties.ARTICLE_PRODUCTGROUP.ToInt();//группа продуктов
-
-                            bool isTerminalDefinition = productGroup == (int)ProductGroup.ElectricalTerminal;
-                            if (!isTerminalDefinition)
+                            if (storableObject is Placement3D placement3D)
                             {
-                                var name = placement3D.Properties[20002].ToString(ISOCode.Language.L_ru_RU);
-                                var partNumber = function3D.ArticleReferences[0].Properties[20481];
-                                DoErrorMessage(storableObject, storableObject.Project, $"{partNumber + "|" + name}");
+                                var productGroup = article?.Properties.ARTICLE_PRODUCTGROUP.ToInt();//группа продуктов
+
+                                bool isTerminalDefinition = productGroup == (int)ProductGroup.ElectricalTerminal;
+                                if (!isTerminalDefinition)
+                                {
+                                    var name = placement3D.Properties[20002].ToString(ISOCode.Language.L_ru_RU);
+                                    var partNumber = article.Properties[20481];
+                                    DoErrorMessage(storableObject, storableObject.Project, $"{partNumber + "|" + name}");
+                                }
                             }
                         }
                     }

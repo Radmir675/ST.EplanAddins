@@ -21,8 +21,8 @@ namespace ST.EplAddin.Verifications
         {
             strName = "ProjectPropertiesVF";
             iOrdinal = 30;
-            this.VerificationPermission = IVerification.Permission.OnlineOfflinePermitted;
-            this.VerificationState = IVerification.VerificationState.OnlineOfflineState;
+            VerificationPermission = IVerification.Permission.OnlineOfflinePermitted;
+            VerificationState = IVerification.VerificationState.OnlineOfflineState;
         }
 
         public override string GetMessageText()
@@ -47,7 +47,6 @@ namespace ST.EplAddin.Verifications
             }
         }
 
-
         public override void Execute(StorableObject storableObject)
         {
             if (IsDone) return;
@@ -55,7 +54,11 @@ namespace ST.EplAddin.Verifications
             PathToBaseProject = @"O:\Шаблоны\Базовый проект\BaseProject.edb\ProjectInfo.xml";
             if (!File.Exists(PathToBaseProject))
             {
-                var dialogResult = MessageBox.Show($"Базовый проект с шаблоном по пути {PathToBaseProject} не найден.\n Хотите указать путь к файлу?", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                var dialogResult = MessageBox.Show(
+                    $"Базовый проект с шаблоном по пути {PathToBaseProject} не найден.\n Хотите указать путь к файлу?",
+                    "Error",
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Error);
                 if (dialogResult != DialogResult.OK)
                 {
                     IsDone = true;
@@ -114,7 +117,6 @@ namespace ST.EplAddin.Verifications
             return result;
         }
 
-
         private void Compare(Dictionary<PropertyKey, Property> baseProjectFormatPropertiesOnly,
             Dictionary<PropertyKey, Property> currentProjectFormatPropertiesOnly)
         {
@@ -167,10 +169,12 @@ namespace ST.EplAddin.Verifications
             return result;
         }
 
+
         private Dictionary<PropertyKey, Property> GetProjectValues(ProjectPropertyList projectPropertyList)
         {
             var existingValues = projectPropertyList.ExistingValues;
-            var dictionary = new Dictionary<PropertyKey, Property>();
+            var dictionary = new Dictionary<PropertyKey, Property>(existingValues.Length);
+
             foreach (var value in existingValues)
             {
                 var propertyValue = value.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
@@ -178,15 +182,18 @@ namespace ST.EplAddin.Verifications
 
                 if (value.Indexes.Length > 0)
                 {
-                    for (int i = 0; i < value.Indexes.Length; i++)
+                    foreach (var ind in value.Indexes)
                     {
-                        try
+                        var idxVal = value[ind];
+
+                        if (!idxVal.IsEmpty)
                         {
-                            var propertyValue1 = value[value.Indexes[i]].GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                            var propertyValue1 = idxVal.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
                             if (!string.IsNullOrEmpty(propertyValue1))
                             {
-                                var definitionName = value[value.Indexes[i]].Definition.Name;
-                                var index = int.Parse(value.Indexes[i].ToString());
+                                var definitionName = idxVal.Definition.Name;
+
+                                var index = int.Parse((ind + 1).ToString());
                                 dictionary.Add(new PropertyKey(id, index), new Property()
                                 {
                                     Name = definitionName,
@@ -195,10 +202,6 @@ namespace ST.EplAddin.Verifications
                                     Index = index
                                 });
                             }
-                        }
-                        catch (Exception e)
-                        {
-
                         }
                     }
                 }
@@ -211,15 +214,12 @@ namespace ST.EplAddin.Verifications
                         Name = definitionName,
                         Id = id,
                         Value = propertyValue,
-                        Index = index
                     });
                 }
-
             }
 
             return dictionary;
         }
-
         private bool ShowFileDialog()
         {
             OpenFileDialog openFileDlg = new OpenFileDialog();
@@ -243,10 +243,7 @@ namespace ST.EplAddin.Verifications
             iOrdinal = 20;
         }
 
-
-        public override void DoHelp()
-        {
-        }
+        public override void DoHelp() { }
     }
 
     public struct PropertyKey
