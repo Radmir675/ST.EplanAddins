@@ -97,6 +97,7 @@
     <Compile Include="ProjectPropertiesCountVF.cs" />
     <Compile Include="ProjectPropertiesVF.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TemplateCableCoreCountVF.cs" />
     <Compile Include="Wrong3DPlacementVF.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
