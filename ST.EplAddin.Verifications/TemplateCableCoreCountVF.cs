@@ -10,8 +10,8 @@ namespace ST.EplAddin.Verifications
         {
             strName = "TemplateCableCoreCountVF";
             iOrdinal = 30;
-            this.VerificationPermission = IVerification.Permission.OnlineOfflinePermitted;
-            this.VerificationState = IVerification.VerificationState.OnlineOfflineState;
+            VerificationPermission = IVerification.Permission.OnlineOfflinePermitted;
+            VerificationState = IVerification.VerificationState.OnlineOfflineState;
         }
 
         public override void OnStartInspection(bool bOnline) { }
@@ -20,6 +20,7 @@ namespace ST.EplAddin.Verifications
 
         public override void Execute(StorableObject oObject1)
         {
+
         }
 
         public override void OnRegister(ref string strCreator, ref IMessage.Region eRegion, ref int iMessageId, ref IMessage.Classification eClassification,
