@@ -1,5 +1,4 @@
-﻿using Eplan.EplApi.DataModel;
-using Eplan.EplApi.EServices;
+﻿using Eplan.EplApi.EServices;
 using Eplan.EplApi.MasterData;
 using System.Linq;
 using Cable = Eplan.EplApi.DataModel.EObjects.Cable;
@@ -29,14 +28,19 @@ namespace ST.EplAddin.Verifications
             if (cable.ArticleReferences.Length <= 0 || cable.ArticleReferences[0].Properties[22041].ToInt() !=
                 (int)MDPartsDatabaseItem.Enums.ProductGroup.ElectricalCableConnection) return;
 
-            var cableArticleTemplates = 0;
-            cableArticleTemplates =
-                cable?.ArticleReferences[0]?.FunctionTemplates.OfType<Connection>().Count() ?? 0;
-
-            var cableTemplatesCount = cable.CableConnections.Count();
-            if (cableTemplatesCount > cableArticleTemplates)
+            if (cable.CableConnections.Any(x => !x.IsTemplate))
             {
                 DoErrorMessage(oObject1, oObject1.Project, $"{cable.Name}");
+                return;
+            }
+            foreach (var item in cable.AllSubFunctions)
+            {
+                if (item.Connections.Any(z => !z.IsTemplate))
+                {
+                    DoErrorMessage(oObject1, oObject1.Project, $"{cable.Name}");
+                    return;
+                }
+
             }
         }
 
