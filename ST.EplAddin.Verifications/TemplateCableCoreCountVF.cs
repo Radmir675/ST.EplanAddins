@@ -25,7 +25,7 @@ namespace ST.EplAddin.Verifications
         public override void Execute(StorableObject oObject1)
         {
             if (oObject1 == null) return;
-            if (oObject1 is not Cable { IsMainFunction: true } cable) return;
+            if (oObject1 is not Cable cable || !cable.IsMainFunction) return;
             if (cable.ArticleReferences.Length <= 0 || cable.ArticleReferences[0].Properties[22041].ToInt() !=
                 (int)MDPartsDatabaseItem.Enums.ProductGroup.ElectricalCableConnection) return;
 
