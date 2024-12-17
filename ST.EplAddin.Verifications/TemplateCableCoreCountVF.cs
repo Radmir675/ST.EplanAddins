@@ -1,5 +1,9 @@
 ﻿using Eplan.EplApi.DataModel;
 using Eplan.EplApi.EServices;
+using Eplan.EplApi.MasterData;
+using System.Linq;
+using Cable = Eplan.EplApi.DataModel.EObjects.Cable;
+using StorableObject = Eplan.EplApi.DataModel.StorableObject;
 
 namespace ST.EplAddin.Verifications
 {
@@ -20,7 +24,20 @@ namespace ST.EplAddin.Verifications
 
         public override void Execute(StorableObject oObject1)
         {
+            if (oObject1 == null) return;
+            if (oObject1 is not Cable { IsMainFunction: true } cable) return;
+            if (cable.ArticleReferences.Length <= 0 || cable.ArticleReferences[0].Properties[22041].ToInt() !=
+                (int)MDPartsDatabaseItem.Enums.ProductGroup.ElectricalCableConnection) return;
 
+            var cableArticleTemplates = 0;
+            cableArticleTemplates =
+                cable?.ArticleReferences[0]?.FunctionTemplates.OfType<Connection>().Count() ?? 0;
+
+            var cableTemplatesCount = cable.CableConnections.Count();
+            if (cableTemplatesCount > cableArticleTemplates)
+            {
+                DoErrorMessage(oObject1, oObject1.Project, $"{cable.Name}");
+            }
         }
 
         public override void OnRegister(ref string strCreator, ref IMessage.Region eRegion, ref int iMessageId, ref IMessage.Classification eClassification,
@@ -35,7 +52,7 @@ namespace ST.EplAddin.Verifications
 
         public override string GetMessageText()
         {
-            return "В кабеле %1!s! не присвоены жилы";
+            return "В кабеле %1!s! не присвоены жилы шаблону функции";
         }
 
         public override void DoHelp() { }
