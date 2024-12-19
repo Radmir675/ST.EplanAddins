@@ -27,20 +27,22 @@ namespace ST.EplAddin.Verifications
                         {
                             if (storableObject is Placement3D placement3D)
                             {
-                                var productGroup = article?.Properties.ARTICLE_PRODUCTGROUP.ToInt();//группа продуктов
+                                var productGroup = article?.Properties.ARTICLE_PRODUCTSUBGROUP.ToInt();//подгруппа продуктов
 
-                                bool isTerminalDefinition = productGroup == (int)ProductGroup.ElectricalTerminal;
-                                if (!isTerminalDefinition)
-                                {
-                                    var name = placement3D.Properties[20002].ToString(ISOCode.Language.L_ru_RU);
-                                    var partNumber = article.Properties[20481];
-                                    DoErrorMessage(storableObject, storableObject.Project, $"{partNumber + "|" + name}");
-                                }
+                                if (!IsOk(productGroup.Value)) continue;
+                                var name = placement3D.Properties[20002].ToString(ISOCode.Language.L_ru_RU);
+                                var partNumber = article.Properties[20481];
+                                DoErrorMessage(storableObject, storableObject.Project, $"{partNumber + "|" + name}");
                             }
                         }
                     }
                 }
             }
+        }
+
+        private bool IsOk(int productGroup)
+        {
+            return productGroup != (int)ProductSubGroup.ElectricalEndangle;
         }
 
         public override string GetMessageText()

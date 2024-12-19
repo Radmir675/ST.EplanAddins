@@ -35,7 +35,7 @@ namespace ST.EplAddin.Verifications
 
         public override string GetMessageText()
         {
-            return "Неверная единица измерения кабеля %1!s!";
+            return "Неверная единица измерения кабеля %1!s! [Предварительно собранный кабель должен поставляться в шт.]";
         }
 
         public override void OnEndInspection()

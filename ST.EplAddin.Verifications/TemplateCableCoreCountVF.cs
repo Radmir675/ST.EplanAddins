@@ -28,7 +28,7 @@ namespace ST.EplAddin.Verifications
             if (cable.ArticleReferences.Length <= 0 || cable.ArticleReferences[0].Properties[22041].ToInt() !=
                 (int)MDPartsDatabaseItem.Enums.ProductGroup.ElectricalCableConnection) return;
 
-            if (cable.CableConnections.Any(x => !x.IsTemplate && x.Properties[20470].ToBool()))
+            if (cable.CableConnections.Any(x => !x.IsTemplate))
             {
                 DoErrorMessage(oObject1, oObject1.Project, $"{cable.Name}");
                 return;
