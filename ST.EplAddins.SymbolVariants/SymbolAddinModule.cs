@@ -21,7 +21,7 @@ namespace ST.EplAddins.SymbolVariants
             var menuId = menu.GetCustomMenuId("ST", null);
             if (menuId == 0)
                 menuId = menu.AddMainMenu("ST", Menu.MainMenuName.eMainMenuUtilities, "None", "None", "Статус", 1);
-            uint subMenuID = menu.AddMenuItem("ChangeSymbolVariant", ChangeSymbolAction.actionName, "", menuId, 0, false, false);
+            uint subMenuID = menu.AddMenuItem("Изменить вариант символа", ChangeSymbolAction.actionName, "", menuId, 0, false, false);
             return true;
 
         }
@@ -29,7 +29,6 @@ namespace ST.EplAddins.SymbolVariants
         public bool OnRegister(ref bool bLoadOnStart)
         {
             bLoadOnStart = true;
-            System.Windows.Forms.MessageBox.Show("Symbol addin is implemented");
             return true;
         }
 
