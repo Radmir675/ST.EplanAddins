@@ -1,4 +1,4 @@
-﻿namespace ST.EplAddin.FootNote
+﻿namespace ST.EplAddin.FootNote.FootNote
 {
     public partial class Footnote_InsertInteraction
     {

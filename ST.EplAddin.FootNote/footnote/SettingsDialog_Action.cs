@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 
-namespace ST.EplAddin.FootNote
+namespace ST.EplAddin.FootNote.FootNote
 {
     class CustomText_Action : IEplAction
     {

@@ -3,7 +3,6 @@ using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.E3D;
 using Eplan.EplApi.DataModel.Graphics;
 using NLog;
-using ST.EplAddin.FootNote.Forms;
 using ST.EplAddin.FootNote.ProperyBrowser;
 using ST.EplAddin.FootNote.Views;
 using System;
@@ -16,11 +15,10 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using static Eplan.EplApi.DataModel.Placement;
 
-namespace ST.EplAddin.FootNote
+namespace ST.EplAddin.FootNote.FootNote
 {
     /// <summary>
     /// Класс объекта выноски
@@ -114,18 +112,18 @@ namespace ST.EplAddin.FootNote
 
         [Browsable(false)]
         [Description("Текст выноски")]
-        [CategoryAttribute("Text"), ReadOnlyAttribute(true), DefaultValueAttribute("")]
+        [Category("Text"), ReadOnly(true), DefaultValue("")]
         public string Text { get; set; } = "label";
 
         [DataMember]
         [Description("Высота текста выноски")]
-        [CategoryAttribute("Text"), DefaultValueAttribute(2.5)]
+        [Category("Text"), DefaultValue(2.5)]
         [DisplayName("Высота текста")]
         public double TEXTHEIGHT { get; set; } = STSettings.instance.TEXTHEIGHT;
 
         [DataMember(Name = "Толщина линии")]
         [Description("Толщина линий выноски")]
-        [CategoryAttribute("Line"), DefaultValueAttribute(0.25)]
+        [Category("Line"), DefaultValue(0.25)]
         [DisplayName("Толщина линий")]
         public double LINEWIDTH
         {
@@ -136,13 +134,13 @@ namespace ST.EplAddin.FootNote
 
         [DataMember(Name = "Направление выноски")] //этот текст попадает в Json
         [Description("Инвертировать направление полки")]
-        [CategoryAttribute("Line"), DefaultValueAttribute(2.5)]
+        [Category("Line"), DefaultValue(2.5)]
         [DisplayName("Инвертировать направление")]
         public bool INVERTDIRECTION { get; set; } = false;
 
         [DataMember]
         [Description("Кружок")]
-        [CategoryAttribute("Line"), DefaultValueAttribute(2.5)]
+        [Category("Line"), DefaultValue(2.5)]
         [DisplayName("Указатель-круг")]
         public bool STARTPOINT { get; set; } = STSettings.instance.STARTPOINT;
 
@@ -150,14 +148,14 @@ namespace ST.EplAddin.FootNote
         [DataMember]
         [Description("Радиус кружка")]
         // [TypeConverter(typeof(FigureConverter))]
-        [CategoryAttribute("Line"), DefaultValueAttribute(0.25)]
+        [Category("Line"), DefaultValue(0.25)]
         [DisplayName("Радиус кружка")]
         // [Editor(typeof(Editor), typeof(UITypeEditor))]
         public double STARTPOINTRADIUS { get; set; } = STSettings.instance.STARTPOINTRADIUS;
 
         [DataMember]
         [Description("Введенный пользователем текст")]
-        [CategoryAttribute("Text"), DefaultValueAttribute(0.25)]
+        [Category("Text"), DefaultValue(0.25)]
         [DisplayName("Введенный пользователем текст")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string USERTEXT { get; set; }
@@ -215,7 +213,7 @@ namespace ST.EplAddin.FootNote
         public String Serialize()
         {
             logger.Debug("");
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(FootnoteItem));
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(FootNote.FootnoteItem));
             var stream = new MemoryStream();
             serializer.WriteObject(stream, this);
 
@@ -243,11 +241,11 @@ namespace ST.EplAddin.FootNote
             try
             {
                 var json = jsontext.Contents.GetString(0);
-                var jsonnote = new FootnoteItem();
+                var jsonnote = new FootNote.FootnoteItem();
                 var ms = new MemoryStream(Encoding.UTF8.GetBytes(json));
                 var ser = new DataContractJsonSerializer(jsonnote.GetType());
 
-                jsonnote = ser.ReadObject(ms) as FootnoteItem;
+                jsonnote = ser.ReadObject(ms) as FootNote.FootnoteItem;
 
                 this.TEXTHEIGHT = jsonnote.TEXTHEIGHT;
                 this.LINEWIDTH = jsonnote.LINEWIDTH;
@@ -671,145 +669,7 @@ namespace ST.EplAddin.FootNote
             return GetSourceObjectProperty(sourceItem3D);
         }
 
-        /// <summary>
-        /// Получить значение свойства исходного объекта
-        /// </summary>
-        /// <param name="placement3D">Исходный объект</param>
-        /// <returns></returns>
-        public string GetSourceObjectProperty(Placement3D placement3D)
-        {
-            logger.Debug("Placement3D");
-            var result = "-1"; //default result
 
-            if (placement3D == null) return result;
-            switch (PROPERTYID)
-            {
-                case PropertiesList.AllAvailableProperties:
-                    PropertySelectDialogForm propertySelectDialogForm = new PropertySelectDialogForm(placement3D);
-                    propertySelectDialogForm.ShowDialog();
-                    if (propertySelectDialogForm.DialogResult == DialogResult.OK)
-                        result = "-1";
-                    break;
-
-                case PropertiesList.User_defined:
-                    if (IsUserTextUpdated)
-                    {
-                        var propertiesId = GetPropID(USERTEXT);
-                        var validPropertiesText = GetValidPropertiesText(placement3D, propertiesId).ToList();
-                        if (!validPropertiesText.Any())
-                        {
-                            result = USERTEXT;
-                            break;
-                        }
-                        for (var i = 0; i < validPropertiesText.Count; i++)
-                        {
-                            result = USERTEXT.Replace($"{{{propertiesId[i].ToString()}}}", validPropertiesText[i]);
-                        }
-                        break;
-                    }
-                    if (label != null)
-                    {
-                        result = label.Contents?.GetStringToDisplay(ISOCode.Language.L_ru_RU);
-                        break;
-                    }
-                    else
-                    {
-                        Footnote_CustomTextForm form = new Footnote_CustomTextForm(placement3D);
-                        form.ShowDialog();
-                        if (form.DialogResult == DialogResult.OK)
-                        {
-                            USERTEXT = form.GetUserText();
-                            var propertiesId = GetPropID(USERTEXT);
-                            var validPropertiesText = GetValidPropertiesText(placement3D, propertiesId).ToList();
-                            if (!validPropertiesText.Any())
-                            {
-                                result = USERTEXT;
-                            }
-                            for (var i = 0; i < validPropertiesText.Count; i++)
-                            {
-                                result = USERTEXT.Replace($"{{{propertiesId[i].ToString()}}}", validPropertiesText[i]);
-                            }
-                        }
-                        form.Close();
-                    }
-                    break;
-
-                case PropertiesList.P20450:
-                    result = placement3D.Properties[20450].ToInt().ToString();
-                    break;
-
-                case PropertiesList.P20008:
-                    result = placement3D.Properties[20008].ToString();
-                    break;
-
-                case PropertiesList.P20487:
-                    Function3D function3D = placement3D as Function3D;
-                    if (function3D == null) { MessageBox.Show("Недействительный объект источника"); break; }
-
-                    ArticleReference articleReference = function3D.ArticleReferences.FirstOrDefault();
-                    if (articleReference == null || articleReference.IsTransient)
-                    {
-                        //Попытка найти номер в связанных элементах
-                        var arr = function3D.CrossReferencedObjectsAll.Where(a => (a as Function3D).ArticleReferences.Count() > 0);
-                        StorableObject arrItem = null;
-                        if (arr != null)
-                        {
-                            arrItem = arr.FirstOrDefault();
-                            articleReference = (arrItem as Function3D).ArticleReferences.FirstOrDefault();
-                        }
-                    }
-
-                    if (articleReference == null || articleReference.IsTransient)
-                    { MessageBox.Show("Недействительная ссылка изделия объекта источника"); break; }
-
-                    if (articleReference.Properties.Exists(20487) == false) { MessageBox.Show("Несуществующее свойство ссылки изделия объекта источника"); break; }
-
-                    if (articleReference.Properties[20487].IsEmpty)
-                    {
-                        //MessageBox.Show("Пустой Номер позиции");
-                        result = "-1";
-                        break;
-                    }
-
-                    result = articleReference.Properties[20487].ToInt().ToString();
-                    break;
-            }
-            return result;
-        }
-
-        private IEnumerable<string> GetValidPropertiesText(Placement3D placement3D, List<int> propertiesId)
-        {
-            //TODO:переписать под разные типы свойств
-            logger.Debug("");
-            return new List<string>();
-            //foreach (var property in propertiesId)
-            //{
-            //    using (PropertyDefinition propertyDefinition = new PropertyDefinition(property))
-            //    {
-            //        bool IsIndexed = propertyDefinition.IsIndexed;
-            //        if (IsIndexed == false)
-            //        {
-            //            var propertyText = placement3D.Properties[property].ToString(ISOCode.Language.L_ru_RU);
-            //            yield return propertyText;
-            //        }
-            //    }
-            //}
-        }
-
-        private List<int> GetPropID(string inputText)
-        {
-            logger.Debug("");
-            string pattern = @"(?<=\{).*?(?=\})";//{215421}слова{12211}
-            Regex regex = new Regex(pattern);
-            MatchCollection collection = regex.Matches(inputText);
-
-            var result = collection
-                    .Cast<Match>()
-                    .Select(s => new { Success = int.TryParse(s.Value, out var value), value })
-                    .Where(pair => pair.Success)
-                    .Select(pair => pair.value).ToList();
-            return result;
-        }
         /// <summary>
         /// Присвоить исходный объект
         /// </summary>

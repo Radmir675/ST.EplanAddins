@@ -3,7 +3,7 @@ using Eplan.EplApi.Gui;
 using System;
 using Action = Eplan.EplApi.ApplicationFramework.Action;
 
-namespace ST.EplAddin.FootNote
+namespace ST.EplAddin.FootNote.FootNote
 {
     class Footnote_InsertAction : IEplAction, IEplActionChecked
     {

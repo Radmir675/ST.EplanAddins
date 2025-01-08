@@ -5,11 +5,11 @@ using ST.EplAddin.FootNote.ProperyBrowser;
 using System;
 using Action = Eplan.EplApi.ApplicationFramework.Action;
 
-namespace ST.EplAddin.FootNote
+namespace ST.EplAddin.FootNote.FootNote
 {
     class FootnoteMoveElementAction : IEplAction
     {
-        FootnoteItem note = null;
+        FootNote.FootnoteItem note = null;
         bool isFootnote = false;
 
         public bool Execute(ActionCallingContext oActionCallingContext)
@@ -26,7 +26,7 @@ namespace ST.EplAddin.FootNote
                 bool isFootnoteBlock = FootnoteVerification.IsFootnoteBlock(bl);
                 if (isFootnoteBlock)
                 {
-                    note = new FootnoteItem();
+                    note = new FootNote.FootnoteItem();
                     note.Create(bl);
                     isFootnote = true;
                 }

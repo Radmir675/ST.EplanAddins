@@ -5,7 +5,7 @@ using ST.EplAddin.FootNote.ProperyBrowser;
 using System;
 using Action = Eplan.EplApi.ApplicationFramework.Action;
 
-namespace ST.EplAddin.FootNote
+namespace ST.EplAddin.FootNote.FootNote
 {
     class Footnote_PropertiesAction : IEplAction
     {
@@ -31,7 +31,7 @@ namespace ST.EplAddin.FootNote
 
                     if (FootnoteVerification.IsFootnoteBlock(block))
                     {
-                        FootnoteItem footnoteItem = new FootnoteItem();
+                        FootNote.FootnoteItem footnoteItem = new FootNote.FootnoteItem();
                         footnoteItem.Create(block);
                         PropertiesDialogForm propertiesDialog = new PropertiesDialogForm();
                         propertiesDialog.SetItem(footnoteItem);

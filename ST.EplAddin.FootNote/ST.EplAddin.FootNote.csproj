@@ -105,17 +105,18 @@
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
     <Compile Include="App.cs" />
-    <Compile Include="footnote\FootNote.cs" />
-    <Compile Include="footnote\Footnote_DragIteraction.cs" />
-    <Compile Include="footnote\Footnote_InsertAction.cs" />
-    <Compile Include="footnote\Footnote_InsertInteraction.cs" />
-    <Compile Include="footnote\Footnote_InsertInteraction.State.cs" />
-    <Compile Include="footnote\Footnote_MoveElementAction.cs" />
-    <Compile Include="footnote\Footnote_PropertiesAction.cs" />
-    <Compile Include="footnote\Footnote_PropertiesActionXGed.cs" />
-    <Compile Include="footnote\Footnote_SelectSameObjectsAction.cs" />
-    <Compile Include="footnote\Footnote_UpdateAction.cs" />
-    <Compile Include="footnote\SettingsDialog_Action.cs" />
+    <Compile Include="FootNote\FootNote.cs" />
+    <Compile Include="FootNote\FootNoteItemProperties.cs" />
+    <Compile Include="FootNote\Footnote_DragIteraction.cs" />
+    <Compile Include="FootNote\Footnote_InsertAction.cs" />
+    <Compile Include="FootNote\Footnote_InsertInteraction.cs" />
+    <Compile Include="FootNote\Footnote_InsertInteraction.State.cs" />
+    <Compile Include="FootNote\Footnote_MoveElementAction.cs" />
+    <Compile Include="FootNote\Footnote_PropertiesAction.cs" />
+    <Compile Include="FootNote\Footnote_PropertiesActionXGed.cs" />
+    <Compile Include="FootNote\Footnote_SelectSameObjectsAction.cs" />
+    <Compile Include="FootNote\Footnote_UpdateAction.cs" />
+    <Compile Include="FootNote\SettingsDialog_Action.cs" />
     <Compile Include="Forms\Footnote_CustomTextForm.cs">
       <SubType>Form</SubType>
     </Compile>

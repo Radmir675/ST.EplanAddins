@@ -16,7 +16,7 @@ namespace ST.EplAddin.FootNote
             this.MinimizeBox = false;
         }
 
-        public void SetItem(FootnoteItem note)
+        public void SetItem(FootNote.FootnoteItem note)
         {
             propertyGrid1.SelectedObject = note;//тут есть проблема
         }
@@ -25,8 +25,8 @@ namespace ST.EplAddin.FootNote
         {
             ApplyEventClick?.Invoke(this, EventArgs.Empty);
 
-            (propertyGrid1.SelectedObject as FootnoteItem)?.UpdateSubItems();
-            (propertyGrid1.SelectedObject as FootnoteItem)?.Serialize();
+            (propertyGrid1.SelectedObject as FootNote.FootnoteItem)?.UpdateSubItems();
+            (propertyGrid1.SelectedObject as FootNote.FootnoteItem)?.Serialize();
             ActionManager oMng = new ActionManager();
             Eplan.EplApi.ApplicationFramework.Action baseAction = oMng.FindAction("gedRedraw");
             baseAction.Execute(new ActionCallingContext());
@@ -34,8 +34,8 @@ namespace ST.EplAddin.FootNote
 
         private void button_close_Click(object sender, EventArgs e)
         {
-            (propertyGrid1.SelectedObject as FootnoteItem)?.Deserialize();
-            (propertyGrid1.SelectedObject as FootnoteItem)?.UpdateSubItems();
+            (propertyGrid1.SelectedObject as FootNote.FootnoteItem)?.Deserialize();
+            (propertyGrid1.SelectedObject as FootNote.FootnoteItem)?.UpdateSubItems();
             this.Close();
         }
     }

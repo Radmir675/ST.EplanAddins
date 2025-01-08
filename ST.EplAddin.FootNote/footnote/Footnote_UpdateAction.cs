@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using Action = Eplan.EplApi.ApplicationFramework.Action;
 
-namespace ST.EplAddin.FootNote
+namespace ST.EplAddin.FootNote.FootNote
 {
     class Footnote_UpdateAction : IEplAction
     {
@@ -31,7 +31,7 @@ namespace ST.EplAddin.FootNote
 
                 foreach (Block block in blocks)
                 {
-                    FootnoteItem note = new FootnoteItem();
+                    FootNote.FootnoteItem note = new FootNote.FootnoteItem();
                     note.UpdateBlockItems(block);
                 }
             }

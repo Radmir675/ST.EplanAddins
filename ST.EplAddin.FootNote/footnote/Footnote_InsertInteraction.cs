@@ -6,16 +6,16 @@ using Eplan.EplApi.HEServices;
 using System.Diagnostics;
 using System.Linq;
 
-namespace ST.EplAddin.FootNote
+namespace ST.EplAddin.FootNote.FootNote
 {
     /// <summary>
     /// XGedStartInteractionAction /Name:XGedFootnote
     /// https://www.eplan.help/en-US/infoportal/content/api/2.8/Interactions.html
     /// </summary>
-    [InteractionAttribute(Name = "XGedFootnote", Ordinal = 50, Prio = 20)]
+    [Interaction(Name = "XGedFootnote", Ordinal = 50, Prio = 20)]
     public partial class Footnote_InsertInteraction : Interaction
     {
-        private State state = State.Init;
+        private Footnote_InsertInteraction.State state = Footnote_InsertInteraction.State.Init;
 
         private PointD startPoint = new PointD(0, 0);
         private PointD endPoint = new PointD(0, 0);
@@ -28,12 +28,12 @@ namespace ST.EplAddin.FootNote
         public void StateInit()
         {
             new Edit().ClearSelection();
-            this.state = State.Init;
+            this.state = Footnote_InsertInteraction.State.Init;
         }
 
         public void StateSelection()
         {
-            this.state = State.Selection;
+            this.state = Footnote_InsertInteraction.State.Selection;
             this.PromptForStatusLine = "Выберите объект пространства листа.";
         }
         /// <summary>
@@ -41,13 +41,13 @@ namespace ST.EplAddin.FootNote
         /// </summary>
         public void StateSourcePoint()
         {
-            this.state = State.SourcePoint;
+            this.state = Footnote_InsertInteraction.State.SourcePoint;
             this.PromptForStatusLine = "Выберите точку на объекте.";
         }
 
         public void StateTargetPoint()
         {
-            this.state = State.TargetPoint;
+            this.state = Footnote_InsertInteraction.State.TargetPoint;
             this.PromptForStatusLine = "Выберите точку установки выноски.";
 
             //TODO: SETSTATICCURSOR
@@ -57,7 +57,7 @@ namespace ST.EplAddin.FootNote
 
         public void StateFinished()
         {
-            this.state = State.Finished;
+            this.state = Footnote_InsertInteraction.State.Finished;
             this.PromptForStatusLine = "Завершено.";
 
             ClearCursor();
@@ -83,7 +83,7 @@ namespace ST.EplAddin.FootNote
         public override RequestCode OnStart(InteractionContext oContext)
         {
             STSettings.instance.LoadSettings();
-            state = State.Init;
+            state = Footnote_InsertInteraction.State.Init;
             IsPlacementFilterActive = true;
 
             this.Description = "Вставить сноску";
@@ -124,14 +124,14 @@ namespace ST.EplAddin.FootNote
         {
             base.OnPoint(oPosition);
             Trace.WriteLine("OnPoint");
-            if (state == State.SourcePoint)
+            if (state == Footnote_InsertInteraction.State.SourcePoint)
             {
                 startPoint = oPosition.FinalPosition;
                 StateTargetPoint();
                 return RequestCode.Point;
             }
 
-            if (state == State.TargetPoint)
+            if (state == Footnote_InsertInteraction.State.TargetPoint)
             {
                 endPoint = oPosition.FinalPosition;
                 StateFinished();
@@ -152,7 +152,7 @@ namespace ST.EplAddin.FootNote
             {
                 Trace.WriteLine("OnSuccess");
 
-                var note = new FootnoteItem(startPoint, endPoint);
+                var note = new FootNote.FootnoteItem(startPoint, endPoint);
                 note.SetSourceObject(vpart);
                 note.Create(Page);
                 note.Serialize();

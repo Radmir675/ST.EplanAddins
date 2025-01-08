@@ -7,16 +7,16 @@ using ST.EplAddin.FootNote.ProperyBrowser;
 using System.Linq;
 using Action = Eplan.EplApi.ApplicationFramework.Action;
 
-namespace ST.EplAddin.FootNote
+namespace ST.EplAddin.FootNote.FootNote
 {
 
     //https://www.eplan.help/en-US/infoportal/content/api/2.8/Interactions.html
     //example of interaction attributes
     //[InteractionAttribute(Name = "FootnoteMove", NameOfBaseInteraction = "XGedMoveElementAction", Ordinal = 50, Prio = 20)]
-    [InteractionAttribute(Name = "XGedIaDuplicate", NameOfBaseInteraction = "XGedIaDuplicate", Ordinal = 50, Prio = 20)]
+    [Interaction(Name = "XGedIaDuplicate", NameOfBaseInteraction = "XGedIaDuplicate", Ordinal = 50, Prio = 20)]
     class Footnote_DragInteraction : Interaction
     {
-        FootnoteItem note = null;
+        FootNote.FootnoteItem note = null;
         PointD newPosition;
         PointD oldPosition;
         bool isFootnote = false;
@@ -42,7 +42,7 @@ namespace ST.EplAddin.FootNote
                     bool isFootnoteBlock = FootnoteVerification.IsFootnoteBlock(block);
                     if (FootnoteVerification.IsFootnoteBlock(storableObject))
                     {
-                        note = new FootnoteItem();
+                        note = new FootNote.FootnoteItem();
                         note.GetBlockInfoToDrag(block);
                         oldPosition = note.FinishPosition;
                         isFootnote = true;
