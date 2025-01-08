@@ -604,7 +604,7 @@ namespace ST.EplAddin.FootNote
                 }
 
                 CreateSubItems(); //создание недостающих элементов
-                CreateBlock(); //объединенить в блок
+                CreateBlock(); //объединить в блок
                 GetSubItems(block.SubPlacements); //получили существующие экземпляры после объединения в блок
                 //GetSourceObject(); //!!!!он может понадобится в обновлении отчета
                 SetSourceObject(sourceItem3D); //устанавливаем ссылку на исходный объект, (ссылку на который получили ранее!)//TODO:это можно уже пропустить
@@ -674,28 +674,51 @@ namespace ST.EplAddin.FootNote
         /// <summary>
         /// Получить значение свойства исходного объекта
         /// </summary>
-        /// <param name="placement3D">исходный объект</param>
+        /// <param name="placement3D">Исходный объект</param>
         /// <returns></returns>
         public string GetSourceObjectProperty(Placement3D placement3D)
         {
             logger.Debug("Placement3D");
-            String result = "-1"; //default result
+            var result = "-1"; //default result
 
-            if (placement3D != null)
+            if (placement3D == null) return result;
+            switch (PROPERTYID)
             {
-                switch (PROPERTYID)
-                {
-                    case PropertiesList.AllAvailableProperties:
-                        PropertySelectDialogForm propertySelectDialogForm = new PropertySelectDialogForm(placement3D);
-                        propertySelectDialogForm.ShowDialog();
-                        if (propertySelectDialogForm.DialogResult == DialogResult.OK)
-                            result = "-1";
+                case PropertiesList.AllAvailableProperties:
+                    PropertySelectDialogForm propertySelectDialogForm = new PropertySelectDialogForm(placement3D);
+                    propertySelectDialogForm.ShowDialog();
+                    if (propertySelectDialogForm.DialogResult == DialogResult.OK)
                         result = "-1";
-                        break;
+                    break;
 
-                    case PropertiesList.User_defined:
-                        if (IsUserTextUpdated == true)
+                case PropertiesList.User_defined:
+                    if (IsUserTextUpdated)
+                    {
+                        var propertiesId = GetPropID(USERTEXT);
+                        var validPropertiesText = GetValidPropertiesText(placement3D, propertiesId).ToList();
+                        if (!validPropertiesText.Any())
                         {
+                            result = USERTEXT;
+                            break;
+                        }
+                        for (var i = 0; i < validPropertiesText.Count; i++)
+                        {
+                            result = USERTEXT.Replace($"{{{propertiesId[i].ToString()}}}", validPropertiesText[i]);
+                        }
+                        break;
+                    }
+                    if (label != null)
+                    {
+                        result = label.Contents?.GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                        break;
+                    }
+                    else
+                    {
+                        Footnote_CustomTextForm form = new Footnote_CustomTextForm(placement3D);
+                        form.ShowDialog();
+                        if (form.DialogResult == DialogResult.OK)
+                        {
+                            USERTEXT = form.GetUserText();
                             var propertiesId = GetPropID(USERTEXT);
                             var validPropertiesText = GetValidPropertiesText(placement3D, propertiesId).ToList();
                             if (!validPropertiesText.Any())
@@ -706,79 +729,50 @@ namespace ST.EplAddin.FootNote
                             {
                                 result = USERTEXT.Replace($"{{{propertiesId[i].ToString()}}}", validPropertiesText[i]);
                             }
-                            break;
                         }
-                        if (label != null)
+                        form.Close();
+                    }
+                    break;
+
+                case PropertiesList.P20450:
+                    result = placement3D.Properties[20450].ToInt().ToString();
+                    break;
+
+                case PropertiesList.P20008:
+                    result = placement3D.Properties[20008].ToString();
+                    break;
+
+                case PropertiesList.P20487:
+                    Function3D function3D = placement3D as Function3D;
+                    if (function3D == null) { MessageBox.Show("Недействительный объект источника"); break; }
+
+                    ArticleReference articleReference = function3D.ArticleReferences.FirstOrDefault();
+                    if (articleReference == null || articleReference.IsTransient)
+                    {
+                        //Попытка найти номер в связанных элементах
+                        var arr = function3D.CrossReferencedObjectsAll.Where(a => (a as Function3D).ArticleReferences.Count() > 0);
+                        StorableObject arrItem = null;
+                        if (arr != null)
                         {
-                            result = label.Contents?.GetStringToDisplay(ISOCode.Language.L_ru_RU);
-                            break;
+                            arrItem = arr.FirstOrDefault();
+                            articleReference = (arrItem as Function3D).ArticleReferences.FirstOrDefault();
                         }
-                        else
-                        {
-                            Footnote_CustomTextForm form = new Footnote_CustomTextForm(placement3D);
-                            form.ShowDialog();
-                            if (form.DialogResult == DialogResult.OK)
-                            {
-                                USERTEXT = form.GetUserText();
-                                var propertiesId = GetPropID(USERTEXT);
-                                var validPropertiesText = GetValidPropertiesText(placement3D, propertiesId).ToList();
-                                if (!validPropertiesText.Any())
-                                {
-                                    result = USERTEXT;
-                                }
-                                for (var i = 0; i < validPropertiesText.Count; i++)
-                                {
-                                    result = USERTEXT.Replace($"{{{propertiesId[i].ToString()}}}", validPropertiesText[i]);
-                                }
-                            }
-                            else
-                            {
-                                result = "-1";
-                            }
-                            form.Close();
-                        }
+                    }
+
+                    if (articleReference == null || articleReference.IsTransient)
+                    { MessageBox.Show("Недействительная ссылка изделия объекта источника"); break; }
+
+                    if (articleReference.Properties.Exists(20487) == false) { MessageBox.Show("Несуществующее свойство ссылки изделия объекта источника"); break; }
+
+                    if (articleReference.Properties[20487].IsEmpty)
+                    {
+                        //MessageBox.Show("Пустой Номер позиции");
+                        result = "-1";
                         break;
+                    }
 
-                    case PropertiesList.P20450:
-                        result = placement3D.Properties[20450].ToInt().ToString();
-                        break;
-
-                    case PropertiesList.P20008:
-                        result = placement3D.Properties[20008].ToString();
-                        break;
-
-                    case PropertiesList.P20487:
-                        Function3D function3D = placement3D as Function3D;
-                        if (function3D == null) { MessageBox.Show("Недействительный объект источника"); break; }
-
-                        ArticleReference articleReference = function3D.ArticleReferences.FirstOrDefault();
-                        if (articleReference == null || articleReference.IsTransient)
-                        {
-                            //Попытка найти номер в связанных элементах
-                            var arr = function3D.CrossReferencedObjectsAll.Where(a => (a as Function3D).ArticleReferences.Count() > 0);
-                            StorableObject arrItem = null;
-                            if (arr != null)
-                            {
-                                arrItem = arr.FirstOrDefault();
-                                articleReference = (arrItem as Function3D).ArticleReferences.FirstOrDefault();
-                            }
-                        }
-
-                        if (articleReference == null || articleReference.IsTransient)
-                        { MessageBox.Show("Недействительная ссылка изделия объекта источника"); break; }
-
-                        if (articleReference.Properties.Exists(20487) == false) { MessageBox.Show("Несуществующее свойство ссылки изделия объекта источника"); break; }
-
-                        if (articleReference.Properties[20487].IsEmpty)
-                        {
-                            //MessageBox.Show("Пустой Номер позиции");
-                            result = "-1";
-                            break;
-                        }
-
-                        result = articleReference.Properties[20487].ToInt().ToString();
-                        break;
-                }
+                    result = articleReference.Properties[20487].ToInt().ToString();
+                    break;
             }
             return result;
         }
@@ -809,7 +803,9 @@ namespace ST.EplAddin.FootNote
             Regex regex = new Regex(pattern);
             MatchCollection collection = regex.Matches(inputText);
 
-            var result = collection.Cast<Match>().Select(s => new { Success = int.TryParse(s.Value, out var value), value })
+            var result = collection
+                    .Cast<Match>()
+                    .Select(s => new { Success = int.TryParse(s.Value, out var value), value })
                     .Where(pair => pair.Success)
                     .Select(pair => pair.value).ToList();
             return result;
