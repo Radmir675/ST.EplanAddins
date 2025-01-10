@@ -56,9 +56,6 @@
             this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.rename_button = new System.Windows.Forms.Button();
-            this.loadTemplate_button = new System.Windows.Forms.Button();
-            this.dropDownList = new System.Windows.Forms.ComboBox();
             this.export_button = new System.Windows.Forms.Button();
             this.import_button = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
@@ -77,7 +74,7 @@
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.reviewPLC_button = new System.Windows.Forms.Button();
             this.FastInput = new System.Windows.Forms.CheckBox();
-            this.remove_button = new System.Windows.Forms.Button();
+            this.sourceFile_button = new System.Windows.Forms.Button();
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource)).BeginInit();
@@ -300,7 +297,7 @@
             // 
             // plcDataModelViewBindingSource
             // 
-            this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
+            //this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
             // 
             // tableLayoutPanel
             // 
@@ -322,49 +319,16 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.Controls.Add(this.remove_button);
-            this.flowLayoutPanel1.Controls.Add(this.rename_button);
-            this.flowLayoutPanel1.Controls.Add(this.loadTemplate_button);
-            this.flowLayoutPanel1.Controls.Add(this.dropDownList);
+            this.flowLayoutPanel1.Controls.Add(this.sourceFile_button);
             this.flowLayoutPanel1.Controls.Add(this.export_button);
             this.flowLayoutPanel1.Controls.Add(this.import_button);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(558, 29);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(291, 29);
             this.flowLayoutPanel1.TabIndex = 5;
             this.flowLayoutPanel1.WrapContents = false;
-            // 
-            // rename_button
-            // 
-            this.rename_button.Location = new System.Drawing.Point(399, 3);
-            this.rename_button.Name = "rename_button";
-            this.rename_button.Size = new System.Drawing.Size(75, 23);
-            this.rename_button.TabIndex = 7;
-            this.rename_button.Text = "Rename";
-            this.rename_button.UseVisualStyleBackColor = true;
-            this.rename_button.Click += new System.EventHandler(this.rename_button_Click);
-            // 
-            // loadTemplate_button
-            // 
-            this.loadTemplate_button.Location = new System.Drawing.Point(305, 3);
-            this.loadTemplate_button.Name = "loadTemplate_button";
-            this.loadTemplate_button.Size = new System.Drawing.Size(88, 23);
-            this.loadTemplate_button.TabIndex = 5;
-            this.loadTemplate_button.Text = "Load Template";
-            this.loadTemplate_button.UseVisualStyleBackColor = true;
-            this.loadTemplate_button.Click += new System.EventHandler(this.loadTemplate_button_Click);
-            // 
-            // dropDownList
-            // 
-            this.dropDownList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.dropDownList.FormattingEnabled = true;
-            this.dropDownList.Location = new System.Drawing.Point(178, 3);
-            this.dropDownList.Name = "dropDownList";
-            this.dropDownList.Size = new System.Drawing.Size(121, 21);
-            this.dropDownList.TabIndex = 6;
-            this.dropDownList.SelectedIndexChanged += new System.EventHandler(this.dropDownList_SelectedIndexChanged);
             // 
             // export_button
             // 
@@ -584,15 +548,15 @@
             this.FastInput.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.FastInput.UseVisualStyleBackColor = true;
             // 
-            // remove_button
+            // sourceFile_button
             // 
-            this.remove_button.Location = new System.Drawing.Point(480, 3);
-            this.remove_button.Name = "remove_button";
-            this.remove_button.Size = new System.Drawing.Size(75, 23);
-            this.remove_button.TabIndex = 8;
-            this.remove_button.Text = "Remove";
-            this.remove_button.UseVisualStyleBackColor = true;
-            this.remove_button.Click += new System.EventHandler(this.remove_button_Click);
+            this.sourceFile_button.Location = new System.Drawing.Point(178, 3);
+            this.sourceFile_button.Name = "sourceFile_button";
+            this.sourceFile_button.Size = new System.Drawing.Size(110, 23);
+            this.sourceFile_button.TabIndex = 5;
+            this.sourceFile_button.Text = "Load  source file";
+            this.sourceFile_button.UseVisualStyleBackColor = true;
+            this.sourceFile_button.Click += new System.EventHandler(this.sourceFile_button_Click);
             // 
             // ManagePlcForm
             // 
@@ -646,8 +610,6 @@
         private System.Windows.Forms.Button export_button;
         private System.Windows.Forms.Button import_button;
         private System.Windows.Forms.DataGridViewTextBoxColumn DevicePointDescription;
-        private System.Windows.Forms.Button loadTemplate_button;
-        private System.Windows.Forms.ComboBox dropDownList;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem;
@@ -676,7 +638,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FunctionDefinition;
         private System.Windows.Forms.DataGridViewTextBoxColumn SymbolicAdressDefined;
         private System.Windows.Forms.DataGridViewTextBoxColumn FunctionType;
-        private System.Windows.Forms.Button rename_button;
-        private System.Windows.Forms.Button remove_button;
+        private System.Windows.Forms.Button sourceFile_button;
     }
 }

@@ -17,6 +17,8 @@ namespace ST.EplAddin.PlcEdit
 {
     public partial class ManagePlcForm : Form
     {
+        private List<CsvFileDataModelView> ImportedData = new();
+        private bool IsFileUploaded = false;
         private readonly string pathToSaveTemplate;
         private readonly IEnumerable<Function> allFunctions;
 
@@ -25,7 +27,6 @@ namespace ST.EplAddin.PlcEdit
         public static event EventHandler<IEnumerable<StorableObject>> ShowSearch;
         private List<PlcDataModelView> PlcDataModelView { get; set; }
         private List<int> LastSelectedRow { get; set; } = new List<int>();
-        public string TemplateName { get; set; }
         public List<Template> Templates { get; set; }
 
         private string cellValue = string.Empty;
@@ -35,18 +36,17 @@ namespace ST.EplAddin.PlcEdit
             get
             {
                 return dataGridView.SelectedCells.Cast<DataGridViewCell>()
-                                       .Select(c => c.OwningRow).Distinct().ToArray();
-            }
-        }
-        public DataGridViewCell[] SelectedCells
-        {
-            get
-            {
-                return dataGridView.SelectedCells.Cast<DataGridViewCell>().OrderBy(x => x.RowIndex).ToArray();
+                    .Select(c => c.OwningRow).Distinct().ToArray();
             }
         }
 
-        public ManagePlcForm(List<PlcDataModelView> plcDataModelView, string pathToSaveTemplate, IEnumerable<Function> allFunctions)
+        public DataGridViewCell[] SelectedCells
+        {
+            get { return dataGridView.SelectedCells.Cast<DataGridViewCell>().OrderBy(x => x.RowIndex).ToArray(); }
+        }
+
+        public ManagePlcForm(List<PlcDataModelView> plcDataModelView, string pathToSaveTemplate,
+            IEnumerable<Function> allFunctions)
         {
             InitializeComponent();
             PlcDataModelView = plcDataModelView;
@@ -54,17 +54,25 @@ namespace ST.EplAddin.PlcEdit
             this.allFunctions = allFunctions;
             AddData(PlcDataModelView);
             PropertiesForm.SettingsChanged += PropertiesForm_SettingsChanged;
-            ImportCsvForm.ImportCsvData += ImportCsvForm_ImportCsvData;
-            LoadTemplateForm.TemplateAction += LoadTemplateForm_TemplateAction;
-            ComparingForm.OkEvent += ComparingForm_OkEvent;
-            ComparingForm.StartRewriting += ComparingForm_StartRewriting; ;
+
+
+
+
+            ComparingForm.StartRewriting += ComparingForm_StartRewriting; //TODO:тут надо посмотреть
             TemplatesData.GetInstance();
             PathEvent?.Invoke(this, pathToSaveTemplate);
             Templates = TemplatesData.GetInstance().GetTemplates();
-            UpdateTemplates();
             FastInput.Checked = Properties.Settings.Default.FastInputChecked;
             SymbolicAdressToolStripMenuItem.Checked = Properties.Settings.Default.IsRewriteSymbolicAdress;
             PLCAdressToolStripMenuItem.Checked = Properties.Settings.Default.IsRewritePLCAdress;
+            import_button.Enabled = false;
+            export_button.Enabled = false;
+        }
+
+        private void ImportForm_ImportCsvDataEvent(object sender, List<CsvFileDataModelView> e)
+        {
+
+            ImportedData = e;
         }
 
         private void ComparingForm_StartRewriting(object sender, EventArgs e)
@@ -88,7 +96,7 @@ namespace ST.EplAddin.PlcEdit
             PlcDataModelView.ForEach(x => x.PropertyChanged -= ChangeCellColor);
         }
 
-        private void ImportCsvForm_ImportCsvData(object sender, List<CsvFileDataModelView> e)
+        private void ImportCsvFormImportCsvDataEvent(object sender, List<CsvFileDataModelView> e)
         {
             var convertedData = Mapper.ConvertDataFromCsvModel(e);
             UpdateDataTable(convertedData);
@@ -101,8 +109,10 @@ namespace ST.EplAddin.PlcEdit
             {
                 sum += item.Width;
             }
+
             return (int)Math.Round(sum);
         }
+
         private void ManagePlcForm_Load(object sender, EventArgs e)
         {
             exchange_button.Enabled = false;
@@ -110,6 +120,7 @@ namespace ST.EplAddin.PlcEdit
             {
                 dataGridView.Rows[0].Selected = true;
             }
+
             ChangeColorDisableColumns();
             GetDefaultColumnSetting();
             UpdateButtonsState();
@@ -119,6 +130,15 @@ namespace ST.EplAddin.PlcEdit
             {
                 Location = initialPointLocation.Value;
             }
+
+            ChangeButtonsView();
+        }
+
+        private void ChangeButtonsView()
+        {
+            if (!IsFileUploaded) return;
+            import_button.Enabled = true;
+            export_button.Enabled = true;
         }
 
         private void PropertiesForm_SettingsChanged(object sender, List<string> columnsToView)
@@ -198,6 +218,7 @@ namespace ST.EplAddin.PlcEdit
                 dataGridView_MouseUp(this, null);
             }
         }
+
         private void exchange_button_Click(object sender, EventArgs e)
         {
             if (SelectedRows.Count() == 2)
@@ -206,6 +227,7 @@ namespace ST.EplAddin.PlcEdit
                 dataGridView_MouseUp(this, null);
             }
         }
+
         private void upper_button_Click(object sender, EventArgs e)
         {
             if (SelectedRows.Any())
@@ -224,6 +246,7 @@ namespace ST.EplAddin.PlcEdit
                 dataGridView_MouseUp(this, null);
             }
         }
+
         private void HighlightRows(List<int> rows)
         {
             dataGridView.ClearSelection();
@@ -260,14 +283,18 @@ namespace ST.EplAddin.PlcEdit
             {
                 var currentRow = dataGridView.Rows[currentIndexRow];
                 var functionDefinition = currentRow.Cells["FunctionDefinition"].Value.ToString();
-                var targetIndexRow = TryGetEmptyIndexRow(currentRow.Index, direction, functionDefinition, jumpThroughAll);// задать смещение 
+                var targetIndexRow =
+                    TryGetEmptyIndexRow(currentRow.Index, direction, functionDefinition,
+                        jumpThroughAll); // задать смещение 
                 if (targetIndexRow == null)
                 {
                     return;
                 }
+
                 AssignDataToTargetRow(currentIndexRow, targetIndexRow.Value);
                 rows.Add(targetIndexRow.Value);
             }
+
             HighlightRows(rows);
         }
 
@@ -281,12 +308,14 @@ namespace ST.EplAddin.PlcEdit
                     result.Add(row);
                 }
             }
+
             return result;
         }
 
         private void ExchangePositions()
         {
-            var rowsIndex = dataGridView.SelectedCells.Cast<DataGridViewCell>().Select(c => c.RowIndex).Distinct().ToArray();
+            var rowsIndex = dataGridView.SelectedCells.Cast<DataGridViewCell>().Select(c => c.RowIndex).Distinct()
+                .ToArray();
             var currentIndexRow = rowsIndex[0];
             var targetIndexRow = rowsIndex[1];
             if (currentIndexRow != targetIndexRow)
@@ -323,9 +352,12 @@ namespace ST.EplAddin.PlcEdit
             {
                 return true;
             }
+
             return false;
         }
-        private int? TryGetEmptyIndexRow(int currentPositionIndex, Direction direction, string functionDefinition, bool jumpThroughAll = false)
+
+        private int? TryGetEmptyIndexRow(int currentPositionIndex, Direction direction, string functionDefinition,
+            bool jumpThroughAll = false)
         {
             DataGridViewRow properlyRow = null;
             if (jumpThroughAll == true)
@@ -334,10 +366,10 @@ namespace ST.EplAddin.PlcEdit
                 {
                     case Direction.Up:
                         properlyRow = dataGridView.Rows.Cast<DataGridViewRow>().FirstOrDefault(x =>
-                      x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
-                     && x.Cells["FunctionText"].Value?.ToString() == string.Empty
-                     && x.Index < currentPositionIndex
-                     && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
+                            x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                            && x.Cells["FunctionText"].Value?.ToString() == string.Empty
+                            && x.Index < currentPositionIndex
+                            && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
                         break;
 
                     case Direction.Down:
@@ -346,10 +378,10 @@ namespace ST.EplAddin.PlcEdit
                             .Where(z => z.Index > currentPositionIndex)
                             .Reverse()
                             .FirstOrDefault(x =>
-                      x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
-                     && x.Cells["FunctionText"].Value?.ToString() == string.Empty
-                      && x.Index > currentPositionIndex
-                     && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
+                                x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                                && x.Cells["FunctionText"].Value?.ToString() == string.Empty
+                                && x.Index > currentPositionIndex
+                                && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
                         break;
                 }
             }
@@ -363,21 +395,22 @@ namespace ST.EplAddin.PlcEdit
                             .Where(z => z.Index < currentPositionIndex)
                             .Reverse()
                             .FirstOrDefault(x =>
-                      x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
-                     && x.Cells["FunctionText"].Value?.ToString() == string.Empty
-                      && x.Index < currentPositionIndex
-                     && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
+                                x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                                && x.Cells["FunctionText"].Value?.ToString() == string.Empty
+                                && x.Index < currentPositionIndex
+                                && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
                         break;
 
                     case Direction.Down:
                         properlyRow = dataGridView.Rows.Cast<DataGridViewRow>().FirstOrDefault(x =>
-                      x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
-                     && x.Cells["FunctionText"].Value?.ToString() == string.Empty
-                     && x.Index > currentPositionIndex
-                     && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
+                            x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                            && x.Cells["FunctionText"].Value?.ToString() == string.Empty
+                            && x.Index > currentPositionIndex
+                            && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
                         break;
                 }
             }
+
             var properlyRowIndex = properlyRow?.Index;
             return properlyRowIndex;
         }
@@ -387,6 +420,7 @@ namespace ST.EplAddin.PlcEdit
             Apply_button.PerformClick();
             Application.Exit();
         }
+
         private void Cancel_button_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -407,16 +441,19 @@ namespace ST.EplAddin.PlcEdit
                 dataGridView.BeginEdit(false);
             }
         }
+
         private void ManagePlcForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
                 Cancel_button.PerformClick();
             }
+
             if (e.KeyCode == Keys.Enter)
             {
                 Ok_button.PerformClick();
             }
+
             if (e.KeyCode == Keys.S && e.Control)
             {
                 Apply_button.PerformClick();
@@ -440,10 +477,11 @@ namespace ST.EplAddin.PlcEdit
             var secondFunctionDefinition = secondSelectedRow?.Cells["FunctionDefinition"]?.Value?.ToString();
             return firstFunctionDefinition == secondFunctionDefinition;
         }
+
         private bool IsEqualDefinitions(List<DataGridViewRow> rows)
         {
             return rows.TrueForAll(z => z?.Cells["FunctionDefinition"]?.Value?.ToString()
-            == rows.FirstOrDefault()?.Cells["FunctionDefinition"]?.Value?.ToString());
+                                        == rows.FirstOrDefault()?.Cells["FunctionDefinition"]?.Value?.ToString());
         }
 
         private void properties_button_Click(object sender, EventArgs e)
@@ -458,32 +496,42 @@ namespace ST.EplAddin.PlcEdit
                     visibleColumnsName.Add(column.Name);
                 }
             }
+
             PropertiesForm propertiesForm = new PropertiesForm(columnsName, visibleColumnsName);
             propertiesForm.ShowDialog();
         }
 
         private void export_button_Click(object sender, EventArgs e)
         {
-            if (TemplateName == null)
+            var dataToExport = GetDataToExport();
+            var exportCsvForm = new ExportCsvForm(dataToExport.ToList());
+            exportCsvForm.ShowDialog();
+            if (exportCsvForm.DialogResult == DialogResult.OK)
             {
-                MessageBox.Show("Please select template", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                MessageBox.Show("Данные успешно записаны!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            var dataToExport = GetProperlyRowsToImportData(PlcDataModelView);
-            ComparingForm comparingForm = new ComparingForm(dataToExport, TemplateName, ExchangeMode.Export);
-            comparingForm.ShowDialog();
+        }
+
+        private CsvFileDataModelView[] GetDataToExport()
+        {
+            var eplanData = GetRewritingRowsData(PlcDataModelView);
+            CsvFileDataModelView[] array = new CsvFileDataModelView[eplanData.Count];
+            if (eplanData.Count == ImportedData.Count)
+            {
+                ImportedData.CopyTo(array);
+                for (var i = 0; i < array.Length; i++)
+                {
+                    array[i].SymbolicAdress = eplanData[i].SymbolicAdress;
+                    array[i].FunctionText = eplanData[i].FunctionText;
+                }
+            }
+            return array;
         }
 
         private void import_button_Click(object sender, EventArgs e)
         {
-            if (TemplateName == null)
-            {
-                MessageBox.Show("Please select template", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            var dataToImport = GetProperlyRowsToImportData(PlcDataModelView);
-            ComparingForm comparingForm = new ComparingForm(dataToImport, TemplateName, ExchangeMode.Import);
-            comparingForm.ShowDialog();
+            //TODO: импортировать данные нужно 
+            var dataToImport = GetRewritingRowsData(PlcDataModelView);
         }
 
         private void UpdateDataTable(List<FromCsvModelView> csvPlcData)
@@ -493,54 +541,55 @@ namespace ST.EplAddin.PlcEdit
                 throw new NullReferenceException("Нет данных для обновления");
 
             }
+
             if (csvPlcData.First().DeviceNameShort != PlcDataModelView.First().DeviceNameShort)
             {
                 MessageBox.Show("Выбран неверный модуль для импорта");
                 return;
             }
-            var properlyDataInDataGrid = GetProperlyRowsToImportData(PlcDataModelView);
 
-            if (csvPlcData.Count() != properlyDataInDataGrid.Count())//тут должно получиться 32 штуки
+            var properlyDataInDataGrid = GetRewritingRowsData(PlcDataModelView);
+
+            if (csvPlcData.Count() != properlyDataInDataGrid.Count()) //тут должно получиться 32 штуки
             {
                 MessageBox.Show("Не найдено взаимооднозначное соответствие данных для импорта");
                 return;
             }
+
             for (int i = 0; i < properlyDataInDataGrid.Count(); i++)
             {
-                properlyDataInDataGrid[i].FunctionText = csvPlcData[i].FunctionText;  //тут надо написать перезаписать datagrid и все!
+                properlyDataInDataGrid[i].FunctionText =
+                    csvPlcData[i].FunctionText; //тут надо написать перезаписать datagrid и все!
                 properlyDataInDataGrid[i].SymbolicAdress = csvPlcData[i].SymbolicAdress;
                 properlyDataInDataGrid[i].PLCAdress = csvPlcData[i].PLCAdress;
             }
+
             dataGridView.Refresh();
         }
 
-        private List<PlcDataModelView> GetProperlyRowsToImportData(List<PlcDataModelView> plcDataModelView)
+        private List<PlcDataModelView> GetRewritingRowsData(List<PlcDataModelView> plcDataModelView)
         {
             List<PlcDataModelView> result = new();
             foreach (var item in plcDataModelView)
             {
-                var splittedFunctionDifinition = item?.FunctionDefinition?.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                if (splittedFunctionDifinition == null)//а вот тут надо подумать
+                var splittedFunctionDifinition =
+                    item?.FunctionDefinition?.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                if (splittedFunctionDifinition == null) //а вот тут надо подумать
                 {
                     result.Add(item);
                     continue;
                 }
+
                 if (splittedFunctionDifinition.Contains("Источник") || splittedFunctionDifinition.Contains("Питание"))
                 {
                     continue;
                 }
-                else
-                {
-                    result.Add(item);
-                }
+                result.Add(item);
             }
             return result;
         }
 
-        private void dropDownList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            TemplateName = dropDownList.SelectedItem.ToString();
-        }
+
 
         private void loadTemplate_button_Click(object sender, EventArgs e)
         {
@@ -550,25 +599,14 @@ namespace ST.EplAddin.PlcEdit
             LoadTemplateForm loadTemplateForm = new LoadTemplateForm(pathFromRead, pathToSaveTemplate);
             loadTemplateForm.ShowDialog();
         }
-        private void LoadTemplateForm_TemplateAction(object sender, Model.Template e)
-        {
-            TemplatesData.GetInstance().Add(e);
-            dropDownList.Items.Add(e.FileName);
-            dropDownList.SelectedItem = e.FileName;
-        }
-        private void UpdateTemplates()
-        {
-            dropDownList.Items.Clear();
-            dropDownList.Items.AddRange(TemplatesData.GetInstance().GetTemplates()?.Select(x => x.FileName)?.ToArray());
-            TemplateName = null;
 
-        }
         private void dataGridView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.V && e.Control)
             {
                 InsertData();
             }
+
             if (e.KeyCode == Keys.Delete)
             {
                 foreach (var cell in SelectedCells)
@@ -605,6 +643,7 @@ namespace ST.EplAddin.PlcEdit
                         {
                             dataGridView[firstSelectedColumnIndex, i].Value = dataInClipboard[j];
                         }
+
                         j++;
                     }
                     else
@@ -628,7 +667,7 @@ namespace ST.EplAddin.PlcEdit
                 }
 
                 else if (dataInClipboard.Count() == SelectedCells.Count()
-                   && SelectedCells.All(x => x.ColumnIndex == firstSelectedColumnIndex))
+                         && SelectedCells.All(x => x.ColumnIndex == firstSelectedColumnIndex))
                 {
                     int j = 0;
 
@@ -643,7 +682,8 @@ namespace ST.EplAddin.PlcEdit
                 }
                 else
                 {
-                    MessageBox.Show("Индекс массива вышел за пределы диапазона", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Индекс массива вышел за пределы диапазона", "Error", MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                 }
             }
         }
@@ -672,7 +712,8 @@ namespace ST.EplAddin.PlcEdit
             var firstSelectedRow = SelectedRows.FirstOrDefault();
             var secondSelectedRow = SelectedRows.LastOrDefault();
 
-            var functionDefinition = firstSelectedRow?.Cells["FunctionDefinition"]?.Value?.ToString() ?? "Не определено";
+            var functionDefinition =
+                firstSelectedRow?.Cells["FunctionDefinition"]?.Value?.ToString() ?? "Не определено";
 
             if (firstSelectedRow != null)
             {
@@ -683,11 +724,13 @@ namespace ST.EplAddin.PlcEdit
                 {
                     exchange_button.Enabled = true;
                 }
+
                 if (emptyUpRow.HasValue && IsEqualDefinitions(SelectedRows.ToList()))
                 {
                     up_button.Enabled = true;
                     upper_button.Enabled = true;
                 }
+
                 if (emptyDownRow.HasValue && IsEqualDefinitions(SelectedRows.ToList()))
                 {
                     dowm_button.Enabled = true;
@@ -703,9 +746,12 @@ namespace ST.EplAddin.PlcEdit
             var result = new List<Function>();
             foreach (var overviewPLC in overviewPLCs)
             {
-                var multyLinePLC = allFunctions.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == overviewPLC.Properties.FUNC_FULLNAME && x.Properties.FUNC_TYPE.ToInt() == 1);
+                var multyLinePLC = allFunctions.FirstOrDefault(x =>
+                    x.Properties.FUNC_FULLNAME == overviewPLC.Properties.FUNC_FULLNAME &&
+                    x.Properties.FUNC_TYPE.ToInt() == 1);
 
-                var functiomText = overviewPLC.Properties.FUNC_TEXT.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                var functiomText = overviewPLC.Properties.FUNC_TEXT.GetDisplayString()
+                    .GetStringToDisplay(ISOCode.Language.L_ru_RU);
                 var IsFunctionTextEmpty = string.IsNullOrEmpty(functiomText);
                 if (!IsFunctionTextEmpty)
                 {
@@ -713,7 +759,8 @@ namespace ST.EplAddin.PlcEdit
                     logger.Log(text);
                 }
 
-                var symbolicAdress = overviewPLC.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL.ToString(ISOCode.Language.L_ru_RU);
+                var symbolicAdress =
+                    overviewPLC.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL.ToString(ISOCode.Language.L_ru_RU);
                 var IsSymbolicAdressEmpty = string.IsNullOrEmpty(symbolicAdress);
                 //if (!IsSymbolicAdressEmpty)
                 //{
@@ -724,13 +771,15 @@ namespace ST.EplAddin.PlcEdit
                 bool IsAdressEqualInDifferentRepresentations;
                 if (multyLinePLC != null)
                 {
-                    IsAdressEqualInDifferentRepresentations = multyLinePLC.Properties.FUNC_PLCADDRESS.ToString(ISOCode.Language.L_ru_RU) ==
-                      overviewPLC.Properties.FUNC_PLCADDRESS.ToString(ISOCode.Language.L_ru_RU);
+                    IsAdressEqualInDifferentRepresentations =
+                        multyLinePLC.Properties.FUNC_PLCADDRESS.ToString(ISOCode.Language.L_ru_RU) ==
+                        overviewPLC.Properties.FUNC_PLCADDRESS.ToString(ISOCode.Language.L_ru_RU);
                 }
                 else
                 {
                     IsAdressEqualInDifferentRepresentations = true;
                 }
+
                 if (!IsAdressEqualInDifferentRepresentations)
                 {
                     var text = $"Адрес на функции {overviewPLC.Name} отличается на разных представлениях";
@@ -744,6 +793,7 @@ namespace ST.EplAddin.PlcEdit
                 //MessageBox.Show(@"Результаты проверки отображены во вкладке ""Поиск"" ");
                 //ShowSearch?.Invoke(this, result.Cast<StorableObject>());
             }
+
             var loggerResult = logger.GetMessages();
             if (loggerResult.Any())
             {
@@ -753,10 +803,12 @@ namespace ST.EplAddin.PlcEdit
 
             }
         }
+
         private void ManagePlcForm_Shown(object sender, EventArgs e)
         {
             reviewPLC_button_Click(this, new EventArgs());
         }
+
         private void rewriteOverviewAdressToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var menuItem = sender as ToolStripMenuItem;
@@ -780,10 +832,12 @@ namespace ST.EplAddin.PlcEdit
         {
             Properties.Settings.Default.FormLocation = this.Location;
         }
+
         private string GetValue(DataGridViewCellEventArgs e)
         {
             return dataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString() ?? string.Empty;
         }
+
         private string GetValue(DataGridViewCellCancelEventArgs e)
         {
             return dataGridView[e.ColumnIndex, e.RowIndex]?.Value?.ToString() ?? string.Empty;
@@ -806,32 +860,38 @@ namespace ST.EplAddin.PlcEdit
             cellValue = GetValue(e);
         }
 
-        private void rename_button_Click(object sender, EventArgs e)
+        private void sourceFile_button_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(TemplateName)) return;
+            var path = PathDialog.TryGetReadPath();
+            if (path == null) return;
+            CsvConverter csvConverter = new CsvConverter(path);
+            var dataFromFile = csvConverter.ReadFile();
+            if (!dataFromFile.Any()) return;
 
-            var renameForm = new RenameForm(TemplateName);
-            var dialogResult = renameForm.ShowDialog();
-            if (dialogResult == DialogResult.Cancel) return;
-            var newName = RenameForm.Path;
-            var result = TemplatesData.GetInstance().Rename(TemplateName, newName);
-            if (result)
+            //var CsvFileDataModelViews = Mapper.ConvertDataToCsvCompare(dataFromFile);
+
+            if (!(PlcDataModelView[0].DeviceNameShort ??= string.Empty).Equals(
+                    dataFromFile[0].DeviceNameShort ??= string.Empty))
             {
-                MessageBox.Show("File successfully  renamed!", "Rename", MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                MessageBox.Show("Выбран неверный модуль для импорта! Пожалуйста проверьте корректность CSV файла.",
+                    "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            UpdateTemplates();
-            dropDownList.SelectedItem = newName;
 
-        }
+            var importForm = new ImportCsvForm(dataFromFile);
+            importForm.ImportCsvDataEvent += ImportForm_ImportCsvDataEvent;
+            importForm.ShowDialog();
+            if (importForm.DialogResult == DialogResult.OK)
+            {
+                if (ImportedData.Any())
+                {
+                    MessageBox.Show("Данные успешно загружены!");
 
-        private void remove_button_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(TemplateName)) return;
-            TemplatesData.GetInstance().Delete(TemplateName);
-            UpdateTemplates();
+                    IsFileUploaded = true;
+                    ChangeButtonsView();
+                }
+            }
+            importForm.ImportCsvDataEvent -= ImportForm_ImportCsvDataEvent;
         }
     }
 }
-
 

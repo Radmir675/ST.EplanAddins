@@ -43,8 +43,6 @@
             this.flowLayoutPanelDown = new System.Windows.Forms.FlowLayoutPanel();
             this.Cancel_button = new System.Windows.Forms.Button();
             this.export_button = new System.Windows.Forms.Button();
-            this.Load_button = new System.Windows.Forms.Button();
-            this.replaceSelectedRows_button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewBindingSource)).BeginInit();
             this.tableLayoutPanel.SuspendLayout();
@@ -152,8 +150,6 @@
             this.flowLayoutPanelDown.AutoSize = true;
             this.flowLayoutPanelDown.Controls.Add(this.Cancel_button);
             this.flowLayoutPanelDown.Controls.Add(this.export_button);
-            this.flowLayoutPanelDown.Controls.Add(this.Load_button);
-            this.flowLayoutPanelDown.Controls.Add(this.replaceSelectedRows_button);
             this.flowLayoutPanelDown.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.flowLayoutPanelDown.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanelDown.Location = new System.Drawing.Point(3, 618);
@@ -186,28 +182,6 @@
             this.export_button.UseVisualStyleBackColor = true;
             this.export_button.Click += new System.EventHandler(this.Export_button_Click);
             // 
-            // Load_button
-            // 
-            this.Load_button.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Load_button.Location = new System.Drawing.Point(661, 3);
-            this.Load_button.Name = "Load_button";
-            this.Load_button.Size = new System.Drawing.Size(95, 23);
-            this.Load_button.TabIndex = 1;
-            this.Load_button.Text = "Load template";
-            this.Load_button.UseVisualStyleBackColor = true;
-            this.Load_button.Click += new System.EventHandler(this.LoadTemplate_button_Click);
-            // 
-            // replaceSelectedRows_button
-            // 
-            this.replaceSelectedRows_button.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.replaceSelectedRows_button.Location = new System.Drawing.Point(525, 3);
-            this.replaceSelectedRows_button.Name = "replaceSelectedRows_button";
-            this.replaceSelectedRows_button.Size = new System.Drawing.Size(130, 23);
-            this.replaceSelectedRows_button.TabIndex = 1;
-            this.replaceSelectedRows_button.Text = "Replace SelectedRows";
-            this.replaceSelectedRows_button.UseVisualStyleBackColor = true;
-            this.replaceSelectedRows_button.Click += new System.EventHandler(this.ReplaceSelectedRows_button_Click);
-            // 
             // ExportCsvForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -234,7 +208,6 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelDown;
         private System.Windows.Forms.Button Cancel_button;
         private System.Windows.Forms.Button export_button;
-        private System.Windows.Forms.Button Load_button;
         private System.Windows.Forms.DataGridViewTextBoxColumn symbolicAdressDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn bitNumberDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn unitDataGridViewTextBoxColumn;
@@ -242,6 +215,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn pLCAdressDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn deviceNameShortDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource csvFileDataModelViewBindingSource;
-        private System.Windows.Forms.Button replaceSelectedRows_button;
     }
 }

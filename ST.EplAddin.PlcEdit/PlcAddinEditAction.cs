@@ -4,6 +4,7 @@ using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.E3D;
 using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.HEServices;
+using ST.EplAddin.PlcEdit.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
