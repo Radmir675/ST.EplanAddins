@@ -37,6 +37,7 @@
             this.functionTextDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pLCAdressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deviceNameShortDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.csvFileDataModelViewsBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.csvFileDataModelViewsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.csvFileDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label = new System.Windows.Forms.Label();
@@ -44,13 +45,12 @@
             this.flowLayoutPanelDown = new System.Windows.Forms.FlowLayoutPanel();
             this.Cancel_button = new System.Windows.Forms.Button();
             this.import_button = new System.Windows.Forms.Button();
-            this.csvFileDataModelViewsBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewsBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewBindingSource)).BeginInit();
             this.tableLayoutPanel.SuspendLayout();
             this.flowLayoutPanelDown.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewsBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView
@@ -58,6 +58,7 @@
             this.dataGridView.AllowUserToAddRows = false;
             this.dataGridView.AllowUserToDeleteRows = false;
             this.dataGridView.AutoGenerateColumns = false;
+            this.dataGridView.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.symbolicAdressDataGridViewTextBoxColumn,
@@ -116,6 +117,10 @@
             this.deviceNameShortDataGridViewTextBoxColumn.HeaderText = "DeviceNameShort";
             this.deviceNameShortDataGridViewTextBoxColumn.Name = "deviceNameShortDataGridViewTextBoxColumn";
             this.deviceNameShortDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // csvFileDataModelViewsBindingSource1
+            // 
+            this.csvFileDataModelViewsBindingSource1.DataSource = typeof(ST.EplAddin.PlcEdit.View.CsvFileDataModelViews);
             // 
             // csvFileDataModelViewsBindingSource
             // 
@@ -190,10 +195,6 @@
             this.import_button.UseVisualStyleBackColor = true;
             this.import_button.Click += new System.EventHandler(this.Import_button_Click);
             // 
-            // csvFileDataModelViewsBindingSource1
-            // 
-            this.csvFileDataModelViewsBindingSource1.DataSource = typeof(ST.EplAddin.PlcEdit.View.CsvFileDataModelViews);
-            // 
             // ImportCsvForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -204,12 +205,12 @@
             this.Name = "ImportCsvForm";
             this.Text = "ImportCsvForm";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewsBindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewBindingSource)).EndInit();
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
             this.flowLayoutPanelDown.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewsBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }

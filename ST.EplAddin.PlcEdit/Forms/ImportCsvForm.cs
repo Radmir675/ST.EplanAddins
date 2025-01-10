@@ -22,7 +22,7 @@ namespace ST.EplAddin.PlcEdit.Forms
         private void Import_button_Click(object sender, EventArgs e)
         {
             ImportCsvDataEvent?.Invoke(this, _csvFileDataModelViews);
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
             Close();
         }
 

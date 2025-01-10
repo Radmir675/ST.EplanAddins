@@ -54,11 +54,6 @@ namespace ST.EplAddin.PlcEdit
             this.allFunctions = allFunctions;
             AddData(PlcDataModelView);
             PropertiesForm.SettingsChanged += PropertiesForm_SettingsChanged;
-
-
-
-
-            ComparingForm.StartRewriting += ComparingForm_StartRewriting; //TODO:тут надо посмотреть
             TemplatesData.GetInstance();
             PathEvent?.Invoke(this, pathToSaveTemplate);
             Templates = TemplatesData.GetInstance().GetTemplates();
@@ -71,11 +66,10 @@ namespace ST.EplAddin.PlcEdit
 
         private void ImportForm_ImportCsvDataEvent(object sender, List<CsvFileDataModelView> e)
         {
-
             ImportedData = e;
         }
 
-        private void ComparingForm_StartRewriting(object sender, EventArgs e)
+        private void ComparingForm_StartRewriting()
         {
             PlcDataModelView.ForEach(x => x.PropertyChanged += ChangeCellColor);
         }
@@ -528,20 +522,27 @@ namespace ST.EplAddin.PlcEdit
             return array;
         }
 
+
+
         private void import_button_Click(object sender, EventArgs e)
         {
-            //TODO: импортировать данные нужно 
-            var dataToImport = GetRewritingRowsData(PlcDataModelView);
+            ComparingForm_StartRewriting();
+            var dataToRewrite = GetRewritingRowsData(PlcDataModelView);
+            if (dataToRewrite.Count == ImportedData.Count)
+            {
+                for (int i = 0; i < ImportedData.Count; i++)
+                {
+                    dataToRewrite[i].PLCAdress = ImportedData[i].PLCAdress;
+                    dataToRewrite[i].SymbolicAdress = ImportedData[i].SymbolicAdress;
+                    dataToRewrite[i].FunctionText = ImportedData[i].FunctionText;
+                }
+            }
+            dataGridView.Refresh();
+
         }
 
         private void UpdateDataTable(List<FromCsvModelView> csvPlcData)
         {
-            if (csvPlcData == null)
-            {
-                throw new NullReferenceException("Нет данных для обновления");
-
-            }
-
             if (csvPlcData.First().DeviceNameShort != PlcDataModelView.First().DeviceNameShort)
             {
                 MessageBox.Show("Выбран неверный модуль для импорта");
@@ -550,7 +551,7 @@ namespace ST.EplAddin.PlcEdit
 
             var properlyDataInDataGrid = GetRewritingRowsData(PlcDataModelView);
 
-            if (csvPlcData.Count() != properlyDataInDataGrid.Count()) //тут должно получиться 32 штуки
+            if (csvPlcData.Count != properlyDataInDataGrid.Count) //тут должно получиться 32 штуки
             {
                 MessageBox.Show("Не найдено взаимооднозначное соответствие данных для импорта");
                 return;
@@ -558,8 +559,7 @@ namespace ST.EplAddin.PlcEdit
 
             for (int i = 0; i < properlyDataInDataGrid.Count(); i++)
             {
-                properlyDataInDataGrid[i].FunctionText =
-                    csvPlcData[i].FunctionText; //тут надо написать перезаписать datagrid и все!
+                properlyDataInDataGrid[i].FunctionText = csvPlcData[i].FunctionText;
                 properlyDataInDataGrid[i].SymbolicAdress = csvPlcData[i].SymbolicAdress;
                 properlyDataInDataGrid[i].PLCAdress = csvPlcData[i].PLCAdress;
             }
@@ -867,8 +867,6 @@ namespace ST.EplAddin.PlcEdit
             CsvConverter csvConverter = new CsvConverter(path);
             var dataFromFile = csvConverter.ReadFile();
             if (!dataFromFile.Any()) return;
-
-            //var CsvFileDataModelViews = Mapper.ConvertDataToCsvCompare(dataFromFile);
 
             if (!(PlcDataModelView[0].DeviceNameShort ??= string.Empty).Equals(
                     dataFromFile[0].DeviceNameShort ??= string.Empty))
