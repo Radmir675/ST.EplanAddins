@@ -71,7 +71,13 @@ namespace ST.EplAddin.PlcEdit
 
         private void ComparingForm_StartRewriting()
         {
+
             PlcDataModelView.ForEach(x => x.PropertyChanged += ChangeCellColor);
+        }
+        private void ComparingForm_FinishRewriting()
+        {
+
+            PlcDataModelView.ForEach(x => x.PropertyChanged -= ChangeCellColor);
         }
 
         private void ChangeCellColor(object sender, PropertyChangedEventArgs e)
@@ -538,7 +544,7 @@ namespace ST.EplAddin.PlcEdit
                 }
             }
             dataGridView.Refresh();
-
+            ComparingForm_FinishRewriting();
         }
 
         private void UpdateDataTable(List<FromCsvModelView> csvPlcData)

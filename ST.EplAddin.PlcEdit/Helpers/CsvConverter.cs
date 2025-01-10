@@ -102,8 +102,7 @@ namespace ST.EplAddin.PlcEdit
             return new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 Delimiter = ";",
-                BadDataFound = null,
-                MissingFieldFound = null
+                TrimOptions = TrimOptions.None
             };
         }
     }
