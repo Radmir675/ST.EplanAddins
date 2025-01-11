@@ -164,13 +164,17 @@ namespace ST.EplAddin.PlcEdit
                 }
                 if (overviewTerminal != null)//тут я разрешил перезапись обзора
                 {
-                    if (Properties.Settings.Default.IsRewritePLCAdress)
+                    if (Properties.Settings.Default.IsRewriteSymbolicAdress)
                     {
                         overviewTerminal.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL = item.SymbolicAdress;
                     }
                     if (Properties.Settings.Default.IsRewritePLCAdress)
                     {
                         overviewTerminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
+                    }
+                    if (Properties.Settings.Default.IsDeleteOverviewFunctionText)
+                    {
+                        overviewTerminal.Properties.FUNC_TEXT = string.Empty;
                     }
                 }
             }

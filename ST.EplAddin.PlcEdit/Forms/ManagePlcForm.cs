@@ -6,7 +6,6 @@ using ST.EplAddin.PlcEdit.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -60,6 +59,7 @@ namespace ST.EplAddin.PlcEdit
             FastInput.Checked = Properties.Settings.Default.FastInputChecked;
             SymbolicAdressToolStripMenuItem.Checked = Properties.Settings.Default.IsRewriteSymbolicAdress;
             PLCAdressToolStripMenuItem.Checked = Properties.Settings.Default.IsRewritePLCAdress;
+            deleteOverviewFunctionTextToolStripMenuItem.Checked = Properties.Settings.Default.IsDeleteOverviewFunctionText;
             import_button.Enabled = false;
             export_button.Enabled = false;
         }
@@ -71,7 +71,6 @@ namespace ST.EplAddin.PlcEdit
 
         private void ComparingForm_StartRewriting()
         {
-
             PlcDataModelView.ForEach(x => x.PropertyChanged += ChangeCellColor);
         }
         private void ComparingForm_FinishRewriting()
@@ -717,7 +716,7 @@ namespace ST.EplAddin.PlcEdit
 
             var firstSelectedRow = SelectedRows.FirstOrDefault();
             var secondSelectedRow = SelectedRows.LastOrDefault();
-
+            var res = dataGridView.Columns;
             var functionDefinition =
                 firstSelectedRow?.Cells["FunctionDefinition"]?.Value?.ToString() ?? "Не определено";
 
@@ -820,6 +819,12 @@ namespace ST.EplAddin.PlcEdit
             var menuItem = sender as ToolStripMenuItem;
             menuItem.Checked = !menuItem.Checked;
             Properties.Settings.Default.IsRewritePLCAdress = menuItem.Checked;
+        }
+        private void deleteOverviewFunctionTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var menuItem = sender as ToolStripMenuItem;
+            menuItem.Checked = !menuItem.Checked;
+            Properties.Settings.Default.IsDeleteOverviewFunctionText = menuItem.Checked;
         }
 
         private void rewriteOwerviewSymbolicAdressToolStripMenuItem_Click(object sender, EventArgs e)

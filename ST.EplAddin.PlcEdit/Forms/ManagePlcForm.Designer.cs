@@ -30,32 +30,17 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManagePlcForm));
             this.Ok_button = new System.Windows.Forms.Button();
             this.Apply_button = new System.Windows.Forms.Button();
             this.Cancel_button = new System.Windows.Forms.Button();
             this.flowLayoutPanelDown = new System.Windows.Forms.FlowLayoutPanel();
-            this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.StatusImage = new System.Windows.Forms.DataGridViewImageColumn();
-            this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DeviceDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Datatype = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SymbolicAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FunctionText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IdenticalDT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DevicePointDesignation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FunctionDefinition = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SymbolicAdressDefined = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.plcDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.sourceFile_button = new System.Windows.Forms.Button();
             this.export_button = new System.Windows.Forms.Button();
             this.import_button = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
@@ -63,6 +48,7 @@
             this.toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SymbolicAdressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PLCAdressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteOverviewFunctionTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.lower_button = new System.Windows.Forms.Button();
@@ -74,9 +60,26 @@
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.reviewPLC_button = new System.Windows.Forms.Button();
             this.FastInput = new System.Windows.Forms.CheckBox();
-            this.sourceFile_button = new System.Windows.Forms.Button();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.plcDataModelViewBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.plcDataModelViewBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+            this.plcDataModelViewBindingSource3 = new System.Windows.Forms.BindingSource(this.components);
+            this.StatusImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DevicePointDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SymbolicAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FunctionText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DevicePointDesignation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FunctionDefinition = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FunctionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Datatype = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IdenticalDT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SymbolicAdressDefined = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TerminalId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeviceNameShort = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DevicePinNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.flowLayoutPanelDown.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource)).BeginInit();
             this.tableLayoutPanel.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -84,6 +87,10 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource3)).BeginInit();
             this.SuspendLayout();
             // 
             // Ok_button
@@ -131,174 +138,6 @@
             this.flowLayoutPanelDown.TabIndex = 5;
             this.flowLayoutPanelDown.WrapContents = false;
             // 
-            // dataGridView
-            // 
-            this.dataGridView.AllowUserToAddRows = false;
-            this.dataGridView.AllowUserToDeleteRows = false;
-            this.dataGridView.AllowUserToOrderColumns = true;
-            this.dataGridView.AllowUserToResizeRows = false;
-            this.dataGridView.AutoGenerateColumns = false;
-            this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            this.dataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.StatusImage,
-            this.PLCAdress,
-            this.DeviceDescription,
-            this.Datatype,
-            this.SymbolicAdress,
-            this.FunctionText,
-            this.DT,
-            this.IdenticalDT,
-            this.DevicePointDesignation,
-            this.FunctionDefinition,
-            this.SymbolicAdressDefined,
-            this.FunctionType});
-            this.dataGridView.DataSource = this.plcDataModelViewBindingSource;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView.EnableHeadersVisualStyles = false;
-            this.dataGridView.GridColor = System.Drawing.Color.Gray;
-            this.dataGridView.Location = new System.Drawing.Point(0, 37);
-            this.dataGridView.Name = "dataGridView";
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.dataGridView.RowHeadersWidth = 17;
-            this.dataGridView.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView.RowTemplate.Height = 17;
-            this.dataGridView.Size = new System.Drawing.Size(1270, 693);
-            this.dataGridView.TabIndex = 6;
-            this.dataGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView_CellBeginEdit);
-            this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellClick);
-            this.dataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellEndEdit);
-            this.dataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView_KeyDown);
-            this.dataGridView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dataGridView_MouseUp);
-            // 
-            // StatusImage
-            // 
-            this.StatusImage.DataPropertyName = "StatusImage";
-            this.StatusImage.HeaderText = "Status";
-            this.StatusImage.Name = "StatusImage";
-            this.StatusImage.ReadOnly = true;
-            // 
-            // PLCAdress
-            // 
-            this.PLCAdress.DataPropertyName = "PLCAdress";
-            this.PLCAdress.FillWeight = 86.17369F;
-            this.PLCAdress.HeaderText = "PLCAdress";
-            this.PLCAdress.Name = "PLCAdress";
-            // 
-            // DeviceDescription
-            // 
-            this.DeviceDescription.DataPropertyName = "DevicePointDescription";
-            this.DeviceDescription.HeaderText = "DevicePointDescription";
-            this.DeviceDescription.Name = "DeviceDescription";
-            this.DeviceDescription.ReadOnly = true;
-            // 
-            // Datatype
-            // 
-            this.Datatype.DataPropertyName = "Datatype";
-            this.Datatype.HeaderText = "Datatype";
-            this.Datatype.Name = "Datatype";
-            this.Datatype.ReadOnly = true;
-            this.Datatype.Visible = false;
-            // 
-            // SymbolicAdress
-            // 
-            this.SymbolicAdress.DataPropertyName = "SymbolicAdress";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.SymbolicAdress.DefaultCellStyle = dataGridViewCellStyle2;
-            this.SymbolicAdress.FillWeight = 114.2454F;
-            this.SymbolicAdress.HeaderText = "SymbolicAdress";
-            this.SymbolicAdress.Name = "SymbolicAdress";
-            // 
-            // FunctionText
-            // 
-            this.FunctionText.DataPropertyName = "FunctionText";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.FunctionText.DefaultCellStyle = dataGridViewCellStyle3;
-            this.FunctionText.FillWeight = 78.17257F;
-            this.FunctionText.HeaderText = "FunctionText";
-            this.FunctionText.MinimumWidth = 140;
-            this.FunctionText.Name = "FunctionText";
-            this.FunctionText.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // DT
-            // 
-            this.DT.DataPropertyName = "DT";
-            this.DT.HeaderText = "DT";
-            this.DT.Name = "DT";
-            this.DT.ReadOnly = true;
-            this.DT.Visible = false;
-            // 
-            // IdenticalDT
-            // 
-            this.IdenticalDT.DataPropertyName = "IdenticalDT";
-            this.IdenticalDT.HeaderText = "IdenticalDT";
-            this.IdenticalDT.Name = "IdenticalDT";
-            this.IdenticalDT.ReadOnly = true;
-            this.IdenticalDT.Visible = false;
-            // 
-            // DevicePointDesignation
-            // 
-            this.DevicePointDesignation.DataPropertyName = "DevicePointDesignation";
-            this.DevicePointDesignation.FillWeight = 114.2454F;
-            this.DevicePointDesignation.HeaderText = "DevicePointDesignation";
-            this.DevicePointDesignation.Name = "DevicePointDesignation";
-            this.DevicePointDesignation.ReadOnly = true;
-            // 
-            // FunctionDefinition
-            // 
-            this.FunctionDefinition.DataPropertyName = "FunctionDefinition";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.FunctionDefinition.DefaultCellStyle = dataGridViewCellStyle4;
-            this.FunctionDefinition.FillWeight = 114.2454F;
-            this.FunctionDefinition.HeaderText = "FunctionDefinition";
-            this.FunctionDefinition.MinimumWidth = 150;
-            this.FunctionDefinition.Name = "FunctionDefinition";
-            this.FunctionDefinition.ReadOnly = true;
-            // 
-            // SymbolicAdressDefined
-            // 
-            this.SymbolicAdressDefined.DataPropertyName = "SymbolicAdressDefined";
-            this.SymbolicAdressDefined.HeaderText = "SymbolicAdressDefined";
-            this.SymbolicAdressDefined.Name = "SymbolicAdressDefined";
-            this.SymbolicAdressDefined.ReadOnly = true;
-            this.SymbolicAdressDefined.Visible = false;
-            // 
-            // FunctionType
-            // 
-            this.FunctionType.DataPropertyName = "FunctionType";
-            this.FunctionType.FillWeight = 78.67199F;
-            this.FunctionType.HeaderText = "FunctionType";
-            this.FunctionType.Name = "FunctionType";
-            this.FunctionType.ReadOnly = true;
-            // 
-            // plcDataModelViewBindingSource
-            // 
-            //this.plcDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
-            // 
             // tableLayoutPanel
             // 
             this.tableLayoutPanel.AutoSize = true;
@@ -329,6 +168,16 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(291, 29);
             this.flowLayoutPanel1.TabIndex = 5;
             this.flowLayoutPanel1.WrapContents = false;
+            // 
+            // sourceFile_button
+            // 
+            this.sourceFile_button.Location = new System.Drawing.Point(178, 3);
+            this.sourceFile_button.Name = "sourceFile_button";
+            this.sourceFile_button.Size = new System.Drawing.Size(110, 23);
+            this.sourceFile_button.TabIndex = 5;
+            this.sourceFile_button.Text = "Load  source file";
+            this.sourceFile_button.UseVisualStyleBackColor = true;
+            this.sourceFile_button.Click += new System.EventHandler(this.sourceFile_button_Click);
             // 
             // export_button
             // 
@@ -379,7 +228,8 @@
             this.toolStripMenuItem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.toolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.SymbolicAdressToolStripMenuItem,
-            this.PLCAdressToolStripMenuItem});
+            this.PLCAdressToolStripMenuItem,
+            this.deleteOverviewFunctionTextToolStripMenuItem});
             this.toolStripMenuItem.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.png_transparent_gear_encapsulated_postscript_computer_icons_engrenagem;
             this.toolStripMenuItem.Name = "toolStripMenuItem";
             this.toolStripMenuItem.Padding = new System.Windows.Forms.Padding(0);
@@ -400,6 +250,13 @@
             this.PLCAdressToolStripMenuItem.Text = "Rewrite overview PLC adress";
             this.PLCAdressToolStripMenuItem.Click += new System.EventHandler(this.rewriteOverviewAdressToolStripMenuItem_Click);
             // 
+            // deleteOverviewFunctionTextToolStripMenuItem
+            // 
+            this.deleteOverviewFunctionTextToolStripMenuItem.Name = "deleteOverviewFunctionTextToolStripMenuItem";
+            this.deleteOverviewFunctionTextToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.deleteOverviewFunctionTextToolStripMenuItem.Text = "Delete overview function text";
+            this.deleteOverviewFunctionTextToolStripMenuItem.Click += new System.EventHandler(this.deleteOverviewFunctionTextToolStripMenuItem_Click);
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
@@ -412,6 +269,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1270, 37);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -548,15 +406,188 @@
             this.FastInput.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.FastInput.UseVisualStyleBackColor = true;
             // 
-            // sourceFile_button
+            // dataGridView
             // 
-            this.sourceFile_button.Location = new System.Drawing.Point(178, 3);
-            this.sourceFile_button.Name = "sourceFile_button";
-            this.sourceFile_button.Size = new System.Drawing.Size(110, 23);
-            this.sourceFile_button.TabIndex = 5;
-            this.sourceFile_button.Text = "Load  source file";
-            this.sourceFile_button.UseVisualStyleBackColor = true;
-            this.sourceFile_button.Click += new System.EventHandler(this.sourceFile_button_Click);
+            this.dataGridView.AllowUserToAddRows = false;
+            this.dataGridView.AllowUserToDeleteRows = false;
+            this.dataGridView.AllowUserToOrderColumns = true;
+            this.dataGridView.AllowUserToResizeRows = false;
+            this.dataGridView.AutoGenerateColumns = false;
+            this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView.BackgroundColor = System.Drawing.Color.WhiteSmoke;
+            this.dataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.StatusImage,
+            this.PLCAdress,
+            this.DevicePointDescription,
+            this.SymbolicAdress,
+            this.FunctionText,
+            this.DevicePointDesignation,
+            this.FunctionDefinition,
+            this.FunctionType,
+            this.Datatype,
+            this.DT,
+            this.IdenticalDT,
+            this.SymbolicAdressDefined,
+            this.TerminalId,
+            this.DeviceNameShort,
+            this.DevicePinNumber});
+            this.dataGridView.DataSource = this.plcDataModelViewBindingSource1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView.EnableHeadersVisualStyles = false;
+            this.dataGridView.GridColor = System.Drawing.Color.Gray;
+            this.dataGridView.Location = new System.Drawing.Point(0, 37);
+            this.dataGridView.Name = "dataGridView";
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridView.RowHeadersWidth = 17;
+            this.dataGridView.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.RowTemplate.Height = 17;
+            this.dataGridView.Size = new System.Drawing.Size(1270, 693);
+            this.dataGridView.TabIndex = 8;
+            // 
+            // plcDataModelViewBindingSource1
+            // 
+            this.plcDataModelViewBindingSource1.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
+            // 
+            // plcDataModelViewBindingSource2
+            // 
+            this.plcDataModelViewBindingSource2.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
+            // 
+            // plcDataModelViewBindingSource3
+            // 
+            this.plcDataModelViewBindingSource3.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
+            // 
+            // StatusImage
+            // 
+            this.StatusImage.DataPropertyName = "StatusImage";
+            this.StatusImage.HeaderText = "Status";
+            this.StatusImage.Name = "StatusImage";
+            this.StatusImage.ReadOnly = true;
+            // 
+            // PLCAdress
+            // 
+            this.PLCAdress.DataPropertyName = "PLCAdress";
+            this.PLCAdress.HeaderText = "PLCAdress";
+            this.PLCAdress.Name = "PLCAdress";
+            // 
+            // DevicePointDescription
+            // 
+            this.DevicePointDescription.DataPropertyName = "DevicePointDescription";
+            this.DevicePointDescription.HeaderText = "DevicePointDescription";
+            this.DevicePointDescription.Name = "DevicePointDescription";
+            this.DevicePointDescription.ReadOnly = true;
+            // 
+            // SymbolicAdress
+            // 
+            this.SymbolicAdress.DataPropertyName = "SymbolicAdress";
+            this.SymbolicAdress.HeaderText = "SymbolicAdress";
+            this.SymbolicAdress.Name = "SymbolicAdress";
+            // 
+            // FunctionText
+            // 
+            this.FunctionText.DataPropertyName = "FunctionText";
+            this.FunctionText.HeaderText = "FunctionText";
+            this.FunctionText.Name = "FunctionText";
+            // 
+            // DevicePointDesignation
+            // 
+            this.DevicePointDesignation.DataPropertyName = "DevicePointDesignation";
+            this.DevicePointDesignation.HeaderText = "DevicePointDesignation";
+            this.DevicePointDesignation.Name = "DevicePointDesignation";
+            this.DevicePointDesignation.ReadOnly = true;
+            // 
+            // FunctionDefinition
+            // 
+            this.FunctionDefinition.DataPropertyName = "FunctionDefinition";
+            this.FunctionDefinition.HeaderText = "FunctionDefinition";
+            this.FunctionDefinition.Name = "FunctionDefinition";
+            this.FunctionDefinition.ReadOnly = true;
+            // 
+            // FunctionType
+            // 
+            this.FunctionType.DataPropertyName = "FunctionType";
+            this.FunctionType.HeaderText = "FunctionType";
+            this.FunctionType.Name = "FunctionType";
+            this.FunctionType.ReadOnly = true;
+            // 
+            // Datatype
+            // 
+            this.Datatype.DataPropertyName = "Datatype";
+            this.Datatype.HeaderText = "Datatype";
+            this.Datatype.Name = "Datatype";
+            this.Datatype.ReadOnly = true;
+            this.Datatype.Visible = false;
+            // 
+            // DT
+            // 
+            this.DT.DataPropertyName = "DT";
+            this.DT.HeaderText = "DT";
+            this.DT.Name = "DT";
+            this.DT.ReadOnly = true;
+            this.DT.Visible = false;
+            // 
+            // IdenticalDT
+            // 
+            this.IdenticalDT.DataPropertyName = "IdenticalDT";
+            this.IdenticalDT.HeaderText = "IdenticalDT";
+            this.IdenticalDT.Name = "IdenticalDT";
+            this.IdenticalDT.ReadOnly = true;
+            this.IdenticalDT.Visible = false;
+            // 
+            // SymbolicAdressDefined
+            // 
+            this.SymbolicAdressDefined.DataPropertyName = "SymbolicAdressDefined";
+            this.SymbolicAdressDefined.HeaderText = "SymbolicAdressDefined";
+            this.SymbolicAdressDefined.Name = "SymbolicAdressDefined";
+            this.SymbolicAdressDefined.ReadOnly = true;
+            this.SymbolicAdressDefined.Visible = false;
+            // 
+            // TerminalId
+            // 
+            this.TerminalId.DataPropertyName = "TerminalId";
+            this.TerminalId.HeaderText = "TerminalId";
+            this.TerminalId.Name = "TerminalId";
+            this.TerminalId.ReadOnly = true;
+            this.TerminalId.Visible = false;
+            // 
+            // DeviceNameShort
+            // 
+            this.DeviceNameShort.DataPropertyName = "DeviceNameShort";
+            this.DeviceNameShort.HeaderText = "DeviceNameShort";
+            this.DeviceNameShort.Name = "DeviceNameShort";
+            this.DeviceNameShort.ReadOnly = true;
+            this.DeviceNameShort.Visible = false;
+            // 
+            // DevicePinNumber
+            // 
+            this.DevicePinNumber.DataPropertyName = "DevicePinNumber";
+            this.DevicePinNumber.HeaderText = "DevicePinNumber";
+            this.DevicePinNumber.Name = "DevicePinNumber";
+            this.DevicePinNumber.ReadOnly = true;
+            this.DevicePinNumber.Visible = false;
             // 
             // ManagePlcForm
             // 
@@ -582,7 +613,6 @@
             this.ResizeEnd += new System.EventHandler(this.ManagePlcForm_ResizeEnd);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ManagePlcForm_KeyDown);
             this.flowLayoutPanelDown.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource)).EndInit();
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
@@ -593,6 +623,10 @@
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -603,13 +637,11 @@
         private System.Windows.Forms.Button Apply_button;
         private System.Windows.Forms.Button Cancel_button;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelDown;
-        private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.BindingSource plcDataModelViewBindingSource;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button export_button;
         private System.Windows.Forms.Button import_button;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DevicePointDescription;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem;
@@ -626,18 +658,26 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.Button reviewPLC_button;
         private System.Windows.Forms.CheckBox FastInput;
+        private System.Windows.Forms.Button sourceFile_button;
+        private System.Windows.Forms.ToolStripMenuItem deleteOverviewFunctionTextToolStripMenuItem;
+        private System.Windows.Forms.BindingSource plcDataModelViewBindingSource1;
+        private System.Windows.Forms.DataGridView dataGridView;
+        private System.Windows.Forms.BindingSource plcDataModelViewBindingSource2;
+        private System.Windows.Forms.BindingSource plcDataModelViewBindingSource3;
         private System.Windows.Forms.DataGridViewImageColumn StatusImage;
         private System.Windows.Forms.DataGridViewTextBoxColumn PLCAdress;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DeviceDescription;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Datatype;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DevicePointDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn SymbolicAdress;
         private System.Windows.Forms.DataGridViewTextBoxColumn FunctionText;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DT;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IdenticalDT;
         private System.Windows.Forms.DataGridViewTextBoxColumn DevicePointDesignation;
         private System.Windows.Forms.DataGridViewTextBoxColumn FunctionDefinition;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SymbolicAdressDefined;
         private System.Windows.Forms.DataGridViewTextBoxColumn FunctionType;
-        private System.Windows.Forms.Button sourceFile_button;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Datatype;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DT;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IdenticalDT;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SymbolicAdressDefined;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TerminalId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DeviceNameShort;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DevicePinNumber;
     }
 }
