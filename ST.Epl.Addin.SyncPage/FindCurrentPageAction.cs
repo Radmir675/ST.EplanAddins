@@ -30,8 +30,11 @@ namespace ST.Epl.Addin.SyncPage
             selectionSet.LockProjectByDefault = false;
             selectionSet.LockSelectionByDefault = false;
             var currentPage = selectionSet.CurrentlyEdited;
-            var fulLinkProject = currentPage.Project.ProjectLinkFilePath;
-
+            var fulLinkProject = currentPage?.Project.ProjectLinkFilePath;
+            if (fulLinkProject == null)
+            {
+                return false;
+            }
             var identifier = currentPage.ToStringIdentifier();
             StringCollection strings = new StringCollection();
             strings.Add(identifier);
