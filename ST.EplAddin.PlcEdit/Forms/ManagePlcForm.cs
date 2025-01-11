@@ -594,17 +594,6 @@ namespace ST.EplAddin.PlcEdit
             return result;
         }
 
-
-
-        private void loadTemplate_button_Click(object sender, EventArgs e)
-        {
-            var pathFromRead = PathDialog.TryGetReadPath();
-            if (pathFromRead == null) return;
-            var fileName = PathDialog.TryGetFileName(pathFromRead);
-            LoadTemplateForm loadTemplateForm = new LoadTemplateForm(pathFromRead, pathToSaveTemplate);
-            loadTemplateForm.ShowDialog();
-        }
-
         private void dataGridView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.V && e.Control)

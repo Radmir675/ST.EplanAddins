@@ -61,9 +61,6 @@
             this.reviewPLC_button = new System.Windows.Forms.Button();
             this.FastInput = new System.Windows.Forms.CheckBox();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.plcDataModelViewBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.plcDataModelViewBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
-            this.plcDataModelViewBindingSource3 = new System.Windows.Forms.BindingSource(this.components);
             this.StatusImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.PLCAdress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DevicePointDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -79,6 +76,9 @@
             this.TerminalId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DeviceNameShort = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DevicePinNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.plcDataModelViewBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.plcDataModelViewBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+            this.plcDataModelViewBindingSource3 = new System.Windows.Forms.BindingSource(this.components);
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource)).BeginInit();
             this.tableLayoutPanel.SuspendLayout();
@@ -467,18 +467,11 @@
             this.dataGridView.RowTemplate.Height = 17;
             this.dataGridView.Size = new System.Drawing.Size(1270, 693);
             this.dataGridView.TabIndex = 8;
-            // 
-            // plcDataModelViewBindingSource1
-            // 
-            this.plcDataModelViewBindingSource1.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
-            // 
-            // plcDataModelViewBindingSource2
-            // 
-            this.plcDataModelViewBindingSource2.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
-            // 
-            // plcDataModelViewBindingSource3
-            // 
-            this.plcDataModelViewBindingSource3.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
+            this.dataGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView_CellBeginEdit);
+            this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellClick);
+            this.dataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellEndEdit);
+            this.dataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView_KeyDown);
+            this.dataGridView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dataGridView_MouseUp);
             // 
             // StatusImage
             // 
@@ -588,6 +581,18 @@
             this.DevicePinNumber.Name = "DevicePinNumber";
             this.DevicePinNumber.ReadOnly = true;
             this.DevicePinNumber.Visible = false;
+            // 
+            // plcDataModelViewBindingSource1
+            // 
+            this.plcDataModelViewBindingSource1.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
+            // 
+            // plcDataModelViewBindingSource2
+            // 
+            this.plcDataModelViewBindingSource2.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
+            // 
+            // plcDataModelViewBindingSource3
+            // 
+            this.plcDataModelViewBindingSource3.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
             // 
             // ManagePlcForm
             // 
