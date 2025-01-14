@@ -79,6 +79,7 @@
             this.plcDataModelViewBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.plcDataModelViewBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.plcDataModelViewBindingSource3 = new System.Windows.Forms.BindingSource(this.components);
+            this.RewriteFunctionsTextInImport = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource)).BeginInit();
             this.tableLayoutPanel.SuspendLayout();
@@ -229,7 +230,8 @@
             this.toolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.SymbolicAdressToolStripMenuItem,
             this.PLCAdressToolStripMenuItem,
-            this.deleteOverviewFunctionTextToolStripMenuItem});
+            this.deleteOverviewFunctionTextToolStripMenuItem,
+            this.RewriteFunctionsTextInImport});
             this.toolStripMenuItem.Image = global::ST.EplAddin.PlcEdit.Properties.Resources.png_transparent_gear_encapsulated_postscript_computer_icons_engrenagem;
             this.toolStripMenuItem.Name = "toolStripMenuItem";
             this.toolStripMenuItem.Padding = new System.Windows.Forms.Padding(0);
@@ -594,6 +596,13 @@
             // 
             this.plcDataModelViewBindingSource3.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
             // 
+            // RewriteFunctionsTextInImport
+            // 
+            this.RewriteFunctionsTextInImport.Name = "RewriteFunctionsTextInImport";
+            this.RewriteFunctionsTextInImport.Size = new System.Drawing.Size(250, 22);
+            this.RewriteFunctionsTextInImport.Text = "Rewrite function texts in import";
+            this.RewriteFunctionsTextInImport.Click += new System.EventHandler(this.dontRewriteFunctionTextsToolStripMenuItem_Click);
+            // 
             // ManagePlcForm
             // 
             this.AcceptButton = this.Ok_button;
@@ -684,5 +693,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn TerminalId;
         private System.Windows.Forms.DataGridViewTextBoxColumn DeviceNameShort;
         private System.Windows.Forms.DataGridViewTextBoxColumn DevicePinNumber;
+        private System.Windows.Forms.ToolStripMenuItem RewriteFunctionsTextInImport;
     }
 }

@@ -39,7 +39,11 @@ namespace ST.EplAddin.PlcEdit
                             PLCAdress = csvReader?.GetField(4),
                             DeviceNameShort = csvReader.GetField(5),
                         };
-                        lines.Add(module);
+                        var bitNumber = module?.BitNumber ?? "";
+                        if (bitNumber.Contains("Bit"))
+                        {
+                            lines.Add(module);
+                        }
                     }
                 }
                 return lines;
@@ -103,7 +107,9 @@ namespace ST.EplAddin.PlcEdit
             {
                 Delimiter = ";",
                 TrimOptions = TrimOptions.None,
-                BadDataFound = null
+                BadDataFound = null,
+                MissingFieldFound = null
+
             };
         }
     }

@@ -60,6 +60,7 @@ namespace ST.EplAddin.PlcEdit
             SymbolicAdressToolStripMenuItem.Checked = Properties.Settings.Default.IsRewriteSymbolicAdress;
             PLCAdressToolStripMenuItem.Checked = Properties.Settings.Default.IsRewritePLCAdress;
             deleteOverviewFunctionTextToolStripMenuItem.Checked = Properties.Settings.Default.IsDeleteOverviewFunctionText;
+            RewriteFunctionsTextInImport.Checked = Properties.Settings.Default.IsRewritePLCFunctionsTextInImport;
             import_button.Enabled = false;
             export_button.Enabled = false;
         }
@@ -505,10 +506,10 @@ namespace ST.EplAddin.PlcEdit
             var dataToExport = GetDataToExport();
             var exportCsvForm = new ExportCsvForm(dataToExport.ToList());
             exportCsvForm.ShowDialog();
-            if (exportCsvForm.DialogResult == DialogResult.OK)
-            {
-                MessageBox.Show("Данные успешно записаны!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            //if (exportCsvForm.DialogResult == DialogResult.OK)
+            //{
+            //    MessageBox.Show("Данные успешно записаны!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
         }
 
         private CsvFileDataModelView[] GetDataToExport()
@@ -526,9 +527,6 @@ namespace ST.EplAddin.PlcEdit
             }
             return array;
         }
-
-
-
         private void import_button_Click(object sender, EventArgs e)
         {
             ComparingForm_StartRewriting();
@@ -539,8 +537,16 @@ namespace ST.EplAddin.PlcEdit
                 {
                     dataToRewrite[i].PLCAdress = ImportedData[i].PLCAdress;
                     dataToRewrite[i].SymbolicAdress = ImportedData[i].SymbolicAdress;
-                    dataToRewrite[i].FunctionText = ImportedData[i].FunctionText;
+                    if (RewriteFunctionsTextInImport.Checked)
+                    {
+                        dataToRewrite[i].FunctionText = ImportedData[i].FunctionText;
+                    }
                 }
+            }
+            else
+            {
+                MessageBox.Show("File and data in Eplan has different rows count to rewrite!'\n Please check that all function templates are assigned correctly!", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             dataGridView.Refresh();
             ComparingForm_FinishRewriting();
@@ -815,7 +821,12 @@ namespace ST.EplAddin.PlcEdit
             menuItem.Checked = !menuItem.Checked;
             Properties.Settings.Default.IsDeleteOverviewFunctionText = menuItem.Checked;
         }
-
+        private void dontRewriteFunctionTextsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var menuItem = sender as ToolStripMenuItem;
+            menuItem.Checked = !menuItem.Checked;
+            Properties.Settings.Default.IsRewritePLCFunctionsTextInImport = menuItem.Checked;
+        }
         private void rewriteOwerviewSymbolicAdressToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var menuItem = sender as ToolStripMenuItem;
@@ -866,6 +877,8 @@ namespace ST.EplAddin.PlcEdit
             if (path == null) return;
             CsvConverter csvConverter = new CsvConverter(path);
             var dataFromFile = csvConverter.ReadFile();
+
+            //TODO: тут надо его обрезать первые и последнюю строчку
             if (!dataFromFile.Any()) return;
 
             if (!(PlcDataModelView[0].DeviceNameShort ??= string.Empty).Equals(
@@ -890,6 +903,8 @@ namespace ST.EplAddin.PlcEdit
             }
             importForm.ImportCsvDataEvent -= ImportForm_ImportCsvDataEvent;
         }
+
+
     }
 }
 
