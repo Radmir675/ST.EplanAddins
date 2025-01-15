@@ -22,10 +22,10 @@
         </Grid.ColumnDefinitions>
 
         <Border Grid.Column="0"
-                Padding="15">
+                Padding="0,18,0,0">
             <GroupBox Header="Объект источника"
-                      Padding="0,10,0,0">
-                <TreeView BorderBrush="Transparent">
+                      Padding="5,12,5,12">
+                <TreeView BorderBrush="Transparent" Padding="0,10,0,0">
                     <TextBox>Элемент TreeView</TextBox>
                     <TreeViewItem Header="Базы данных">
                         <TreeViewItem Header="MS SQL Server" />
@@ -81,8 +81,9 @@
                                             Height="25"
                                             HorizontalAlignment="Right"
                                             Grid.Column="1"
-                                            Margin="10,0,0,0" />
-
+                                            Margin="10,0,0,0"
+                                            Content="🗙" 
+                                            Foreground="Red"/>
                                 </Grid>
                             </StackPanel>
 
