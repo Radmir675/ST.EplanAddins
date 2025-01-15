@@ -12,15 +12,15 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300" />
-            <ColumnDefinition Width="2" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Column="0"
-                Padding="0,18,0,0">
             <GroupBox Header="Объект источника"
-                      Padding="5,12,5,12">
+                      Padding="5,12,5,12"
+                      Grid.Column="0"
+                      Margin="0,18,0,0">
                 <TreeView BorderBrush="Transparent"
                           Padding="0,10,0,0">
                     <TextBox>Элемент TreeView</TextBox>
@@ -44,10 +44,12 @@
                     </TreeViewItem>
                 </TreeView>
             </GroupBox>
-        </Border>
+       
         <GridSplitter Grid.Column="1"
-                      Width="2"
-                      BorderThickness="1" />
+                      Width="5"
+                      BorderThickness="2"
+                      ShowsPreview="False"
+                      VerticalAlignment="Stretch" />
         <Grid  Grid.Column="2"
                Margin="0,0,10,0">
             <Grid.RowDefinitions>
@@ -87,23 +89,23 @@
                             </StackPanel>
 
                             <ListView Grid.Row="1"
+                                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                       ItemsSource="{Binding Message}"
                                       SelectedItem="{Binding SelectedMessage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                      Margin="0,15,0,15">
-                                <!--<ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" />
-                                </DataTemplate>
-                            </ListView.ItemTemplate>-->
+                                      Margin="0,15,0,15" >
                                 <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Title}"
-                                                        Header="Имя свойства"
-                                                        Width="500" />
+                                    
+                                        <GridView>
+                                            
+                                            <GridViewColumn DisplayMemberBinding="{Binding Path=Title}"
+                                                            Header="Имя свойства"
+                                                            Width="500" />
                                         <GridViewColumn DisplayMemberBinding="{Binding Path=Company}"
                                                         Width="700"
                                                         Header="Значение" />
                                     </GridView>
+                                      
                                 </ListView.View>
                             </ListView>
                             <TextBox Grid.Row="2"
