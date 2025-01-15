@@ -7,19 +7,79 @@
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
         mc:Ignorable="d"
-        Width="400"
-        Height="375">
+        Width="1450"
+        Height="950">
 
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="2" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
+        <Border Padding="15">
+            <GroupBox Header="Объект источника"
+                      Padding="0,10,0,0">
 
-        <GridSplitter Grid.Column="1"/>
+                <TreeView BorderBrush="Transparent">
+                    <TextBox>Элемент TreeView</TextBox>
+                    <TreeViewItem Header="Базы данных">
+                        <TreeViewItem Header="MS SQL Server" />
+                        <TreeViewItem Header="MySQL" />
+                        <TreeViewItem Header="MongoDB" />
+                        <TreeViewItem Header="Postgres" />
+                    </TreeViewItem>
+                    <TreeViewItem Header="Языки программирования">
+                        <TreeViewItem Header="C-языки">
+                            <TreeViewItem Header="C#" />
+                            <TreeViewItem Header="C/C++" />
+                            <TreeViewItem Header="Java" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Basic">
+                            <TreeViewItem Header="Visual Basic" />
+                            <TreeViewItem Header="VB.Net" />
+                            <TreeViewItem Header="PureBasic" />
+                        </TreeViewItem>
+                    </TreeViewItem>
+                </TreeView>
+            </GroupBox>
+        </Border>
+        <GridSplitter Grid.Column="1"
+                      Width="2"
+                      BorderThickness="1" />
+        <TabControl Grid.Column="2"
+                    Margin="15">
+            <TabItem  Header="Функция">
+                <Border Padding="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel>
+                            <TextBlock Text="Фильтр" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox />
+                                <Button Width="25"
+                                        Height="25"
+                                        HorizontalAlignment="Right"
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0"/>
+
+                            </Grid>
+                        </StackPanel>
+                        
+                    </Grid>
+                </Border>
+            </TabItem>
+        </TabControl>
     </Grid>
 
 </Window>
