@@ -8,7 +8,10 @@
         xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
         mc:Ignorable="d"
         Width="1450"
-        Height="950">
+        Height="900"
+        Background="WhiteSmoke"
+        ResizeMode="CanResizeWithGrip"
+        Title="Выбор свойств">
 
 
     <Grid>
@@ -18,10 +21,10 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Border Padding="15">
+        <Border Grid.Column="0"
+                Padding="15">
             <GroupBox Header="Объект источника"
                       Padding="0,10,0,0">
-
                 <TreeView BorderBrush="Transparent">
                     <TextBox>Элемент TreeView</TextBox>
                     <TreeViewItem Header="Базы данных">
@@ -48,38 +51,91 @@
         <GridSplitter Grid.Column="1"
                       Width="2"
                       BorderThickness="1" />
-        <TabControl Grid.Column="2"
-                    Margin="15">
-            <TabItem  Header="Функция">
-                <Border Padding="10">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
+        <Grid  Grid.Column="2"
+               Margin="0,0,10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TabControl Margin="0,5,0,0"
+                        Background="WhiteSmoke"
+                        BorderThickness="2">
+                <TabItem  Header="Функция">
+                    <Border Padding="10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
 
-                        <StackPanel>
-                            <TextBlock Text="Фильтр" />
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBox />
-                                <Button Width="25"
-                                        Height="25"
-                                        HorizontalAlignment="Right"
-                                        Grid.Column="1"
-                                        Margin="10,0,0,0"/>
+                            <StackPanel>
+                                <TextBlock Text="Фильтр" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox VerticalContentAlignment="Center" />
+                                    <Button Width="25"
+                                            Height="25"
+                                            HorizontalAlignment="Right"
+                                            Grid.Column="1"
+                                            Margin="10,0,0,0" />
 
-                            </Grid>
-                        </StackPanel>
-                        
-                    </Grid>
-                </Border>
-            </TabItem>
-        </TabControl>
+                                </Grid>
+                            </StackPanel>
+
+                            <ListView Grid.Row="1"
+                                      ItemsSource="{Binding Message}"
+                                      SelectedItem="{Binding SelectedMessage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                      Margin="0,15,0,15">
+                                <!--<ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>-->
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Title}"
+                                                        Header="Имя свойства"
+                                                        Width="500" />
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Company}"
+                                                        Width="700"
+                                                        Header="Значение" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <TextBox Grid.Row="2"
+                                     Height="100"
+                                     TextWrapping="Wrap"
+                                     Text="AutomationML GUID/ Это свойство необходимо для экспорта и импорта AutomationML. Каждый объект в AutomationML идентифицируется глобальным уникальным идентификатором GUID (Globally Unique Identifier). GUID генерируется автоматически и, как правило, не должен изменяться вручную."
+                                     VerticalScrollBarVisibility="Auto"
+                                     Padding="3"
+                                     FontSize="14"
+                                     IsReadOnly="True"
+                                     Background="WhiteSmoke" />
+                        </Grid>
+                    </Border>
+                </TabItem>
+            </TabControl>
+            <UniformGrid Rows="1" Grid.Row="1"
+                         Height="25"
+                         VerticalAlignment="Bottom"
+                         Columns="2"
+                         Margin="15"
+                         Width="280"
+                         HorizontalAlignment="Right">
+
+                <Button Width="120"
+                        Content="ОК" />
+                <Button Width="120"
+                        Content="Отменить"
+                        IsCancel="True"
+                        Margin="5,0,0,0" />
+
+            </UniformGrid>
+        </Grid>
     </Grid>
 
 </Window>
