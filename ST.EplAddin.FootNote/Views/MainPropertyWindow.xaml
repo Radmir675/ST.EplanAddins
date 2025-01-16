@@ -23,6 +23,7 @@
                 <ResourceDictionary Source="/ST.EplAddin.FootNote;component/Dictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <cnvrt:AlignmentConverter x:Key="AlignmentConverter"/>
+            <cnvrt:ShapeConverter x:Key="ShapeConverter"/>
         <Style x:Key="WindowBorderStyle"
                TargetType="{x:Type Border}">
             <Setter Property="Margin"
@@ -211,21 +212,21 @@
                                                Margin="0,0,0,5" />
                                     <ComboBox Width="75"
                                               Height="32"
-                                              SelectedIndex="1"
+                                              SelectedIndex="{Binding StartShape,Converter={StaticResource ShapeConverter},ConverterParameter=23 }"
                                               VerticalContentAlignment="Center"
-                                              ToolTip="Выбор выноски"
-                                              SelectedItem="{Binding StartShape}">
-                                        <ComboBoxItem>
+                                              ToolTip="Выбор выноски">
+                                       
+                                        <ComboBoxItem  Name="Point">
                                             <Image Source="/ST.EplAddin.FootNote;component/Images/point.png"
                                                    RenderOptions.BitmapScalingMode="HighQuality"
                                                    Width="50"
-                                                   Height="20" />
+                                                   Height="20"/>
                                         </ComboBoxItem>
-                                        <ComboBoxItem>
+                                        <ComboBoxItem  Name="Arrow">
                                             <Image Source="../Images/arrow.png"
                                                    RenderOptions.BitmapScalingMode="HighQuality"
                                                    Width="50"
-                                                   Height="20" />
+                                                   Height="20"/>
                                         </ComboBoxItem>
                                     </ComboBox>
                                 </WrapPanel>

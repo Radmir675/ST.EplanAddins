@@ -106,6 +106,7 @@
     <Compile Include="AddinModule.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Converters\AlignmentConverter.cs" />
+    <Compile Include="Converters\ShapeConverter.cs" />
     <Compile Include="FootNote\FootNote.cs" />
     <Compile Include="FootNote\FootNoteItemProperties.cs" />
     <Compile Include="FootNote\Footnote_DragIteraction.cs" />

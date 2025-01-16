@@ -12,7 +12,13 @@ namespace ST.EplAddin.FootNote.ViewModels
         public string LinesColor { get; set; }
         public bool RememberAll { get; set; }
         public string Text { get; set; }
-        public Shape StartShape { get; set; }
+
+        public Shape StartShape
+        {
+            get => _startShape;
+            set => _startShape = value;
+        }
+        private Shape _startShape = Shape.Circle;
         public Alignment TextAlignment { get; set; }
 
         #region Commands
@@ -95,6 +101,8 @@ namespace ST.EplAddin.FootNote.ViewModels
             }
         }
         private RelayCommand _apply;
+
+
         public RelayCommand Apply
         {
             get

@@ -2,7 +2,7 @@
 {
     internal enum Shape
     {
-        Arrow,
-        Circle
+        Circle = 0,
+        Arrow = 1
     }
 }
