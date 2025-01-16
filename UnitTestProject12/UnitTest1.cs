@@ -12,7 +12,7 @@ namespace UnitTestProject12
         {
             new System.Windows.Application();
             //var app = new App();
-            new MainPropertyWindow().ShowDialog();
+            new FullPropertiesWindow().ShowDialog();
         }
     }
 }
