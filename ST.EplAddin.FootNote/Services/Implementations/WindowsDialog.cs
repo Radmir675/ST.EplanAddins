@@ -14,7 +14,7 @@ namespace ST.EplAddin.FootNote.Services.Implementations
         }
         public bool ShowPropertiesWindow()
         {
-            var window = _services.GetRequiredService<PropertiesWindow>();
+            var window = _services.GetRequiredService<MainPropertyWindow>();
             bool? result = window.ShowDialog();
             return result.GetValueOrDefault(false);
         }

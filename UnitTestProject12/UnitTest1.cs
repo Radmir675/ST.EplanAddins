@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ST.EplAddin.FootNote;
 using ST.EplAddin.FootNote.Views;
 
 namespace UnitTestProject12
@@ -7,12 +8,15 @@ namespace UnitTestProject12
     public class UnitTest1
     {
 
+
         [TestMethod]
         public void TestMethod()
         {
-            new System.Windows.Application();
-            //var app = new App();
-            new FullPropertiesWindow().ShowDialog();
+            //new System.Windows.Application();
+            var app = new App();
+            new MainPropertyWindow().ShowDialog();
+
+
         }
     }
 }

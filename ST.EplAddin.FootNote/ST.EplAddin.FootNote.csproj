@@ -145,6 +145,7 @@
     </Compile>
     <Compile Include="Models\Alignment.cs" />
     <Compile Include="Models\Class1.cs" />
+    <Compile Include="Models\Shape.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyBrowser\ContextActionEventListener.cs" />
     <Compile Include="PropertyBrowser\EplHelper.cs" />
@@ -162,9 +163,6 @@
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\FullPropertiesWindow.xaml.cs">
       <DependentUpon>FullPropertiesWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PropertiesWindow.xaml.cs">
-      <DependentUpon>PropertiesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPropertyWindow.xaml.cs">
       <DependentUpon>MainPropertyWindow.xaml</DependentUpon>
@@ -216,10 +214,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FullPropertiesWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PropertiesWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

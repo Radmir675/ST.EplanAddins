@@ -214,7 +214,7 @@
                                               SelectedIndex="1"
                                               VerticalContentAlignment="Center"
                                               ToolTip="Выбор выноски"
-                                              SelectedItem="{Binding StartShape }">
+                                              SelectedItem="{Binding StartShape}">
                                         <ComboBoxItem>
                                             <Image Source="/ST.EplAddin.FootNote;component/Images/point.png"
                                                    RenderOptions.BitmapScalingMode="HighQuality"
@@ -284,8 +284,7 @@
                                         <RadioButton Style="{StaticResource Flag}"
                                                      GroupName="TextAlign"
                                                      ToolTip="Выравнивание по левому краю"
-                                                     Checked="{Binding TextAlignment, 
-                                            Converter={ StaticResource AlignmentConverter  }}"
+                                                    
                                                      Name="LeftAlignment">
                                             <svg:SVGImage SizeType="SizeToContent"
                                                            Source="/ST.EplAddin.FootNote;component/Icons/format_align_left.svg "

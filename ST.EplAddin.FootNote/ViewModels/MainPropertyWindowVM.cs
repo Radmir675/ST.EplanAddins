@@ -5,14 +5,14 @@ namespace ST.EplAddin.FootNote.ViewModels
     internal class MainPropertyWindowVM
     {
         public string Title { get; set; } = "Формат выноски";
-        public double TextHeight { get; set; }
-        public double CircleRadius { get; set; }
-        public double LineThickness { get; set; }
+        public double TextHeight { get; set; } = 2.5;
+        public double CircleRadius { get; set; } = 0.4;
+        public double LineThickness { get; set; } = 0.18;
         public string TextColor { get; set; }
         public string LinesColor { get; set; }
         public bool RememberAll { get; set; }
         public string Text { get; set; }
-        public string StartShape { get; set; }
+        public Shape StartShape { get; set; }
         public Alignment TextAlignment { get; set; }
 
         #region Commands

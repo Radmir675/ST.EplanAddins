@@ -31,7 +31,7 @@ namespace ST.EplAddin.FootNote
         }
         void StartWindow()
         {
-            Services.GetRequiredService<PropertiesWindow>().ShowDialog(); //чтобы стартануть надо сделать вот так
+            Services.GetRequiredService<MainPropertyWindow>().ShowDialog(); //чтобы стартануть надо сделать вот так
         }
 
         #endregion
@@ -82,7 +82,7 @@ namespace ST.EplAddin.FootNote
             services.AddTransient(S =>
             {
                 var model = Services.GetRequiredService<MainPropertyWindowVM>();
-                var window = new PropertiesWindow { DataContext = model };
+                var window = new MainPropertyWindow() { DataContext = model };
                 return window;
             });
 
