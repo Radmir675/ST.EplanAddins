@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace ST.EplAddin.FootNote.Views
 {
@@ -10,6 +11,16 @@ namespace ST.EplAddin.FootNote.Views
         public PropertiesWindow()
         {
             InitializeComponent();
+        }
+
+        private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
+        {
+            var elementName = (sender as RadioButton).Name;
+        }
+
+        private void LeftAlignment_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

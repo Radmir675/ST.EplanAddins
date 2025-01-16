@@ -6,6 +6,7 @@
         xmlns:svg="https://github.com/dotnetprojects/SVGImage"
         xmlns:colorPicker="clr-namespace:ColorPicker;assembly=ColorPicker"
         xmlns:vm="clr-namespace:ST.EplAddin.FootNote.ViewModels"
+        xmlns:cnvrt="clr-namespace:ST.EplAddin.FootNote.Converters"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance vm:MainPropertyWindowVM, IsDesignTimeCreatable=True }"
         Title="Объект выноски"
@@ -22,6 +23,7 @@
                 <ResourceDictionary Source="../PropertiesWindowDictionary.xaml"/>
                 <ResourceDictionary Source="/ST.EplAddin.FootNote;component/Dictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <cnvrt:AlignmentConverter x:Key="AlignmentConverter"/>
         <Style x:Key="WindowBorderStyle"
                TargetType="{x:Type Border}">
             <Setter Property="Margin"
@@ -138,7 +140,8 @@
                                             <UniformGrid Rows="1"
                                                          HorizontalAlignment="Left">
 
-                                                <Button Style="{StaticResource button_icon}">
+                                                <Button Style="{StaticResource button_icon}"
+                                                        Command="{Binding NextFootNote}">
                                                     <svg:SVGImage SizeType="SizeToContent"
                                                                    Source="/ST.EplAddin.FootNote;component/Icons/arrow_downward.svg "
                                                                    Margin="3"
@@ -148,7 +151,8 @@
                                                                    ToolTip="К выноске ниже" />
                                                 </Button>
 
-                                                <Button Style="{StaticResource button_icon}">
+                                                <Button Style="{StaticResource button_icon}"
+                                                        Command="{Binding PreviousFootNote}">
                                                     <svg:SVGImage SizeType="SizeToContent"
                                                                    Source="/ST.EplAddin.FootNote;component/Icons/arrow_upward.svg "
                                                                    Margin="3"
@@ -157,7 +161,8 @@
                                                                    HorizontalContentAlignment="Center"
                                                                    ToolTip="К выноске выше" />
                                                 </Button>
-                                                <Button Style="{StaticResource button_icon}">
+                                                <Button Style="{StaticResource button_icon}"
+                                                        Command="{Binding CopyStyle}">
                                                     <svg:SVGImage SizeType="SizeToContent"
                                                                    Source="/ST.EplAddin.FootNote;component/Icons/format_paint.svg "
                                                                    Margin="3"
@@ -172,7 +177,8 @@
 
                                                 <Button x:Name="Reset"
                                                         Style="{StaticResource button_icon}"
-                                                        HorizontalAlignment="Right">
+                                                        HorizontalAlignment="Right"
+                                                        Command="{Binding Reset}">
                                                     <svg:SVGImage SizeType="SizeToContent"
                                                                    Source="/ST.EplAddin.FootNote;component/Icons/reset.svg"
                                                                    Margin="3"
@@ -183,7 +189,8 @@
                                                 </Button>
                                                 <Button x:Name="Delete"
                                                         Style="{StaticResource button_icon}"
-                                                        HorizontalAlignment="Right">
+                                                        HorizontalAlignment="Right"
+                                                        Command="{Binding Delete}">
                                                     <svg:SVGImage SizeType="SizeToContent"
                                                                    Source="/ST.EplAddin.FootNote;component/Icons/delete.svg "
                                                                    Margin="3"
@@ -208,7 +215,8 @@
                                               Height="32"
                                               SelectedIndex="1"
                                               VerticalContentAlignment="Center"
-                                              ToolTip="Выбор выноски">
+                                              ToolTip="Выбор выноски"
+                                              SelectedItem="{Binding StartShape }">
                                         <ComboBoxItem>
                                             <Image Source="/ST.EplAddin.FootNote;component/Images/point.png"
                                                    RenderOptions.BitmapScalingMode="HighQuality"
@@ -226,7 +234,7 @@
 
                                 <Separator Margin="0,3,0,12" />
                                 <TextBox Height="80"
-                                         Text="Text"
+                                         Text="{Binding Text}"
                                          TextWrapping="Wrap"
                                          VerticalScrollBarVisibility="Auto"
                                          Padding="3"
@@ -277,18 +285,22 @@
                                         </StackPanel.Resources>
                                         <RadioButton Style="{StaticResource Flag}"
                                                      GroupName="TextAlign"
-                                                     ToolTip="Выравнивание по левому краю">
+                                                     ToolTip="Выравнивание по левому краю"
+                                                     Checked="{Binding TextAlignment, 
+                                            Converter={ StaticResource AlignmentConverter  }}"
+                                                     Name="LeftAlignment">
                                             <svg:SVGImage SizeType="SizeToContent"
                                                            Source="/ST.EplAddin.FootNote;component/Icons/format_align_left.svg "
                                                            Margin="1.5"
                                                            BorderThickness="0"
                                                            RenderTransformOrigin="0.5,0.5"
                                                            VerticalContentAlignment="Center"
-                                                           HorizontalContentAlignment="Center" />
+                                                           HorizontalContentAlignment="Center"/>
                                         </RadioButton>
                                         <RadioButton Style="{StaticResource Flag}"
                                                      GroupName="TextAlign"
-                                                     ToolTip="Выравнивание по центру">
+                                                     ToolTip="Выравнивание по центру"
+                                                     Name="CenterAlignment">
                                             <svg:SVGImage SizeType="SizeToContent"
                                                            Source="/ST.EplAddin.FootNote;component/Icons/format_align_center.svg "
                                                            Margin="1.5"
@@ -298,7 +310,8 @@
                                         </RadioButton>
                                         <RadioButton Style="{StaticResource Flag}"
                                                      GroupName="TextAlign"
-                                                     ToolTip="Выравнивание по правому краю">
+                                                     ToolTip="Выравнивание по правому краю"
+                                                     Name="RightAlignment">
                                             <svg:SVGImage SizeType="SizeToContent"
                                                            Source="/ST.EplAddin.FootNote;component/Icons/format_align_right.svg "
                                                            Margin="1.5"
@@ -313,7 +326,8 @@
                                             HorizontalAlignment="Right"
                                             Foreground="Black"
                                             FontFamily="Exo 2 SemiBold"
-                                            ToolTip="Вставить специальные символы">
+                                            ToolTip="Вставить специальные символы"
+                                            Command="{Binding AddSpecialSign}">
                                         +m²
                                     </Button>
 
@@ -321,7 +335,8 @@
                                             Style="{StaticResource button_icon}"
                                             HorizontalAlignment="Right"
                                             Margin="0,0,6,0"
-                                            Foreground="Gray">
+                                            Foreground="Gray"
+                                            Command="{Binding AddEplanProperties}">
                                         <svg:SVGImage SizeType="SizeToContent"
                                                        Source="/ST.EplAddin.FootNote;component/Icons/add.svg "
                                                        Margin="4"
@@ -338,19 +353,22 @@
                                                  Margin="0,0,6,0">
                                         <TextBlock Text="Размер текста"
                                                    FontSize="14" />
-                                        <TextBox Style="{StaticResource VerticalAlignContent}" />
+                                        <TextBox Style="{StaticResource VerticalAlignContent}" 
+                                                 Text="{Binding TextHeight}"/>
                                     </UniformGrid>
                                     <UniformGrid Columns="1"
                                                  Margin="0,0,0,0">
                                         <TextBlock Text="Цвет текста"
                                                    FontSize="14" />
-                                        <colorPicker:PortableColorPicker ColorState="{Binding ElementName=main, Path=ColorState, Mode=TwoWay}" />
+                                        <colorPicker:PortableColorPicker ColorState="{Binding ElementName=main, Path=ColorState, Mode=TwoWay}"
+                                                                         SelectedColor="{Binding TextColor}" />
                                     </UniformGrid>
                                     <UniformGrid Columns="1"
                                                  Margin="6,0,0,0">
                                         <TextBlock Text="Толщина линий"
                                                    FontSize="14" />
-                                        <TextBox Style="{StaticResource VerticalAlignContent}" />
+                                        <TextBox Style="{StaticResource VerticalAlignContent}"
+                                                 Text="{Binding LineThickness}" />
                                     </UniformGrid>
                                 </UniformGrid>
                                 <Separator Margin="0,12,0,3" />
@@ -361,18 +379,20 @@
                                                  Margin="0,0,6,0">
                                         <TextBlock Text="Радиус кружка"
                                                    FontSize="14" />
-                                        <TextBox Style="{StaticResource VerticalAlignContent}" />
+                                        <TextBox Style="{StaticResource VerticalAlignContent}"
+                                                 Text="{Binding CircleRadius}" />
                                     </UniformGrid>
                                     <UniformGrid Columns="1">
                                         <TextBlock Text="Цвет выноски"
                                                    FontSize="14" />
-                                        <colorPicker:PortableColorPicker ColorState="{Binding ElementName=main, Path=ColorState, Mode=TwoWay}" />
+                                        <colorPicker:PortableColorPicker ColorState="{Binding ElementName=main, Path=ColorState, Mode=TwoWay}"
+                                                                         SelectedColor="{Binding LinesColor}" />
                                     </UniformGrid>
                                     <UniformGrid Columns="1"
                                                  Margin="6,0,0,0" />
                                 </UniformGrid>
                                 <Separator Margin="0,12,0,3" />
-                                <CheckBox IsChecked="False"
+                                <CheckBox IsChecked="{Binding RememberAll}"
                                           Content="Запомнить для последующих выносок"
                                           FontSize="14"
                                           Margin="0,5,0,5"
@@ -389,7 +409,8 @@
                                      Height="23"
                                      VerticalAlignment="Bottom">
 
-                            <Button Width="auto">
+                            <Button Width="auto"
+                                    Command="{Binding Apply}">
                                 <StackPanel Orientation="Horizontal">
                                     <svg:SVGImage SizeType="SizeToContent"
                                                    Source="/ST.EplAddin.FootNote;component/Icons/check.svg "
@@ -417,9 +438,7 @@
                                     <TextBlock Text="Отмена" />
                                 </StackPanel>
                             </Button>
-
                         </UniformGrid>
-
                     </Grid>
                 </Border>
             </Grid>
