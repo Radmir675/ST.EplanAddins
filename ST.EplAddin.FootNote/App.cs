@@ -76,12 +76,12 @@ namespace ST.EplAddin.FootNote
         private static IServiceCollection InitializeServices()
         {
             var services = new ServiceCollection();
-            services.AddTransient<PropertiesWindowVM>();
+            services.AddTransient<MainPropertyWindowVM>();
             services.AddTransient<IWindowsServiceDialog, WindowsDialog>();
 
             services.AddTransient(S =>
             {
-                var model = Services.GetRequiredService<PropertiesWindowVM>();
+                var model = Services.GetRequiredService<MainPropertyWindowVM>();
                 var window = new PropertiesWindow { DataContext = model };
                 return window;
             });

@@ -154,7 +154,7 @@
     <Compile Include="PropertyBrowser\Settings.cs" />
     <Compile Include="Services\Implementations\WindowsDialog.cs" />
     <Compile Include="Services\IWindowsServiceDialog.cs" />
-    <Compile Include="ViewModels\PropertiesWindowVM.cs" />
+    <Compile Include="ViewModels\MainPropertyWindowVM.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\FullPropertiesWindow.xaml.cs">
@@ -162,6 +162,9 @@
     </Compile>
     <Compile Include="Views\PropertiesWindow.xaml.cs">
       <DependentUpon>PropertiesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainPropertyWindow.xaml.cs">
+      <DependentUpon>MainPropertyWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
@@ -214,6 +217,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\PropertiesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainPropertyWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

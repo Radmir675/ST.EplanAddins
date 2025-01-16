@@ -7,7 +7,7 @@
         xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
         mc:Ignorable="d"
         xmlns:vm="clr-namespace:ST.EplAddin.FootNote.ViewModels"
-        d:DataContext="{d:DesignInstance vm:PropertiesWindowVM, IsDesignTimeCreatable=True }"
+        d:DataContext="{d:DesignInstance vm:MainPropertyWindowVM, IsDesignTimeCreatable=True }"
         Width="394"
         Title="{Binding Title}"
         ResizeMode="NoResize"
