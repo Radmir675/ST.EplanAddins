@@ -12,44 +12,45 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" MinWidth="200"/>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="4*" MinWidth="300"/>
         </Grid.ColumnDefinitions>
 
-            <GroupBox Header="Объект источника"
-                      Padding="5,12,5,12"
-                      Grid.Column="0"
-                      Margin="0,18,0,0">
-                <TreeView BorderBrush="Transparent"
-                          Padding="0,10,0,0">
-                    <TextBox>Элемент TreeView</TextBox>
-                    <TreeViewItem Header="Базы данных">
-                        <TreeViewItem Header="MS SQL Server" />
-                        <TreeViewItem Header="MySQL" />
-                        <TreeViewItem Header="MongoDB" />
-                        <TreeViewItem Header="Postgres" />
+        <GroupBox Header="Объект источника"
+                  Padding="5,12,5,12"
+                  Grid.Column="0"
+                  Margin="0,18,0,0">
+            <TreeView BorderBrush="Transparent"
+                      Padding="0,10,0,0">
+                <TextBox>Элемент TreeView</TextBox>
+                <TreeViewItem Header="Базы данных">
+                    <TreeViewItem Header="MS SQL Server" />
+                    <TreeViewItem Header="MySQL" />
+                    <TreeViewItem Header="MongoDB" />
+                    <TreeViewItem Header="Postgres" />
+                </TreeViewItem>
+                <TreeViewItem Header="Языки программирования">
+                    <TreeViewItem Header="C-языки">
+                        <TreeViewItem Header="C#" />
+                        <TreeViewItem Header="C/C++" />
+                        <TreeViewItem Header="Java" />
                     </TreeViewItem>
-                    <TreeViewItem Header="Языки программирования">
-                        <TreeViewItem Header="C-языки">
-                            <TreeViewItem Header="C#" />
-                            <TreeViewItem Header="C/C++" />
-                            <TreeViewItem Header="Java" />
-                        </TreeViewItem>
-                        <TreeViewItem Header="Basic">
-                            <TreeViewItem Header="Visual Basic" />
-                            <TreeViewItem Header="VB.Net" />
-                            <TreeViewItem Header="PureBasic" />
-                        </TreeViewItem>
+                    <TreeViewItem Header="Basic">
+                        <TreeViewItem Header="Visual Basic" />
+                        <TreeViewItem Header="VB.Net" />
+                        <TreeViewItem Header="PureBasic" />
                     </TreeViewItem>
-                </TreeView>
-            </GroupBox>
-       
+                </TreeViewItem>
+            </TreeView>
+        </GroupBox>
+
         <GridSplitter Grid.Column="1"
                       Width="5"
                       BorderThickness="2"
                       ShowsPreview="False"
-                      VerticalAlignment="Stretch" />
+                      VerticalAlignment="Stretch"
+                      ResizeDirection="Columns" />
         <Grid  Grid.Column="2"
                Margin="0,0,10,0">
             <Grid.RowDefinitions>
@@ -81,9 +82,10 @@
                                             HorizontalAlignment="Right"
                                             Grid.Column="1"
                                             Margin="10,0,0,0"
-                                            Foreground="Red" 
-                                            VerticalContentAlignment="Top" >
-                                        <TextBlock Text="🗙" Margin="0,1,0,0"/>
+                                            Foreground="Red"
+                                            VerticalContentAlignment="Top">
+                                        <TextBlock Text="🗙"
+                                                   Margin="0,1,0,0" />
                                     </Button>
                                 </Grid>
                             </StackPanel>
@@ -93,19 +95,19 @@
                                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                       ItemsSource="{Binding Message}"
                                       SelectedItem="{Binding SelectedMessage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                      Margin="0,15,0,15" >
+                                      Margin="0,15,0,15">
                                 <ListView.View>
-                                    
-                                        <GridView>
-                                            
-                                            <GridViewColumn DisplayMemberBinding="{Binding Path=Title}"
-                                                            Header="Имя свойства"
-                                                            Width="500" />
+
+                                    <GridView>
+
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Title}"
+                                                        Header="Имя свойства"
+                                                        Width="500" />
                                         <GridViewColumn DisplayMemberBinding="{Binding Path=Company}"
                                                         Width="700"
                                                         Header="Значение" />
                                     </GridView>
-                                      
+
                                 </ListView.View>
                             </ListView>
                             <TextBox Grid.Row="2"

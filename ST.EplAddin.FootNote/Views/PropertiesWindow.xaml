@@ -17,7 +17,6 @@
 
     <Window.Resources>
         <ResourceDictionary Source="../PropertiesWindowDictionary.xaml"></ResourceDictionary>
-
     </Window.Resources>
 
     <!--body-->
@@ -71,7 +70,8 @@
                                                        Margin="3"
                                                        RenderTransformOrigin="0.5,0.5"
                                                        VerticalContentAlignment="Center"
-                                                       HorizontalContentAlignment="Center" />
+                                                       HorizontalContentAlignment="Center"
+                                                       ToolTip="К выноске ниже"/>
                                     </Button>
 
                                     <Button Style="{StaticResource button_icon}">
@@ -80,7 +80,8 @@
                                                        Margin="3"
                                                        RenderTransformOrigin="0.5,0.5"
                                                        VerticalContentAlignment="Center"
-                                                       HorizontalContentAlignment="Center" />
+                                                       HorizontalContentAlignment="Center" 
+                                                       ToolTip="К выноске выше"/>
                                     </Button>
                                     <Button Style="{StaticResource button_icon}">
                                         <svg1:SVGImage SizeType="SizeToContent"
@@ -88,7 +89,8 @@
                                                        Margin="3"
                                                        RenderTransformOrigin="0.5,0.5"
                                                        VerticalContentAlignment="Center"
-                                                       HorizontalContentAlignment="Center" />
+                                                       HorizontalContentAlignment="Center" 
+                                                       ToolTip="Скопировать формат"/>
                                     </Button>
                                 </UniformGrid>
                                 <StackPanel Orientation="Horizontal"
@@ -102,7 +104,8 @@
                                                        Margin="3"
                                                        RenderTransformOrigin="0.5,0.5"
                                                        VerticalContentAlignment="Center"
-                                                       HorizontalContentAlignment="Center" />
+                                                       HorizontalContentAlignment="Center"
+                                                       ToolTip="Сбросить настройки"/>
                                     </Button>
                                     <Button x:Name="Delete"
                                             Style="{StaticResource button_icon}"
@@ -112,7 +115,8 @@
                                                        Margin="3"
                                                        RenderTransformOrigin="0.5,0.5"
                                                        VerticalContentAlignment="Center"
-                                                       HorizontalContentAlignment="Center" />
+                                                       HorizontalContentAlignment="Center" 
+                                                       ToolTip="Удалить выноску"/>
                                     </Button>
                                 </StackPanel>
 
@@ -129,7 +133,8 @@
                         <ComboBox Width="75"
                                   Height="32"
                                   SelectedIndex="1"
-                                  VerticalContentAlignment="Center">
+                                  VerticalContentAlignment="Center"
+                                  ToolTip="Выбор выноски">
                             <ComboBoxItem>
                                 <Image Source="/ST.EplAddin.FootNote;component/Images/point.png"
                                        RenderOptions.BitmapScalingMode="HighQuality"
@@ -155,7 +160,8 @@
                              AcceptsReturn="True"
                              SpellCheck.IsEnabled="True"
                              Language="ru-ru"
-                             FontFamily="Exo 2" />
+                             FontFamily="Exo 2" 
+                             ToolTip="Текст выноски"/>
                     <DockPanel Margin="0,10,0,0">
                         <StackPanel HorizontalAlignment="Left"
                                     Orientation="Horizontal"
@@ -172,9 +178,7 @@
                                             <Setter Property="BorderThickness"
                                                     Value="1.5" />
                                         </Trigger>
-
                                     </Style.Triggers>
-
 
                                     <Setter Property="Height"
                                             Value="20" />
@@ -198,7 +202,8 @@
                                 </Style>
                             </StackPanel.Resources>
                             <RadioButton Style="{StaticResource Flag}"
-                                         GroupName="TextAlign">
+                                         GroupName="TextAlign"
+                                         ToolTip="Выравнивание по левому краю">
                                 <svg1:SVGImage SizeType="SizeToContent"
                                                Source="/ST.EplAddin.FootNote;component/Icons/format_align_left.svg "
                                                Margin="1.5"
@@ -208,7 +213,8 @@
                                                HorizontalContentAlignment="Center" />
                             </RadioButton>
                             <RadioButton Style="{StaticResource Flag}"
-                                         GroupName="TextAlign">
+                                         GroupName="TextAlign"
+                                         ToolTip="Выравнивание по центру">
                                 <svg1:SVGImage SizeType="SizeToContent"
                                                Source="/ST.EplAddin.FootNote;component/Icons/format_align_center.svg "
                                                Margin="1.5"
@@ -217,7 +223,8 @@
                                                HorizontalContentAlignment="Center" />
                             </RadioButton>
                             <RadioButton Style="{StaticResource Flag}"
-                                         GroupName="TextAlign">
+                                         GroupName="TextAlign"
+                                         ToolTip="Выравнивание по правому краю">
                                 <svg1:SVGImage SizeType="SizeToContent"
                                                Source="/ST.EplAddin.FootNote;component/Icons/format_align_right.svg "
                                                Margin="1.5"
@@ -231,7 +238,8 @@
                                 Width="35"
                                 HorizontalAlignment="Right"
                                 Foreground="Black"
-                                FontFamily="Exo 2 SemiBold">
+                                FontFamily="Exo 2 SemiBold"
+                                ToolTip="Вставить специальные символы">
                             +m²
                         </Button>
 
@@ -245,7 +253,8 @@
                                            Margin="4"
                                            RenderTransformOrigin="0.5,0.5"
                                            VerticalContentAlignment="Center"
-                                           HorizontalContentAlignment="Center" />
+                                           HorizontalContentAlignment="Center" 
+                                           ToolTip="Вставить свойства проекта"/>
                         </Button>
                     </DockPanel>
                     <Separator Margin="0,10,0,3" />
@@ -315,7 +324,7 @@
                                        VerticalContentAlignment="Center"
                                        HorizontalContentAlignment="Center"
                                        Width="20" />
-                        <TextBlock Text="Ок" />
+                        <TextBlock Text="Применить" />
                     </StackPanel>
                 </Button>
                 <Button Width="auto"

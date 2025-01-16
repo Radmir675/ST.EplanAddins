@@ -75,6 +75,7 @@
                            Foreground="#FF828282"
                            Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}},Path=Title}"
                            Margin="5,0,0,0"/>
+                    
                 </Grid>
             </Grid>
                 </Border>

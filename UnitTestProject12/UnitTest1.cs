@@ -10,9 +10,9 @@ namespace UnitTestProject12
         [TestMethod]
         public void TestMethod()
         {
-            //new System.Windows.Application();
+            new System.Windows.Application();
             //var app = new App();
-            new FullPropertiesWindow().ShowDialog();
+            new SettingsWindow().ShowDialog();
 
 
 
