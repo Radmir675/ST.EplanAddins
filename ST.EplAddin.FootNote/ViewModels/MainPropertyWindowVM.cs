@@ -4,7 +4,7 @@ namespace ST.EplAddin.FootNote.ViewModels
 {
     internal class MainPropertyWindowVM
     {
-        public string Title { get; set; } = "Условный объект";
+        public string Title { get; set; } = "Формат выноски";
         public double TextHeight { get; set; }
         public double CircleRadius { get; set; }
         public double LineThickness { get; set; }

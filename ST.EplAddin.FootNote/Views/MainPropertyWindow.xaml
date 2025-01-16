@@ -9,7 +9,6 @@
         xmlns:cnvrt="clr-namespace:ST.EplAddin.FootNote.Converters"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance vm:MainPropertyWindowVM, IsDesignTimeCreatable=True }"
-        Title="Объект выноски"
         Height="664"
         Width="394"
         AllowsTransparency="True"
@@ -79,7 +78,7 @@
                       VerticalAlignment="Center">
                     <Label x:Name="MainTitle"
                            Foreground="#FF828282"
-                           Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}},Path=Title}"
+                           Content="{Binding Title}"
                            Margin="5,0,0,0"/>
                     
                 </Grid>
@@ -90,7 +89,6 @@
                 <Border BorderThickness="0"
                         Padding="7"
                         BorderBrush="#efefef">
-
                     <Grid>
                         <ScrollViewer VerticalScrollBarVisibility="Auto"
                                       CanContentScroll="True">
