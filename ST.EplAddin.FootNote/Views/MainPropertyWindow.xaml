@@ -285,7 +285,7 @@
                                         <RadioButton Style="{StaticResource Flag}"
                                                      GroupName="TextAlign"
                                                      ToolTip="Выравнивание по левому краю"
-                                                    
+                                                     IsChecked="{Binding TextAlignment, Converter={StaticResource AlignmentConverter}}"
                                                      Name="LeftAlignment">
                                             <svg:SVGImage SizeType="SizeToContent"
                                                            Source="/ST.EplAddin.FootNote;component/Icons/format_align_left.svg "

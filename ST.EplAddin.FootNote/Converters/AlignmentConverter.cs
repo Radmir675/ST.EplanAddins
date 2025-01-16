@@ -1,6 +1,6 @@
-﻿using System;
+﻿using ST.EplAddin.FootNote.Models;
+using System;
 using System.Globalization;
-using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace ST.EplAddin.FootNote.Converters
@@ -9,10 +9,13 @@ namespace ST.EplAddin.FootNote.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value is Alignment.Left)
+            {
+                return true;
 
-            var elementName = (value as RadioButton).Name;
-            return null;
+            }
 
+            return false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

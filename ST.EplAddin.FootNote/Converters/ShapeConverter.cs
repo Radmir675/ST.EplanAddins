@@ -9,20 +9,13 @@ namespace ST.EplAddin.FootNote.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Shape shape)
-                return (int)shape;
-            return 0;
+            if (value is not Shape shape) return null;
+            return (int)shape;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
-            switch (value as int?)
-            {
-                case 0: return Shape.Circle;
-                default: return Shape.Arrow;
-            }
-
+            return (value as int?) == 0 ? Shape.Circle : Shape.Arrow;
         }
     }
 }
