@@ -17,7 +17,7 @@ namespace ST.EplAddin.FootNote
         public App()
         {
             LoadAssemblies();
-            StartWindow();
+            //StartWindow();
         }
 
         #region DELETE
@@ -29,7 +29,7 @@ namespace ST.EplAddin.FootNote
             };
 
         }
-        void StartWindow()
+        public void StartWindow()
         {
             Services.GetRequiredService<MainPropertyWindow>().ShowDialog(); //чтобы стартануть надо сделать вот так
         }

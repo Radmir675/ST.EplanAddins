@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using ST.EplAddin.FootNote.Models;
+using ST.EplAddin.FootNote.ViewModels;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace ST.EplAddin.FootNote.Views
@@ -11,7 +14,6 @@ namespace ST.EplAddin.FootNote.Views
         public MainPropertyWindow()
         {
             InitializeComponent();
-
         }
 
         #region WindowButtons
@@ -60,6 +62,23 @@ namespace ST.EplAddin.FootNote.Views
         #endregion
 
 
+        private void Alignment_OnChecked(object sender, RoutedEventArgs e)
+        {
+            var elementName = (sender as RadioButton)?.Name;
+            var alignment = (this.DataContext as MainPropertyWindowVM).TextAlignment;
+            switch (elementName)
+            {
+                case "LeftAlignment":
+                    alignment = Alignment.Left;
+                    break;
+                case "CenterAlignment":
+                    alignment = Alignment.Center;
+                    break;
+                case "RightAlignment":
+                    alignment = Alignment.Right;
+                    break;
+            }
+        }
     }
 }
 

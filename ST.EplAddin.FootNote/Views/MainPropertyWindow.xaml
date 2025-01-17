@@ -94,17 +94,7 @@
                         <ScrollViewer VerticalScrollBarVisibility="Auto"
                                       CanContentScroll="True">
                             <StackPanel>
-                                <Separator Margin="0,0,0,15">
-                                    <Separator.Template>
-                                        <ControlTemplate TargetType="{x:Type Separator}">
-                                            <Border Background="{TemplateBinding Control.Background}"
-                                                    BorderBrush="{TemplateBinding Control.BorderBrush}"
-                                                    BorderThickness="{TemplateBinding Control.BorderThickness}"
-                                                    Margin="0" />
-                                        </ControlTemplate>
-                                    </Separator.Template>
-                                </Separator>
-                                <Grid Height="60px">
+                                <Grid Height="60px" Margin="0,15,0,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="70px" />
                                         <ColumnDefinition Width="2*" />
@@ -285,7 +275,7 @@
                                         <RadioButton Style="{StaticResource Flag}"
                                                      GroupName="TextAlign"
                                                      ToolTip="Выравнивание по левому краю"
-                                                     IsChecked="{Binding TextAlignment, Converter={StaticResource AlignmentConverter}}"
+                                                     Checked="Alignment_OnChecked"
                                                      Name="LeftAlignment">
                                             <svg:SVGImage SizeType="SizeToContent"
                                                            Source="/ST.EplAddin.FootNote;component/Icons/format_align_left.svg "
@@ -298,6 +288,7 @@
                                         <RadioButton Style="{StaticResource Flag}"
                                                      GroupName="TextAlign"
                                                      ToolTip="Выравнивание по центру"
+                                                     Checked="Alignment_OnChecked"
                                                      Name="CenterAlignment">
                                             <svg:SVGImage SizeType="SizeToContent"
                                                            Source="/ST.EplAddin.FootNote;component/Icons/format_align_center.svg "
@@ -309,6 +300,7 @@
                                         <RadioButton Style="{StaticResource Flag}"
                                                      GroupName="TextAlign"
                                                      ToolTip="Выравнивание по правому краю"
+                                                     Checked="Alignment_OnChecked"
                                                      Name="RightAlignment">
                                             <svg:SVGImage SizeType="SizeToContent"
                                                            Source="/ST.EplAddin.FootNote;component/Icons/format_align_right.svg "
