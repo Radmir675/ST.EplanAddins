@@ -145,7 +145,6 @@
       <DependentUpon>SettingsDialogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Alignment.cs" />
-    <Compile Include="Models\Class1.cs" />
     <Compile Include="Models\Shape.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyBrowser\ContextActionEventListener.cs" />

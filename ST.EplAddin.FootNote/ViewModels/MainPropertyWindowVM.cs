@@ -9,12 +9,7 @@ namespace ST.EplAddin.FootNote.ViewModels
     internal class MainPropertyWindowVM : ViewModelBase
     {
         private readonly IWindowsServiceDialog _windowsService;
-
-        public MainPropertyWindowVM()
-        {
-
-        }
-
+        public MainPropertyWindowVM() { }
         public MainPropertyWindowVM(IWindowsServiceDialog windowsService) : this()
         {
             _windowsService = windowsService;
