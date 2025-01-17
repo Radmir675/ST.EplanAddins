@@ -1,4 +1,6 @@
 ﻿using ST.EplAddin.FootNote.Models;
+using System.Windows.Media;
+
 
 namespace ST.EplAddin.FootNote.ViewModels
 {
@@ -8,8 +10,8 @@ namespace ST.EplAddin.FootNote.ViewModels
         public double TextHeight { get; set; } = 2.5;
         public double CircleRadius { get; set; } = 0.4;
         public double LineThickness { get; set; } = 0.18;
-        public string TextColor { get; set; }
-        public string LinesColor { get; set; }
+        public Color TextColor { get; set; } = Color.FromRgb(0, 0, 127);
+        public Color LinesColor { get; set; } = Color.FromRgb(0, 0, 127);
         public bool RememberAll { get; set; }
         public string Text { get; set; }
         public Shape StartShape { get; set; } = Shape.Arrow;
@@ -95,8 +97,6 @@ namespace ST.EplAddin.FootNote.ViewModels
             }
         }
         private RelayCommand _apply;
-
-
         public RelayCommand Apply
         {
             get
