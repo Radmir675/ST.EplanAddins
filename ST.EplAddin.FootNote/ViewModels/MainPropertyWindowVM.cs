@@ -1,21 +1,57 @@
 ﻿using ST.EplAddin.FootNote.Models;
+using System;
 using System.Windows.Media;
 
 
 namespace ST.EplAddin.FootNote.ViewModels
 {
-    internal class MainPropertyWindowVM
+    internal class MainPropertyWindowVM : ViewModelBase
     {
         public string Title { get; set; } = "Формат выноски";
         public double TextHeight { get; set; } = 2.5;
-        public double CircleRadius { get; set; } = 0.4;
+        private double? _circleRadius;
+        public double? CircleRadius
+        {
+            get => _circleRadius;
+            set
+            {
+                if (Nullable.Equals(value, _circleRadius)) return;
+                _circleRadius = value;
+                OnPropertyChanged();
+            }
+        }
+
         public double LineThickness { get; set; } = 0.18;
         public Color TextColor { get; set; } = Color.FromRgb(0, 0, 127);
         public Color LinesColor { get; set; } = Color.FromRgb(0, 0, 127);
         public bool RememberAll { get; set; }
         public string Text { get; set; }
-        public Shape StartShape { get; set; } = Shape.Arrow;
+        private Shape _startShape = Shape.Arrow;
+        public Shape StartShape
+        {
+            get => _startShape;
+            set
+            {
+                if (value == _startShape) return;
+                _startShape = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsInputCircleRadiusEnabled));
+            }
+        }
         public Alignment TextAlignment { get; set; } = Alignment.Left;
+        public bool IsInputCircleRadiusEnabled
+        {
+            get
+            {
+                if (StartShape != Shape.Circle)
+                {
+                    CircleRadius = null;
+                    return false;
+                }
+                CircleRadius = 0.4;
+                return true;
+            }
+        }
 
         #region Commands
 
@@ -97,6 +133,8 @@ namespace ST.EplAddin.FootNote.ViewModels
             }
         }
         private RelayCommand _apply;
+
+
         public RelayCommand Apply
         {
             get

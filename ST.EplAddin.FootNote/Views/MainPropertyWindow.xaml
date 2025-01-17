@@ -370,7 +370,8 @@
                                         <TextBlock Text="Радиус кружка"
                                                    FontSize="14" />
                                         <TextBox Style="{StaticResource VerticalAlignContent}"
-                                                 Text="{Binding CircleRadius}" />
+                                                 Text="{Binding CircleRadius}"
+                                                 IsEnabled="{Binding IsInputCircleRadiusEnabled}"/>
                                     </UniformGrid>
                                     <UniformGrid Columns="1">
                                         <TextBlock Text="Цвет выноски"
