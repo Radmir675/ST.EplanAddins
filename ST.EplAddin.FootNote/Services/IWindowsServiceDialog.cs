@@ -2,6 +2,7 @@
 {
     public interface IWindowsServiceDialog
     {
-        bool ShowPropertiesWindow();
+        bool ShowMainPropertiesWindow();
+        bool ShowFullPropertiesWindow();
     }
 }

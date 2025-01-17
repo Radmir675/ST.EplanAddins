@@ -1,4 +1,5 @@
 ﻿using ST.EplAddin.FootNote.Models;
+using ST.EplAddin.FootNote.Services;
 using System;
 using System.Windows.Media;
 
@@ -7,9 +8,19 @@ namespace ST.EplAddin.FootNote.ViewModels
 {
     internal class MainPropertyWindowVM : ViewModelBase
     {
+        private readonly IWindowsServiceDialog _windowsService;
+
+        public MainPropertyWindowVM()
+        {
+
+        }
+
+        public MainPropertyWindowVM(IWindowsServiceDialog windowsService) : this()
+        {
+            _windowsService = windowsService;
+        }
         public string Title { get; set; } = "Формат выноски";
         public double TextHeight { get; set; } = 2.5;
-        private double? _circleRadius;
         public double? CircleRadius
         {
             get => _circleRadius;
@@ -20,13 +31,11 @@ namespace ST.EplAddin.FootNote.ViewModels
                 OnPropertyChanged();
             }
         }
-
         public double LineThickness { get; set; } = 0.18;
         public Color TextColor { get; set; } = Color.FromRgb(0, 0, 127);
         public Color LinesColor { get; set; } = Color.FromRgb(0, 0, 127);
         public bool RememberAll { get; set; }
         public string Text { get; set; }
-        private Shape _startShape = Shape.Arrow;
         public Shape StartShape
         {
             get => _startShape;
@@ -53,6 +62,10 @@ namespace ST.EplAddin.FootNote.ViewModels
             }
         }
 
+        #region private fields
+        private double? _circleRadius;
+        private Shape _startShape = Shape.Arrow;
+        #endregion
         #region Commands
 
         private RelayCommand _nextFootNote;
@@ -117,7 +130,7 @@ namespace ST.EplAddin.FootNote.ViewModels
             {
                 return _addEplanProperties ??= new RelayCommand(obj =>
                 {
-
+                    _windowsService.ShowFullPropertiesWindow();
                 });
             }
         }

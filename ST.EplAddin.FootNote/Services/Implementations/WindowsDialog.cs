@@ -12,9 +12,15 @@ namespace ST.EplAddin.FootNote.Services.Implementations
         {
             _services = services;
         }
-        public bool ShowPropertiesWindow()
+        public bool ShowMainPropertiesWindow()
         {
             var window = _services.GetRequiredService<MainPropertyWindow>();
+            bool? result = window.ShowDialog();
+            return result.GetValueOrDefault(false);
+        }
+        public bool ShowFullPropertiesWindow()
+        {
+            var window = _services.GetRequiredService<FullPropertiesWindow>();
             bool? result = window.ShowDialog();
             return result.GetValueOrDefault(false);
         }

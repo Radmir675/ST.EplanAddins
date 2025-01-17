@@ -29,12 +29,14 @@ namespace ST.EplAddin.FootNote
             };
 
         }
+        #endregion
         public void StartWindow()
         {
             Services.GetRequiredService<MainPropertyWindow>().ShowDialog(); //чтобы стартануть надо сделать вот так
         }
 
-        #endregion
+
+
 
         #region CheckAssemblies
         private void LoadAssemblies()
@@ -77,12 +79,20 @@ namespace ST.EplAddin.FootNote
         {
             var services = new ServiceCollection();
             services.AddTransient<MainPropertyWindowVM>();
+            services.AddTransient<FullPropertiesWindowVM>();
+
             services.AddTransient<IWindowsServiceDialog, WindowsDialog>();
 
             services.AddTransient(S =>
             {
                 var model = Services.GetRequiredService<MainPropertyWindowVM>();
                 var window = new MainPropertyWindow() { DataContext = model };
+                return window;
+            });
+            services.AddTransient(S =>
+            {
+                var model = Services.GetRequiredService<FullPropertiesWindowVM>();
+                var window = new FullPropertiesWindow() { DataContext = model };
                 return window;
             });
 
