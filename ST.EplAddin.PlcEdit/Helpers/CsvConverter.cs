@@ -13,15 +13,15 @@ namespace ST.EplAddin.PlcEdit
     {
         private readonly string filePath;
 
+
         public CsvConverter(string filePath)
         {
             this.filePath = filePath;
         }
 
-        public List<CsvFileDataModelView> ReadFile()
+        public IEnumerable<CsvFileDataModelView> ReadFile()
         {
             CsvConfiguration config = GetConfig();
-            List<CsvFileDataModelView> lines = new List<CsvFileDataModelView>(50);
             try
             {
                 using (var reader = new StreamReader(filePath))
@@ -39,22 +39,22 @@ namespace ST.EplAddin.PlcEdit
                             PLCAdress = csvReader?.GetField(4),
                             DeviceNameShort = csvReader.GetField(5),
                         };
-                        var bitNumber = module?.BitNumber ?? "";
-                        if (bitNumber.Contains("Bit"))
-                        {
-                            lines.Add(module);
-                        }
+                        yield return module;
                     }
                 }
-                return lines;
-
             }
-            catch (System.Exception e)
+            finally
             {
-                MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //TODO:посмотреть что делать с блоком finnaly
             }
-            return lines;
+            //catch (System.Exception e)
+            //{
+            //    MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
+
+
+
         public void SaveFile(List<CsvFileDataModelView> fileToWrite)
         {
             try

@@ -8,7 +8,6 @@ namespace ST.EplAddin.PlcEdit.Forms
     public partial class ExportCsvForm : Form
     {
         private readonly List<CsvFileDataModelView> _dataToExport;
-
         public ExportCsvForm()
         {
             InitializeComponent();

@@ -29,6 +29,8 @@ namespace ST.EplAddin.PlcEdit
         public List<Template> Templates { get; set; }
 
         private string cellValue = string.Empty;
+        CsvConverter csvConverter;
+        IEnumerable<CsvFileDataModelView> allDataInFile;
 
         public DataGridViewRow[] SelectedRows
         {
@@ -504,28 +506,38 @@ namespace ST.EplAddin.PlcEdit
         private void export_button_Click(object sender, EventArgs e)
         {
             var dataToExport = GetDataToExport();
-            var exportCsvForm = new ExportCsvForm(dataToExport.ToList());
+            var exportCsvForm = new ExportCsvForm(dataToExport);
             exportCsvForm.ShowDialog();
-            //if (exportCsvForm.DialogResult == DialogResult.OK)
-            //{
-            //    MessageBox.Show("Данные успешно записаны!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //}
         }
 
-        private CsvFileDataModelView[] GetDataToExport()
+        private List<CsvFileDataModelView> GetDataToExport()
         {
             var eplanData = GetRewritingRowsData(PlcDataModelView);
-            CsvFileDataModelView[] array = new CsvFileDataModelView[eplanData.Count];
-            if (eplanData.Count == ImportedData.Count)
+            IEnumerable<CsvFileDataModelView> copiedDataOfInitialFile = allDataInFile.ToList();
+
+            var enumerator = copiedDataOfInitialFile.GetEnumerator();
+            bool IsStartFlagFound = false;
+
+            while (IsStartFlagFound == false && enumerator.MoveNext())
             {
-                ImportedData.CopyTo(array);
-                for (var i = 0; i < array.Length; i++)
+                if (enumerator.Current?.BitNumber?.Contains("Дискрет") ?? false)
                 {
-                    array[i].SymbolicAdress = eplanData[i].SymbolicAdress;
-                    array[i].FunctionText = eplanData[i].FunctionText;
+                    IsStartFlagFound = true;
                 }
             }
-            return array;
+
+            int i = 0;
+            while (IsStartFlagFound && enumerator.MoveNext())
+            {
+                enumerator.Current.SymbolicAdress = eplanData[i].SymbolicAdress;
+                enumerator.Current.FunctionText = eplanData[i].FunctionText;
+                if (i == 31)
+                {
+                    IsStartFlagFound = false;
+                }
+                i++;
+            }
+            return copiedDataOfInitialFile.ToList();
         }
         private void import_button_Click(object sender, EventArgs e)
         {
@@ -875,10 +887,12 @@ namespace ST.EplAddin.PlcEdit
         {
             var path = PathDialog.TryGetReadPath();
             if (path == null) return;
-            CsvConverter csvConverter = new CsvConverter(path);
-            var dataFromFile = csvConverter.ReadFile();
 
-            //TODO: тут надо его обрезать первые и последнюю строчку
+            csvConverter = new CsvConverter(path);
+
+            allDataInFile = csvConverter.ReadFile();
+            var dataFromFile = GetValidatedPlcData(allDataInFile).ToList();
+
             if (!dataFromFile.Any()) return;
 
             if (!(PlcDataModelView[0].DeviceNameShort ??= string.Empty).Equals(
@@ -903,8 +917,28 @@ namespace ST.EplAddin.PlcEdit
             }
             importForm.ImportCsvDataEvent -= ImportForm_ImportCsvDataEvent;
         }
+        public IEnumerable<CsvFileDataModelView> GetValidatedPlcData(IEnumerable<CsvFileDataModelView> allDataInFile)
+        {
+            var enumerator = allDataInFile.GetEnumerator();
+            bool IsStartFlagFound = false;
 
+            while (IsStartFlagFound == false && enumerator.MoveNext())
+            {
+                if (enumerator.Current?.BitNumber?.Contains("Дискрет") ?? false)
+                {
+                    IsStartFlagFound = true;
+                }
+            }
+            while (IsStartFlagFound && enumerator.MoveNext())
+            {
+                yield return enumerator.Current;
 
+                if (enumerator.Current.BitNumber.Contains("Bit31"))
+                {
+                    yield break;
+                }
+            }
+        }
     }
 }
 
