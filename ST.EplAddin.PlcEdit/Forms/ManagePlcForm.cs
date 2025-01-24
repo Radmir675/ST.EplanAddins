@@ -187,12 +187,18 @@ namespace ST.EplAddin.PlcEdit
                 {
                     column.DefaultCellStyle = null;
                     column.DefaultCellStyle.BackColor = Color.FromArgb(169, 169, 169);
+
                 }
                 else if (column.ReadOnly == false)
                 {
                     column.DefaultCellStyle = null;
                     column.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                    var maxWidth = column.Width;
+                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                    column.Width = maxWidth;
+
+
 
                 }
             }
@@ -261,8 +267,7 @@ namespace ST.EplAddin.PlcEdit
             }
             catch (Exception e)
             {
-
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message + "HighlightRows");
             }
         }
 
