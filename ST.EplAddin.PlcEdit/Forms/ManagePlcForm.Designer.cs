@@ -49,6 +49,7 @@
             this.SymbolicAdressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PLCAdressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteOverviewFunctionTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RewriteFunctionsTextInImport = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.lower_button = new System.Windows.Forms.Button();
@@ -79,7 +80,6 @@
             this.plcDataModelViewBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.plcDataModelViewBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.plcDataModelViewBindingSource3 = new System.Windows.Forms.BindingSource(this.components);
-            this.RewriteFunctionsTextInImport = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanelDown.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.plcDataModelViewBindingSource)).BeginInit();
             this.tableLayoutPanel.SuspendLayout();
@@ -259,6 +259,13 @@
             this.deleteOverviewFunctionTextToolStripMenuItem.Text = "Delete overview function text";
             this.deleteOverviewFunctionTextToolStripMenuItem.Click += new System.EventHandler(this.deleteOverviewFunctionTextToolStripMenuItem_Click);
             // 
+            // RewriteFunctionsTextInImport
+            // 
+            this.RewriteFunctionsTextInImport.Name = "RewriteFunctionsTextInImport";
+            this.RewriteFunctionsTextInImport.Size = new System.Drawing.Size(250, 22);
+            this.RewriteFunctionsTextInImport.Text = "Rewrite function texts in import";
+            this.RewriteFunctionsTextInImport.Click += new System.EventHandler(this.dontRewriteFunctionTextsToolStripMenuItem_Click);
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
@@ -415,7 +422,6 @@
             this.dataGridView.AllowUserToOrderColumns = true;
             this.dataGridView.AllowUserToResizeRows = false;
             this.dataGridView.AutoGenerateColumns = false;
-            this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             this.dataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -481,12 +487,14 @@
             this.StatusImage.HeaderText = "Status";
             this.StatusImage.Name = "StatusImage";
             this.StatusImage.ReadOnly = true;
+            this.StatusImage.Width = 156;
             // 
             // PLCAdress
             // 
             this.PLCAdress.DataPropertyName = "PLCAdress";
             this.PLCAdress.HeaderText = "PLCAdress";
             this.PLCAdress.Name = "PLCAdress";
+            this.PLCAdress.Width = 157;
             // 
             // DevicePointDescription
             // 
@@ -494,18 +502,21 @@
             this.DevicePointDescription.HeaderText = "DevicePointDescription";
             this.DevicePointDescription.Name = "DevicePointDescription";
             this.DevicePointDescription.ReadOnly = true;
+            this.DevicePointDescription.Width = 156;
             // 
             // SymbolicAdress
             // 
             this.SymbolicAdress.DataPropertyName = "SymbolicAdress";
             this.SymbolicAdress.HeaderText = "SymbolicAdress";
             this.SymbolicAdress.Name = "SymbolicAdress";
+            this.SymbolicAdress.Width = 157;
             // 
             // FunctionText
             // 
             this.FunctionText.DataPropertyName = "FunctionText";
             this.FunctionText.HeaderText = "FunctionText";
             this.FunctionText.Name = "FunctionText";
+            this.FunctionText.Width = 156;
             // 
             // DevicePointDesignation
             // 
@@ -513,6 +524,7 @@
             this.DevicePointDesignation.HeaderText = "DevicePointDesignation";
             this.DevicePointDesignation.Name = "DevicePointDesignation";
             this.DevicePointDesignation.ReadOnly = true;
+            this.DevicePointDesignation.Width = 156;
             // 
             // FunctionDefinition
             // 
@@ -520,6 +532,7 @@
             this.FunctionDefinition.HeaderText = "FunctionDefinition";
             this.FunctionDefinition.Name = "FunctionDefinition";
             this.FunctionDefinition.ReadOnly = true;
+            this.FunctionDefinition.Width = 157;
             // 
             // FunctionType
             // 
@@ -527,6 +540,7 @@
             this.FunctionType.HeaderText = "FunctionType";
             this.FunctionType.Name = "FunctionType";
             this.FunctionType.ReadOnly = true;
+            this.FunctionType.Width = 156;
             // 
             // Datatype
             // 
@@ -595,13 +609,6 @@
             // plcDataModelViewBindingSource3
             // 
             this.plcDataModelViewBindingSource3.DataSource = typeof(ST.EplAddin.PlcEdit.PlcDataModelView);
-            // 
-            // RewriteFunctionsTextInImport
-            // 
-            this.RewriteFunctionsTextInImport.Name = "RewriteFunctionsTextInImport";
-            this.RewriteFunctionsTextInImport.Size = new System.Drawing.Size(250, 22);
-            this.RewriteFunctionsTextInImport.Text = "Rewrite function texts in import";
-            this.RewriteFunctionsTextInImport.Click += new System.EventHandler(this.dontRewriteFunctionTextsToolStripMenuItem_Click);
             // 
             // ManagePlcForm
             // 
