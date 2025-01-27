@@ -34,7 +34,6 @@ namespace ST.EplAddin.PlcEdit
         public PlcAddinEditAction()
         {
             ManagePlcForm.ApplyEvent += ManagePlcForm_ApplyEvent;
-            ManagePlcForm.ShowSearch += (sender, args) => ShowSearch(args);
         }
         public void GetActionProperties(ref ActionProperties actionProperties) { }
 

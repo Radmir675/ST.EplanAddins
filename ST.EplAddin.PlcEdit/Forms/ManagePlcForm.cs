@@ -18,14 +18,12 @@ namespace ST.EplAddin.PlcEdit
     {
         private List<CsvFileDataModelView> ImportedData = new();
         private bool IsFileUploaded = false;
-        private readonly string pathToSaveTemplate;
         private readonly IEnumerable<Function> allFunctions;
 
         public static event EventHandler<CustomEventArgs> ApplyEvent;
         public static event EventHandler<string> PathEvent;
-        public static event EventHandler<IEnumerable<StorableObject>> ShowSearch;
         private List<PlcDataModelView> PlcDataModelView { get; set; }
-        private List<int> LastSelectedRow { get; set; } = new List<int>();
+        private List<int> LastSelectedRows { get; set; } = new List<int>();
         public List<Template> Templates { get; set; }
 
         private string cellValue = string.Empty;
@@ -51,7 +49,6 @@ namespace ST.EplAddin.PlcEdit
         {
             InitializeComponent();
             PlcDataModelView = plcDataModelView;
-            this.pathToSaveTemplate = pathToSaveTemplate;
             this.allFunctions = allFunctions;
             AddData(PlcDataModelView);
             PropertiesForm.SettingsChanged += PropertiesForm_SettingsChanged;
@@ -65,6 +62,7 @@ namespace ST.EplAddin.PlcEdit
             RewriteFunctionsTextInImport.Checked = Properties.Settings.Default.IsRewritePLCFunctionsTextInImport;
             import_button.Enabled = false;
             export_button.Enabled = false;
+            ComparingForm_StartRewriting();
         }
 
         private void ImportForm_ImportCsvDataEvent(object sender, List<CsvFileDataModelView> e)
@@ -261,7 +259,7 @@ namespace ST.EplAddin.PlcEdit
             try
             {
                 rows.ForEach(rowIndex => dataGridView.Rows[rowIndex].Selected = true);
-                LastSelectedRow = rows;
+                LastSelectedRows = rows;
                 dataGridView.Refresh();
 
             }
@@ -436,13 +434,13 @@ namespace ST.EplAddin.PlcEdit
         private void Apply_button_Click(object sender, EventArgs e)
         {
             ApplyEvent?.Invoke(this, new CustomEventArgs(PlcDataModelView));
-            HighlightRows(LastSelectedRow);
+            HighlightRows(LastSelectedRows);
         }
 
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            LastSelectedRow.Clear();
-            LastSelectedRow.Add(e.RowIndex);
+            LastSelectedRows.Clear();
+            LastSelectedRows.Add(e.RowIndex);
             if (FastInput.Checked)
             {
                 dataGridView.BeginEdit(false);
@@ -546,7 +544,7 @@ namespace ST.EplAddin.PlcEdit
         }
         private void import_button_Click(object sender, EventArgs e)
         {
-            ComparingForm_StartRewriting();
+            //ComparingForm_StartRewriting();
             var dataToRewrite = GetRewritingRowsData(PlcDataModelView);
             if (dataToRewrite.Count == ImportedData.Count)
             {
@@ -623,18 +621,6 @@ namespace ST.EplAddin.PlcEdit
             {
                 InsertData();
             }
-
-            if (e.KeyCode == Keys.Delete)
-            {
-                foreach (var cell in SelectedCells)
-                {
-                    if (cell.OwningColumn.ReadOnly == false)
-                    {
-                        cell.Value = string.Empty;
-                    }
-                }
-
-            }
         }
 
         private void InsertData()
@@ -644,6 +630,10 @@ namespace ST.EplAddin.PlcEdit
             char[] columnSplitter = { '\t' };
 
             var dataInClipboard = dataInClipBoard.Split(rowSplitter, StringSplitOptions.None);
+            if (dataInClipboard[dataInClipboard.Length - 1] == string.Empty)
+            {
+                dataInClipboard = dataInClipboard.Take(dataInClipboard.Length - 1).ToArray();
+            }
             int firstSelectedRowIndex = dataGridView.SelectedCells[0].RowIndex;
             int firstSelectedColumnIndex = dataGridView.SelectedCells[0].ColumnIndex;
 
@@ -715,7 +705,7 @@ namespace ST.EplAddin.PlcEdit
         private void dataGridView_MouseUp(object sender, MouseEventArgs e)
         {
             UpdateButtonsState();
-            LastSelectedRow = SelectedRows.Select(x => x.Index).ToList();
+            LastSelectedRows = SelectedRows.Select(x => x.Index).ToList();
         }
 
         private void UpdateButtonsState()
@@ -942,6 +932,26 @@ namespace ST.EplAddin.PlcEdit
                 {
                     yield break;
                 }
+            }
+        }
+        private void dataGridView_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Insert:
+                    InsertData();
+                    break;
+                case Keys.Delete:
+                    {
+                        foreach (var cell in SelectedCells)
+                        {
+                            if (cell.OwningColumn.ReadOnly == false)
+                            {
+                                cell.Value = string.Empty;
+                            }
+                        }
+                        break;
+                    }
             }
         }
     }
