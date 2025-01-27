@@ -1,7 +1,6 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
-using Eplan.EplApi.DataModel.E3D;
 using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.HEServices;
 using ST.EplAddin.PlcEdit.Helpers;
@@ -12,7 +11,6 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MessageBox = System.Windows.Forms.MessageBox;
-
 
 namespace ST.EplAddin.PlcEdit
 {
@@ -75,23 +73,6 @@ namespace ST.EplAddin.PlcEdit
             }
         }
 
-        private string GetPlcFullName(StorableObject[] selectedPlcdata)
-        {
-            var fullDeviceTag = string.Empty;
-
-            var plcTerminal = selectedPlcdata[0] as Function;
-            if (plcTerminal == null)
-            {
-                var placement = selectedPlcdata[0] as Placement3D;
-                fullDeviceTag = placement?.Properties.FUNC_FULLDEVICETAG.ToString();
-            }
-            else
-            {
-                fullDeviceTag = plcTerminal?.Properties.FUNC_FULLDEVICETAG.ToString();
-            }
-            return fullDeviceTag;
-        }
-
         public void ShowTableForm(List<PlcDataModelView> plcDataModelView)
         {
             Process oCurrent = Process.GetCurrentProcess();
@@ -99,11 +80,7 @@ namespace ST.EplAddin.PlcEdit
 
             ManagePlcForm = new ManagePlcForm(plcDataModelView, GetPathToSaveTemplate(CurrentProject), FunctionsInProgram);
             ManagePlcForm.Show(eplanOwner);
-
         }
-
-
-
         private void ManagePlcForm_ApplyEvent(object sender, CustomEventArgs e)
         {
             GetPLCData();
@@ -178,15 +155,6 @@ namespace ST.EplAddin.PlcEdit
                 }
             }
         }
-
-        private string GetPath(Project project)
-        {
-            using (LockingStep lockingStep = new LockingStep())
-            {
-                string path = project.ProjectDirectoryPath;
-                return path;
-            }
-        }
         private string GetPathToSaveTemplate(Project project)
         {
             using (LockingStep lockingStep = new LockingStep())
@@ -240,7 +208,6 @@ namespace ST.EplAddin.PlcEdit
 
         private void AssignFunction(List<Function> sourceFunction, List<Function> targetFunction, bool reverse = false)
         {
-
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
                 if (reverse == false)
@@ -253,8 +220,6 @@ namespace ST.EplAddin.PlcEdit
                 }
                 safetyPoint.Commit();
             }
-
-
         }
 
         private void ReverseOutputPins(List<Function> sourceFunction, List<Function> targetFunction)
@@ -289,20 +254,6 @@ namespace ST.EplAddin.PlcEdit
             {
                 throw new Exception("Присвоение обзора-обзору недопустимо при наличии у обзора многополюсного представления. Пожалуйста выберите верный диапазон данных!");
             }
-        }
-        private void ShowSearch(IEnumerable<StorableObject> enumerable)
-        {
-            Search search = new Search();
-            search.ClearSearchDB(CurrentProject);
-            search.AddToSearchDB(enumerable.ToArray());
-            ShowSearchNavigator();
-        }
-        private void ShowSearchNavigator()
-        {
-            ActionManager oMng = new ActionManager();
-            Eplan.EplApi.ApplicationFramework.Action baseAction = oMng.FindAction("XSeShowSearchResultsAction");
-            ActionCallingContext ctx = new ActionCallingContext();
-            bool result = baseAction.Execute(ctx);
         }
     }
 }
