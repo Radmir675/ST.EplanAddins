@@ -6,10 +6,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="IsRewritePLCAdress" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="IsRewriteSymbolicAdress" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="FormSize" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">1334, 794</Value>
@@ -18,10 +18,10 @@
       <Value Profile="(Default)">0, 0</Value>
     </Setting>
     <Setting Name="IsDeleteOverviewFunctionText" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="IsRewritePLCFunctionsTextInImport" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

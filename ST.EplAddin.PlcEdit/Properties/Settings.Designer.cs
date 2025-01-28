@@ -37,7 +37,7 @@ namespace ST.EplAddin.PlcEdit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool IsRewritePLCAdress {
             get {
                 return ((bool)(this["IsRewritePLCAdress"]));
@@ -49,7 +49,7 @@ namespace ST.EplAddin.PlcEdit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool IsRewriteSymbolicAdress {
             get {
                 return ((bool)(this["IsRewriteSymbolicAdress"]));
@@ -85,7 +85,7 @@ namespace ST.EplAddin.PlcEdit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool IsDeleteOverviewFunctionText {
             get {
                 return ((bool)(this["IsDeleteOverviewFunctionText"]));
@@ -97,7 +97,7 @@ namespace ST.EplAddin.PlcEdit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool IsRewritePLCFunctionsTextInImport {
             get {
                 return ((bool)(this["IsRewritePLCFunctionsTextInImport"]));

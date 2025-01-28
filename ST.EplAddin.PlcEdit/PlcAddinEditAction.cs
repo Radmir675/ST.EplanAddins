@@ -16,16 +16,18 @@ namespace ST.EplAddin.PlcEdit
 {
     class PlcAddinEditAction : IEplAction
     {
-        public static string actionName = "PlcGuiIGfWindRackConfiguration";
+        public const string _actionName = "PlcGuiIGfWindRackConfiguration";
         private static List<PlcDataModelView> InitialPlcData { get; set; }
         public ManagePlcForm ManagePlcForm { get; private set; }
         public Project CurrentProject { get; set; }
         private IEnumerable<Function> FunctionsInProgram { get; set; }
         private Terminal[] PlcTerminals { get; set; }
         public string DeviceTag { get; set; }
+
+        private StorableObject[] selectedPlcData;
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
-            Name = actionName;
+            Name = _actionName;
             Ordinal = 99;
             return true;
         }
@@ -35,11 +37,11 @@ namespace ST.EplAddin.PlcEdit
         }
         public void GetActionProperties(ref ActionProperties actionProperties) { }
 
-
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
+                selectedPlcData = null;
                 GetPLCData();
                 ShowTableForm(InitialPlcData.Select(x => x.Clone() as PlcDataModelView).ToList());
                 safetyPoint.Commit();
@@ -48,17 +50,12 @@ namespace ST.EplAddin.PlcEdit
         }
         public Terminal[] GetPlcTerminals()
         {
-            SelectionSet selectionSet = new SelectionSet();
-            selectionSet.LockProjectByDefault = false;
-            selectionSet.LockSelectionByDefault = false;
-            CurrentProject = selectionSet.GetCurrentProject(true);
+            selectedPlcData ??= GetSelectedObjects();
 
-            var selectedPlcdata = selectionSet.Selection;//отфильтровать надо именно selection
-
-            if (selectedPlcdata.OfType<PLC>().Count() == selectedPlcdata.Count())
+            if (selectedPlcData.OfType<PLC>().Count() == selectedPlcData.Count())
             {
                 List<List<Terminal>> plcTerminals = new List<List<Terminal>>();
-                foreach (var plc in selectedPlcdata)
+                foreach (var plc in selectedPlcData)
                 {
                     var s = plc.CrossReferencedObjectsAll.OfType<Terminal>().ToList();
                     plcTerminals.Add(s);
@@ -68,9 +65,23 @@ namespace ST.EplAddin.PlcEdit
             }
             else
             {
-                var result = selectedPlcdata?.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
+                var result = selectedPlcData?
+                    .OfType<Terminal>()
+                    .Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК")
+                    .ToArray();
                 return result;
             }
+        }
+
+        private StorableObject[] GetSelectedObjects()
+        {
+            SelectionSet selectionSet = new SelectionSet();
+            selectionSet.LockProjectByDefault = false;
+            selectionSet.LockSelectionByDefault = false;
+            CurrentProject = selectionSet.GetCurrentProject(true);
+
+            var selectedPlcData = selectionSet.Selection;//отфильтровать надо именно selection
+            return selectedPlcData;
         }
 
         public void ShowTableForm(List<PlcDataModelView> plcDataModelView)
@@ -123,7 +134,7 @@ namespace ST.EplAddin.PlcEdit
         {
             var sourceFunction = functionsInProgram.Where(x => x.Properties.FUNC_FULLNAME == tableWithReverse.FunctionOldName).ToList();//найдем его
             var targetFunction = functionsInProgram.Where(x => x.Properties.FUNC_FULLNAME == tableWithReverse.FunctionNewName).ToList();//найдем его
-            AssignFunction(sourceFunction, targetFunction, true);
+            AssignFunction(sourceFunction, targetFunction);
         }
         private void RewritePlcProperties(Terminal[] plcTerminals, List<PlcDataModelView> newDataPlc)
         {
@@ -169,11 +180,9 @@ namespace ST.EplAddin.PlcEdit
         {
             var name = terminal.Select(x => x.ToStringIdentifier());
             bool isUnique = name.Distinct().Count() == name.Count();
-            if (isUnique == false)
-            {
-                MessageBox.Show("An ID match was found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                ManagePlcForm.Exit();
-            }
+            if (isUnique != false) return;
+            MessageBox.Show("An ID match was found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            ManagePlcForm.Exit();
         }
         private void UpdateFormData()
         {
@@ -206,25 +215,17 @@ namespace ST.EplAddin.PlcEdit
             return tableWithReverse;
         }
 
-        private void AssignFunction(List<Function> sourceFunction, List<Function> targetFunction, bool reverse = false)
+        private void AssignFunction(List<Function> sourceFunction, List<Function> targetFunction)
         {
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-                if (reverse == false)
-                {
-                    // targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
-                }
-                else//если есть реверс то применяем вот эту схему "с реверсом"
-                {
-                    ReverseOutputPins(sourceFunction, targetFunction);
-                }
+                ReverseOutputPins(sourceFunction, targetFunction);
                 safetyPoint.Commit();
             }
         }
 
         private void ReverseOutputPins(List<Function> sourceFunction, List<Function> targetFunction)
         {
-
             var allCrossreferencedFunctions = sourceFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>() ?? targetFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>();
 
             var sourceOverviewFunction = allCrossreferencedFunctions.FirstOrDefault(z => z.Properties.FUNC_TYPE == 3

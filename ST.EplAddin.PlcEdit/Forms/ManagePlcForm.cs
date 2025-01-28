@@ -76,7 +76,6 @@ namespace ST.EplAddin.PlcEdit
         }
         private void ComparingForm_FinishRewriting()
         {
-
             PlcDataModelView.ForEach(x => x.PropertyChanged -= ChangeCellColor);
         }
 
@@ -84,7 +83,6 @@ namespace ST.EplAddin.PlcEdit
         {
             var item = sender as PlcDataModelView;
             var indexRow = PlcDataModelView.IndexOf(item);
-            //var indexColumn = dataGridView.Columns[e.PropertyName]?.Index;
             if (indexRow == -1) return;
             dataGridView[e.PropertyName, indexRow].Style.BackColor = Color.Yellow;
         }
@@ -95,24 +93,6 @@ namespace ST.EplAddin.PlcEdit
             dataGridView.Refresh();
             PlcDataModelView.ForEach(x => x.PropertyChanged -= ChangeCellColor);
         }
-
-        private void ImportCsvFormImportCsvDataEvent(object sender, List<CsvFileDataModelView> e)
-        {
-            var convertedData = Mapper.ConvertDataFromCsvModel(e);
-            UpdateDataTable(convertedData);
-        }
-
-        public int GetCurrentColumnsHeaderWidth()
-        {
-            double sum = 0;
-            foreach (DataGridViewColumn item in dataGridView.Columns)
-            {
-                sum += item.Width;
-            }
-
-            return (int)Math.Round(sum);
-        }
-
         private void ManagePlcForm_Load(object sender, EventArgs e)
         {
             exchange_button.Enabled = false;
@@ -130,7 +110,6 @@ namespace ST.EplAddin.PlcEdit
             {
                 Location = initialPointLocation.Value;
             }
-
             ChangeButtonsView();
         }
 
@@ -195,9 +174,6 @@ namespace ST.EplAddin.PlcEdit
                     var maxWidth = column.Width;
                     column.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
                     column.Width = maxWidth;
-
-
-
                 }
             }
         }
@@ -261,11 +237,11 @@ namespace ST.EplAddin.PlcEdit
                 rows.ForEach(rowIndex => dataGridView.Rows[rowIndex].Selected = true);
                 LastSelectedRows = rows;
                 dataGridView.Refresh();
-
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message + "HighlightRows");
+                MessageBox.Show(e.Message + "HighlightRows", "Error", MessageBoxButtons.OK);
+                Close();
             }
         }
 
@@ -302,21 +278,6 @@ namespace ST.EplAddin.PlcEdit
 
             HighlightRows(rows);
         }
-
-        private List<DataGridViewRow> GetRowsWithIndex(DataGridViewRowCollection rows, List<int> currentIndexRows)
-        {
-            List<DataGridViewRow> result = new();
-            foreach (DataGridViewRow row in rows)
-            {
-                if (currentIndexRows.Contains(row.Index))
-                {
-                    result.Add(row);
-                }
-            }
-
-            return result;
-        }
-
         private void ExchangePositions()
         {
             var rowsIndex = dataGridView.SelectedCells.Cast<DataGridViewCell>().Select(c => c.RowIndex).Distinct()
@@ -357,7 +318,6 @@ namespace ST.EplAddin.PlcEdit
             {
                 return true;
             }
-
             return false;
         }
 
@@ -566,33 +526,6 @@ namespace ST.EplAddin.PlcEdit
             dataGridView.Refresh();
             ComparingForm_FinishRewriting();
         }
-
-        private void UpdateDataTable(List<FromCsvModelView> csvPlcData)
-        {
-            if (csvPlcData.First().DeviceNameShort != PlcDataModelView.First().DeviceNameShort)
-            {
-                MessageBox.Show("Выбран неверный модуль для импорта");
-                return;
-            }
-
-            var properlyDataInDataGrid = GetRewritingRowsData(PlcDataModelView);
-
-            if (csvPlcData.Count != properlyDataInDataGrid.Count) //тут должно получиться 32 штуки
-            {
-                MessageBox.Show("Не найдено взаимооднозначное соответствие данных для импорта");
-                return;
-            }
-
-            for (int i = 0; i < properlyDataInDataGrid.Count(); i++)
-            {
-                properlyDataInDataGrid[i].FunctionText = csvPlcData[i].FunctionText;
-                properlyDataInDataGrid[i].SymbolicAdress = csvPlcData[i].SymbolicAdress;
-                properlyDataInDataGrid[i].PLCAdress = csvPlcData[i].PLCAdress;
-            }
-
-            dataGridView.Refresh();
-        }
-
         private List<PlcDataModelView> GetRewritingRowsData(List<PlcDataModelView> plcDataModelView)
         {
             List<PlcDataModelView> result = new();
@@ -622,7 +555,6 @@ namespace ST.EplAddin.PlcEdit
                 InsertData();
             }
         }
-
         private void InsertData()
         {
             var dataInClipBoard = Clipboard.GetText();
