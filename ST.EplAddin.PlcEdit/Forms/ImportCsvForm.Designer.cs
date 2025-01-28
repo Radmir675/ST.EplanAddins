@@ -72,7 +72,7 @@
             this.dataGridView.Location = new System.Drawing.Point(3, 28);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
-            this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView.Size = new System.Drawing.Size(921, 584);
             this.dataGridView.TabIndex = 0;
             // 
