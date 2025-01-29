@@ -167,7 +167,6 @@
       <DependentUpon>ManagePlcForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Template.cs" />
-    <Compile Include="Model\TemplatesData.cs" />
     <Compile Include="PlcAddinEditAction.cs" />
     <Compile Include="Forms\PropertiesForm.cs">
       <SubType>Form</SubType>

@@ -2,7 +2,6 @@
 using Eplan.EplApi.DataModel;
 using ST.EplAddin.PlcEdit.Forms;
 using ST.EplAddin.PlcEdit.Helpers;
-using ST.EplAddin.PlcEdit.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,7 +23,6 @@ namespace ST.EplAddin.PlcEdit
         public static event EventHandler<string> PathEvent;
         private List<PlcDataModelView> PlcDataModelView { get; set; }
         private List<int> LastSelectedRows { get; set; } = new List<int>();
-        public List<Template> Templates { get; set; }
 
         private string cellValue = string.Empty;
         CsvConverter csvConverter;
@@ -52,9 +50,7 @@ namespace ST.EplAddin.PlcEdit
             this.allFunctions = allFunctions;
             AddData(PlcDataModelView);
             PropertiesForm.SettingsChanged += PropertiesForm_SettingsChanged;
-            TemplatesData.GetInstance();
             PathEvent?.Invoke(this, pathToSaveTemplate);
-            Templates = TemplatesData.GetInstance().GetTemplates();
             FastInput.Checked = Properties.Settings.Default.FastInputChecked;
             SymbolicAdressToolStripMenuItem.Checked = Properties.Settings.Default.IsRewriteSymbolicAdress;
             PLCAdressToolStripMenuItem.Checked = Properties.Settings.Default.IsRewritePLCAdress;
@@ -144,7 +140,7 @@ namespace ST.EplAddin.PlcEdit
         {
             try
             {
-                EplanSettings eplanSettings = new EplanSettings();
+                EplanSettings eplanSettings = new();
                 var columnsToView = eplanSettings.TryGetSelectedColumns();
                 if (columnsToView.Any())
                 {
@@ -520,7 +516,8 @@ namespace ST.EplAddin.PlcEdit
             }
             else
             {
-                MessageBox.Show("File and data in Eplan has different rows count to rewrite!'\n Please check that all function templates are assigned correctly!", "Error",
+                MessageBox.Show("Количество записей в загружаемом файле отличается от текущего ПЛК!'\n " +
+                                "Пожалуйста, проверьте присвоение шаблонов функций ПЛК!", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             dataGridView.Refresh();
