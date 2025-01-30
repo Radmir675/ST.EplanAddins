@@ -12,7 +12,7 @@ namespace ST.EplAddin.PlcEdit.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.10.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.12.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -37,7 +37,7 @@ namespace ST.EplAddin.PlcEdit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool IsRewritePLCAdress {
             get {
                 return ((bool)(this["IsRewritePLCAdress"]));
@@ -49,7 +49,7 @@ namespace ST.EplAddin.PlcEdit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool IsRewriteSymbolicAdress {
             get {
                 return ((bool)(this["IsRewriteSymbolicAdress"]));
@@ -80,6 +80,30 @@ namespace ST.EplAddin.PlcEdit.Properties {
             }
             set {
                 this["FormLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsDeleteOverviewFunctionText {
+            get {
+                return ((bool)(this["IsDeleteOverviewFunctionText"]));
+            }
+            set {
+                this["IsDeleteOverviewFunctionText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsRewritePLCFunctionsTextInImport {
+            get {
+                return ((bool)(this["IsRewritePLCFunctionsTextInImport"]));
+            }
+            set {
+                this["IsRewritePLCFunctionsTextInImport"] = value;
             }
         }
     }

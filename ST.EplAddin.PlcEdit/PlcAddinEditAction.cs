@@ -1,9 +1,9 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
-using Eplan.EplApi.DataModel.E3D;
 using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.HEServices;
+using ST.EplAddin.PlcEdit.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,36 +12,36 @@ using System.Linq;
 using System.Windows.Forms;
 using MessageBox = System.Windows.Forms.MessageBox;
 
-
 namespace ST.EplAddin.PlcEdit
 {
     class PlcAddinEditAction : IEplAction
     {
-        public static string actionName = "PlcGuiIGfWindRackConfiguration";
+        public const string _actionName = "PlcGuiIGfWindRackConfiguration";
         private static List<PlcDataModelView> InitialPlcData { get; set; }
         public ManagePlcForm ManagePlcForm { get; private set; }
         public Project CurrentProject { get; set; }
         private IEnumerable<Function> FunctionsInProgram { get; set; }
         private Terminal[] PlcTerminals { get; set; }
         public string DeviceTag { get; set; }
+
+        private StorableObject[] selectedPlcData;
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
-            Name = actionName;
+            Name = _actionName;
             Ordinal = 99;
             return true;
         }
         public PlcAddinEditAction()
         {
             ManagePlcForm.ApplyEvent += ManagePlcForm_ApplyEvent;
-            ManagePlcForm.ShowSearch += (sender, args) => ShowSearch(args);
         }
         public void GetActionProperties(ref ActionProperties actionProperties) { }
-
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
+                selectedPlcData = null;
                 GetPLCData();
                 ShowTableForm(InitialPlcData.Select(x => x.Clone() as PlcDataModelView).ToList());
                 safetyPoint.Commit();
@@ -50,17 +50,12 @@ namespace ST.EplAddin.PlcEdit
         }
         public Terminal[] GetPlcTerminals()
         {
-            SelectionSet selectionSet = new SelectionSet();
-            selectionSet.LockProjectByDefault = false;
-            selectionSet.LockSelectionByDefault = false;
-            CurrentProject = selectionSet.GetCurrentProject(true);
+            selectedPlcData ??= GetSelectedObjects();
 
-            var selectedPlcdata = selectionSet.Selection;//отфильтровать надо именно selection
-
-            if (selectedPlcdata.OfType<PLC>().Count() == selectedPlcdata.Count())
+            if (selectedPlcData.OfType<PLC>().Count() == selectedPlcData.Count())
             {
                 List<List<Terminal>> plcTerminals = new List<List<Terminal>>();
-                foreach (var plc in selectedPlcdata)
+                foreach (var plc in selectedPlcData)
                 {
                     var s = plc.CrossReferencedObjectsAll.OfType<Terminal>().ToList();
                     plcTerminals.Add(s);
@@ -70,26 +65,23 @@ namespace ST.EplAddin.PlcEdit
             }
             else
             {
-                var result = selectedPlcdata?.OfType<Terminal>().Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК").ToArray();
+                var result = selectedPlcData?
+                    .OfType<Terminal>()
+                    .Where(x => x.Properties.FUNC_CATEGORY.ToString(ISOCode.Language.L_ru_RU) == "Вывод устройства ПЛК")
+                    .ToArray();
                 return result;
             }
         }
 
-        private string GetPlcFullName(StorableObject[] selectedPlcdata)
+        private StorableObject[] GetSelectedObjects()
         {
-            var fullDeviceTag = string.Empty;
+            SelectionSet selectionSet = new SelectionSet();
+            selectionSet.LockProjectByDefault = false;
+            selectionSet.LockSelectionByDefault = false;
+            CurrentProject = selectionSet.GetCurrentProject(true);
 
-            var plcTerminal = selectedPlcdata[0] as Function;
-            if (plcTerminal == null)
-            {
-                var placement = selectedPlcdata[0] as Placement3D;
-                fullDeviceTag = placement?.Properties.FUNC_FULLDEVICETAG.ToString();
-            }
-            else
-            {
-                fullDeviceTag = plcTerminal?.Properties.FUNC_FULLDEVICETAG.ToString();
-            }
-            return fullDeviceTag;
+            var selectedPlcData = selectionSet.Selection;//отфильтровать надо именно selection
+            return selectedPlcData;
         }
 
         public void ShowTableForm(List<PlcDataModelView> plcDataModelView)
@@ -99,11 +91,7 @@ namespace ST.EplAddin.PlcEdit
 
             ManagePlcForm = new ManagePlcForm(plcDataModelView, GetPathToSaveTemplate(CurrentProject), FunctionsInProgram);
             ManagePlcForm.Show(eplanOwner);
-
         }
-
-
-
         private void ManagePlcForm_ApplyEvent(object sender, CustomEventArgs e)
         {
             GetPLCData();
@@ -146,7 +134,7 @@ namespace ST.EplAddin.PlcEdit
         {
             var sourceFunction = functionsInProgram.Where(x => x.Properties.FUNC_FULLNAME == tableWithReverse.FunctionOldName).ToList();//найдем его
             var targetFunction = functionsInProgram.Where(x => x.Properties.FUNC_FULLNAME == tableWithReverse.FunctionNewName).ToList();//найдем его
-            AssignFunction(sourceFunction, targetFunction, true);
+            AssignFunction(sourceFunction, targetFunction);
         }
         private void RewritePlcProperties(Terminal[] plcTerminals, List<PlcDataModelView> newDataPlc)
         {
@@ -163,7 +151,7 @@ namespace ST.EplAddin.PlcEdit
                 }
                 if (overviewTerminal != null)//тут я разрешил перезапись обзора
                 {
-                    if (Properties.Settings.Default.IsRewritePLCAdress)
+                    if (Properties.Settings.Default.IsRewriteSymbolicAdress)
                     {
                         overviewTerminal.Properties.FUNC_PLCSYMBOLICADDRESS_MANUAL = item.SymbolicAdress;
                     }
@@ -171,16 +159,11 @@ namespace ST.EplAddin.PlcEdit
                     {
                         overviewTerminal.Properties.FUNC_PLCADDRESS = item.PLCAdress;
                     }
+                    if (Properties.Settings.Default.IsDeleteOverviewFunctionText)
+                    {
+                        overviewTerminal.Properties.FUNC_TEXT = string.Empty;
+                    }
                 }
-            }
-        }
-
-        private string GetPath(Project project)
-        {
-            using (LockingStep lockingStep = new LockingStep())
-            {
-                string path = project.ProjectDirectoryPath;
-                return path;
             }
         }
         private string GetPathToSaveTemplate(Project project)
@@ -197,11 +180,9 @@ namespace ST.EplAddin.PlcEdit
         {
             var name = terminal.Select(x => x.ToStringIdentifier());
             bool isUnique = name.Distinct().Count() == name.Count();
-            if (isUnique == false)
-            {
-                MessageBox.Show("An ID match was found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                ManagePlcForm.Exit();
-            }
+            if (isUnique != false) return;
+            MessageBox.Show("An ID match was found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            ManagePlcForm.Exit();
         }
         private void UpdateFormData()
         {
@@ -234,28 +215,17 @@ namespace ST.EplAddin.PlcEdit
             return tableWithReverse;
         }
 
-        private void AssignFunction(List<Function> sourceFunction, List<Function> targetFunction, bool reverse = false)
+        private void AssignFunction(List<Function> sourceFunction, List<Function> targetFunction)
         {
-
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-                if (reverse == false)
-                {
-                    // targetFunction.Assign(sourceFunction);//сначала пишется "куда"----- "откуда" 
-                }
-                else//если есть реверс то применяем вот эту схему "с реверсом"
-                {
-                    ReverseOutputPins(sourceFunction, targetFunction);
-                }
+                ReverseOutputPins(sourceFunction, targetFunction);
                 safetyPoint.Commit();
             }
-
-
         }
 
         private void ReverseOutputPins(List<Function> sourceFunction, List<Function> targetFunction)
         {
-
             var allCrossreferencedFunctions = sourceFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>() ?? targetFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>();
 
             var sourceOverviewFunction = allCrossreferencedFunctions.FirstOrDefault(z => z.Properties.FUNC_TYPE == 3
@@ -285,20 +255,6 @@ namespace ST.EplAddin.PlcEdit
             {
                 throw new Exception("Присвоение обзора-обзору недопустимо при наличии у обзора многополюсного представления. Пожалуйста выберите верный диапазон данных!");
             }
-        }
-        private void ShowSearch(IEnumerable<StorableObject> enumerable)
-        {
-            Search search = new Search();
-            search.ClearSearchDB(CurrentProject);
-            search.AddToSearchDB(enumerable.ToArray());
-            ShowSearchNavigator();
-        }
-        private void ShowSearchNavigator()
-        {
-            ActionManager oMng = new ActionManager();
-            Eplan.EplApi.ApplicationFramework.Action baseAction = oMng.FindAction("XSeShowSearchResultsAction");
-            ActionCallingContext ctx = new ActionCallingContext();
-            bool result = baseAction.Execute(ctx);
         }
     }
 }

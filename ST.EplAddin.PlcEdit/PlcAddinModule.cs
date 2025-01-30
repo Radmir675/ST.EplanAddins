@@ -1,5 +1,4 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
-using System;
 using System.Windows.Forms;
 
 namespace ST.EplAddin.PlcEdit
@@ -8,7 +7,7 @@ namespace ST.EplAddin.PlcEdit
     {
         public bool OnExit()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public bool OnInit()

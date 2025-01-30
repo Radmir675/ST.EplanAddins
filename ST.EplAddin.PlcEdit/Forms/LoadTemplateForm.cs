@@ -52,9 +52,9 @@ namespace ST.EplAddin.PlcEdit.Forms
 
         private void LoadTemplateForm_Load(object sender, EventArgs e)
         {
-            CsvConverter csvConverter = new CsvConverter(path);
-            var dataFromFile = csvConverter.ReadFile();
-            dataGridView.DataSource = dataFromFile;
+            //CsvConverter csvConverter = new CsvConverter(path);
+            //var dataFromFile = csvConverter.ReadFile();
+            //dataGridView.DataSource = dataFromFile;
         }
     }
 }

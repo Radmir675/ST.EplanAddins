@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace ST.EplAddin.PlcEdit
+namespace ST.EplAddin.PlcEdit.Helpers
 {
     public class PinNumberComparer : IComparer<string>
     {

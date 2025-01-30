@@ -37,14 +37,17 @@
             this.functionTextDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pLCAdressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deviceNameShortDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.csvFileDataModelViewsBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.csvFileDataModelViewsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.csvFileDataModelViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label = new System.Windows.Forms.Label();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanelDown = new System.Windows.Forms.FlowLayoutPanel();
             this.Cancel_button = new System.Windows.Forms.Button();
             this.import_button = new System.Windows.Forms.Button();
-            this.Load_button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewsBindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewBindingSource)).BeginInit();
             this.tableLayoutPanel.SuspendLayout();
             this.flowLayoutPanelDown.SuspendLayout();
@@ -55,6 +58,7 @@
             this.dataGridView.AllowUserToAddRows = false;
             this.dataGridView.AllowUserToDeleteRows = false;
             this.dataGridView.AutoGenerateColumns = false;
+            this.dataGridView.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.symbolicAdressDataGridViewTextBoxColumn,
@@ -63,12 +67,12 @@
             this.functionTextDataGridViewTextBoxColumn,
             this.pLCAdressDataGridViewTextBoxColumn,
             this.deviceNameShortDataGridViewTextBoxColumn});
-            this.dataGridView.DataSource = this.csvFileDataModelViewBindingSource;
+            this.dataGridView.DataSource = this.csvFileDataModelViewsBindingSource1;
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.Location = new System.Drawing.Point(3, 28);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
-            this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView.Size = new System.Drawing.Size(921, 584);
             this.dataGridView.TabIndex = 0;
             // 
@@ -114,6 +118,14 @@
             this.deviceNameShortDataGridViewTextBoxColumn.Name = "deviceNameShortDataGridViewTextBoxColumn";
             this.deviceNameShortDataGridViewTextBoxColumn.ReadOnly = true;
             // 
+            // csvFileDataModelViewsBindingSource1
+            // 
+            this.csvFileDataModelViewsBindingSource1.DataSource = typeof(ST.EplAddin.PlcEdit.View.CsvFileDataModelViews);
+            // 
+            // csvFileDataModelViewsBindingSource
+            // 
+            this.csvFileDataModelViewsBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.View.CsvFileDataModelViews);
+            // 
             // csvFileDataModelViewBindingSource
             // 
             this.csvFileDataModelViewBindingSource.DataSource = typeof(ST.EplAddin.PlcEdit.CsvFileDataModelView);
@@ -151,7 +163,6 @@
             this.flowLayoutPanelDown.AutoSize = true;
             this.flowLayoutPanelDown.Controls.Add(this.Cancel_button);
             this.flowLayoutPanelDown.Controls.Add(this.import_button);
-            this.flowLayoutPanelDown.Controls.Add(this.Load_button);
             this.flowLayoutPanelDown.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.flowLayoutPanelDown.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanelDown.Location = new System.Drawing.Point(3, 618);
@@ -184,17 +195,6 @@
             this.import_button.UseVisualStyleBackColor = true;
             this.import_button.Click += new System.EventHandler(this.Import_button_Click);
             // 
-            // Load_button
-            // 
-            this.Load_button.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Load_button.Location = new System.Drawing.Point(681, 3);
-            this.Load_button.Name = "Load_button";
-            this.Load_button.Size = new System.Drawing.Size(75, 23);
-            this.Load_button.TabIndex = 1;
-            this.Load_button.Text = "Load file";
-            this.Load_button.UseVisualStyleBackColor = true;
-            this.Load_button.Click += new System.EventHandler(this.Load_button_Click);
-            // 
             // ImportCsvForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -205,6 +205,8 @@
             this.Name = "ImportCsvForm";
             this.Text = "ImportCsvForm";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewsBindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.csvFileDataModelViewBindingSource)).EndInit();
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
@@ -220,7 +222,6 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelDown;
         private System.Windows.Forms.Button Cancel_button;
         private System.Windows.Forms.Button import_button;
-        private System.Windows.Forms.Button Load_button;
         private System.Windows.Forms.DataGridViewTextBoxColumn symbolicAdressDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn bitNumberDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn unitDataGridViewTextBoxColumn;
@@ -229,5 +230,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn deviceNameShortDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource csvFileDataModelViewBindingSource;
         public System.Windows.Forms.Label label;
+        private System.Windows.Forms.BindingSource csvFileDataModelViewsBindingSource;
+        private System.Windows.Forms.BindingSource csvFileDataModelViewsBindingSource1;
     }
 }

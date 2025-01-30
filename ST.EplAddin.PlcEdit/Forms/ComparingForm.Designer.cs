@@ -42,7 +42,6 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.ok_button = new System.Windows.Forms.Button();
-            this.Upload_doc_button = new System.Windows.Forms.Button();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.checkBox = new System.Windows.Forms.CheckBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -171,19 +170,8 @@
             this.ok_button.UseVisualStyleBackColor = true;
             this.ok_button.Click += new System.EventHandler(this.ok_button_Click);
             // 
-            // Upload_doc_button
-            // 
-            this.Upload_doc_button.Location = new System.Drawing.Point(3, 3);
-            this.Upload_doc_button.Name = "Upload_doc_button";
-            this.Upload_doc_button.Size = new System.Drawing.Size(194, 23);
-            this.Upload_doc_button.TabIndex = 0;
-            this.Upload_doc_button.Text = "Load file";
-            this.Upload_doc_button.UseVisualStyleBackColor = true;
-            this.Upload_doc_button.Click += new System.EventHandler(this.Upload_doc_button_Click);
-            // 
             // flowLayoutPanel2
             // 
-            this.flowLayoutPanel2.Controls.Add(this.Upload_doc_button);
             this.flowLayoutPanel2.Controls.Add(this.checkBox);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 703);
@@ -195,9 +183,9 @@
             // 
             this.checkBox.AutoSize = true;
             this.checkBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkBox.Location = new System.Drawing.Point(203, 3);
+            this.checkBox.Location = new System.Drawing.Point(3, 3);
             this.checkBox.Name = "checkBox";
-            this.checkBox.Size = new System.Drawing.Size(67, 23);
+            this.checkBox.Size = new System.Drawing.Size(67, 17);
             this.checkBox.TabIndex = 4;
             this.checkBox.Text = "SelectAll";
             this.checkBox.UseVisualStyleBackColor = true;
@@ -263,7 +251,6 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button ok_button;
-        private System.Windows.Forms.Button Upload_doc_button;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.CheckBox checkBox;
         private System.Windows.Forms.SplitContainer splitContainer1;
