@@ -3,18 +3,13 @@ using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Action = Eplan.EplApi.ApplicationFramework.Action;
 
 namespace EplAddin.ClipboardHelper
 {
-
     class ClipboardAction : IEplAction
     {
         int lastHash = -1;
@@ -36,7 +31,7 @@ namespace EplAddin.ClipboardHelper
             {
                 bool clipboardChanged = false;
                 IDataObject iData = Clipboard.GetDataObject();
-                
+
                 bool isImage = Clipboard.ContainsImage();
 
                 if (isImage)
@@ -119,10 +114,7 @@ namespace EplAddin.ClipboardHelper
             return result;
         }
 
-        public void GetActionProperties(ref ActionProperties actionProperties)
-        {
-            throw new NotImplementedException();
-        }
+        public void GetActionProperties(ref ActionProperties actionProperties) { }
 
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
