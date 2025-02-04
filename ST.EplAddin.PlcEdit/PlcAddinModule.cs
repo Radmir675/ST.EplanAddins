@@ -1,5 +1,4 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
-using System.Windows.Forms;
 
 namespace ST.EplAddin.PlcEdit
 {
@@ -23,7 +22,6 @@ namespace ST.EplAddin.PlcEdit
         public bool OnRegister(ref bool bLoadOnStart)
         {
             bLoadOnStart = true;
-            MessageBox.Show("Plc edit addin is implemented");
             return true;
         }
 
