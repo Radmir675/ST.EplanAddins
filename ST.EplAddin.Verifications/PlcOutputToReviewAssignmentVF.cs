@@ -1,6 +1,5 @@
 ﻿using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.EServices;
-using System.Windows.Forms;
 using Function = Eplan.EplApi.DataModel.Function;
 using StorableObject = Eplan.EplApi.DataModel.StorableObject;
 
@@ -54,12 +53,11 @@ namespace ST.EplAddin.Verifications
 
         public override string GetMessageText()
         {
-            return "Вывод ПЛК %1!s! не присвоен обзору функции";
+            return "Вывод ПЛК %1!s! не присвоен шаблону функции";
         }
 
         public override void DoHelp()
         {
-            MessageBox.Show("Привет мир!");
         }
 
     }
