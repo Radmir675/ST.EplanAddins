@@ -127,7 +127,8 @@ namespace ST.EplAddin.PlcEdit
         {
             PlcTerminals = GetPlcTerminals();
             FunctionsInProgram = PlcTerminals.Cast<Function>();
-            InitialPlcData = Mapper.GetPlcData(PlcTerminals);
+            Mapper mapper = new();
+            InitialPlcData = mapper.GetPlcData(PlcTerminals);
         }
 
         private void AsssignNewFunctions(IEnumerable<Function> functionsInProgram, NameCorrelation tableWithReverse)
@@ -188,7 +189,8 @@ namespace ST.EplAddin.PlcEdit
         {
             var terminals = GetPlcTerminals();
             CheckToIdenticalTerminal(terminals);
-            var mappedPlcTerminals = Mapper.GetPlcData(terminals);
+            Mapper mapper = new();
+            var mappedPlcTerminals = mapper.GetPlcData(terminals);
             ManagePlcForm?.UpdateTable(mappedPlcTerminals);//тут передать данные после присвоения для обновления формы
         }
 

@@ -185,7 +185,6 @@ namespace ST.EplAddin.PlcEdit
                 OnPropertyChanged();
             }
         } //image of type
-
         public object Clone()
         {
             return MemberwiseClone();
