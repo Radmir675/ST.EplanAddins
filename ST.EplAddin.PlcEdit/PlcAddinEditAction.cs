@@ -141,8 +141,8 @@ namespace ST.EplAddin.PlcEdit
         {
             foreach (var item in newDataPlc)
             {
-                var multyLineTerminal = plcTerminals.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.DT && x.Properties.FUNC_TYPE.ToInt() == 1);
-                var overviewTerminal = plcTerminals.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.DT && x.Properties.FUNC_TYPE.ToInt() == 3);
+                var multyLineTerminal = plcTerminals.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.DT && x.Properties.FUNC_TYPE.ToInt() == 1 && item.DevicePointDesignation == x.Properties.FUNC_PLCAUTOPLUG_AND_CONNPTDESIGNATION.ToString(ISOCode.Language.L_ru_RU));
+                var overviewTerminal = plcTerminals.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.DT && x.Properties.FUNC_TYPE.ToInt() == 3 && item.DevicePointDesignation == x.Properties.FUNC_PLCAUTOPLUG_AND_CONNPTDESIGNATION.ToString(ISOCode.Language.L_ru_RU));
 
                 if (multyLineTerminal != null)
                 {
