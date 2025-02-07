@@ -58,7 +58,7 @@ namespace ST.EplAddin.PlcEdit
             RewriteFunctionsTextInImport.Checked = Properties.Settings.Default.IsRewritePLCFunctionsTextInImport;
             import_button.Enabled = false;
             export_button.Enabled = false;
-            ComparingForm_StartRewriting();
+
         }
 
         private void ImportForm_ImportCsvDataEvent(object sender, List<CsvFileDataModelView> e)
@@ -500,7 +500,7 @@ namespace ST.EplAddin.PlcEdit
         }
         private void import_button_Click(object sender, EventArgs e)
         {
-            //ComparingForm_StartRewriting();
+            ComparingForm_StartRewriting();
             var dataToRewrite = GetRewritingRowsData(PlcDataModelView);
             if (dataToRewrite.Count == ImportedData.Count)
             {
