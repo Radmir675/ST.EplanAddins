@@ -6,7 +6,10 @@ namespace ST.EplAddin.PlcEdit
     {
         public bool Equals(NameCorrelation x, NameCorrelation y)
         {
-            var result = (x.FunctionNewName == y.FunctionOldName && x.FunctionOldName == y.FunctionNewName) ? true : false;
+            var result = (x.FunctionNewName == y.FunctionOldName
+                          && x.FunctionOldName == y.FunctionNewName
+                          && x.NewDevicePointDesignation == y.OldDevicePointDesignation
+                          && x.OldDevicePointDesignation == y.NewDevicePointDesignation) ? true : false;
             return result;
         }
 

@@ -684,7 +684,8 @@ namespace ST.EplAddin.PlcEdit
             {
                 var multyLinePLC = allFunctions.FirstOrDefault(x =>
                     x.Properties.FUNC_FULLNAME == overviewPLC.Properties.FUNC_FULLNAME &&
-                    x.Properties.FUNC_TYPE.ToInt() == 1);
+                    x.Properties.FUNC_TYPE.ToInt() == 1 &&
+                    x.Properties[20183] == overviewPLC.Properties[20183]);
 
                 var functiomText = overviewPLC.Properties.FUNC_TEXT.GetDisplayString()
                     .GetStringToDisplay(ISOCode.Language.L_ru_RU);
