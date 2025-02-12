@@ -327,7 +327,7 @@ namespace ST.EplAddin.PlcEdit
                 {
                     case Direction.Up:
                         properlyRow = dataGridView.Rows.Cast<DataGridViewRow>().FirstOrDefault(x =>
-                            x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                            x.Cells["SymbolicAdressDefined"].Value?.ToString() == string.Empty
                             && x.Cells["FunctionText"].Value?.ToString() == string.Empty
                             && x.Index < currentPositionIndex
                             && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
@@ -339,7 +339,7 @@ namespace ST.EplAddin.PlcEdit
                             .Where(z => z.Index > currentPositionIndex)
                             .Reverse()
                             .FirstOrDefault(x =>
-                                x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                                x.Cells["SymbolicAdressDefined"].Value?.ToString() == string.Empty
                                 && x.Cells["FunctionText"].Value?.ToString() == string.Empty
                                 && x.Index > currentPositionIndex
                                 && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
@@ -356,7 +356,7 @@ namespace ST.EplAddin.PlcEdit
                             .Where(z => z.Index < currentPositionIndex)
                             .Reverse()
                             .FirstOrDefault(x =>
-                                x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                                x.Cells["SymbolicAdressDefined"].Value?.ToString() == string.Empty
                                 && x.Cells["FunctionText"].Value?.ToString() == string.Empty
                                 && x.Index < currentPositionIndex
                                 && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
@@ -364,7 +364,7 @@ namespace ST.EplAddin.PlcEdit
 
                     case Direction.Down:
                         properlyRow = dataGridView.Rows.Cast<DataGridViewRow>().FirstOrDefault(x =>
-                            x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                            x.Cells["SymbolicAdressDefined"].Value?.ToString() == string.Empty
                             && x.Cells["FunctionText"].Value?.ToString() == string.Empty
                             && x.Index > currentPositionIndex
                             && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
