@@ -58,7 +58,7 @@ namespace ST.EplAddin.PlcEdit
             RewriteFunctionsTextInImport.Checked = Properties.Settings.Default.IsRewritePLCFunctionsTextInImport;
             import_button.Enabled = false;
             export_button.Enabled = false;
-            ComparingForm_StartRewriting();
+
         }
 
         private void ImportForm_ImportCsvDataEvent(object sender, List<CsvFileDataModelView> e)
@@ -327,7 +327,7 @@ namespace ST.EplAddin.PlcEdit
                 {
                     case Direction.Up:
                         properlyRow = dataGridView.Rows.Cast<DataGridViewRow>().FirstOrDefault(x =>
-                            x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                            x.Cells["SymbolicAdressDefined"].Value?.ToString() == string.Empty
                             && x.Cells["FunctionText"].Value?.ToString() == string.Empty
                             && x.Index < currentPositionIndex
                             && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
@@ -339,7 +339,7 @@ namespace ST.EplAddin.PlcEdit
                             .Where(z => z.Index > currentPositionIndex)
                             .Reverse()
                             .FirstOrDefault(x =>
-                                x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                                x.Cells["SymbolicAdressDefined"].Value?.ToString() == string.Empty
                                 && x.Cells["FunctionText"].Value?.ToString() == string.Empty
                                 && x.Index > currentPositionIndex
                                 && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
@@ -356,7 +356,7 @@ namespace ST.EplAddin.PlcEdit
                             .Where(z => z.Index < currentPositionIndex)
                             .Reverse()
                             .FirstOrDefault(x =>
-                                x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                                x.Cells["SymbolicAdressDefined"].Value?.ToString() == string.Empty
                                 && x.Cells["FunctionText"].Value?.ToString() == string.Empty
                                 && x.Index < currentPositionIndex
                                 && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
@@ -364,7 +364,7 @@ namespace ST.EplAddin.PlcEdit
 
                     case Direction.Down:
                         properlyRow = dataGridView.Rows.Cast<DataGridViewRow>().FirstOrDefault(x =>
-                            x.Cells["SymbolicAdress"].Value?.ToString() == string.Empty
+                            x.Cells["SymbolicAdressDefined"].Value?.ToString() == string.Empty
                             && x.Cells["FunctionText"].Value?.ToString() == string.Empty
                             && x.Index > currentPositionIndex
                             && functionDefinition == x.Cells["FunctionDefinition"].Value?.ToString());
@@ -500,7 +500,7 @@ namespace ST.EplAddin.PlcEdit
         }
         private void import_button_Click(object sender, EventArgs e)
         {
-            //ComparingForm_StartRewriting();
+            ComparingForm_StartRewriting();
             var dataToRewrite = GetRewritingRowsData(PlcDataModelView);
             if (dataToRewrite.Count == ImportedData.Count)
             {
@@ -684,7 +684,8 @@ namespace ST.EplAddin.PlcEdit
             {
                 var multyLinePLC = allFunctions.FirstOrDefault(x =>
                     x.Properties.FUNC_FULLNAME == overviewPLC.Properties.FUNC_FULLNAME &&
-                    x.Properties.FUNC_TYPE.ToInt() == 1);
+                    x.Properties.FUNC_TYPE.ToInt() == 1 &&
+                    x.Properties[20183] == overviewPLC.Properties[20183]);
 
                 var functiomText = overviewPLC.Properties.FUNC_TEXT.GetDisplayString()
                     .GetStringToDisplay(ISOCode.Language.L_ru_RU);

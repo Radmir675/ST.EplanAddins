@@ -127,21 +127,29 @@ namespace ST.EplAddin.PlcEdit
         {
             PlcTerminals = GetPlcTerminals();
             FunctionsInProgram = PlcTerminals.Cast<Function>();
-            InitialPlcData = Mapper.GetPlcData(PlcTerminals);
+            Mapper mapper = new();
+            InitialPlcData = mapper.GetPlcData(PlcTerminals);
         }
 
         private void AsssignNewFunctions(IEnumerable<Function> functionsInProgram, NameCorrelation tableWithReverse)
         {
-            var sourceFunction = functionsInProgram.Where(x => x.Properties.FUNC_FULLNAME == tableWithReverse.FunctionOldName).ToList();//найдем его
-            var targetFunction = functionsInProgram.Where(x => x.Properties.FUNC_FULLNAME == tableWithReverse.FunctionNewName).ToList();//найдем его
+            var sourceFunction = functionsInProgram.Where(x => x.Properties.FUNC_FULLNAME == tableWithReverse.FunctionOldName
+                                                               && x.Properties[20183].ToString() == tableWithReverse.OldDevicePointDesignation
+                                                               ).ToList();//найдем его
+            var targetFunction = functionsInProgram.Where(x => x.Properties.FUNC_FULLNAME == tableWithReverse.FunctionNewName
+                && x.Properties[20183].ToString() == tableWithReverse.NewDevicePointDesignation).ToList();//найдем его
             AssignFunction(sourceFunction, targetFunction);
         }
         private void RewritePlcProperties(Terminal[] plcTerminals, List<PlcDataModelView> newDataPlc)
         {
             foreach (var item in newDataPlc)
             {
-                var multyLineTerminal = plcTerminals.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.DT && x.Properties.FUNC_TYPE.ToInt() == 1);
-                var overviewTerminal = plcTerminals.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.DT && x.Properties.FUNC_TYPE.ToInt() == 3);
+                var multyLineTerminal = plcTerminals.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.DT
+                                                                         && x.Properties.FUNC_TYPE.ToInt() == 1
+                                                                         && item.DevicePointDesignation == x.Properties.FUNC_PLCAUTOPLUG_AND_CONNPTDESIGNATION.ToString(ISOCode.Language.L_ru_RU));
+                var overviewTerminal = plcTerminals.FirstOrDefault(x => x.Properties.FUNC_FULLNAME == item.DT
+                                                                        && x.Properties.FUNC_TYPE.ToInt() == 3
+                    && item.DevicePointDesignation == x.Properties.FUNC_PLCAUTOPLUG_AND_CONNPTDESIGNATION.ToString(ISOCode.Language.L_ru_RU));
 
                 if (multyLineTerminal != null)
                 {
@@ -188,7 +196,8 @@ namespace ST.EplAddin.PlcEdit
         {
             var terminals = GetPlcTerminals();
             CheckToIdenticalTerminal(terminals);
-            var mappedPlcTerminals = Mapper.GetPlcData(terminals);
+            Mapper mapper = new();
+            var mappedPlcTerminals = mapper.GetPlcData(terminals);
             ManagePlcForm?.UpdateTable(mappedPlcTerminals);//тут передать данные после присвоения для обновления формы
         }
 
@@ -201,7 +210,7 @@ namespace ST.EplAddin.PlcEdit
                 {
                     if (data1.FunctionText != string.Empty || data1.SymbolicAdressDefined != string.Empty)
                     {
-                        return new NameCorrelation(data1.DT, data2.DT);
+                        return new NameCorrelation(data1.DT, data2.DT, data1.DevicePointDesignation, data2.DevicePointDesignation);
                     }
                     return null;
                 }).Where(x => x != null).ToList();
@@ -210,7 +219,7 @@ namespace ST.EplAddin.PlcEdit
         }
         private List<NameCorrelation> FindDifferences(List<NameCorrelation> table)
         {
-            table = table.Where(x => x.FunctionNewName != x.FunctionOldName).ToList();
+            table = table.Where(x => x.FunctionNewName != x.FunctionOldName && x.NewDevicePointDesignation != x.OldDevicePointDesignation).ToList();
             var tableWithReverse = table.Distinct(new EqualityComparer()).ToList();
             return tableWithReverse;
         }
@@ -226,28 +235,35 @@ namespace ST.EplAddin.PlcEdit
 
         private void ReverseOutputPins(List<Function> sourceFunction, List<Function> targetFunction)
         {
-            var allCrossreferencedFunctions = sourceFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>() ?? targetFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>();
+            var allCrossreferencedFunctionsSource =
+                sourceFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>();
+            var allCrossreferencedFunctionsTarget = targetFunction.FirstOrDefault()?.CrossReferencedObjectsAll.OfType<Terminal>();
 
-            var sourceOverviewFunction = allCrossreferencedFunctions.FirstOrDefault(z => z.Properties.FUNC_TYPE == 3
-            && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == sourceFunction.FirstOrDefault()?.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
+            var sourceOverviewFunction = allCrossreferencedFunctionsSource.FirstOrDefault(z => z.Properties.FUNC_TYPE == 3
+            && z.Properties[20183] == sourceFunction.FirstOrDefault()?.Properties[20183]
+            && z.Properties.FUNC_FULLNAME == sourceFunction.FirstOrDefault()?.Properties.FUNC_FULLNAME);
 
-            var targetOverviewFunction = allCrossreferencedFunctions.FirstOrDefault(z => z.Properties.FUNC_TYPE == 3
-            && z.Properties.FUNC_ALLCONNECTIONDESIGNATIONS == targetFunction.FirstOrDefault()?.Properties.FUNC_ALLCONNECTIONDESIGNATIONS);
+            var targetOverviewFunction = allCrossreferencedFunctionsTarget.FirstOrDefault(z => z.Properties.FUNC_TYPE == 3
+            && z.Properties[20183] == targetFunction.FirstOrDefault()?.Properties[20183]
+                                         && z.Properties.FUNC_FULLNAME == targetFunction.FirstOrDefault()?.Properties.FUNC_FULLNAME);
 
             var targetMainFunction = targetFunction.FirstOrDefault(x => x.Properties.FUNC_TYPE == 1);
             var sourceMainFunction = sourceFunction.FirstOrDefault(x => x.Properties.FUNC_TYPE == 1);
 
-
-            if (targetMainFunction?.Properties.FUNC_TYPE == 1 && sourceMainFunction?.Properties.FUNC_TYPE == 1)
+            if (targetOverviewFunction == null)
+            {
+                throw new Exception("Не удалось найти обзор выхода ПЛК");
+            }
+            if (targetMainFunction != null && sourceMainFunction != null)
             {
                 sourceOverviewFunction.Assign(targetMainFunction);
                 targetOverviewFunction.Assign(sourceMainFunction);
             }
-            else if (sourceMainFunction?.Properties.FUNC_TYPE == 1)
+            else if (sourceMainFunction != null)
             {
                 targetOverviewFunction?.Assign(sourceMainFunction);
             }
-            else if (targetMainFunction?.Properties.FUNC_TYPE == 1)
+            else if (targetMainFunction != null)
             {
                 sourceOverviewFunction.Assign(targetMainFunction);
             }

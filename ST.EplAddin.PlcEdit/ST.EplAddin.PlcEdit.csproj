@@ -72,10 +72,18 @@
       <HintPath>..\..\..\..\..\Program Files\EPLAN\Platform\2.9.4\Bin\Eplan.EplApi.DataModelu.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Eplan.EplApi.Guiu, Version=1.0.0.0, Culture=neutral, PublicKeyToken=57aaa27e22f7b107, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\EPLAN\Platform\2.9.4\Bin\Eplan.EplApi.Guiu.dll</HintPath>
+    </Reference>
     <Reference Include="Eplan.EplApi.HEServicesu, Version=1.0.0.0, Culture=neutral, PublicKeyToken=57aaa27e22f7b107, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files\EPLAN\Platform\2.9.4\Bin\Eplan.EplApi.HEServicesu.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Eplan.EplApi.Systemu, Version=1.0.0.0, Culture=neutral, PublicKeyToken=57aaa27e22f7b107, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\EPLAN\Platform\2.9.4\Bin\Eplan.EplApi.Systemu.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -187,6 +195,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="TestAction.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="View\CsvFileDataModelViews.cs" />
     <Compile Include="View\PlcDataView.cs" />
