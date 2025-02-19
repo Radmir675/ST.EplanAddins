@@ -122,7 +122,7 @@ namespace ST.EplAddins.LastTerminalStrip
                             TerminalOff.Add(terminal);
                         }
                     }
-                    if (TerminalOff != null && TerminalOff.Count() >= 1)
+                    if (TerminalOff != null && TerminalOff.Any())
                     {
                         var productSubGroup = TerminalOff.Last().ArticleReferences.First().Properties.ARTICLE_PRODUCTSUBGROUP.GetDisplayString();
                         var displaySubGroupName = productSubGroup.GetStringToDisplay(ISOCode.Language.L_ru_RU);
