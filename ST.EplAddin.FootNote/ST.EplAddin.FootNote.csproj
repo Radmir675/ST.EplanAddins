@@ -145,6 +145,7 @@
       <DependentUpon>SettingsDialogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Alignment.cs" />
+    <Compile Include="Models\PropertyStates.cs" />
     <Compile Include="Models\Shape.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyBrowser\ContextActionEventListener.cs" />
@@ -153,7 +154,8 @@
     <Compile Include="PropertyBrowser\FootnoteVerification.cs" />
     <Compile Include="PropertyBrowser\PropertiesList.cs" />
     <Compile Include="PropertyBrowser\PropertiesProvider.cs" />
-    <Compile Include="PropertyBrowser\PropertiesStore.cs" />
+    <Compile Include="Services\IPropertiesStore.cs" />
+    <Compile Include="Services\Implementations\PropertiesStore.cs" />
     <Compile Include="PropertyBrowser\Settings.cs" />
     <Compile Include="Services\Implementations\WindowsDialog.cs" />
     <Compile Include="Services\IWindowsServiceDialog.cs" />

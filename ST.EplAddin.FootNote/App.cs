@@ -16,8 +16,12 @@ namespace ST.EplAddin.FootNote
 
         public App()
         {
-            LoadAssemblies();
             //StartWindow();
+        }
+
+        static App()
+        {
+            LoadAssemblies();
         }
 
         #region DELETE
@@ -34,12 +38,15 @@ namespace ST.EplAddin.FootNote
         {
             Services.GetRequiredService<MainPropertyWindow>().ShowDialog(); //чтобы стартануть надо сделать вот так
         }
-
+        public void StartProp()
+        {
+            Services.GetRequiredService<FullPropertiesWindow>().ShowDialog(); //чтобы стартануть надо сделать вот так
+        }
 
 
 
         #region CheckAssemblies
-        private void LoadAssemblies()
+        private static void LoadAssemblies()
         {
             string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
@@ -56,7 +63,7 @@ namespace ST.EplAddin.FootNote
             }
         }
 
-        private bool CheckDll(string reference, string[] loadedPaths)
+        private static bool CheckDll(string reference, string[] loadedPaths)
         {
             var name = Path.GetFileName(reference);
 
@@ -95,6 +102,8 @@ namespace ST.EplAddin.FootNote
                 var window = new FullPropertiesWindow() { DataContext = model };
                 return window;
             });
+
+
 
             return services;
 

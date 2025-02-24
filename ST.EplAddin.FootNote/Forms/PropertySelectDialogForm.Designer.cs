@@ -136,6 +136,7 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(2, 2);
@@ -149,18 +150,19 @@
             this.panel1.Controls.Add(this.cancel_button);
             this.panel1.Controls.Add(this.ok_button);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(5, 743);
+            this.panel1.Location = new System.Drawing.Point(5, 771);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1004, 60);
+            this.panel1.Size = new System.Drawing.Size(1004, 32);
             this.panel1.TabIndex = 3;
             // 
             // cancel_button
             // 
-            this.cancel_button.Location = new System.Drawing.Point(836, 14);
-            this.cancel_button.Margin = new System.Windows.Forms.Padding(2);
+            this.cancel_button.Dock = System.Windows.Forms.DockStyle.Right;
+            this.cancel_button.Location = new System.Drawing.Point(785, 0);
+            this.cancel_button.Margin = new System.Windows.Forms.Padding(0);
             this.cancel_button.Name = "cancel_button";
-            this.cancel_button.Size = new System.Drawing.Size(112, 34);
+            this.cancel_button.Size = new System.Drawing.Size(112, 32);
             this.cancel_button.TabIndex = 1;
             this.cancel_button.Text = "Отменить";
             this.cancel_button.UseVisualStyleBackColor = true;
@@ -168,10 +170,11 @@
             // 
             // ok_button
             // 
-            this.ok_button.Location = new System.Drawing.Point(713, 14);
-            this.ok_button.Margin = new System.Windows.Forms.Padding(2);
+            this.ok_button.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ok_button.Location = new System.Drawing.Point(897, 0);
+            this.ok_button.Margin = new System.Windows.Forms.Padding(20, 2, 2, 2);
             this.ok_button.Name = "ok_button";
-            this.ok_button.Size = new System.Drawing.Size(107, 34);
+            this.ok_button.Size = new System.Drawing.Size(107, 32);
             this.ok_button.TabIndex = 0;
             this.ok_button.Text = "ОК";
             this.ok_button.UseVisualStyleBackColor = true;

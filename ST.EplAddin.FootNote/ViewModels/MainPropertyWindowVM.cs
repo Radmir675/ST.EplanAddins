@@ -125,7 +125,7 @@ namespace ST.EplAddin.FootNote.ViewModels
             {
                 return _addEplanProperties ??= new RelayCommand(obj =>
                 {
-                    _windowsService.ShowFullPropertiesWindow();
+                    //_windowsService.ShowFullPropertiesWindow();
                 });
             }
         }

@@ -55,6 +55,8 @@ namespace ST.EplAddin.FootNote.FootNote
                     }
                     else
                     {
+
+
                         Footnote_CustomTextForm form = new Footnote_CustomTextForm(placement3D);
                         form.ShowDialog();
                         if (form.DialogResult == DialogResult.OK)

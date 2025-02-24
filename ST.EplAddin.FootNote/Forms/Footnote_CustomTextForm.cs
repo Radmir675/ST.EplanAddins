@@ -1,14 +1,19 @@
-﻿using Eplan.EplApi.DataModel.E3D;
+﻿#nullable enable
+using Eplan.EplApi.DataModel.E3D;
+using Microsoft.Extensions.DependencyInjection;
 using ST.EplAddin.FootNote.Forms;
+using ST.EplAddin.FootNote.Services;
 using System.Windows.Forms;
 
 namespace ST.EplAddin.FootNote
 {
     public partial class Footnote_CustomTextForm : Form
     {
+        private readonly IWindowsServiceDialog _dialog;
         private readonly Placement3D _placement3D;
         public Footnote_CustomTextForm()
         {
+
             InitializeComponent();
             var subscribersCount = PropertySelectDialogForm.GetSubscriberCount();
         }
@@ -27,6 +32,8 @@ namespace ST.EplAddin.FootNote
         public Footnote_CustomTextForm(Placement3D placement3D) : this()
         {
             this._placement3D = placement3D;
+            _dialog = App.Services.GetService<IWindowsServiceDialog>(); ;
+
         }
         //public void ShowForm()
         //{
@@ -43,10 +50,12 @@ namespace ST.EplAddin.FootNote
 
         private void propertiesButton_Click(object sender, System.EventArgs e)
         {
-            PropertySelectDialogForm form = new PropertySelectDialogForm(_placement3D);
-            form.ShowDialog(this);
-            Update();
-            this.DialogResult = DialogResult.None;
+            //PropertySelectDialogForm form = new PropertySelectDialogForm(_placement3D);
+            //form.ShowDialog(this);
+            //Update();
+            //DialogResult = DialogResult.None;
+            var result = _dialog.ShowFullPropertiesWindow(_placement3D, out PropertyEplan prop);
+
         }
 
         private void Ok_Button_Click(object sender, System.EventArgs e)

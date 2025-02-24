@@ -23,28 +23,14 @@
                   Padding="5,12,5,12"
                   Grid.Column="0"
                   Margin="0,18,0,0">
-            <TreeView BorderBrush="Transparent"
-                      Padding="0,10,0,0">
-                <TextBox>Элемент TreeView</TextBox>
-                <TreeViewItem Header="Базы данных">
-                    <TreeViewItem Header="MS SQL Server" />
-                    <TreeViewItem Header="MySQL" />
-                    <TreeViewItem Header="MongoDB" />
-                    <TreeViewItem Header="Postgres" />
-                </TreeViewItem>
-                <TreeViewItem Header="Языки программирования">
-                    <TreeViewItem Header="C-языки">
-                        <TreeViewItem Header="C#" />
-                        <TreeViewItem Header="C/C++" />
-                        <TreeViewItem Header="Java" />
-                    </TreeViewItem>
-                    <TreeViewItem Header="Basic">
-                        <TreeViewItem Header="Visual Basic" />
-                        <TreeViewItem Header="VB.Net" />
-                        <TreeViewItem Header="PureBasic" />
-                    </TreeViewItem>
-                </TreeViewItem>
-            </TreeView>
+         <ListBox SelectionMode="Single"
+                  Padding="10"
+                  SelectedItem="{Binding SelectedType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <ListBoxItem  Content="Изделие"/>
+                <ListBoxItem  Content="Ссылка изделия"/>
+                <ListBoxItem  Content="Размещения изделия"/>
+               
+         </ListBox>
         </GroupBox>
 
         <GridSplitter Grid.Column="1"
@@ -94,18 +80,21 @@
                             <ListView Grid.Row="1"
                                       ScrollViewer.VerticalScrollBarVisibility="Visible"
                                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                                      ItemsSource="{Binding Message}"
-                                      SelectedItem="{Binding SelectedMessage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                      ItemsSource="{Binding AllProperties}"
+                                      SelectedItem="{Binding CurrentSelectedProperty, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                       Margin="0,15,0,15">
                                 <ListView.View>
 
                                     <GridView>
 
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Title}"
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Property}"
                                                         Header="Имя свойства"
-                                                        Width="500" />
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Company}"
-                                                        Width="700"
+                                                        Width="300" />
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=PropertyIndex}"
+                                                        Width="500"
+                                                        Header="Значение" />
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Value}"
+                                                        Width="200"
                                                         Header="Значение" />
                                     </GridView>
 

@@ -1,4 +1,4 @@
-﻿namespace ST.EplAddin.FootNote.ProperyBrowser
+﻿namespace ST.EplAddin.FootNote.Forms
 {
     public class PropertyEplan
     {

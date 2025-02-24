@@ -1,4 +1,4 @@
-﻿using ST.EplAddin.FootNote.PropertyBrowser;
+﻿using ST.EplAddin.FootNote.Services.Implementations;
 using System;
 using System.Windows.Forms;
 using Placement3D = Eplan.EplApi.DataModel.E3D.Placement3D;

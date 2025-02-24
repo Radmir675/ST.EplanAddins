@@ -15,5 +15,10 @@ namespace ST.EplAddin.FootNote.Views
             Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "MaterialDesignColors.dll"));
             InitializeComponent();
         }
+
+        private void ListBoxItem_OnSelected(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

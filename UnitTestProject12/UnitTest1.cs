@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ST.EplAddin.FootNote;
+using ST.EplAddin.FootNote.ViewModels;
+using ST.EplAddin.FootNote.Views;
 
 namespace UnitTestProject12
 {
@@ -8,12 +9,23 @@ namespace UnitTestProject12
     {
 
 
+        //[TestMethod]
+        //public void StartMainPropertyWindow()
+        //{
+        //    new System.Windows.Application();
+        //    var app = new App();
+        //    app.StartWindow();
+
+
+        //}
+
         [TestMethod]
-        public void TestMethod()
+        public void StartPropertyWindow()
         {
-            //new System.Windows.Application();
-            var app = new App();
-            app.StartWindow();
+            FullPropertiesWindow fullPropertiesWindow = new FullPropertiesWindow();
+
+            fullPropertiesWindow.DataContext = new FullPropertiesWindowVM();
+            fullPropertiesWindow.ShowDialog();
 
 
         }

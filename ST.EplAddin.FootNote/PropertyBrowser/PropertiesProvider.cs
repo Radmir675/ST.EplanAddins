@@ -1,6 +1,6 @@
 ﻿using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.E3D;
-using ST.EplAddin.FootNote.ProperyBrowser;
+using ST.EplAddin.FootNote.Forms;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -15,38 +15,40 @@ namespace ST.EplAddin.FootNote.PropertyBrowser
         {
             Placement3D = placement3D;
         }
-        public List<PropertyEplan> GetArticleReferenceProperties()
+        public IEnumerable<PropertyEplan> GetArticleReferenceProperties()
         {
-            List<PropertyEplan> result = new();
-            //TODO:нужно найти изделия и получить все свойства
             var function3D = Placement3D as Function3D;
-            if (function3D == null) { MessageBox.Show("Недействительный объект источника"); return new List<PropertyEplan>(); }
+            if (function3D == null)
+            {
+                MessageBox.Show("Недействительный объект источника");
+                yield break;
+            }
             var articleReference = function3D.ArticleReferences.FirstOrDefault();
 
             foreach (var property in Properties.AllArticleReferencePropIDs)
             {
                 try
                 {
-                    if (articleReference == null) return new List<PropertyEplan>();
+                    if (articleReference == null) yield break;
 
                     var value = articleReference.Properties[property];
                     var name = property?.Definition.Name;
                     if (!string.IsNullOrEmpty(value))
                     {
-                        result.Add(new PropertyEplan(name, value, property.AsInt));
+                        yield return new PropertyEplan(name, value, property.AsInt);
 
                     }
                 }
-                catch (System.Exception)
+                finally
                 {
+
                 }
             }
-            return result;
+
         }
         public List<PropertyEplan> GetArticleProperties()
         {
             List<PropertyEplan> result = new();
-            //TODO:нужно найти изделия и получить все свойства
             var function3D = Placement3D as Function3D;
             if (function3D == null) { MessageBox.Show("Недействительный объект источника"); return new List<PropertyEplan>(); }
             var article = function3D.Articles.FirstOrDefault();
