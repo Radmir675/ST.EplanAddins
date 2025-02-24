@@ -39,7 +39,9 @@
                      ItemsSource="{Binding States}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" />
+                        <StackPanel>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" />
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
 

@@ -4,7 +4,7 @@ namespace ST.EplAddin.FootNote.Models
 {
     public enum PropertyStates
     {
-        [Description("1")]
+        [Description("1525")]
         ArticleReferenceProperty,
         [Description("1")]
         ArticleProperty,

@@ -10,7 +10,13 @@ namespace ST.EplAddin.FootNote.ViewModels
     {
         private readonly PropertiesStore propertiesStore;
         private PropertyStates _selectedType;
-        public IReadOnlyList<PropertyStates> States { get; set; }
+        private IReadOnlyList<PropertyStates> _states;
+
+        public IReadOnlyList<PropertyStates> States
+        {
+            get => _states;
+            set => _states = value;
+        }
 
         public FullPropertiesWindowVM()
         { }
@@ -37,9 +43,9 @@ namespace ST.EplAddin.FootNote.ViewModels
             {
                 return SelectedType switch
                 {
-                    PropertyStates.ArticleReferenceProperty => propertiesStore.ArticleReferenceProperties,
-                    PropertyStates.ArticleProperty => propertiesStore.ArticleProperties,
-                    PropertyStates.Placement3DProperty => propertiesStore.Placement3DProperties,
+                    PropertyStates.ArticleReferenceProperty => propertiesStore?.ArticleReferenceProperties,
+                    PropertyStates.ArticleProperty => propertiesStore?.ArticleProperties,
+                    PropertyStates.Placement3DProperty => propertiesStore?.Placement3DProperties,
                     _ => null
                 };
             }
