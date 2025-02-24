@@ -10,7 +10,7 @@ namespace ST.EplAddin.FootNote.ViewModels
     {
         private readonly PropertiesStore propertiesStore;
         private PropertyStates _selectedType;
-
+        public IReadOnlyList<PropertyStates> States { get; set; }
 
         public FullPropertiesWindowVM()
         { }

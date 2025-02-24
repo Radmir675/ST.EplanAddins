@@ -149,6 +149,7 @@
     <Compile Include="Models\Shape.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyBrowser\ContextActionEventListener.cs" />
+    <Compile Include="PropertyBrowser\EnumExtension.cs" />
     <Compile Include="PropertyBrowser\EplHelper.cs" />
     <Compile Include="PropertyBrowser\FigureConverter.cs" />
     <Compile Include="PropertyBrowser\FootnoteVerification.cs" />
