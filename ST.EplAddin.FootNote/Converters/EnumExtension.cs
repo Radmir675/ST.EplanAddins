@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-namespace ST.EplAddin.ComparisonOfProjectProperties.Converters
+namespace ST.EplAddin.FootNote.Converters
 {
     internal static class EnumExtension
     {
