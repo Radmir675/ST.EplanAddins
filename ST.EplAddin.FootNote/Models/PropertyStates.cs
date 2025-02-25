@@ -4,11 +4,11 @@ namespace ST.EplAddin.FootNote.Models
 {
     public enum PropertyStates
     {
-        [Description("1525")]
+        [Description("Ссылка изделия")]
         ArticleReferenceProperty,
-        [Description("1")]
+        [Description("Изделие")]
         ArticleProperty,
-        [Description("1")]
+        [Description("Размещение изделия")]
         Placement3DProperty
     }
 }

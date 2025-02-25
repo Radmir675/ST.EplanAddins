@@ -1,4 +1,5 @@
 ﻿using Eplan.EplApi.DataModel.E3D;
+using ST.EplAddin.FootNote.Converters;
 using ST.EplAddin.FootNote.Forms;
 using ST.EplAddin.FootNote.Models;
 using ST.EplAddin.FootNote.Services.Implementations;
@@ -12,11 +13,7 @@ namespace ST.EplAddin.FootNote.ViewModels
         private PropertyStates _selectedType;
         private IReadOnlyList<PropertyStates> _states;
 
-        public IReadOnlyList<PropertyStates> States
-        {
-            get => _states;
-            set => _states = value;
-        }
+        public IReadOnlyList<PropertyStates> States { get; set; } = EnumExtension.GetEnumList<PropertyStates>();
 
         public FullPropertiesWindowVM()
         { }

@@ -15,6 +15,12 @@ namespace ST.EplAddin.FootNote.Converters
             var result = attribute != null ? attribute.Description : value.ToString();
             return result;
         }
+        public static List<T> GetEnumList<T>()
+        {
+            T[] array = (T[])Enum.GetValues(typeof(T));
+            List<T> list = new List<T>(array);
+            return list;
+        }
 
         /// <summary>
         /// Enumerates all enum values
