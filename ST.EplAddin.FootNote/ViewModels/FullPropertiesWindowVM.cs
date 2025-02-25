@@ -11,7 +11,6 @@ namespace ST.EplAddin.FootNote.ViewModels
     {
         private readonly PropertiesStore propertiesStore;
         private PropertyStates _selectedType;
-        private IReadOnlyList<PropertyStates> _states;
 
         public IReadOnlyList<PropertyStates> States { get; set; } = EnumExtension.GetEnumList<PropertyStates>();
 
@@ -49,5 +48,7 @@ namespace ST.EplAddin.FootNote.ViewModels
         }
 
         public PropertyEplan CurrentSelectedProperty { get; set; }
+
+
     }
 }

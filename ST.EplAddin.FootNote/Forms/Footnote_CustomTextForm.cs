@@ -53,9 +53,12 @@ namespace ST.EplAddin.FootNote
             //PropertySelectDialogForm form = new PropertySelectDialogForm(_placement3D);
             //form.ShowDialog(this);
             //Update();
-            //DialogResult = DialogResult.None;
             var result = _dialog.ShowFullPropertiesWindow(_placement3D, out PropertyEplan prop);
-
+            if (result)
+            {
+                AppendText(prop.PropertyIndex.ToString());
+            }
+            DialogResult = DialogResult.None;
         }
 
         private void Ok_Button_Click(object sender, System.EventArgs e)

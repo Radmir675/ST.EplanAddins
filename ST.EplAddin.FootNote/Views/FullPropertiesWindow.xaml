@@ -78,14 +78,15 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBox VerticalContentAlignment="Center" />
+                                    <TextBox VerticalContentAlignment="Center" Name="SearchTextBox" />
                                     <Button Width="25"
                                             Height="25"
                                             HorizontalAlignment="Right"
                                             Grid.Column="1"
                                             Margin="10,0,0,0"
                                             Foreground="Red"
-                                            VerticalContentAlignment="Top">
+                                            VerticalContentAlignment="Top"
+                                            Click="Cleare_OnClick">
                                         <TextBlock Text="🗙"
                                                    Margin="0,1,0,0" />
                                     </Button>
@@ -97,20 +98,20 @@
                                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                       ItemsSource="{Binding AllProperties}"
                                       SelectedItem="{Binding CurrentSelectedProperty, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                      Margin="0,15,0,15">
+                                      Margin="0,15,0,15"
+                                      MouseDoubleClick="Control_OnMouseDoubleClick">
                                 <ListView.View>
 
                                     <GridView>
-
                                         <GridViewColumn DisplayMemberBinding="{Binding Path=Property}"
                                                         Header="Имя свойства"
-                                                        Width="300" />
+                                                        Width="400" />
                                         <GridViewColumn DisplayMemberBinding="{Binding Path=PropertyIndex}"
-                                                        Width="500"
-                                                        Header="Значение" />
+                                                        Width="auto"
+                                                        Header="Индекс"/>
                                         <GridViewColumn DisplayMemberBinding="{Binding Path=Value}"
-                                                        Width="200"
-                                                        Header="Значение" />
+                                                        Width="400"
+                                                        Header="Значение"/>
                                     </GridView>
 
                                 </ListView.View>
@@ -118,7 +119,7 @@
                             <TextBox Grid.Row="2"
                                      Height="100"
                                      TextWrapping="Wrap"
-                                     Text="AutomationML GUID/ Это свойство необходимо для экспорта и импорта AutomationML. Каждый объект в AutomationML идентифицируется глобальным уникальным идентификатором GUID (Globally Unique Identifier). GUID генерируется автоматически и, как правило, не должен изменяться вручную."
+                                     Text="{Binding CurrentSelectedProperty.Description,UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
                                      VerticalScrollBarVisibility="Auto"
                                      Padding="3"
                                      FontSize="14"
@@ -138,7 +139,8 @@
                          HorizontalAlignment="Right">
 
                 <Button Width="120"
-                        Content="ОК" />
+                        Content="ОК"
+                        Click="ButtonBase_OnClick"/>
                 <Button Width="120"
                         Content="Отменить"
                         IsCancel="True"

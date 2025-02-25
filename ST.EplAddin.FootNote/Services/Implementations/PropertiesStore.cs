@@ -12,39 +12,24 @@ namespace ST.EplAddin.FootNote.Services.Implementations
         public IEnumerable<PropertyEplan> ArticleReferenceProperties { get; set; }
         public IEnumerable<PropertyEplan> ArticleProperties { get; set; }
         public IEnumerable<PropertyEplan> Placement3DProperties { get; set; }
-        private Task ArticleReferenceTask { get; set; }
-        private Task ArticlePropertiesTask { get; set; }
-        private Task Placement3DTask { get; set; }
+
         public PropertiesStore(Placement3D placement3D)
         {
             _propertiesProvider = new PropertiesProvider(placement3D);
-            DownLoadAllAsync().Wait();
+            DownLoadAllAsync();
         }
-        private void DownLoadAll()
+        public void DownLoadAllAsync()
         {
-            ArticleReferenceProperties = _propertiesProvider.GetArticleReferenceProperties();
-            ArticleProperties = _propertiesProvider.GetArticleProperties();
-            Placement3DProperties = _propertiesProvider.GetPlacement3DProperties();
-        }
-        public async Task DownLoadAllAsync()
-        {
+            Task[] tasks = new Task[]
+            {
+                new Task(() => ArticleReferenceProperties = _propertiesProvider.GetArticleReferenceProperties())
+                //new Task(() => ArticleProperties = _propertiesProvider.GetArticleProperties()),
+                //new Task(() => Placement3DProperties = _propertiesProvider.GetPlacement3DProperties())
+            };
+            foreach (var task in tasks)
+                task.Start();
+            Task.WaitAll(tasks);
 
-            ArticleReferenceTask = Task.Run(() =>
-            {
-                ArticleReferenceProperties = _propertiesProvider.GetArticleReferenceProperties();
-            });
-            ArticlePropertiesTask = Task.Run(() =>
-            {
-                ArticleProperties = _propertiesProvider.GetArticleProperties();
-            });
-            Placement3DTask = Task.Run(() =>
-            {
-                Placement3DProperties = _propertiesProvider.GetPlacement3DProperties();
-            });
-            var task = Task.WhenAll(ArticleReferenceTask, ArticlePropertiesTask, Placement3DTask);
-            await task;
         }
     }
-
-
 }
