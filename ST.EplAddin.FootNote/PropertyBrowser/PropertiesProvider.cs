@@ -37,14 +37,13 @@ namespace ST.EplAddin.FootNote.PropertyBrowser
                     if (propertyDefinition.IsInternal) continue;
                     var value = articleReference_Props[property];
                     var name = propertyDefinition.Name;
-                    var description = "pdfg";
+                    var description = propertyDefinition.GetAsDisplayString(value);
 
                     if (propertyDefinition.IsIndexed)
                     {
                         foreach (var ind in value.Indexes)
                         {
                             var idxVal = value[ind];
-
 
                             if (!idxVal.IsEmpty)
                             {
@@ -62,59 +61,92 @@ namespace ST.EplAddin.FootNote.PropertyBrowser
                         }
                     }
                 }
-                finally
-                {
-
-                }
+                finally { }
             }
-
         }
-        public List<PropertyEplan> GetArticleProperties()
+        public IEnumerable<PropertyEplan> GetArticleProperties()
         {
-            List<PropertyEplan> result = new();
             var function3D = Placement3D as Function3D;
-            if (function3D == null) { MessageBox.Show("Недействительный объект источника"); return new List<PropertyEplan>(); }
+            if (function3D == null) { MessageBox.Show("Недействительный объект источника"); yield break; }
             var article = function3D.Articles.FirstOrDefault();
+            if (article == null) yield break;
+            var articleProperties = article.Properties;
 
             foreach (var property in Properties.AllArticlePropIDs)
             {
                 try
                 {
-                    if (article == null) return new List<PropertyEplan>();
-                    var value = article.Properties[property];
-                    var name = property?.Definition.Name;
-                    if (!string.IsNullOrEmpty(value))
+                    var propertyDefinition = property.Definition;
+                    if (propertyDefinition.IsInternal) continue;
+                    var value = articleProperties[property];
+                    var name = propertyDefinition.Name;
+                    var description = propertyDefinition.GetAsDisplayString(value);
+
+                    if (propertyDefinition.IsIndexed)
                     {
-                        result.Add(new PropertyEplan(name, value, property.AsInt));
+                        foreach (var ind in value.Indexes)
+                        {
+                            var idxVal = value[ind];
 
+                            if (!idxVal.IsEmpty)
+                            {
+                                yield return new PropertyEplan(name + "_" + ind, idxVal.ToString(ISOCode.Language.L_ru_RU), property.AsInt, description);
+                            }
+                        }
+                        continue;
                     }
-                }
-                catch (System.Exception)
-                {
 
+                    if (propertyDefinition.IsIndexed == false)
+                    {
+                        if (!value.IsEmpty)
+                        {
+                            yield return new PropertyEplan(name, value.ToString(ISOCode.Language.L_ru_RU), property.AsInt, description);
+                        }
+                    }
 
                 }
+                finally { }
             }
-
-            return result;
         }
-        public List<PropertyEplan> GetPlacement3DProperties()
+        public IEnumerable<PropertyEplan> GetPlacement3DProperties()
         {
-            List<PropertyEplan> result = new();
+            var placementProperties = Placement3D.Properties;
             foreach (var property in Properties.AllPlacement3DPropIDs)
             {
+                if (!placementProperties.Exists(property)) continue;
                 try
                 {
-                    var value = Placement3D.Properties[property];
-                    var name = property?.Definition.Name;
-                    result.Add(new PropertyEplan(name, value, property.AsInt));
-                }
-                catch (System.Exception)
-                {
+                    var propertyDefinition = property.Definition;
+                    if (propertyDefinition.IsInternal) continue;
 
+                    var value = placementProperties[property];
+                    var name = propertyDefinition.Name;
+                    var description = propertyDefinition.GetAsDisplayString(value);
+
+                    if (propertyDefinition.IsIndexed)
+                    {
+                        foreach (var ind in value.Indexes)
+                        {
+                            var idxVal = value[ind];
+
+                            if (!idxVal.IsEmpty)
+                            {
+                                yield return new PropertyEplan(name + "_" + ind, idxVal.ToString(ISOCode.Language.L_ru_RU), property.AsInt, description);
+                            }
+                        }
+                        continue;
+                    }
+
+                    if (propertyDefinition.IsIndexed == false)
+                    {
+                        if (!value.IsEmpty)
+                        {
+                            yield return new PropertyEplan(name, value.ToString(ISOCode.Language.L_ru_RU), property.AsInt, description);
+                        }
+                    }
                 }
+                finally { }
             }
-            return result;
         }
     }
 }

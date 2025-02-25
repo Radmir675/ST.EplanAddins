@@ -11,9 +11,9 @@ namespace ST.EplAddin.FootNote
     {
         private readonly IWindowsServiceDialog _dialog;
         private readonly Placement3D _placement3D;
+        private PropertyEplan propertiesEplanObject;
         public Footnote_CustomTextForm()
         {
-
             InitializeComponent();
             var subscribersCount = PropertySelectDialogForm.GetSubscriberCount();
         }
@@ -35,14 +35,6 @@ namespace ST.EplAddin.FootNote
             _dialog = App.Services.GetService<IWindowsServiceDialog>(); ;
 
         }
-        //public void ShowForm()
-        //{
-        //    Process oCurrent = Process.GetCurrentProcess();
-        //    var eplanHandle = new WindowWrapper(oCurrent.MainWindowHandle);
-        //    Footnote_CustomTextForm dialog = new Footnote_CustomTextForm();
-        //    dialog.ShowDialog(eplanHandle);
-        //}
-
         public string GetUserText()
         {
             return CommentText.Text;
@@ -50,12 +42,11 @@ namespace ST.EplAddin.FootNote
 
         private void propertiesButton_Click(object sender, System.EventArgs e)
         {
-            //PropertySelectDialogForm form = new PropertySelectDialogForm(_placement3D);
-            //form.ShowDialog(this);
-            //Update();
             var result = _dialog.ShowFullPropertiesWindow(_placement3D, out PropertyEplan prop);
             if (result)
             {
+                //TODO:Удалить 
+                propertiesEplanObject = prop;
                 AppendText(prop.PropertyIndex.ToString());
             }
             DialogResult = DialogResult.None;
@@ -71,9 +62,9 @@ namespace ST.EplAddin.FootNote
             PropertySelectDialogForm.PropertySelectedEvent += PropertySelectDialogForm_PropertySelectedEvent;
         }
 
-        private void Cancel_Button_Click(object sender, System.EventArgs e)
+        public PropertyEplan TryGetPropertiesSelectedObject()
         {
-
+            return propertiesEplanObject;
         }
     }
 }

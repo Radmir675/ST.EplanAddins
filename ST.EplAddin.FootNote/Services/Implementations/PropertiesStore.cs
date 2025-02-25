@@ -22,9 +22,9 @@ namespace ST.EplAddin.FootNote.Services.Implementations
         {
             Task[] tasks = new Task[]
             {
-                new Task(() => ArticleReferenceProperties = _propertiesProvider.GetArticleReferenceProperties())
-                //new Task(() => ArticleProperties = _propertiesProvider.GetArticleProperties()),
-                //new Task(() => Placement3DProperties = _propertiesProvider.GetPlacement3DProperties())
+                new Task(() => ArticleReferenceProperties = _propertiesProvider.GetArticleReferenceProperties()),
+                new Task(() => ArticleProperties = _propertiesProvider.GetArticleProperties()),
+                new Task(() => Placement3DProperties = _propertiesProvider.GetPlacement3DProperties())
             };
             foreach (var task in tasks)
                 task.Start();

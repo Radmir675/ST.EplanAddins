@@ -30,7 +30,5 @@ namespace ST.EplAddin.FootNote.Services.Implementations
             selectedProperty = viewModel.CurrentSelectedProperty;
             return result.GetValueOrDefault(false);
         }
-
-
     }
 }
