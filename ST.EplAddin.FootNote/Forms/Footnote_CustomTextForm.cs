@@ -11,7 +11,6 @@ namespace ST.EplAddin.FootNote
     {
         private readonly IWindowsServiceDialog _dialog;
         private readonly Placement3D _placement3D;
-        private PropertyEplan propertiesEplanObject;
         public Footnote_CustomTextForm()
         {
             InitializeComponent();
@@ -45,8 +44,6 @@ namespace ST.EplAddin.FootNote
             var result = _dialog.ShowFullPropertiesWindow(_placement3D, out PropertyEplan prop);
             if (result)
             {
-                //TODO:Удалить 
-                propertiesEplanObject = prop;
                 AppendText(prop.PropertyIndex.ToString());
             }
             DialogResult = DialogResult.None;
@@ -60,11 +57,6 @@ namespace ST.EplAddin.FootNote
         private void Footnote_CustomTextForm_Load(object sender, System.EventArgs e)
         {
             PropertySelectDialogForm.PropertySelectedEvent += PropertySelectDialogForm_PropertySelectedEvent;
-        }
-
-        public PropertyEplan TryGetPropertiesSelectedObject()
-        {
-            return propertiesEplanObject;
         }
     }
 }

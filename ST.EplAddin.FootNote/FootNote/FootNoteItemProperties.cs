@@ -1,4 +1,5 @@
 ﻿using Eplan.EplApi.Base;
+using Eplan.EplApi.DataModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -70,20 +71,33 @@ namespace ST.EplAddin.FootNote.FootNote
         {
             logger.Debug("");
 
+
             foreach (var property in propertiesId)
             {
                 if (placement3D.Properties.Exists(property))
                 {
-                    yield return placement3D.Properties[property];
-
-
+                    //TODO:надо доделать свойства
+                    AnyPropertyId wd = new AnyPropertyId();
+                    wd.SetPropertyId(property);
+                    if (wd.Definition.IsIndexed)
+                    {
+                        yield return placement3D.Properties[property][1];
+                    }
+                    else
+                    {
+                        yield return placement3D.Properties[property];
+                    }
                 }
 
                 else if (placement3D is Function3D function3D)
                 {
-                    if (function3D.Properties.Exists(property))
+                    if (function3D.ArticleReferences.First().Properties.Exists(property))
                     {
-                        yield return function3D.Properties[property];
+                        yield return function3D.ArticleReferences.First().Properties[property];
+                    }
+                    else if (function3D.Articles.First().Properties.Exists(property))
+                    {
+                        yield return function3D.Articles.First().Properties[property];
                     }
                 }
             }

@@ -14,7 +14,7 @@ namespace ST.EplAddin.FootNote.Views
         }
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
+            DialogResult = true;
             Close();
         }
 

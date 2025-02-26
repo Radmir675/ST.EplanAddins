@@ -150,7 +150,9 @@
 
                 <Button Width="120"
                         Content="ОК"
-                        Click="ButtonBase_OnClick"/>
+                        Click="ButtonBase_OnClick"
+                        IsDefault="True"
+                        KeyUp="ButtonBase_OnClick"/>
                 <Button Width="120"
                         Content="Отменить"
                         IsCancel="True"
