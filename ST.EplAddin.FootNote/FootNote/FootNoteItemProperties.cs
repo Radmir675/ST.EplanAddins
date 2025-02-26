@@ -1,9 +1,10 @@
 ﻿using Eplan.EplApi.Base;
-using Eplan.EplApi.DataModel.E3D;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Function3D = Eplan.EplApi.DataModel.E3D.Function3D;
+using Placement3D = Eplan.EplApi.DataModel.E3D.Placement3D;
 
 namespace ST.EplAddin.FootNote.FootNote
 {
@@ -67,12 +68,25 @@ namespace ST.EplAddin.FootNote.FootNote
 
         private IEnumerable<string> GetValidPropertiesText(Placement3D placement3D, List<int> propertiesId)
         {
-
             logger.Debug("");
-            //TODO: надо написать поиск
-            yield return "3262";
+
+            foreach (var property in propertiesId)
+            {
+                if (placement3D.Properties.Exists(property))
+                {
+                    yield return placement3D.Properties[property];
 
 
+                }
+
+                else if (placement3D is Function3D function3D)
+                {
+                    if (function3D.Properties.Exists(property))
+                    {
+                        yield return function3D.Properties[property];
+                    }
+                }
+            }
         }
 
         private List<int> GetPropID(string inputText)

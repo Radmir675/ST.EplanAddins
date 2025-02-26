@@ -47,7 +47,8 @@ namespace ST.EplAddin.FootNote.PropertyBrowser
 
                             if (!idxVal.IsEmpty)
                             {
-                                yield return new PropertyEplan(name + "_" + ind, idxVal.ToString(ISOCode.Language.L_ru_RU), property.AsInt, description);
+                                yield return new PropertyEplan(name, idxVal.ToString(ISOCode.Language.L_ru_RU), property.AsInt, idxVal, description);
+                                //$"{name} [{ind}]"
                             }
                         }
                         continue;
@@ -55,10 +56,10 @@ namespace ST.EplAddin.FootNote.PropertyBrowser
 
                     if (propertyDefinition.IsIndexed == false)
                     {
-                        if (!value.IsEmpty)
-                        {
-                            yield return new PropertyEplan(name, value.ToString(ISOCode.Language.L_ru_RU), property.AsInt, description);
-                        }
+                        //if (!value.IsEmpty)
+                        //{
+                        yield return new PropertyEplan(name, value.ToString(ISOCode.Language.L_ru_RU), property.AsInt, description);
+                        // }
                     }
                 }
                 finally { }
@@ -88,20 +89,20 @@ namespace ST.EplAddin.FootNote.PropertyBrowser
                         {
                             var idxVal = value[ind];
 
-                            if (!idxVal.IsEmpty)
-                            {
-                                yield return new PropertyEplan(name + "_" + ind, idxVal.ToString(ISOCode.Language.L_ru_RU), property.AsInt, description);
-                            }
+                            // if (!idxVal.IsEmpty)
+                            // {
+                            yield return new PropertyEplan(name + "_" + ind, idxVal.ToString(ISOCode.Language.L_ru_RU), property.AsInt, idxVal, description);
+                            // }
                         }
                         continue;
                     }
 
                     if (propertyDefinition.IsIndexed == false)
                     {
-                        if (!value.IsEmpty)
-                        {
-                            yield return new PropertyEplan(name, value.ToString(ISOCode.Language.L_ru_RU), property.AsInt, description);
-                        }
+                        // if (!value.IsEmpty)
+                        // {
+                        yield return new PropertyEplan(name, value.ToString(ISOCode.Language.L_ru_RU), property.AsInt, description);
+                        // }
                     }
 
                 }
@@ -131,7 +132,7 @@ namespace ST.EplAddin.FootNote.PropertyBrowser
 
                             if (!idxVal.IsEmpty)
                             {
-                                yield return new PropertyEplan(name + "_" + ind, idxVal.ToString(ISOCode.Language.L_ru_RU), property.AsInt, description);
+                                yield return new PropertyEplan(name + "_" + ind, idxVal.ToString(ISOCode.Language.L_ru_RU), property.AsInt, idxVal, description);
                             }
                         }
                         continue;
@@ -139,10 +140,10 @@ namespace ST.EplAddin.FootNote.PropertyBrowser
 
                     if (propertyDefinition.IsIndexed == false)
                     {
-                        if (!value.IsEmpty)
-                        {
-                            yield return new PropertyEplan(name, value.ToString(ISOCode.Language.L_ru_RU), property.AsInt, description);
-                        }
+                        //if (!value.IsEmpty)
+                        //{
+                        yield return new PropertyEplan(name, value.ToString(ISOCode.Language.L_ru_RU), property.AsInt, description);
+                        //}
                     }
                 }
                 finally { }

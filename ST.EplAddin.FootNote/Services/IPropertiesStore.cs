@@ -8,7 +8,5 @@ namespace ST.EplAddin.FootNote.Services
         IEnumerable<PropertyEplan> ArticleProperties { get; set; }
         IEnumerable<PropertyEplan> ArticleReferenceProperties { get; set; }
         IEnumerable<PropertyEplan> Placement3DProperties { get; set; }
-
-
     }
 }

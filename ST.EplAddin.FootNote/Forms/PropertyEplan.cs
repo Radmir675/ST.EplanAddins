@@ -1,18 +1,34 @@
-﻿namespace ST.EplAddin.FootNote.Forms
+﻿using System.ComponentModel;
+
+namespace ST.EplAddin.FootNote.Forms
 {
     public class PropertyEplan
     {
-        public PropertyEplan(string property, string value, int propertyIndex, string description = "")
+        public PropertyEplan(string propertyName, string value, int propertyIndex, string description = "")
         {
-            Property = property;
+            PropertyName = propertyName;
             Value = value;
             PropertyIndex = propertyIndex;
             Description = description;
         }
+        public PropertyEplan(string propertyName, string value, int propertyIndex, int indexedNumber, string description = "") : this(propertyName, value, propertyIndex, description = "")
+        {
+            IndexedNumber = indexedNumber;
+        }
 
-        public string Property { get; set; }
-        public string Value { get; set; }
-        public int PropertyIndex { get; set; }
-        public string Description { get; set; }
+        [Description("Имя свойства")]
+        public string PropertyName { get; }
+
+        [Description("Значение свойства")]
+        public string Value { get; }
+
+        [Description("Индекс свойства")]
+        public int PropertyIndex { get; }
+
+        [Description("Подындекс для индексированных свойств")]
+        public int? IndexedNumber { get; }
+
+        [Description("Описание свойства")]
+        public string Description { get; }
     }
 }

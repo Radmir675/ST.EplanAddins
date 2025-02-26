@@ -20,7 +20,7 @@ namespace ST.EplAddin.FootNote.Services.Implementations
         }
         public void DownLoadAllAsync()
         {
-            Task[] tasks = new Task[]
+            Task[] tasks = new Task[3]
             {
                 new Task(() => ArticleReferenceProperties = _propertiesProvider.GetArticleReferenceProperties()),
                 new Task(() => ArticleProperties = _propertiesProvider.GetArticleProperties()),
@@ -29,7 +29,7 @@ namespace ST.EplAddin.FootNote.Services.Implementations
             foreach (var task in tasks)
                 task.Start();
             Task.WaitAll(tasks);
-
         }
+
     }
 }

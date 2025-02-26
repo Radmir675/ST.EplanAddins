@@ -103,9 +103,23 @@
                                 <ListView.View>
 
                                     <GridView>
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Property}"
+                                        <GridViewColumn
                                                         Header="Имя свойства"
-                                                        Width="400" />
+                                                        Width="400" 
+                                                        >
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate >
+                                                    <TextBlock>
+                                                        <TextBlock.Text>
+                                                            <MultiBinding  StringFormat="{}{0}">
+                                                        <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type}" Path="Header"/>
+                                                              
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
                                         <GridViewColumn DisplayMemberBinding="{Binding Path=PropertyIndex}"
                                                         Width="auto"
                                                         Header="Индекс"/>
