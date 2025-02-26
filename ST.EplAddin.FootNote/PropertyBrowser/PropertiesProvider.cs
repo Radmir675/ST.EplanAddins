@@ -47,8 +47,7 @@ namespace ST.EplAddin.FootNote.PropertyBrowser
 
                             if (!idxVal.IsEmpty)
                             {
-                                yield return new PropertyEplan(name, idxVal.ToString(ISOCode.Language.L_ru_RU), property.AsInt, idxVal, description);
-                                //$"{name} [{ind}]"
+                                yield return new PropertyEplan(name, idxVal.ToString(ISOCode.Language.L_ru_RU), property.AsInt, ind, description);
                             }
                         }
                         continue;
@@ -91,7 +90,7 @@ namespace ST.EplAddin.FootNote.PropertyBrowser
 
                             // if (!idxVal.IsEmpty)
                             // {
-                            yield return new PropertyEplan(name + "_" + ind, idxVal.ToString(ISOCode.Language.L_ru_RU), property.AsInt, idxVal, description);
+                            yield return new PropertyEplan(name, idxVal.ToString(ISOCode.Language.L_ru_RU), property.AsInt, ind, description);
                             // }
                         }
                         continue;
@@ -132,7 +131,7 @@ namespace ST.EplAddin.FootNote.PropertyBrowser
 
                             if (!idxVal.IsEmpty)
                             {
-                                yield return new PropertyEplan(name + "_" + ind, idxVal.ToString(ISOCode.Language.L_ru_RU), property.AsInt, idxVal, description);
+                                yield return new PropertyEplan(name, idxVal.ToString(ISOCode.Language.L_ru_RU), property.AsInt, ind, description);
                             }
                         }
                         continue;
@@ -140,10 +139,7 @@ namespace ST.EplAddin.FootNote.PropertyBrowser
 
                     if (propertyDefinition.IsIndexed == false)
                     {
-                        //if (!value.IsEmpty)
-                        //{
                         yield return new PropertyEplan(name, value.ToString(ISOCode.Language.L_ru_RU), property.AsInt, description);
-                        //}
                     }
                 }
                 finally { }

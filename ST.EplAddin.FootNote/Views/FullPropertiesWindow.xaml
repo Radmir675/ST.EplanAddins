@@ -6,6 +6,7 @@
         mc:Ignorable="d"
         xmlns:vm="clr-namespace:ST.EplAddin.FootNote.ViewModels"
         xmlns:cvrt="clr-namespace:ST.EplAddin.FootNote.Converters"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         d:DataContext="{d:DesignInstance vm:FullPropertiesWindowVM, IsDesignTimeCreatable=True }"
         Width="1450"
         Height="900"
@@ -105,18 +106,13 @@
                                     <GridView>
                                         <GridViewColumn
                                                         Header="Имя свойства"
-                                                        Width="400" 
-                                                        >
+                                                        Width="400"  >
                                             <GridViewColumn.CellTemplate>
-                                                <DataTemplate >
-                                                    <TextBlock>
-                                                        <TextBlock.Text>
-                                                            <MultiBinding  StringFormat="{}{0}">
-                                                        <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type}" Path="Header"/>
-                                                              
-                                                            </MultiBinding>
-                                                        </TextBlock.Text>
-                                                    </TextBlock>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding PropertyName}"/>
+                                                        <TextBlock Text="{Binding IndexedNumber, StringFormat=[{0}], TargetNullValue={x:Static system:String.Empty }, FallbackValue={x:Static system:String.Empty}  }" />
+                                                    </StackPanel>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
