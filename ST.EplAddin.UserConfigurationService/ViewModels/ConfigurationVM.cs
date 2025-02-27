@@ -57,6 +57,12 @@ namespace ST.EplAddin.UserConfigurationService.ViewModels
 
         private Scheme SetUndefined()
         {
+            var searchResult = storage.TryGetSchemeByParameters(EplanConfiguration.CurrentCatalog, EplanConfiguration.CurrentDatabase,
+                 out var properlyScheme);
+            if (searchResult)
+            {
+                return properlyScheme.First();
+            }
             var newS = new Scheme()
             {
                 Catalog = EplanConfiguration.CurrentCatalog,
