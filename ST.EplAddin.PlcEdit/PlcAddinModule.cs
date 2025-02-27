@@ -1,6 +1,5 @@
 ﻿
 using Eplan.EplApi.ApplicationFramework;
-using Eplan.EplApi.Gui;
 
 namespace ST.EplAddin.PlcEdit
 {
@@ -18,13 +17,6 @@ namespace ST.EplAddin.PlcEdit
 
         public bool OnInitGui()
         {
-            Menu menu = new Menu();
-            var menuId = menu.GetCustomMenuId("ST", null);
-            if (menuId == 0)
-                menuId = menu.AddMainMenu("ST", Menu.MainMenuName.eMainMenuUtilities, "None", "None", "Статус", 1);
-            uint subMenuID = menu.AddMenuItem(
-                "PLCTest", TestAction._actionName, "", menuId, 0, false, false);
-
             return true;
         }
 

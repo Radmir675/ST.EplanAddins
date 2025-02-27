@@ -547,10 +547,12 @@ namespace ST.EplAddin.PlcEdit
 
         private void dataGridView_KeyDown(object sender, KeyEventArgs e)
         {
+            ComparingForm_StartRewriting();
             if (e.KeyCode == Keys.V && e.Control)
             {
                 InsertData();
             }
+            ComparingForm_FinishRewriting();
         }
         private void InsertData()
         {
@@ -866,6 +868,7 @@ namespace ST.EplAddin.PlcEdit
         }
         private void dataGridView_KeyUp(object sender, KeyEventArgs e)
         {
+            ComparingForm_StartRewriting();
             switch (e.KeyCode)
             {
                 case Keys.Insert:
@@ -883,6 +886,7 @@ namespace ST.EplAddin.PlcEdit
                         break;
                     }
             }
+            ComparingForm_FinishRewriting();
         }
     }
 }
