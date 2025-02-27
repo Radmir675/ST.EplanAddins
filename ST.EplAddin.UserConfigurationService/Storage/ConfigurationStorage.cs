@@ -1,6 +1,7 @@
 ﻿using ST.EplAddin.UserConfigurationService.Models;
 using ST.EplAddin.UserConfigurationService.Services;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -76,6 +77,11 @@ namespace ST.EplAddin.UserConfigurationService.Storage
         {
             scheme = _schemes.FirstOrDefault(x => x.Name == Name);
             return scheme != null;
+        }
+        public bool TryGetSchemeByParameters(string Catalog, string Database, out List<Scheme> schemes)
+        {
+            schemes = _schemes.Where(scheme => scheme.Catalog == Catalog && scheme.Database == Database).ToList();
+            return schemes != null;
         }
     }
 }
