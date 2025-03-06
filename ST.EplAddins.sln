@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddin.ComparisonOfPro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddin.UserConfigurationService", "ST.EplAddin.UserConfigurationService\ST.EplAddin.UserConfigurationService.csproj", "{96FFF25E-579E-412E-B8B7-EB7825A8DB58}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddin.Tests", "ST.EplAddin.Tests\ST.EplAddin.Tests.csproj", "{CB1E48C3-F25D-4781-8153-E3596ABBB4D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +141,14 @@ Global
 		{96FFF25E-579E-412E-B8B7-EB7825A8DB58}.Release|Any CPU.Build.0 = Release|Any CPU
 		{96FFF25E-579E-412E-B8B7-EB7825A8DB58}.Release|x64.ActiveCfg = Release|Any CPU
 		{96FFF25E-579E-412E-B8B7-EB7825A8DB58}.Release|x64.Build.0 = Release|Any CPU
+		{CB1E48C3-F25D-4781-8153-E3596ABBB4D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB1E48C3-F25D-4781-8153-E3596ABBB4D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB1E48C3-F25D-4781-8153-E3596ABBB4D0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CB1E48C3-F25D-4781-8153-E3596ABBB4D0}.Debug|x64.Build.0 = Debug|Any CPU
+		{CB1E48C3-F25D-4781-8153-E3596ABBB4D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB1E48C3-F25D-4781-8153-E3596ABBB4D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB1E48C3-F25D-4781-8153-E3596ABBB4D0}.Release|x64.ActiveCfg = Release|Any CPU
+		{CB1E48C3-F25D-4781-8153-E3596ABBB4D0}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
