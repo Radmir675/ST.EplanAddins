@@ -93,6 +93,7 @@
     <Compile Include="ArticleReferenceUnitCheckVF.cs" />
     <Compile Include="CableConductorsCheckPartsVF.cs" />
     <Compile Include="CableMainFunctionsCheckVF.cs" />
+    <Compile Include="ConnectionColorVF.cs" />
     <Compile Include="ConnectionDesignationVF.cs" />
     <Compile Include="Function3DArticlesCoutVF.cs" />
     <Compile Include="PlcOutputToReviewAssignmentVF.cs" />
