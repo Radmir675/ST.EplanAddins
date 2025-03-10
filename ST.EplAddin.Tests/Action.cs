@@ -1,4 +1,5 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
+using Eplan.EplApi.HEServices;
 
 namespace ST.EplAddin.Tests
 {
@@ -14,9 +15,9 @@ namespace ST.EplAddin.Tests
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            ExportPDFSchema exportPdfSchema = new();
-            exportPdfSchema.SetPDFExportScheme();
-            exportPdfSchema.SetPagesScheme();
+            SelectionSet selection = new SelectionSet();
+            var project = selection.GetCurrentProject(true);
+            project.Properties.PROJ_INSTALLATIONNAME = "cdc";
 
             return true;
         }
