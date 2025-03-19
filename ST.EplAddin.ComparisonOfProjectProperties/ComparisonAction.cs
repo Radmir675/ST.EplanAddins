@@ -84,47 +84,46 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
             {
                 var id = value.Id.AsInt;
 
-                if (value.Indexes.Any())
+                if (value.Indexes.Length > 0)
                 {
-                    foreach (var ind in value.Indexes)
+                    foreach (var indx in value.Indexes)
                     {
-                        var idxVal = value[ind];
+                        var indxVal = value[indx];
 
-                        if (!idxVal.IsEmpty)
+                        if (!indxVal.IsEmpty)
                         {
-                            var propertyValue1 = idxVal.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
-                            if (!string.IsNullOrEmpty(propertyValue1)) continue;
-
-                            var definitionName = idxVal.Definition.Name;
-
-                            var index = int.Parse((ind + 1).ToString());
-                            dictionary.Add(new PropertyKey(id, index), new Property()
+                            var propertyIndxValue = indxVal.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
+                            if (!string.IsNullOrEmpty(propertyIndxValue))
                             {
-                                Name = definitionName,
-                                Id = id,
-                                Value = propertyValue1,
-                                Index = index
-                            });
+                                var definitionName = indxVal.Definition.Name;
 
-
+                                var index = int.Parse((indx + 1).ToString());
+                                dictionary.Add(new PropertyKey(id, index), new Property()
+                                {
+                                    Id = id,
+                                    Name = definitionName,
+                                    Value = propertyIndxValue,
+                                    Index = index
+                                });
+                            }
                         }
-
                     }
-
                 }
                 else
                 {
                     var propertyValue = value.GetDisplayString().GetStringToDisplay(ISOCode.Language.L_ru_RU);
-                    if (string.IsNullOrEmpty(propertyValue)) continue;
 
-                    var definitionName = value.Definition.Name;
-                    var index = 0;
-                    dictionary.Add(new PropertyKey(id, index), new Property()
+                    if (!string.IsNullOrEmpty(propertyValue))
                     {
-                        Name = definitionName,
-                        Id = id,
-                        Value = propertyValue,
-                    });
+                        var definitionName = value.Definition.Name;
+                        var index = 0;
+                        dictionary.Add(new PropertyKey(id, index), new Property()
+                        {
+                            Id = id,
+                            Name = definitionName,
+                            Value = propertyValue,
+                        });
+                    }
                 }
                 progress.Step(1);
                 if (progress.Canceled()) break;
