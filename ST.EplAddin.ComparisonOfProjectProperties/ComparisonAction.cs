@@ -96,6 +96,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                             if (!string.IsNullOrEmpty(propertyIndxValue))
                             {
                                 var definitionName = indxVal.Definition.Name;
+                                var definitionRO = indxVal.Definition.IsReadOnly;
 
                                 var index = int.Parse((indx + 1).ToString());
                                 dictionary.Add(new PropertyKey(id, index), new Property()
@@ -103,7 +104,8 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                                     Id = id,
                                     Name = definitionName,
                                     Value = propertyIndxValue,
-                                    Index = index
+                                    Index = index,
+                                    ReadOnly = definitionRO,
                                 });
                             }
                         }
@@ -116,12 +118,15 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                     if (!string.IsNullOrEmpty(propertyValue))
                     {
                         var definitionName = value.Definition.Name;
+                        var definitionRO = value.Definition.IsReadOnly;
+
                         var index = 0;
                         dictionary.Add(new PropertyKey(id, index), new Property()
                         {
                             Id = id,
                             Name = definitionName,
                             Value = propertyValue,
+                            ReadOnly = definitionRO
                         });
                     }
                 }

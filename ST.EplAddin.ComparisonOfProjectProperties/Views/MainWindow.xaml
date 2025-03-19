@@ -15,7 +15,6 @@
 
     <Window.Resources>
         <converters:EnumToDisplayConverter x:Key="EnumDescriptionConverter"></converters:EnumToDisplayConverter>
-
     </Window.Resources>
 
     <Window.DataContext>
@@ -135,8 +134,8 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Path=Value.Name}" />
-                                            <TextBlock Text="{Binding Value.Index,StringFormat=[{0}], TargetNullValue={x:Static system:String.Empty}}" />
+                                            <TextBlock Text="{Binding Path=Value.Name}"  />
+                                            <TextBlock Text="{Binding Value.Index, StringFormat=[{0}], TargetNullValue={x:Static system:String.Empty}}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -149,9 +148,20 @@
                             <DataGridTextColumn Header="Id"
                                                 MinWidth="50"
                                                 Binding="{Binding Value.Id}" />
-
                         </DataGrid.Columns>
-                    </DataGrid>
+
+                     
+                        <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Value.ReadOnly}" Value="true">
+                                        <Setter Property="Background" Value="#E5E5E5"></Setter>
+                                    </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                        </DataGrid.RowStyle>
+                            
+                        </DataGrid>
 
 
                     <DataGrid Grid.Column="2"
