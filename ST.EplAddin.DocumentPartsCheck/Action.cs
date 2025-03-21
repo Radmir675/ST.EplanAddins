@@ -9,7 +9,7 @@ namespace ST.EplAddin.DocumentPartsCheck
 {
     public class Action : IEplAction
     {
-        public static string actionName = "DocumentPartsCheck";
+        public static string actionName = "DocumentsPartCheck";
 
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
