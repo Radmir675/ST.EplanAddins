@@ -129,6 +129,9 @@ namespace ST.EplAddin.ComparisonOfProjectProperties.ViewModels
                                 e.Accepted = true;
                                 break;
                             }
+                        } else {
+                            e.Accepted= true;
+                            break;
                         }
                     }
 
