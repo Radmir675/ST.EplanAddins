@@ -30,7 +30,7 @@ namespace ST.EplAddin.Tests
             };
             var currentProject = selectionSet.GetCurrentProject(true);
             //теперь найдем все места установки
-            var projectLocations = GetProjectLocations(currentProject);
+            var projectLocations = GetProjectLocations(currentProject).Where(x => x != "TB");
 
             //теперь найдем все идентификаторы проекта
             var projectExistingTypes = GetProjectExistingTypes(currentProject);
