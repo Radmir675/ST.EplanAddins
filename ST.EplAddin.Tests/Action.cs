@@ -11,6 +11,10 @@ namespace ST.EplAddin.Tests
     {
         public static string actionName = "EplanTests";
 
+        public void GetActionProperties(ref ActionProperties actionProperties)
+        {
+
+        }
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
             Name = actionName;
@@ -20,21 +24,23 @@ namespace ST.EplAddin.Tests
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            SelectionSet selectionSet = new SelectionSet();
-            selectionSet.LockProjectByDefault = false;
+            SelectionSet selectionSet = new SelectionSet
+            {
+                LockProjectByDefault = false
+            };
             var currentProject = selectionSet.GetCurrentProject(true);
             //теперь найдем все места установки
             var projectLocations = GetProjectLocations(currentProject);
 
             //теперь найдем все идентификаторы проекта
-            var projectExistingtypes = ProjectExistingtypes(currentProject);
+            var projectExistingTypes = GetProjectExistingTypes(currentProject);
             foreach (var location in projectLocations)
             {
                 //тут мы нашли все виды документов
                 var pagesType = PagesType(currentProject, location);
 
                 //тут мы найдем есть ли такие изделия в данном месте установки
-                var allArtRefParts = AllArtRefParts(currentProject, projectExistingtypes, location);
+                var allArtRefParts = GetAllArtRefParts(currentProject, projectExistingTypes, location);
 
                 var wringIdentify = GetWrongTypes(pagesType, allArtRefParts).ToList();
 
@@ -64,19 +70,19 @@ namespace ST.EplAddin.Tests
             return missingPartNo;
         }
 
-        private List<string> AllArtRefParts(Project currentProject, List<string> projectExistingtypes, string fullLocation)
+        private List<string> GetAllArtRefParts(Project currentProject, List<string> projectExistingTypes, string fullLocation)
         {
             DMObjectsFinder finder = new DMObjectsFinder(currentProject);
-            var allArtRefParts = finder.GetArticleReferencesWithCF(new ArticleReferenceFilter(projectExistingtypes, fullLocation))
+            var allArtRefParts = finder.GetArticleReferencesWithCF(new ArticleReferenceFilter(projectExistingTypes, fullLocation))
                 .Select(x => x.PartNr.ToString())
                 .ToList();
             return allArtRefParts;
         }
 
-        private List<string> ProjectExistingtypes(Project currentProject)
+        private List<string> GetProjectExistingTypes(Project currentProject)
         {
-            var projectExistingtypes = currentProject.GetLocations(Project.Hierarchy.Document).ToList();
-            return projectExistingtypes;
+            var projectExistingTypes = currentProject.GetLocations(Project.Hierarchy.Document).ToList();
+            return projectExistingTypes;
         }
 
         private static IEnumerable<string> PagesType(Project currentProject, string fullLocation)
@@ -93,33 +99,17 @@ namespace ST.EplAddin.Tests
             return pagesType;
         }
 
-        public void GetActionProperties(ref ActionProperties actionProperties)
+
+        public class ArticleReferenceFilter(List<string> docTypes, string fullLocation) : ICustomFilter
         {
-
-        }
-
-        public class ArticleReferenceFilter : ICustomFilter
-        {
-            private readonly List<string> _docTypes;
-            private readonly string _fullLocation;
-
-            public ArticleReferenceFilter(List<string> docTypes, string fullLocation)
-            {
-                _docTypes = docTypes;
-                _fullLocation = fullLocation;
-            }
             public bool IsMatching(StorableObject objectToCheck)
             {
-                var artilceReference = objectToCheck as ArticleReference;
-                if (artilceReference.Properties.DESIGNATION_FULLLOCATION.ToString() != _fullLocation) return false;
-                if (artilceReference.Count <= 0) return false;
+                var articleReference = objectToCheck as ArticleReference;
+                if (articleReference.Properties.DESIGNATION_FULLLOCATION.ToString() != fullLocation) return false;
+                if (articleReference.Count <= 0) return false;
 
-                var pathNo = artilceReference.Properties.ARTICLEREF_PARTNO.ToString();
-                if (_docTypes.Contains(pathNo))
-                {
-                    return true;
-                }
-                return false;
+                var pathNo = articleReference.Properties.ARTICLEREF_PARTNO.ToString();
+                return docTypes.Contains(pathNo);
             }
         }
     }
