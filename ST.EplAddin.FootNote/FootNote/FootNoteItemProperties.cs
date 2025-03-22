@@ -70,8 +70,6 @@ namespace ST.EplAddin.FootNote.FootNote
         private IEnumerable<string> GetValidPropertiesText(Placement3D placement3D, List<int> propertiesId)
         {
             logger.Debug("");
-
-
             foreach (var property in propertiesId)
             {
                 if (placement3D.Properties.Exists(property))
@@ -81,11 +79,11 @@ namespace ST.EplAddin.FootNote.FootNote
                     wd.SetPropertyId(property);
                     if (wd.Definition.IsIndexed)
                     {
-                        yield return placement3D.Properties[property][1];
+                        yield return placement3D.Properties[property][1].ToString(ISOCode.Language.L_ru_RU);
                     }
                     else
                     {
-                        yield return placement3D.Properties[property];
+                        yield return placement3D.Properties[property].ToString(ISOCode.Language.L_ru_RU);
                     }
                 }
 
@@ -93,7 +91,7 @@ namespace ST.EplAddin.FootNote.FootNote
                 {
                     if (function3D.ArticleReferences.First().Properties.Exists(property))
                     {
-                        yield return function3D.ArticleReferences.First().Properties[property];
+                        yield return function3D.ArticleReferences.First().Properties[property].ToString(ISOCode.Language.L_ru_RU);
                     }
                     else if (function3D.Articles.First().Properties.Exists(property))
                     {
