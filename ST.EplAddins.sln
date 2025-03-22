@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddin.UserConfigurati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddin.DocumentPartsCheck", "ST.EplAddin.DocumentPartsCheck\ST.EplAddin.DocumentPartsCheck.csproj", "{3800D95D-B3B8-456D-8244-5785DDF11620}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.EplAddin.FootNote", "ST.EplAddin.FootNote\ST.EplAddin.FootNote.csproj", "{39490899-7EE2-44E3-BAFF-A2640D3FD7B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -149,6 +151,14 @@ Global
 		{3800D95D-B3B8-456D-8244-5785DDF11620}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3800D95D-B3B8-456D-8244-5785DDF11620}.Release|x64.ActiveCfg = Release|Any CPU
 		{3800D95D-B3B8-456D-8244-5785DDF11620}.Release|x64.Build.0 = Release|Any CPU
+		{39490899-7EE2-44E3-BAFF-A2640D3FD7B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39490899-7EE2-44E3-BAFF-A2640D3FD7B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39490899-7EE2-44E3-BAFF-A2640D3FD7B9}.Debug|x64.ActiveCfg = Debug|x64
+		{39490899-7EE2-44E3-BAFF-A2640D3FD7B9}.Debug|x64.Build.0 = Debug|x64
+		{39490899-7EE2-44E3-BAFF-A2640D3FD7B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39490899-7EE2-44E3-BAFF-A2640D3FD7B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39490899-7EE2-44E3-BAFF-A2640D3FD7B9}.Release|x64.ActiveCfg = Release|Any CPU
+		{39490899-7EE2-44E3-BAFF-A2640D3FD7B9}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
