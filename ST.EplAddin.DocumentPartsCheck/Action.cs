@@ -49,9 +49,17 @@ namespace ST.EplAddin.DocumentPartsCheck
                 var allArtRefParts = GetAllArtRefParts(currentProject, projectExistingTypes, location);
 
                 var wringIdentify = GetWrongTypes(pagesType, allArtRefParts).ToList();
+                if (wringIdentify.Any())
+                {
+                    MessageBox.Show(
+                        $"Пожалуйста проверьте следующие идентификаторы (изделия) в разделе документация {string.Join(", ", wringIdentify)}  в месте установки {location}", "Ошибки в спецификации", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                MessageBox.Show(
-                    $"Пожалуйста проверьте следующие идентификаторы (изделия) в разделе документация {string.Join(", ", wringIdentify)}  в месте установки {location}", "Ошибки в спецификации", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show("Проверка прошла успешно!", "Проверка", MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
             }
         }
 
