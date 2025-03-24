@@ -644,15 +644,15 @@ namespace ST.EplAddin.FootNote.FootNote
 
             if (obj == null) return;
 
-            Placement3D si_p3d = obj as Placement3D;
-            if (si_p3d == null)
+            Placement3D placement3D = obj as Placement3D;
+            if (placement3D == null)
             {
-                ViewPart si_vp = obj as ViewPart;
-                sourceItem3D = si_vp.Source;
+                ViewPart viewPart = obj as ViewPart;
+                sourceItem3D = viewPart.Source;
             }
             else
             {
-                sourceItem3D = si_p3d;
+                sourceItem3D = placement3D;
             }
         }
 
