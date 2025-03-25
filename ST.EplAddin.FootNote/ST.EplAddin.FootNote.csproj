@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{39490899-7EE2-44E3-BAFF-A2640D3FD7B9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ST.EplAddin.FootNote</RootNamespace>
+    <AssemblyName>ST.EplAddin.FootNote</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <LangVersion>9.0</LangVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <LangVersion>9.0</LangVersion>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>9.0</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>9.0</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Eplan.EplApi.AFu, Version=1.0.0.0, Culture=neutral, PublicKeyToken=57aaa27e22f7b107, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\EPLAN\Platform\2.9.4\Bin\Eplan.EplApi.AFu.dll</HintPath>
+    </Reference>
+    <Reference Include="Eplan.EplApi.Baseu, Version=1.0.0.0, Culture=neutral, PublicKeyToken=57aaa27e22f7b107, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\EPLAN\Platform\2.9.4\Bin\Eplan.EplApi.Baseu.dll</HintPath>
+    </Reference>
+    <Reference Include="Eplan.EplApi.DataModelu, Version=1.0.0.0, Culture=neutral, PublicKeyToken=57aaa27e22f7b107, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\EPLAN\Platform\2.9.4\Bin\Eplan.EplApi.DataModelu.dll</HintPath>
+    </Reference>
+    <Reference Include="Eplan.EplApi.EServicesu, Version=1.0.0.0, Culture=neutral, PublicKeyToken=57aaa27e22f7b107, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\EPLAN\Platform\2.9.4\Bin\Eplan.EplApi.EServicesu.dll</HintPath>
+    </Reference>
+    <Reference Include="Eplan.EplApi.Guiu, Version=1.0.0.0, Culture=neutral, PublicKeyToken=57aaa27e22f7b107, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\EPLAN\Platform\2.9.4\Bin\Eplan.EplApi.Guiu.dll</HintPath>
+    </Reference>
+    <Reference Include="Eplan.EplApi.HEServicesu, Version=1.0.0.0, Culture=neutral, PublicKeyToken=57aaa27e22f7b107, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\EPLAN\Platform\2.9.4\Bin\Eplan.EplApi.HEServicesu.dll</HintPath>
+    </Reference>
+    <Reference Include="Eplan.EplApi.MasterDatau, Version=1.0.0.0, Culture=neutral, PublicKeyToken=57aaa27e22f7b107, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\EPLAN\Platform\2.9.4\Bin\Eplan.EplApi.MasterDatau.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Presentation" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddinModule.cs" />
+    <Compile Include="App.cs" />
+    <Compile Include="Converters\AlignmentConverter.cs" />
+    <Compile Include="Converters\EnumToDisplayConverter.cs" />
+    <Compile Include="Converters\ShapeConverter.cs" />
+    <Compile Include="FootNote\FootNote.cs" />
+    <Compile Include="FootNote\FootNoteItemProperties.cs" />
+    <Compile Include="FootNote\Footnote_DragIteraction.cs" />
+    <Compile Include="FootNote\Footnote_InsertAction.cs" />
+    <Compile Include="FootNote\Footnote_InsertInteraction.cs" />
+    <Compile Include="FootNote\Footnote_InsertInteraction.State.cs" />
+    <Compile Include="FootNote\Footnote_MoveElementAction.cs" />
+    <Compile Include="FootNote\Footnote_PropertiesAction.cs" />
+    <Compile Include="FootNote\Footnote_PropertiesActionXGed.cs" />
+    <Compile Include="FootNote\Footnote_SelectSameObjectsAction.cs" />
+    <Compile Include="FootNote\Footnote_UpdateAction.cs" />
+    <Compile Include="FootNote\SettingsDialog_Action.cs" />
+    <Compile Include="Forms\Footnote_CustomTextForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Footnote_CustomTextForm.Designer.cs">
+      <DependentUpon>Footnote_CustomTextForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PropertiesDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PropertiesDialogForm.Designer.cs">
+      <DependentUpon>PropertiesDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PropertyEplan.cs" />
+    <Compile Include="Forms\PropertySelectDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PropertySelectDialogForm.Designer.cs">
+      <DependentUpon>PropertySelectDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SettingsDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SettingsDialogForm.Designer.cs">
+      <DependentUpon>SettingsDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Alignment.cs" />
+    <Compile Include="Models\PropertyStates.cs" />
+    <Compile Include="Models\Shape.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyBrowser\ContextActionEventListener.cs" />
+    <Compile Include="Converters\EnumExtension.cs" />
+    <Compile Include="PropertyBrowser\EplHelper.cs" />
+    <Compile Include="PropertyBrowser\FigureConverter.cs" />
+    <Compile Include="PropertyBrowser\FootnoteVerification.cs" />
+    <Compile Include="PropertyBrowser\PropertiesList.cs" />
+    <Compile Include="PropertyBrowser\PropertiesProvider.cs" />
+    <Compile Include="Services\IPropertiesStore.cs" />
+    <Compile Include="Services\Implementations\PropertiesStore.cs" />
+    <Compile Include="PropertyBrowser\Settings.cs" />
+    <Compile Include="Services\Implementations\WindowsDialog.cs" />
+    <Compile Include="Services\IWindowsServiceDialog.cs" />
+    <Compile Include="ViewModels\FullPropertiesWindowVM.cs" />
+    <Compile Include="ViewModels\MainPropertyWindowVM.cs" />
+    <Compile Include="ViewModels\RelayCommand.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\FullPropertiesWindow.xaml.cs">
+      <DependentUpon>FullPropertiesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainPropertyWindow.xaml.cs">
+      <DependentUpon>MainPropertyWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\add.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\arrow_downward.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\arrow_upward.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\block_.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\check.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\delete.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\format_align_center.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\format_align_left.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\format_align_right.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\format_paint.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\fx_function.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Dictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PropertiesWindowDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FullPropertiesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainPropertyWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DotNetProjects.SVGImage">
+      <Version>5.2.2</Version>
+    </PackageReference>
+    <PackageReference Include="MaterialDesignColors">
+      <Version>3.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="MaterialDesignThemes">
+      <Version>5.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="MaterialDesignThemes.MahApps">
+      <Version>3.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection">
+      <Version>9.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Hosting">
+      <Version>9.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="NLog">
+      <Version>5.3.4</Version>
+    </PackageReference>
+    <PackageReference Include="NLog.Config">
+      <Version>4.7.15</Version>
+    </PackageReference>
+    <PackageReference Include="PixiEditor.ColorPicker">
+      <Version>3.4.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\Footnote_CustomTextForm.resx">
+      <DependentUpon>Footnote_CustomTextForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PropertiesDialogForm.resx">
+      <DependentUpon>PropertiesDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PropertySelectDialogForm.resx">
+      <DependentUpon>PropertySelectDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SettingsDialogForm.resx">
+      <DependentUpon>SettingsDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\arrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\FootNoteItem.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\point.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\reset.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Fonts\Skolar PE Variable Italic.ttf" />
+    <Resource Include="Fonts\Skolar PE Variable Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
