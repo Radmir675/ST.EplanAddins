@@ -40,6 +40,7 @@ namespace ST.EplAddin.JumpersReport
         private EventHandler reportsUpdateEnd_EventHandler;
         public ReportsEndListener()
         {
+
             reportsUpdateEnd_EventHandler = new EventHandler("onActionEnd.String.XFgUpdateEvaluationAction");
             //reportsUpdateEnd_EventHandler.SetEvent("GenerateJumpersReportStartEvent");
             reportsUpdateEnd_EventHandler.EplanEvent += Event;
@@ -47,6 +48,7 @@ namespace ST.EplAddin.JumpersReport
 
         private void Event(IEventParameter pieventparameter)
         {
+            TerminalsRepository.Reset();
             ReportProvider reportProvider = new ReportProvider();
             reportProvider.Create();
         }

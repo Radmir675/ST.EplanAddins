@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+//https://www.eplan.help/en-us/Infoportal/Content/api/2.9/API_REPORTS_MODIFICATION.html
 namespace ST.EplAddin.JumpersReport
 {
     public class Action : IEplAction
@@ -13,6 +14,7 @@ namespace ST.EplAddin.JumpersReport
         private string resultData;
         public static bool IsOtherReportsUpdated = false;
         private JumpersDataProvider jumpersDataProvider;
+
         public void GetActionProperties(ref ActionProperties actionProperties) { }
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
@@ -52,13 +54,17 @@ namespace ST.EplAddin.JumpersReport
             {
                 currentProject = StorableObject.FromStringIdentifier(project).Project;
                 jumpersDataProvider = new JumpersDataProvider(currentProject);
+
+
             }
 
             if (mode == "ModifyObjectList")
             {
                 objects = "";
-                var terminals = jumpersDataProvider.GetSetTerminals();
-                if (terminals.Any()) return false;
+
+                var terminals = TerminalsRepository.GetInstance().GetData();
+
+                if (!terminals.Any()) return false;
 
                 List<string> resultList =
                     terminals.Where(s => s != null).Select(s => s.ToStringIdentifier()).ToList();
@@ -70,7 +76,9 @@ namespace ST.EplAddin.JumpersReport
             if (mode == "Finish")
             {
                 IsOtherReportsUpdated = false;
-                //TODO:сгенерировать событие на удаление всех клемм.
+
+                var terminalsToRemove = TerminalsRepository.GetInstance().GetAllSavedTerminals();
+                terminalsToRemove.ForEach(x => x.Remove());
                 return true;
             }
             return false;

@@ -7,7 +7,7 @@ namespace ST.EplAddin.JumpersReport
 {
     internal class JumpersDataProvider(Project project)
     {
-        private Terminal CreateTransientTerminal()
+        private Terminal CreateTransientTerminal(string name)
         {
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
@@ -15,30 +15,28 @@ namespace ST.EplAddin.JumpersReport
                 FunctionDefinition funcDefinition = new FunctionDefinition(project, Function.Enums.Category.Terminal, 6, 1);
                 Terminal terminal = new Terminal();
                 terminal.Create(project, funcDefinition);
-                terminal.Name = "K1-X1";
+                terminal.Name = name;
                 safetyPoint.Commit();
                 return terminal;
             }
         }
 
-        public List<Terminal> GetSetTerminals()
-        {
-            var connections = FindInsertableJumperConnections();
-            var sortedList = SortDeviceJumpers(connections);
-            var terminal = CreateTransientTerminal();
-            InsertJumperInTerminals(terminal);
-            Queue<List<Terminal>> terminals = new Queue<List<Terminal>>();
-            return terminals.Dequeue();
-        }
         private Connection[] FindInsertableJumperConnections()
         {
             DMObjectsFinder finder = new DMObjectsFinder(project);
             var connections = finder.GetConnectionsWithCF(new ConnectionFilter());
             return connections;
         }
-        public string SortDeviceJumpers(Connection[] connections)
+        private IEnumerable<List<Connection>> SortDeviceJumpers(Connection[] connections)
         {
-            return "";
+            // connections.GroupJoin()
+
+
+
+
+
+            // connections.FirstOrDefault().StartPin.
+            return null;
         }
         public void InsertJumperInTerminals(List<Terminal> terminals)
         {
@@ -54,7 +52,22 @@ namespace ST.EplAddin.JumpersReport
         }
         public void RemoveTerminals(List<Terminal> terminals)
         {
-            //  terminals.ForEach(x=>x.Remove());
+            terminals.ForEach(x => x.Remove());
+        }
+
+        public void FindAndCreateTerminals()
+        {
+            var connections = FindInsertableJumperConnections();
+            var sortedList = SortDeviceJumpers(connections);
+            var terminal1 = CreateTransientTerminal("K1-X1");
+            var terminal2 = CreateTransientTerminal("K1-X1");
+            var terminal3 = CreateTransientTerminal("K1-X1");
+            var terminal4 = CreateTransientTerminal("K1-X2");
+            var terminal5 = CreateTransientTerminal("K1-X2");
+            var result = new List<Terminal>(3) { terminal1, terminal2, terminal3 };
+            var resul1 = new List<Terminal>(3) { terminal4, terminal5 };
+            TerminalsRepository.GetInstance().Save(result);
+            TerminalsRepository.GetInstance().Save(resul1);
         }
     }
 }
