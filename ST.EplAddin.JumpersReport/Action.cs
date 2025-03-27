@@ -1,11 +1,9 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
-using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.HEServices;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace ST.EplAddin.JumpersReport
@@ -13,21 +11,26 @@ namespace ST.EplAddin.JumpersReport
     public class Action : IEplAction
     {
         public static string actionName = "JumpersReport";
-        public static bool isEntered = false;
         private Project currentProject;
+        string resultData;
+        public static bool IsReady = false;
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
-
         }
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
             Name = actionName;
-            Ordinal = 99;
+            Ordinal = 98;
             return true;
+
         }
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
+            if (!IsReady)
+            {
+                return false;
+            }
 
             int count = oActionCallingContext.GetParameterCount();
             string[] contextParams = oActionCallingContext.GetParameters();
@@ -48,52 +51,46 @@ namespace ST.EplAddin.JumpersReport
             oActionCallingContext.GetParameter("filter", ref filter);
             oActionCallingContext.GetParameter("mainfunction", ref mainfunction);
 
-
             if (mode == "Start")
-            {
-                isEntered = false;
-            }
-            if (mode == "ModifyObjectList" && isEntered == false)
             {
                 using (SafetyPoint safetyPoint = SafetyPoint.Create())
                 {
+                    currentProject = StorableObject.FromStringIdentifier(project).Project;
+                    objects = "";
+                    var terminal = CreateTransientTerminal();
+                    List<Terminal> terminals = new List<Terminal>();
+                    terminals.Add(terminal);
+                    terminals.Add(terminal);
+                    terminals.Add(terminal);
+                    List<string> resultList =
+                        terminals.Where(s => s != null).Select(s => s.ToStringIdentifier()).ToList();
 
-                    try
-                    {
-                        currentProject = StorableObject.FromStringIdentifier(project).Project;
+                    resultData = String.Join(";", resultList);
+                    RemoveTerminals(terminals);
 
-
-
-
-                        var terminal = CreateTransientTerminal();
-                        List<Terminal> terminals = new List<Terminal>();
-                        terminals.Add(terminal);
-                        InsertJumper(terminals);
-                        //result
-                        List<string> resultList = terminals.Where(s => s != null).Select(s => s.ToStringIdentifier()).ToList();
-                        var qq = String.Join(";", resultList);
-
-
-                        oActionCallingContext.AddParameter("objects", qq);
-                        isEntered = true;
-                        safetyPoint.Commit();
-                        return true;
-
-                    }
-
-                    catch (BaseException e)
-                    {
-                        String strMessage = e.Message;
-                        int linenumber = (new StackTrace(e, true)).GetFrame(0).GetFileLineNumber();
-                        string srcFileName = (new StackTrace(e, true)).GetFrame(0).GetFileName();
-                        Trace.WriteLine($"Exception [{srcFileName}:{linenumber}]: " + strMessage);
-                    }
+                    safetyPoint.Commit();
                 }
+            }
+
+            if (mode == "ModifyObjectList")
+            {
+
+                oActionCallingContext.AddParameter("objects", resultData);
+                return true;
+            }
+            if (mode == "Finish")
+            {
+                IsReady = false;
             }
 
 
 
             return false;
+        }
+
+        private void RemoveTerminals(List<Terminal> terminals)
+        {
+            //  terminals.ForEach(x=>x.Remove());
         }
 
         private bool B()

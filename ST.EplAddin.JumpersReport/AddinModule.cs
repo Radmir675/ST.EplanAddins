@@ -5,6 +5,7 @@ namespace ST.EplAddin.JumpersReport
     public class AddinModule : IEplAddIn
     {
         private Eplan.EplApi.Base.TraceListener m_oTrace;
+        ReportsEndListener reportsEndListener;
         public bool OnUnregister()
         {
             return true;
@@ -14,18 +15,13 @@ namespace ST.EplAddin.JumpersReport
         {
             m_oTrace = new Eplan.EplApi.Base.TraceListener();
             System.Diagnostics.Trace.Listeners.Add(m_oTrace);
+            reportsEndListener = new ReportsEndListener();
+
             return true;
         }
 
         public bool OnInitGui()
         {
-            //Menu menu = new Menu();
-            //var menuId = menu.GetCustomMenuId("ST", null);
-            //if (menuId == 0)
-            //    menuId = menu.AddMainMenu("ST", Menu.MainMenuName.eMainMenuUtilities, "None", "None", "Статус", 1);
-            //uint subMenuID = menu.AddMenuItem(
-            //    "Проверить все изделия документации", Action.actionName, "", menuId, 0, false, false);
-
             return true;
         }
         public bool OnRegister(ref bool bLoadOnStart)
@@ -39,4 +35,21 @@ namespace ST.EplAddin.JumpersReport
             return true;
         }
     }
+    public class ReportsEndListener
+    {
+        private EventHandler reportsUpdateEnd_EventHandler;
+        public ReportsEndListener()
+        {
+            reportsUpdateEnd_EventHandler = new EventHandler("onActionEnd.String.XFgUpdateEvaluationAction");
+            //reportsUpdateEnd_EventHandler.SetEvent("GenerateJumpersReportStartEvent");
+            reportsUpdateEnd_EventHandler.EplanEvent += Event;
+        }
+
+        private void Event(IEventParameter pieventparameter)
+        {
+            ReportProvider reportProvider = new ReportProvider();
+            reportProvider.Create();
+        }
+    }
+
 }
