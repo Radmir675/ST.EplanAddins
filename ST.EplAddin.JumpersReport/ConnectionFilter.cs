@@ -11,8 +11,8 @@ namespace ST.EplAddin.JumpersReport
             if (objectToCheck is not Connection connection) return false;
             return (connection.KindOfWire == Connection.Enums.KindOfWire.IndividualConnection &&
                     connection.Properties.CONNECTION_HAS_CDP.ToBool() &&
-                    connection.Page != null && connection.Properties.FUNC_COMPONENTTYPE.ToString(ISOCode.Language.L_ru_RU) == "Вставная перемычка");
+                    connection.Page != null &&
+                    connection.Properties.FUNC_COMPONENTTYPE.ToString(ISOCode.Language.L_ru_RU) == "Вставная перемычка");
         }
     }
 }
-//connection.EndPin.Type==Pin.ConnPointType.Jumper

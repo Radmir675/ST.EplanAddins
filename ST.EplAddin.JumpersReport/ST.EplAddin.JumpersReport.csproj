@@ -125,6 +125,10 @@
     <Compile Include="ConnectionFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportProvider.cs" />
+    <Compile Include="JumpersDataProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Help.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

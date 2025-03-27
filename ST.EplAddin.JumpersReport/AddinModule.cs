@@ -51,5 +51,4 @@ namespace ST.EplAddin.JumpersReport
             reportProvider.Create();
         }
     }
-
 }
