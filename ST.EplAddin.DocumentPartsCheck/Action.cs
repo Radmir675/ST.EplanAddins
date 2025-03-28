@@ -36,7 +36,7 @@ namespace ST.EplAddin.DocumentPartsCheck
             };
             var currentProject = selectionSet.GetCurrentProject(true);
             //теперь найдем все места установки
-            var projectLocations = GetProjectLocations(currentProject).Where(x => x != "TB");
+            var projectLocations = GetProjectLocations(currentProject);
 
             //теперь найдем все идентификаторы проекта
             var projectExistingTypes = GetProjectExistingTypes(currentProject);
@@ -57,7 +57,7 @@ namespace ST.EplAddin.DocumentPartsCheck
                 }
                 else
                 {
-                    MessageBox.Show("Проверка прошла успешно!", "Проверка", MessageBoxButtons.OK,
+                    MessageBox.Show($"Для {location} проверка прошла успешно!", "Проверка", MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
                 }
             }
@@ -68,7 +68,7 @@ namespace ST.EplAddin.DocumentPartsCheck
             DMObjectsFinder oFinder = new DMObjectsFinder(currentProject);
             var pages = oFinder.GetPages(null);
             var pagesType = pages.Select(x => x.Properties.DESIGNATION_FULLLOCATION)
-                .Distinct().Select(x => x.ToString()).Where(x => !string.IsNullOrEmpty(x));
+                .Distinct().Select(x => x.ToString());
             return pagesType;
         }
 
@@ -106,7 +106,7 @@ namespace ST.EplAddin.DocumentPartsCheck
             var pages = oFinder.GetPages(oPagesFilter);
             var pagesType = pages.Select(x => x.Properties.DESIGNATION_DOCTYPE)
                 .Distinct().Select(x => x.ToString())
-                .Where(x => x != "СП");
+                .Where(x => x != "СП" && x != "");
             return pagesType;
         }
 
