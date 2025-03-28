@@ -28,7 +28,6 @@ namespace ST.EplAddin.JumpersReport
         }
         public virtual List<T> DequeueAll()
         {
-
             var data = allTerminals.ToList();
             allTerminals.Clear();
             return data;

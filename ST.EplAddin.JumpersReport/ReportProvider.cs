@@ -1,5 +1,6 @@
 ﻿using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
+using System;
 using System.Collections.Generic;
 
 namespace ST.EplAddin.JumpersReport
@@ -12,6 +13,12 @@ namespace ST.EplAddin.JumpersReport
 
             SelectionSet selectionSet = new SelectionSet();
             Project project = selectionSet.GetCurrentProject(false);
+            if (project == null)
+            {
+                throw new NullReferenceException("Отсутствует ссылка на проект");
+            }
+
+            selectionSet.LockProjectByDefault = false;
             CreateTerminals(project);
             Reports reports = new Reports();
             reports.CreateReportsFromTemplates(project,

@@ -69,8 +69,6 @@ namespace ST.EplAddin.JumpersReport
             if (mode == "Finish")
             {
                 IsOtherReportsUpdated = false;
-                var terminalsToRemove = TerminalsRepository.GetInstance().GetAllSavedTerminals();
-                terminalsToRemove.ForEach(x => x.Remove());
                 return true;
             }
             return false;
