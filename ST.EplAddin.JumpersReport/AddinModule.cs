@@ -48,7 +48,6 @@ namespace ST.EplAddin.JumpersReport
 
         private void Event(IEventParameter pieventparameter)
         {
-            TerminalsRepository.Reset();
             ReportProvider reportProvider = new ReportProvider();
             reportProvider.Create();
         }

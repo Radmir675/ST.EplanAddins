@@ -7,18 +7,12 @@ namespace ST.EplAddin.JumpersReport
     internal class TerminalsRepository
     {
         private static TerminalsRepository instance;
-        private Queue<List<Terminal>> queue = new();
-        private List<List<Terminal>> allTerminals = new();
+        private ModifyQueue<List<Terminal>> queue = new();
         private TerminalsRepository() { }
 
         public static TerminalsRepository GetInstance()
         {
-            if (instance == null)
-            {
-                instance ??= new TerminalsRepository();
-            }
-
-            return instance;
+            return instance ??= new TerminalsRepository();
         }
 
         public List<Terminal> GetData()
@@ -28,17 +22,11 @@ namespace ST.EplAddin.JumpersReport
         public void Save(List<Terminal> list)
         {
             queue.Enqueue(list);
-            allTerminals.Add(list);
         }
         public List<Terminal> GetAllSavedTerminals()
         {
-            var result = allTerminals.SelectMany(x => x).ToList();
+            var result = queue.GetAll().SelectMany(x => x).ToList();
             return result;
         }
-        public static void Reset()
-        {
-            instance = null;
-        }
-
     }
 }
