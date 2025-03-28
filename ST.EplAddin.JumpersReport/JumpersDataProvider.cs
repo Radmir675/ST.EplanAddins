@@ -30,11 +30,6 @@ namespace ST.EplAddin.JumpersReport
         private IEnumerable<List<Connection>> SortDeviceJumpers(Connection[] connections)
         {
             // connections.GroupJoin()
-
-
-
-
-
             // connections.FirstOrDefault().StartPin.
             return null;
         }
@@ -50,11 +45,6 @@ namespace ST.EplAddin.JumpersReport
                 safetyPoint.Commit();
             }
         }
-        public void RemoveTerminals(List<Terminal> terminals)
-        {
-            terminals.ForEach(x => x.Remove());
-        }
-
         public void FindAndCreateTerminals()
         {
             var connections = FindInsertableJumperConnections();

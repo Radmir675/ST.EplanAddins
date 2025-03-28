@@ -1,5 +1,4 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
-using Eplan.EplApi.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +8,13 @@ namespace ST.EplAddin.JumpersReport
 {
     public class Action : IEplAction
     {
-        public static string actionName = "JumpersReport";
-        private Project currentProject;
+        private const string ACTION_NAME = "JumpersReport";
         private string resultData;
         public static bool IsOtherReportsUpdated = false;
-        private JumpersDataProvider jumpersDataProvider;
-
         public void GetActionProperties(ref ActionProperties actionProperties) { }
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
-            Name = actionName;
+            Name = ACTION_NAME;
             Ordinal = 98;
             return true;
 
@@ -52,10 +48,7 @@ namespace ST.EplAddin.JumpersReport
             //запускается один раз в начале создания отчета
             if (mode == "Start")
             {
-                currentProject = StorableObject.FromStringIdentifier(project).Project;
-                jumpersDataProvider = new JumpersDataProvider(currentProject);
-
-
+                //   currentProject = StorableObject.FromStringIdentifier(project).Project;
             }
 
             if (mode == "ModifyObjectList")
@@ -76,13 +69,11 @@ namespace ST.EplAddin.JumpersReport
             if (mode == "Finish")
             {
                 IsOtherReportsUpdated = false;
-
                 var terminalsToRemove = TerminalsRepository.GetInstance().GetAllSavedTerminals();
                 terminalsToRemove.ForEach(x => x.Remove());
                 return true;
             }
             return false;
         }
-
     }
 }
