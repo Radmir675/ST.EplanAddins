@@ -25,7 +25,7 @@ namespace ST.EplAddin.JumpersReport
         }
         public List<Terminal> GetAllSavedTerminals()
         {
-            var result = queue.GetAll().SelectMany(x => x).ToList();
+            var result = queue.DequeueAll().SelectMany(x => x).ToList();
             return result;
         }
     }

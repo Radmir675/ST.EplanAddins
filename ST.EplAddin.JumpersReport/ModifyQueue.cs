@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ST.EplAddin.JumpersReport
 {
@@ -25,9 +26,12 @@ namespace ST.EplAddin.JumpersReport
             T item = queue.Dequeue();
             return item;
         }
-        public virtual List<T> GetAll()
+        public virtual List<T> DequeueAll()
         {
-            return allTerminals;
+
+            var data = allTerminals.ToList();
+            allTerminals.Clear();
+            return data;
         }
     }
 }
