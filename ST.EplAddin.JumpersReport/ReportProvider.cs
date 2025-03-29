@@ -1,7 +1,7 @@
 ﻿using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace ST.EplAddin.JumpersReport
 {
@@ -21,8 +21,20 @@ namespace ST.EplAddin.JumpersReport
             selectionSet.LockProjectByDefault = false;
             CreateTerminals(project);
             Reports reports = new Reports();
-            reports.CreateReportsFromTemplates(project,
-                new List<DocumentTypeManager.DocumentType>(1) { DocumentTypeManager.DocumentType.TerminalDiagram });
+            ReportBlock reportBlock = new ReportBlock();
+            reportBlock.Create(project);
+            reportBlock.FormName = "";
+            reportBlock.Action = "";
+            FunctionBasePropertyList[] functionBasePropertyLists = new FunctionBasePropertyList[]
+            {
+                TerminalsRepository.GetInstance().GetData().FirstOrDefault().Properties,
+                TerminalsRepository.GetInstance().GetData().FirstOrDefault().Properties
+            };
+            reportBlock.DeviceTagNameParts = functionBasePropertyLists;
+            reports.CreateReport(reportBlock,);
+
+            //reports.CreateReportsFromTemplates(project,
+            //    new List<DocumentTypeManager.DocumentType>(1) { DocumentTypeManager.DocumentType.TerminalDiagram });
         }
         private void CreateTerminals(Project project)
         {
