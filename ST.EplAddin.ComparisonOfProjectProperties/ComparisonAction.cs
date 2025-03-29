@@ -6,7 +6,6 @@ using ST.EplAddin.ComparisonOfProjectProperties.Models;
 using ST.EplAddin.ComparisonOfProjectProperties.ViewModels;
 using ST.EplAddin.ComparisonOfProjectProperties.Views;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace ST.EplAddin.ComparisonOfProjectProperties
@@ -98,7 +97,7 @@ namespace ST.EplAddin.ComparisonOfProjectProperties
                                 var definitionName = indxVal.Definition.Name;
                                 var definitionRO = indxVal.Definition.IsReadOnly;
 
-                                var index = int.Parse((indx + 1).ToString());
+                                var index = int.Parse((indx).ToString());
                                 dictionary.Add(new PropertyKey(id, index), new Property()
                                 {
                                     Id = id,
