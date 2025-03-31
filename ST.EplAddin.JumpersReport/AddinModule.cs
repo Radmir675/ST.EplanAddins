@@ -49,9 +49,9 @@ namespace ST.EplAddin.JumpersReport
         {
             reportsUpdateEnd_EventHandler = new EventHandler("onActionEnd.String.XFgUpdateEvaluationAction");
             jumpersUpdateEnd_EventHandler = new EventHandler("onActionEnd.String.XFgEvaluateProjectAction");
-            jumpersUpdateEnd1_EventHandler = new EventHandler("onActionEnd.String.EsSwitchConnectionUpdate");
+            //    jumpersUpdateEnd1_EventHandler = new EventHandler("onActionEnd.String.EsSwitchConnectionUpdate");
             jumpersUpdateEnd_EventHandler.EplanEvent += Event2;
-            jumpersUpdateEnd1_EventHandler.EplanEvent += Event3;
+            // jumpersUpdateEnd1_EventHandler.EplanEvent += Event3;
         }
 
         private void Event(IEventParameter pieventparameter)
