@@ -21,6 +21,7 @@ namespace ST.EplAddin.JumpersReport
         }
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
+
             if (!IsOtherReportsUpdated)
             {
                 return false;
@@ -57,8 +58,8 @@ namespace ST.EplAddin.JumpersReport
                 List<string> resultList =
                     terminals.Where(s => s != null).Select(s => s.ToStringIdentifier()).ToList();
                 resultData = String.Join(";", resultList);
-                objects = resultData;
-                // oActionCallingContext.AddParameter("objects", resultData);
+                //objects = resultData;
+                oActionCallingContext.AddParameter("objects", resultData);
                 return true;
             }
             if (mode == "Finish")

@@ -23,7 +23,7 @@ namespace ST.EplAddin.JumpersReport
             Reports reports = new Reports();
             reports.CreateReportsFromTemplates(project,
                 new List<DocumentTypeManager.DocumentType>(1) { DocumentTypeManager.DocumentType.TerminalDiagram });
-            // TerminalsRepository.GetInstance().GetAllSavedTerminals().ForEach(z => z.Remove());
+            //  TerminalsRepository.GetInstance().GetAllSavedTerminals().ForEach(z => z.Remove());
         }
         private void CreateTerminals(Project project)
         {
