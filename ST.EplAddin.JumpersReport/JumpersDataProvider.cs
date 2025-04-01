@@ -2,22 +2,40 @@
 using Eplan.EplApi.DataModel.EObjects;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace ST.EplAddin.JumpersReport
 {
     internal class JumpersDataProvider(Project project)
     {
-        private Terminal CreateTransientTerminal(string name)
+        private Terminal CreateTransientTerminals(JumperConnection jumperConnection, bool isLast = false)
         {
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
+                if (!isLast)
+                {
+                    FunctionDefinition funcDefinition = new FunctionDefinition(project, Function.Enums.Category.Terminal, 6, 1);
+                    Terminal terminal = new Terminal();
+                    terminal.Create(project, funcDefinition);
+                    terminal.Name = $"+{jumperConnection.StartLocation}-{jumperConnection.StartLiteralDT}";
+                    terminal.Properties[20038] = jumperConnection.StartPinDesignation;
+                    terminal.Properties[20030] = jumperConnection.StartDTCounter;
+                    safetyPoint.Commit();
+                    return terminal;
 
-                FunctionDefinition funcDefinition = new FunctionDefinition(project, Function.Enums.Category.Terminal, 6, 1);
-                Terminal terminal = new Terminal();
-                terminal.Create(project, funcDefinition);
-                terminal.Name = name;
-                safetyPoint.Commit();
-                return terminal;
+                }
+                else
+                {
+                    FunctionDefinition funcDefinition1 = new FunctionDefinition(project, Function.Enums.Category.Terminal, 6, 1);
+                    Terminal terminal1 = new Terminal();
+                    terminal1.Create(project, funcDefinition1);
+                    terminal1.Name = $"+{jumperConnection.EndLocation}-{jumperConnection.EndLiteralDT}";
+                    terminal1.Properties[20038] = jumperConnection.EndPinDesignation;
+                    terminal1.Properties[20030] = jumperConnection.EndDTCounter;
+                    safetyPoint.Commit();
+                    return terminal1;
+                }
+
             }
         }
 
@@ -27,39 +45,127 @@ namespace ST.EplAddin.JumpersReport
             var connections = finder.GetConnectionsWithCF(new ConnectionFilter());
             return connections;
         }
-        private IEnumerable<List<Connection>> SortDeviceJumpers(Connection[] connections)
+
+        private IEnumerable<JumperConnection> GetSymbolsData(Connection[] connections)
         {
-            // connections.GroupJoin()
-            // connections.FirstOrDefault().StartPin.
-            return null;
+            foreach (var connection in connections)
+            {
+
+                var connectionResult = new JumperConnection()
+                {
+                    StartPinDesignation = connection.StartPin.Name,
+                    EndPinDesignation = connection.EndPin.Name,
+                    StartLocation = ((Function)connection.StartSymbolReference).Properties[1220],
+                    EndLocation = ((Function)connection.EndSymbolReference).Properties[1220],
+                    StartLiteralDT = ((Function)connection.StartSymbolReference).Properties[20013],
+                    EndLiteralDT = ((Function)connection.EndSymbolReference).Properties[20013],
+                    StartDTCounter = ((Function)connection.StartSymbolReference).Properties[20014],
+                    EndDTCounter = ((Function)connection.EndSymbolReference).Properties[20014],
+                    StartFullDeviceName = ((Function)connection.StartSymbolReference).Properties[20006],
+                    EndFullDeviceName = ((Function)connection.EndSymbolReference).Properties[20006],
+
+                };
+                yield return connectionResult;
+            }
         }
-        public void InsertJumperInTerminals(List<Terminal> terminals)
+
+        private IEnumerable<IEnumerable<JumperConnection>> SortDeviceJumpers(Connection[] connections)
         {
+            var result = GetSymbolsData(connections).ToList();
+
+            var sortedList = result.OrderBy(x => x?.StartLiteralDT ?? x.EndLiteralDT).ThenBy(z => z?.StartDTCounter ?? z.EndDTCounter);
+            var items = LinqExtension.GroupBy(sortedList);
+            return items;
+        }
+        public void InsertJumperInTerminals(IEnumerable<Terminal> terminals)
+        {
+            if (!terminals.Any()) return;
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
-                terminals.First().Properties.FUNC_TERMINAL_JUMPER_INTERN[1] = "1/0;1/0";
-                //Свойство сохраняется на клемме, представляющей начало созданной вручную мостовой перемычки между внутренними выводами мостовой перемычки.
-                //В этом свойстве определяется "Гребенка перемычки". Для этого от начала перемычки указывается величина шага до следующих клемм с перемычками,
-                //а также величина шага до относящегося к ней уровня.
-                // Пример: Значение "2/0;1/-1" означает, что есть мостовая перемычка к клемме через одну на том же уровне и от нее к следующей клемме уровнем ниже.
+                terminals.First().Properties.FUNC_TERMINAL_JUMPER_INTERN[1] = GetJumperConfig(terminals.Count());
                 safetyPoint.Commit();
             }
         }
+
+        private string GetJumperConfig(int count)
+        {
+            const string jumperCode = "1/0;";
+            int capacity = jumperCode.Length * count;
+            StringBuilder builder = new StringBuilder(capacity);
+            for (int i = 0; i < count - 1; i++)
+            {
+                builder.Append(jumperCode);
+            }
+            var cutEndSymbol = builder.Remove(builder.Length - 1, 1);
+            return cutEndSymbol.ToString();
+        }
+
         public void FindAndCreateTerminals()
         {
             var connections = FindInsertableJumperConnections();
             var sortedList = SortDeviceJumpers(connections);
-            var terminal1 = CreateTransientTerminal("K1-X1");
-            var terminal2 = CreateTransientTerminal("K1-X1");
-            var terminal3 = CreateTransientTerminal("K1-X1");
-            var terminal4 = CreateTransientTerminal("K1-X2");
-            var terminal5 = CreateTransientTerminal("K1-X2");
-            var result = new List<Terminal>(3) { terminal1, terminal2, terminal3 };
-            var resul1 = new List<Terminal>(3) { terminal4, terminal5 };
-            TerminalsRepository.GetInstance().Save(result);
-            TerminalsRepository.GetInstance().Save(resul1);
+            var terminals = GetTermnals(sortedList).ToList();
+            foreach (var terminal in terminals)
+            {
+                InsertJumperInTerminals(terminal);
+            }
+            TerminalsRepository.GetInstance().Save(terminals.SelectMany(z => z).ToList());
+        }
+
+        private IEnumerable<IEnumerable<Terminal>> GetTermnals(IEnumerable<IEnumerable<JumperConnection>> sortedList)
+        {
+            foreach (var terminals in sortedList)
+            {
+                var terminalList = new List<Terminal>();
+                foreach (var terminal in terminals)
+                {
+                    var transientTerminal = CreateTransientTerminals(terminal);
+                    terminalList.Add(transientTerminal);
+                }
+                var transientTerminal2 = CreateTransientTerminals(terminals.Last(), true);
+                terminalList.Add(transientTerminal2);
+                yield return terminalList;
+
+            }
         }
     }
-}
 
-//connection.EndPin.Type==Pin.ConnPointType.Jumper
+    internal class LinqExtension
+    {
+        public static IEnumerable<IEnumerable<JumperConnection>> GroupBy(IEnumerable<JumperConnection> connections)
+        {
+            var groups = new List<List<JumperConnection>>();
+
+            var enumerator = connections.GetEnumerator();
+            var list = new List<JumperConnection>();
+            while (enumerator.MoveNext())
+            {
+                var current = enumerator.Current;
+                if (!list.Any())
+                {
+                    list.Add(current);
+                    continue;
+                }
+
+                if (list.Contains(current, new Comparator()))
+                {
+                    list.Add(current);
+                    continue;
+                }
+
+                else
+                {
+                    groups.Add(list);
+                    list = new();
+                    list.Add(current);
+                    continue;
+                }
+
+            }
+
+            groups.Add(list);
+            return groups;
+        }
+
+    }
+}

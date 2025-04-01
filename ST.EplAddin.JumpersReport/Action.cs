@@ -45,11 +45,6 @@ namespace ST.EplAddin.JumpersReport
             oActionCallingContext.GetParameter("filter", ref filter);
             oActionCallingContext.GetParameter("mainfunction", ref mainfunction);
 
-            //запускается один раз в начале создания отчета
-            if (mode == "Start")
-            {
-                //   currentProject = StorableObject.FromStringIdentifier(project).Project;
-            }
 
             if (mode == "ModifyObjectList")
             {
@@ -62,8 +57,8 @@ namespace ST.EplAddin.JumpersReport
                 List<string> resultList =
                     terminals.Where(s => s != null).Select(s => s.ToStringIdentifier()).ToList();
                 resultData = String.Join(";", resultList);
-
-                oActionCallingContext.AddParameter("objects", resultData);
+                objects = resultData;
+                // oActionCallingContext.AddParameter("objects", resultData);
                 return true;
             }
             if (mode == "Finish")

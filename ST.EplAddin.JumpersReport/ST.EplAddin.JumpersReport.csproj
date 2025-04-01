@@ -122,15 +122,19 @@
   <ItemGroup>
     <Compile Include="Action.cs" />
     <Compile Include="AddinModule.cs" />
+    <Compile Include="Comparator.cs" />
+    <Compile Include="JumperConnection.cs" />
     <Compile Include="ConnectionFilter.cs" />
     <Compile Include="ModifyQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportProvider.cs" />
     <Compile Include="JumpersDataProvider.cs" />
+    <Compile Include="ReportsEndListener.cs" />
     <Compile Include="TerminalsRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Help.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
