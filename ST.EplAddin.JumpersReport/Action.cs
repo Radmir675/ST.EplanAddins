@@ -11,7 +11,15 @@ namespace ST.EplAddin.JumpersReport
         private const string ACTION_NAME = "JumpersReport";
         private string resultData;
         public static bool IsOtherReportsUpdated = false;
-        public void GetActionProperties(ref ActionProperties actionProperties) { }
+
+        public void GetActionProperties(ref ActionProperties actionProperties)
+        {
+            var PROP = new ActionParameterProperties();
+            var t = new ActionParameterProperties();
+            t.Set("STReport");
+            actionProperties.AddParameter(t);
+
+        }
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
             Name = ACTION_NAME;
@@ -21,7 +29,6 @@ namespace ST.EplAddin.JumpersReport
         }
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-
             if (!IsOtherReportsUpdated)
             {
                 return false;
@@ -58,8 +65,8 @@ namespace ST.EplAddin.JumpersReport
                 List<string> resultList =
                     terminals.Where(s => s != null).Select(s => s.ToStringIdentifier()).ToList();
                 resultData = String.Join(";", resultList);
-                //objects = resultData;
-                oActionCallingContext.AddParameter("objects", resultData);
+                objects = resultData;
+                //oActionCallingContext.AddParameter("objects", resultData);
                 return true;
             }
             if (mode == "Finish")

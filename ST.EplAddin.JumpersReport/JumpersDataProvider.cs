@@ -108,6 +108,7 @@ namespace ST.EplAddin.JumpersReport
             foreach (var terminal in terminals)
             {
                 InsertJumperInTerminals(terminal);
+
             }
             TerminalsRepository.GetInstance().Save(terminals.SelectMany(z => z).ToList());
         }
