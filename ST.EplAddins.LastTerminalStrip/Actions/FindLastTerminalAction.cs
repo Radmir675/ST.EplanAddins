@@ -4,6 +4,7 @@ using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.DataModel.MasterData;
 using Eplan.EplApi.HEServices;
+using Eplan.EplApi.MasterData;
 using ST.EplAddin.LastTerminalStrip;
 using System;
 using System.Collections.Generic;
@@ -117,22 +118,21 @@ namespace ST.EplAddins.LastTerminalStrip
                 if (terminalstrip != null && terminalstrip.Terminals != null)
                 {
                     Progress.Step(1);
-                    List<Terminal> TerminalOff = new List<Terminal>();
+                    List<Terminal> terminals = new List<Terminal>();
                     Progress.BeginPart(100 / (terminalStrips.Count()), terminalstrip.Name);
                     foreach (Terminal terminal in terminalstrip.Terminals)
                     {
-                        if (terminal.IsMainTerminal == true && terminal.Articles.Any())
+                        if (terminal.IsMainTerminal && terminal.Articles.Any())
                         {
-                            TerminalOff.Add(terminal);
+                            terminals.Add(terminal);
                         }
                     }
-                    if (TerminalOff != null && TerminalOff.Count() >= 1)
+                    if (terminals.Any())
                     {
-                        var productSubGroup = TerminalOff.Last().ArticleReferences.First().Properties.ARTICLE_PRODUCTSUBGROUP.GetDisplayString();
-                        var displaySubGroupName = productSubGroup.GetStringToDisplay(ISOCode.Language.L_ru_RU);
-                        if (displaySubGroupName == "Клемма")
+                        var productSubGroup = terminals.Last().ArticleReferences.First().Properties.ARTICLE_PRODUCTSUBGROUP;
+                        if (productSubGroup == (int)MDPartsDatabaseItem.Enums.ProductSubGroup.ElectricalTerminal)
                         {
-                            record.Add(TerminalOff?.Last());
+                            record.Add(terminals?.Last());
                         }
                     }
                 }
@@ -174,7 +174,18 @@ namespace ST.EplAddins.LastTerminalStrip
         }
         private Terminal[] GetEpmtyTerminalStrips(List<Terminal> terminals)
         {
-            var result = terminals.Where(x => x.Articles.Length < 2).ToArray();
+            var result = terminals.Where(x =>
+            {
+                if (x.Articles.Length < 2) return true;
+                foreach (var article in x.Articles)
+                {
+                    if (article.Properties.ARTICLE_PRODUCTSUBGROUP == (int)MDPartsDatabaseItem.Enums.ProductSubGroup.ElectricalEnd)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }).ToArray();
             return result;
         }
         public void GetActionProperties(ref ActionProperties actionProperties) { }
