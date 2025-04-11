@@ -81,7 +81,7 @@ namespace ST.EplAddin.UserConfigurationService.Storage
         public bool TryGetSchemeByParameters(string Catalog, string Database, out List<Scheme> schemes)
         {
             schemes = _schemes.Where(scheme => scheme.Catalog == Catalog && scheme.Database == Database).ToList();
-            return schemes != null;
+            return schemes.Any();
         }
     }
 }
