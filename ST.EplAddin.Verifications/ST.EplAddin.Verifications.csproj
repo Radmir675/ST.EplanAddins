@@ -96,6 +96,7 @@
     <Compile Include="ConnectionColorVF.cs" />
     <Compile Include="ConnectionDesignationVF.cs" />
     <Compile Include="Function3DArticlesCoutVF.cs" />
+    <Compile Include="LengthPartVF.cs" />
     <Compile Include="PlcOutputToReviewAssignmentVF.cs" />
     <Compile Include="ProjectPropertiesVF.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
