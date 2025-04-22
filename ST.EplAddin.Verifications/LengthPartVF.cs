@@ -8,7 +8,7 @@ namespace ST.EplAddin.Verifications
     internal class LengthPartVF : Verification
     {
         private const int m_iMessageId = 43;
-        private const int TOLERANCE = 2;
+        private const int TOLERANCE = 1;
         public override void OnRegister(ref string strName, ref int iOrdinal)
         {
             strName = "LengthPartVF";
@@ -29,23 +29,25 @@ namespace ST.EplAddin.Verifications
         {
             if (oObject1 == null) return;
             if (oObject1 is not BusBar busBar) return;
+            var name = busBar.Name;
             var length3D = Get3DLength(busBar);
             var length2D = Get2DLength(busBar);
             if (Math.Abs(length2D - length3D) > TOLERANCE)
             {
-                DoErrorMessage(oObject1, busBar.Name);
+                DoErrorMessage(oObject1, name);
             }
         }
 
         private double Get2DLength(BusBar busBar)
         {
-            return 0;
+            var length = busBar.ArticleReferences[0]?.Properties[20496].ToDouble();
+            return length ?? 0;
         }
 
         private double Get3DLength(BusBar busBar)
         {
-            var length = busBar.ArticleReferences[0]?.Properties[31008].ToDouble();
-            return length ?? 0;
+            var length = Math.Round(busBar.Length, 0);
+            return length;
         }
 
         public override void OnRegister(ref string strCreator, ref IMessage.Region eRegion, ref int iMessageId, ref IMessage.Classification eClassification,
@@ -60,7 +62,7 @@ namespace ST.EplAddin.Verifications
 
         public override string GetMessageText()
         {
-            return "Длина %1!s! не соответствует главной функции в 2D представлении";
+            return "Длина шины %1!s! не соответствует функции в 2D представлении ";
         }
 
         public override void DoHelp()
