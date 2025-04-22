@@ -1,5 +1,6 @@
 ﻿using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.EServices;
+using System.Linq;
 using Function = Eplan.EplApi.DataModel.Function;
 using StorableObject = Eplan.EplApi.DataModel.StorableObject;
 
@@ -26,16 +27,31 @@ namespace ST.EplAddin.Verifications
             if (oObject1 is not Terminal terminal) return;
             if (terminal.Category != Function.Enums.Category.PLCTerminal) return;
 
-            if (terminal.Properties[20121].ToInt() == 1 && !terminal.IsTemplate)
+            if (terminal.Properties[20121].ToInt() == 1 && !terminal.IsTemplate)//1-многополюсное представление
             {
-                DoErrorMessage(terminal, oObject1.Project, $"{terminal.Name}");
-
+                if (terminal.Properties[20473].ToBool() == false)
+                {
+                    DoErrorMessage(terminal, oObject1.Project, $"{terminal.Name}");
+                }
             }
-            if (terminal.Properties[20121].ToInt() == 3)
+            if (terminal.Properties[20121].ToInt() == 3)//3- обзор
             {
                 if (!terminal.IsTemplate && terminal.Properties[20470].ToBool() == false)
                 {
-                    DoErrorMessage(terminal, oObject1.Project, $"{terminal.Name}");
+                    //если у главной функции нет шаблонов то пропустить проверку надо
+                    var paarFunc = terminal.ParentFunction;
+                    if (paarFunc.IsMainFunction && paarFunc.ArticleReferences.Any())
+                    {
+                        if (!paarFunc.ArticleReferences[0]?.FunctionTemplates.Any() ?? false)
+                        {
+                            return;
+                        }
+                    }
+
+                    if (terminal.IsCoveredTemplate == false)
+                    {
+                        DoErrorMessage(terminal, oObject1.Project, $"{terminal.Name}");
+                    }
                 }
 
             }
