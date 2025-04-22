@@ -27,6 +27,7 @@ namespace ST.EplAddin.Verifications
             if (oObject1 is not Cable cable || !cable.IsMainFunction) return;
             if (cable.ArticleReferences.Length <= 0 || cable.ArticleReferences[0].Properties[22041].ToInt() !=
                 (int)MDPartsDatabaseItem.Enums.ProductGroup.ElectricalCableConnection) return;
+            if (!cable.FunctionTemplates.Any()) return;
 
             if (cable.CableConnections.Any(x => !x.IsTemplate))
             {
