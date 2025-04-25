@@ -26,34 +26,22 @@ namespace ST.EplAddin.Verifications
             if (oObject1 == null) return;
             if (oObject1 is not Terminal terminal) return;
             if (terminal.Category != Function.Enums.Category.PLCTerminal) return;
+            if (!terminal?.ParentFunction?.ArticleReferences?.Any(x => x?.FunctionTemplates?.Any() ?? false) ?? false) return;
 
-            if (terminal.Properties[20121].ToInt() == 1 && !terminal.IsTemplate)//1-многополюсное представление
+            switch (terminal.Properties[20121].ToInt())
             {
-                if (terminal.Properties[20473].ToBool() == false)
-                {
-                    DoErrorMessage(terminal, oObject1.Project, $"{terminal.Name}");
-                }
-            }
-            if (terminal.Properties[20121].ToInt() == 3)//3- обзор
-            {
-                if (!terminal.IsTemplate && terminal.Properties[20470].ToBool() == false)
-                {
-                    //если у главной функции нет шаблонов то пропустить проверку надо
-                    var paarFunc = terminal.ParentFunction;
-                    if (paarFunc.IsMainFunction && paarFunc.ArticleReferences.Any())
-                    {
-                        if (!paarFunc.ArticleReferences[0]?.FunctionTemplates.Any() ?? false)
-                        {
-                            return;
-                        }
-                    }
-
-                    if (terminal.IsCoveredTemplate == false)
+                case 1://1-многополюсное представление
+                    if (!terminal.IsTemplate)
                     {
                         DoErrorMessage(terminal, oObject1.Project, $"{terminal.Name}");
                     }
-                }
-
+                    break;
+                case 3://3- обзор
+                    if (!terminal.IsTemplate && terminal.Properties[20470].ToBool() == false)
+                    {
+                        DoErrorMessage(terminal, oObject1.Project, $"{terminal.Name}");
+                    }
+                    break;
             }
         }
 
