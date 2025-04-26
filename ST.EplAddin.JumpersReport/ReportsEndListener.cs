@@ -1,5 +1,4 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
-using System.Diagnostics;
 
 namespace ST.EplAddin.JumpersReport;
 
@@ -12,16 +11,16 @@ public class ReportsEndListener
 
     public ReportsEndListener()
     {
-        anyReportUpdateEnd_EventHandler = new EventHandler("onActionEnd.String.XFgUpdateEvaluationAction"); //Обновить
-        anyReportUpdateEnd_EventHandler.EplanEvent += AnyReportUpdateEvent;
+        //anyReportUpdateEnd_EventHandler = new EventHandler("onActionEnd.String.XFgUpdateEvaluationAction"); //Обновить
+        //anyReportUpdateEnd_EventHandler.EplanEvent += AnyReportUpdateEvent;
 
-        allReportsGenerateEnd_EventHandler = new EventHandler("onActionEnd.String.XFgEvaluateProjectAction"); //Генерировать по проекту
-        //allReportsGenerateEnd_EventHandler.EplanEvent += AllReportsGenerateEvent;
+        //allReportsGenerateEnd_EventHandler = new EventHandler("onActionEnd.String.XFgEvaluateProjectAction"); //Генерировать по проекту
+        ////allReportsGenerateEnd_EventHandler.EplanEvent += AllReportsGenerateEvent;
 
         onPostCreateEvaluation_EventHandler = new EventHandler("onPostCreateEvaluation");  //обновление отчера через форму Генерировать "Шестеренка" окончание
         onPostCreateEvaluation_EventHandler.EplanEvent += OnPostCreateEvaluationEvent;
 
-        onPostCreateEvaluationTemplate_EventHandler = new EventHandler("onPostCreateEvaluationTemplate"); //создание шаблона отчета  через форму генерировать
+        //onPostCreateEvaluationTemplate_EventHandler = new EventHandler("onPostCreateEvaluationTemplate"); //создание шаблона отчета  через форму генерировать
         //onPostCreateEvaluationTemplate_EventHandler.EplanEvent += OnPostCreateEvaluationTemplateEvent;
 
         //AVXFgCreateEvaluationProjectAction
