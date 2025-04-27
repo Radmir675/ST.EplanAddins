@@ -31,7 +31,7 @@ namespace ST.EplAddin.JumpersReport
             }
             TerminalsRepository.GetInstance().GetAllSavedTerminals().ForEach(z => z.Remove());
         }
-        private void CreateTerminals(Project project)
+        public void CreateTerminals(Project project)
         {
             var jumperDataProvider = new JumpersDataProvider(project);
             jumperDataProvider.FindAndCreateTerminals();

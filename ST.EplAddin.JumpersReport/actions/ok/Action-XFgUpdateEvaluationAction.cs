@@ -1,11 +1,10 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
+using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
-using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 //https://www.eplan.help/en-us/Infoportal/Content/api/2.9/API_REPORTS_MODIFICATION.html
 namespace ST.EplAddin.JumpersReport
@@ -23,16 +22,9 @@ namespace ST.EplAddin.JumpersReport
         //AVXFgCompareEvaluations
         //AVXFgExtEvaluations
         //AVXGedEvaluationTab@@ 
-       // GfDlgMgrActionIGfWind /function:EvaluateTemplate
+        // GfDlgMgrActionIGfWind /function:EvaluateTemplate
 
-        public void GetActionProperties(ref ActionProperties actionProperties)
-        {
-            var PROP = new ActionParameterProperties();
-            var t = new ActionParameterProperties();
-            t.Set("STReport");
-            actionProperties.AddParameter(t);
-
-        }
+        public void GetActionProperties(ref ActionProperties actionProperties) { }
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
             Name = ACTION_NAME;
@@ -42,11 +34,6 @@ namespace ST.EplAddin.JumpersReport
         }
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            int count = oActionCallingContext.GetParameterCount();
-            string[] contextParams = oActionCallingContext.GetParameters();
-            string[] contextStrings = oActionCallingContext.GetStrings();
-
-
             // получение шаблонов отчетов из настроек проекта
             using (SafetyPoint safetyPoint = SafetyPoint.Create())
             {
@@ -59,22 +46,31 @@ namespace ST.EplAddin.JumpersReport
                 prjNode3.GetListOfAllSettings(ref colOfSettings3, true);
 
                 prjNode3.Write(System.IO.Path.GetTempPath() + "ProjectSettingNode3.xml");
+                var subNode = GetActionSubNode(prjNode3);
+                var nodePath = subNode.GetNodePath();
+
+                ReportBlock reportBlock = new ReportBlock();
+                reportBlock.Create(prj);
+                reportBlock.Type = DocumentTypeManager.DocumentType.TerminalDiagram;
+                reportBlock.FormName = subNode.GetStringSetting("FormName", 0);
+                reportBlock.IsAutomaticPageDescription = true;
+                ReportProvider reportProvider = new ReportProvider();
+                reportProvider.CreateTerminals(prj);
 
 
-                ReportBlock rb = new ReportBlock();
+                var terminalsRepository = TerminalsRepository.GetInstance();
+                var data = terminalsRepository.GetAllSavedTerminals();
+                var list = new List<FunctionBasePropertyList>();
+                list.AddRange(data.Select(x => new FunctionPropertyList(x)));
+                reportBlock.DeviceTagNameParts = list.ToArray();
 
-                rb.Create(prj);
-
+                var StartPage = subNode.GetStringSetting("StartPage", 0);
 
                 Reports reports = new Reports();
-
-                string StartPage = "";
-
-                reports.CreateReport(rb, StartPage);
-
+                reports.CreateReport(reportBlock, StartPage);
                 DMObjectsFinder DMObjectsFinder = new DMObjectsFinder(prj);
-                List<ReportBlock> reports1 = DMObjectsFinder.GetAll<ReportBlock>(true).Cast<ReportBlock>().Where(a => a.Action == "JumpersReport").ToList();
-
+                List<ReportBlock> reports1 = DMObjectsFinder.GetAll<ReportBlock>(true).Cast<ReportBlock>().Where(a => a.Action == Action.ACTION_NAME).ToList();
+                safetyPoint.Commit();
             }
 
             ActionManager oMng = new ActionManager();
@@ -82,6 +78,22 @@ namespace ST.EplAddin.JumpersReport
             string props = oBaseAction.ActionProperties.ToString();
             return oBaseAction.Execute(oActionCallingContext);
 
+        }
+
+        private SettingNode GetActionSubNode(ProjectSettingNode prjNode3)
+        {
+            StringCollection sunNodes = new StringCollection();
+            prjNode3.GetListOfNodes(ref sunNodes, false);
+            foreach (var node in sunNodes)
+            {
+                SettingNode settingNode = prjNode3.GetSubNode(node);
+                var actionName = settingNode.GetStringSetting("Action", 0);
+                if (actionName == "JumpersReport")
+                {
+                    return settingNode;
+                }
+            }
+            return null;
         }
     }
 }

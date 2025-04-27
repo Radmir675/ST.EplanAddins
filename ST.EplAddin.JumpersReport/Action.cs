@@ -8,7 +8,7 @@ namespace ST.EplAddin.JumpersReport
 {
     public class Action : IEplAction
     {
-        private const string ACTION_NAME = "JumpersReport";
+        public const string ACTION_NAME = "JumpersReport";
         private string resultData;
         public static bool IsOtherReportsUpdated = false;
 
