@@ -2,12 +2,11 @@
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
 using ST.EplAddin.JumpersReport.Actions.ok;
-using ST.EplAddin.JumpersReport.Providers;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 
-namespace ST.EplAddin.JumpersReport.actions.Manager;
+namespace ST.EplAddin.JumpersReport.Providers;
 
 internal class ActionProvider
 {
@@ -27,8 +26,8 @@ internal class ActionProvider
         GetAndCreateData();
         CreateReport(subNode, reportBlock);
         Check();
-
-        TerminalsRepository.GetInstance().GetAllSavedTerminals().ForEach(z => z.Remove());
+        //удаление клемм
+        //TerminalsRepository.GetInstance().GetAllSavedTerminals().ForEach(z => z.Remove());
     }
 
     private void Check()

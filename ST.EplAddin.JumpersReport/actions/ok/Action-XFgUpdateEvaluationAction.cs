@@ -1,6 +1,6 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.DataModel;
-using ST.EplAddin.JumpersReport.actions.Manager;
+using ST.EplAddin.JumpersReport.Providers;
 
 //https://www.eplan.help/en-us/Infoportal/Content/api/2.9/API_REPORTS_MODIFICATION.html
 namespace ST.EplAddin.JumpersReport

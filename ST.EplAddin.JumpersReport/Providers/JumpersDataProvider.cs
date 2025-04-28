@@ -58,7 +58,7 @@ namespace ST.EplAddin.JumpersReport.Providers
 
         private string GetJumperConfig(int count)
         {
-            const string jumperCode = "1/0;";
+            string jumperCode = "1/0;";
             int capacity = jumperCode.Length * count;
             StringBuilder builder = new StringBuilder(capacity);
             for (int i = 0; i < count - 1; i++)

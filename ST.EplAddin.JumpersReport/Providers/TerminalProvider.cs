@@ -50,6 +50,7 @@ internal class TerminalProvider(Project project)
                 terminal.Create(project, funcDefinition);
                 terminal.Name = $"+{jumperConnection.StartLocation}-{jumperConnection.StartLiteralDT}:{jumperConnection.StartDTCounter}";
                 terminal.Properties[20030] = jumperConnection.StartLiteralDT + jumperConnection.StartDTCounter + ":" + jumperConnection.StartPinDesignation; //pin
+                terminal.Properties[20810] = true;
                 safetyPoint.Commit();
                 return terminal;
 
@@ -61,6 +62,7 @@ internal class TerminalProvider(Project project)
                 terminal1.Create(project, funcDefinition1);
                 terminal1.Name = $"+{jumperConnection.EndLocation}-{jumperConnection.EndLiteralDT}:{jumperConnection.EndDTCounter}";
                 terminal1.Properties[20030] = jumperConnection.EndLiteralDT + jumperConnection.EndDTCounter + ":" + jumperConnection.EndPinDesignation; //pin
+                terminal1.Properties[20810] = true;
                 safetyPoint.Commit();
                 return terminal1;
             }
