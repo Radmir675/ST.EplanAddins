@@ -57,6 +57,6 @@ public class ReportsEndListener
     private void CreateReport()
     {
         ReportProvider reportProvider = new ReportProvider();
-        reportProvider.Create();
+
     }
 }

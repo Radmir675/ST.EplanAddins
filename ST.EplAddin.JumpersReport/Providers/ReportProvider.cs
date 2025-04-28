@@ -1,6 +1,7 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
+using ST.EplAddin.JumpersReport.Actions.ok;
 using System;
 using System.Collections.Generic;
 
@@ -8,9 +9,9 @@ namespace ST.EplAddin.JumpersReport
 {
     internal class ReportProvider
     {
-        public void Create()
+        private void Create()
         {
-            Action.IsOtherReportsUpdated = true;
+            ShowReportAction.IsOtherReportsUpdated = true;
 
             SelectionSet selectionSet = new SelectionSet();
             Project project = selectionSet.GetCurrentProject(false);

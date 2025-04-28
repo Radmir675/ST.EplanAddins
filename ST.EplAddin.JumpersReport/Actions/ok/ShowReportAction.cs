@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 //https://www.eplan.help/en-us/Infoportal/Content/api/2.9/API_REPORTS_MODIFICATION.html
-namespace ST.EplAddin.JumpersReport
+namespace ST.EplAddin.JumpersReport.Actions.ok
 {
-    public class Action : IEplAction
+    public class ShowReportAction : IEplAction
     {
         public const string ACTION_NAME = "JumpersReport";
         private string resultData;
@@ -14,10 +14,6 @@ namespace ST.EplAddin.JumpersReport
 
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
-            var PROP = new ActionParameterProperties();
-            var t = new ActionParameterProperties();
-            t.Set("STReport");
-            actionProperties.AddParameter(t);
 
         }
         public bool OnRegister(ref string Name, ref int Ordinal)
