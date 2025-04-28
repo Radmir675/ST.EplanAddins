@@ -20,19 +20,23 @@ namespace ST.EplAddin.Verifications
                 if (!function3D.Properties.FUNC_ISPLACEDIN_CIRCUIT && !function3D.Properties.FUNC_ISPLACEDIN_OVERVIEW && !function3D.Properties.FUNC_ISPLACEDIN_SINGLELINE)
                 {
                     if (function3D.ArticleReferences.Length == 0) return;
-                    foreach (var article in function3D.ArticleReferences)
+                    foreach (var articleReference in function3D.ArticleReferences)
                     {
-                        bool isElectro = article?.Properties.ARTICLE_PRODUCTTOPGROUP?.ToInt() == (int)ProductTopGroup.Electric;
+                        if (function3D.Properties.FUNC_ARTICLE_PARTTYPE[1] == 98) return;//если это узел/модуль распределенное размещение
+
+                        bool isElectro = articleReference?.Properties.ARTICLE_PRODUCTTOPGROUP?.ToInt() == (int)ProductTopGroup.Electric;
                         if (isElectro)
                         {
+
                             if (storableObject is Placement3D placement3D)
                             {
-                                var productGroup = article?.Properties.ARTICLE_PRODUCTSUBGROUP.ToInt();//подгруппа продуктов
+                                var productGroup = articleReference?.Properties.ARTICLE_PRODUCTSUBGROUP.ToInt();//подгруппа продуктов
 
                                 if (!IsOk(productGroup.Value)) continue;
                                 var name = placement3D.Properties[20002].ToString(ISOCode.Language.L_ru_RU);
-                                var partNumber = article.Properties[20481];
+                                var partNumber = articleReference.Properties[20481];
                                 DoErrorMessage(storableObject, storableObject.Project, $"{partNumber + "|" + name}");
+                                var res = function3D.Properties.FUNC_ARTICLE_PARTTYPE[1]; //для проверки;
                             }
                         }
                     }
