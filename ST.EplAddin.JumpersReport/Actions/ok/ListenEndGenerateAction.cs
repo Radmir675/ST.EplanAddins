@@ -1,4 +1,6 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
+using Eplan.EplApi.DataModel;
+using ST.EplAddin.JumpersReport.Providers;
 
 namespace ST.EplAddin.JumpersReport;
 
@@ -14,6 +16,12 @@ public class ListenEndGenerateAction
     }
     private void OnPostCreateEvaluationEvent(IEventParameter eventParameter)
     {
+        using (SafetyPoint safetyPoint = SafetyPoint.Create())
+        {
+            ActionProvider actionProvider = new ActionProvider();
+            actionProvider.Execute();
+            safetyPoint.Commit();
+        }
 
 
     }

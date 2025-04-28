@@ -10,12 +10,11 @@ namespace ST.EplAddin.JumpersReport.Providers;
 
 internal class ActionProvider
 {
-    private readonly string _actionName;
+    private const string EPLAN_ACTION_NAME = "PROJECT.FormGeneratorGui.Templates.PxfForm_TERMINALDIAGRAM";
     private readonly Project project;
 
-    public ActionProvider(string actionName)
+    public ActionProvider()
     {
-        _actionName = actionName;
         project = GetCurrentProject();
     }
     public void Execute()
@@ -41,6 +40,7 @@ internal class ActionProvider
         var startPage = subNode.GetStringSetting("StartPage", 0);
         Reports reports = new Reports();
         reports.CreateReport(reportBlock, startPage);
+
     }
 
 
@@ -52,7 +52,7 @@ internal class ActionProvider
 
     private SettingNode GetNodeCollection()
     {
-        ProjectSettingNode prjNode3 = new ProjectSettingNode(project, _actionName);
+        ProjectSettingNode prjNode3 = new ProjectSettingNode(project, EPLAN_ACTION_NAME);
 
         StringCollection colOfSettings3 = new StringCollection();
         prjNode3.GetListOfAllSettings(ref colOfSettings3, true);
