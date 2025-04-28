@@ -7,7 +7,7 @@ namespace ST.EplAddin.JumpersReport.Providers;
 
 internal class TerminalProvider(Project project)
 {
-    private JumpersDataProvider jumpersData = new JumpersDataProvider(project);
+    private readonly JumpersDataProvider jumpersData = new JumpersDataProvider(project);
     public void FindAndCreateTerminals()
     {
         var connections = jumpersData.FindInsertableJumperConnections();

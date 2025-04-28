@@ -5,7 +5,7 @@ namespace ST.EplAddin.JumpersReport
     public class AddinModule : IEplAddIn
     {
         private Eplan.EplApi.Base.TraceListener m_oTrace;
-        ReportsEndListener reportsEndListener;
+        ListenEndGenerateAction _listenEndGenerateAction;
         public bool OnUnregister()
         {
             return true;
@@ -15,7 +15,7 @@ namespace ST.EplAddin.JumpersReport
         {
             m_oTrace = new Eplan.EplApi.Base.TraceListener();
             System.Diagnostics.Trace.Listeners.Add(m_oTrace);
-            reportsEndListener = new ReportsEndListener();
+            _listenEndGenerateAction = new ListenEndGenerateAction();
 
 
             return true;

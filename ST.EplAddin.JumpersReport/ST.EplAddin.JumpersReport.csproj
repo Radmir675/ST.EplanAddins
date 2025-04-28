@@ -120,6 +120,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\ok\ActionProvider.cs" />
     <Compile Include="Actions\ok\ShowReportAction.cs" />
     <Compile Include="Actions\del\Action7.cs" />
     <Compile Include="Actions\del\Action6.cs" />
@@ -141,7 +142,7 @@
     <Compile Include="Providers\ReportProvider.cs" />
     <Compile Include="Providers\JumpersDataProvider.cs" />
     <Compile Include="Providers\TerminalProvider.cs" />
-    <Compile Include="ReportsEndListener.cs" />
+    <Compile Include="Actions\ok\ListenEndGenerateAction.cs" />
     <Compile Include="Repositories\TerminalsRepository.cs" />
   </ItemGroup>
   <ItemGroup>

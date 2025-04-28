@@ -5,12 +5,12 @@ using ST.EplAddin.JumpersReport.Providers;
 //https://www.eplan.help/en-us/Infoportal/Content/api/2.9/API_REPORTS_MODIFICATION.html
 namespace ST.EplAddin.JumpersReport
 {
+    //TODO:Разделить клеммники по местам установки
+    //TODO:Нужно сортировку по местам установки еще вытащить из свойств
     public class Action_XFgUpdateEvaluationAction : IEplAction
     {
         private const string ACTION_NAME = "XFgUpdateEvaluationAction";  //Сервисные программы > Отчеты > Обновить
         private const string EPLAN_ACTION_NAME = "PROJECT.FormGeneratorGui.Templates.PxfForm_TERMINALDIAGRAM";
-        private string resultData;
-        public static bool IsOtherReportsUpdated = false;
 
         public void GetActionProperties(ref ActionProperties actionProperties) { }
         public bool OnRegister(ref string Name, ref int Ordinal)

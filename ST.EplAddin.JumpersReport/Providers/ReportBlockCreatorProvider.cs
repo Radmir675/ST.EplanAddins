@@ -41,6 +41,6 @@ internal class ReportBlockCreatorProvider
         reportBlock.FormName = subNode.GetStringSetting("FormName", 0);
         reportBlock.IsAutomaticPageDescription = true;
         // reportBlock.DeviceTagNameParts = MethodName().ToArray();
-        var parts = reportBlock.DeviceTagNameParts;// для проверки
+
     }
 }
