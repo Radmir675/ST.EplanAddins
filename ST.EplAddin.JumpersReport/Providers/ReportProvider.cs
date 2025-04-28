@@ -5,7 +5,7 @@ using ST.EplAddin.JumpersReport.Actions.ok;
 using System;
 using System.Collections.Generic;
 
-namespace ST.EplAddin.JumpersReport
+namespace ST.EplAddin.JumpersReport.Providers
 {
     internal class ReportProvider
     {
@@ -34,8 +34,7 @@ namespace ST.EplAddin.JumpersReport
         }
         public void CreateTerminals(Project project)
         {
-            var jumperDataProvider = new JumpersDataProvider(project);
-            jumperDataProvider.FindAndCreateTerminals();
+            new TerminalProvider(project).FindAndCreateTerminals();
             UpdateConnections();
         }
 

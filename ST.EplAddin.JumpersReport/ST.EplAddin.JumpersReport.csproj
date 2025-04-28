@@ -130,6 +130,7 @@
     <Compile Include="Actions\ok\Action-XFgEvaluateProjectAction.cs" />
     <Compile Include="Actions\ok\Action-XFgUpdateEvaluationAction.cs" />
     <Compile Include="Providers\ActionProvider.cs" />
+    <Compile Include="LINQ\LinqExtension.cs" />
     <Compile Include="Providers\ReportBlockCreatorProvider.cs" />
     <Compile Include="Actions\AddinModule.cs" />
     <Compile Include="Filters\Comparator.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ReportProvider.cs" />
     <Compile Include="Providers\JumpersDataProvider.cs" />
+    <Compile Include="Providers\TerminalProvider.cs" />
     <Compile Include="ReportsEndListener.cs" />
     <Compile Include="Repositories\TerminalsRepository.cs" />
   </ItemGroup>
