@@ -7,7 +7,7 @@ namespace ST.EplAddin.Verifications
 {
     internal class LengthPartVF : Verification
     {
-        private const int m_iMessageId = 43;
+        private const int m_iMessageId = 44;
         private const int TOLERANCE = 1;
         public override void OnRegister(ref string strName, ref int iOrdinal)
         {
@@ -62,7 +62,7 @@ namespace ST.EplAddin.Verifications
 
         public override string GetMessageText()
         {
-            return "Длина шины %1!s! не соответствует функции в 2D представлении ";
+            return "Длина шины %1!s! не соответствует функции в 2D представлении";
         }
 
         public override void DoHelp()
