@@ -120,7 +120,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\ok\ActionProvider.cs" />
     <Compile Include="Actions\ok\ShowReportAction.cs" />
     <Compile Include="Actions\del\Action7.cs" />
     <Compile Include="Actions\del\Action6.cs" />
