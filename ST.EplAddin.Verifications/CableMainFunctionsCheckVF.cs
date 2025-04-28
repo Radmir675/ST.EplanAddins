@@ -1,5 +1,4 @@
 ﻿using Eplan.EplApi.EServices;
-using System.Collections.Generic;
 using System.Linq;
 using Cable = Eplan.EplApi.DataModel.EObjects.Cable;
 using StorableObject = Eplan.EplApi.DataModel.StorableObject;
@@ -9,7 +8,6 @@ namespace ST.EplAddin.Verifications
     internal class CableMainFunctionsCheckVF : Verification
     {
         private int m_iMessageId = 41;
-        List<string> result;
         public override void OnRegister(ref string strName, ref int iOrdinal)
         {
             strName = "CableMainFunctionsCheckVF";
@@ -20,8 +18,7 @@ namespace ST.EplAddin.Verifications
 
         public override void OnStartInspection(bool bOnline)
         {
-            if (bOnline) { return; }
-            result = new();
+
         }
 
         public override void OnEndInspection() { }
@@ -31,10 +28,8 @@ namespace ST.EplAddin.Verifications
             if (oObject1 == null) return;
             if (oObject1 is not Cable cable) return;
             if (!cable.IsMainFunction) return;
-
-            result.Add(cable.Name);
-
-            if (result.Count(x => x == cable.Name) > 1)
+            var res = cable.NestedFunctions;
+            if (res.Any(x => x.IsMainFunction))
             {
                 DoErrorMessage(oObject1, oObject1.Project, cable.Name);
             }
