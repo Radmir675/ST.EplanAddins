@@ -90,17 +90,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddinModule.cs" />
-    <Compile Include="ArticleReferenceUnitCheckVF.cs" />
-    <Compile Include="CableConductorsCheckPartsVF.cs" />
-    <Compile Include="CableMainFunctionsCheckVF.cs" />
-    <Compile Include="ConnectionColorVF.cs" />
-    <Compile Include="ConnectionDesignationVF.cs" />
-    <Compile Include="Function3DArticlesCoutVF.cs" />
-    <Compile Include="LengthPartVF.cs" />
-    <Compile Include="PlcOutputToReviewAssignmentVF.cs" />
+    <Compile Include="VF\ArticleReferenceUnitCheckVF.cs" />
+    <Compile Include="VF\CableConductorsCheckPartsVF.cs" />
+    <Compile Include="VF\CableMainFunctionsCheckVF.cs" />
+    <Compile Include="VF\ConnectionColorVF.cs" />
+    <Compile Include="VF\ConnectionDesignationVF.cs" />
+    <Compile Include="VF\Function3DArticlesCoutVF.cs" />
+    <Compile Include="VF\LengthPartVF.cs" />
+    <Compile Include="VF\PlcOutputToReviewAssignmentVF.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TemplateCableCoreCountVF.cs" />
-    <Compile Include="Wrong3DPlacementVF.cs" />
+    <Compile Include="VF\TemplateCableCoreCountVF.cs" />
+    <Compile Include="VF\Wrong3DPlacementVF.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="HELP.txt" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
