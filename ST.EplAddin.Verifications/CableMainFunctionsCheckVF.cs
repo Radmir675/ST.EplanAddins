@@ -29,7 +29,7 @@ namespace ST.EplAddin.Verifications
             if (oObject1 is not Cable cable) return;
             if (!cable.IsMainFunction) return;
             var res = cable.NestedFunctions;
-            if (res.Any(x => x.IsMainFunction))
+            if (res.Any(x => x.IsMainFunction && x.Name == cable.Name))
             {
                 DoErrorMessage(oObject1, oObject1.Project, cable.Name);
             }
