@@ -19,10 +19,10 @@ namespace ST.EplAddin.Verifications
         private Dictionary<PropertyKey, Property> _errors;
         public override void OnRegister(ref string strName, ref int iOrdinal)
         {
-            //strName = "ProjectPropertiesVF";
-            //iOrdinal = 30;
-            //VerificationPermission = IVerification.Permission.OnlineOfflinePermitted;
-            //VerificationState = IVerification.VerificationState.OnlineOfflineState;
+            strName = "ProjectPropertiesVF";
+            iOrdinal = 30;
+            VerificationPermission = IVerification.Permission.OnlineOfflinePermitted;
+            VerificationState = IVerification.VerificationState.OnlineOfflineState;
         }
 
         public override string GetMessageText()
@@ -236,11 +236,11 @@ namespace ST.EplAddin.Verifications
         public override void OnRegister(ref string strCreator, ref IMessage.Region eRegion, ref int iMessageId, ref IMessage.Classification eClassification,
             ref int iOrdinal)
         {
-            //strCreator = "Scantronic";
-            //eRegion = IMessage.Region.Externals;
-            //iMessageId = m_iMessageId;
-            //eClassification = IMessage.Classification.Warning;
-            //iOrdinal = 20;
+            strCreator = "Scantronic";
+            eRegion = IMessage.Region.Externals;
+            iMessageId = m_iMessageId;
+            eClassification = IMessage.Classification.Warning;
+            iOrdinal = 20;
         }
 
         public override void DoHelp() { }
