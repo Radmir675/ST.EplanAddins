@@ -1,7 +1,8 @@
-﻿using Eplan.EplApi.EServices;
+﻿using Eplan.EplApi.DataModel;
+using Eplan.EplApi.DataModel.EObjects;
+using Eplan.EplApi.EServices;
 using Eplan.EplApi.MasterData;
 using System.Linq;
-using Cable = Eplan.EplApi.DataModel.EObjects.Cable;
 using StorableObject = Eplan.EplApi.DataModel.StorableObject;
 
 namespace ST.EplAddin.Verifications
@@ -43,8 +44,43 @@ namespace ST.EplAddin.Verifications
                 }
 
             }
+            //if (oObject1 == null) return;
+            //if (oObject1 is not Connection connection) return;
+            //if (!IsMatching(oObject1)) return;
+
+            //var cableLine = connection.CableDefinitionLine;
+            //if (cableLine == null) return;
+            //var cableName = cableLine.Name;
+            //StorableObject[] templates;
+            //if (!connection.IsTemplate)
+            //{
+            //    if (cableLine.IsMainFunction)
+            //    {
+            //        templates = cableLine.FunctionTemplates;
+            //    }
+            //    else
+            //    {
+            //        var func = cableLine.ParentFunction;
+            //        templates = func?.FunctionTemplates;
+            //    }
+
+            //    if (templates != null && templates.Any())
+            //    {
+            //        DoErrorMessage(oObject1, oObject1.Project, cableName);
+            //    }
+            //}
+
         }
 
+        public bool IsMatching(StorableObject objectToCheck)
+        {
+            Connection c = objectToCheck as Connection;
+            return (c.KindOfWire == Connection.Enums.KindOfWire.Cable &&
+                    c.Properties.CONNECTION_HAS_CDP.ToBool() &&
+                    c.Page != null &&
+                    c.Page.PageType == DocumentTypeManager.DocumentType.Circuit &&
+                    (c as Connection).ConnectionDefPoints.FirstOrDefault().SymbolVariant.SymbolName == "CDPNG");
+        }
         public override void OnRegister(ref string strCreator, ref IMessage.Region eRegion, ref int iMessageId, ref IMessage.Classification eClassification,
             ref int iOrdinal)
         {
@@ -62,4 +98,5 @@ namespace ST.EplAddin.Verifications
 
         public override void DoHelp() { }
     }
+
 }
