@@ -53,6 +53,7 @@ namespace ST.EplAddin.PlcEdit.Helpers
                     FunctionDefinition = terminal.Properties.FUNC_COMPONENTTYPE.ToString(ISOCode.Language.L_ru_RU),
                     SymbolicAdressDefined = terminal.Properties.FUNC_PLCSYMBOLICADDRESS_CALCULATED.ToString(ISOCode.Language.L_ru_RU),
                     FunctionType = (terminal.Properties.FUNC_TYPE).GetDisplayString().GetString(ISOCode.Language.L_ru_RU),
+                    FunctionTypeId = (terminal.Properties.FUNC_TYPE).ToInt(),
                     TerminalId = terminal.ToStringIdentifier(),
                     DeviceNameShort = terminal.Properties.FUNC_IDENTDEVICETAGWITHOUTSTRUCTURES.ToString(ISOCode.Language.L_ru_RU),
                     DevicePinNumber = terminal.Properties.FUNC_ALLCONNECTIONDESIGNATIONS.ToString(ISOCode.Language.L_ru_RU),
@@ -67,9 +68,20 @@ namespace ST.EplAddin.PlcEdit.Helpers
             return result.OrderBy(f => f.IdenticalDT).ThenBy(x => x.DevicePinNumber, new PinNumberComparer());
         }
 
-        private static Image GetImage(Terminal terminal)
+        public static Image GetImage(Terminal terminal)
         {
             switch (terminal.Properties.FUNC_TYPE.ToInt())
+            {
+                case 1: return Properties.Resources.plcMultyLine;
+
+                case 3: return Properties.Resources.plcOverview;
+
+                default: return null;//Properties.Resources.undefined;
+            }
+        }
+        public static Image GetImageById(int id)
+        {
+            switch (id)
             {
                 case 1: return Properties.Resources.plcMultyLine;
 

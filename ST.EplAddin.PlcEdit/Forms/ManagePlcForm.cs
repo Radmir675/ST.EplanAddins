@@ -299,6 +299,9 @@ namespace ST.EplAddin.PlcEdit
             targetObject.Datatype = string.Copy(sourceObject?.Datatype ?? String.Empty);
             targetObject.PLCAdress = string.Copy(sourceObject?.PLCAdress ?? String.Empty);
             targetObject.TerminalId = string.Copy(sourceObject?.TerminalId ?? String.Empty);
+            targetObject.FunctionType = string.Copy(sourceObject?.FunctionType ?? String.Empty);
+            targetObject.FunctionTypeId = sourceObject?.FunctionTypeId ?? 0;
+            targetObject.StatusImage = Mapper.GetImageById(sourceObject?.FunctionTypeId ?? 0);
 
             sourceObject.SymbolicAdressDefined = string.Copy(targetObjectClone?.SymbolicAdressDefined ?? String.Empty);
             sourceObject.FunctionText = string.Copy(targetObjectClone?.FunctionText ?? String.Empty);
@@ -306,6 +309,9 @@ namespace ST.EplAddin.PlcEdit
             sourceObject.Datatype = string.Copy(targetObjectClone?.Datatype ?? String.Empty);
             sourceObject.PLCAdress = string.Copy(targetObjectClone?.PLCAdress ?? String.Empty);
             sourceObject.TerminalId = string.Copy(targetObjectClone?.TerminalId ?? String.Empty);
+            sourceObject.FunctionType = string.Copy(targetObjectClone?.FunctionType ?? String.Empty);
+            sourceObject.FunctionTypeId = targetObjectClone?.FunctionTypeId ?? 0;
+            sourceObject.StatusImage = Mapper.GetImageById(sourceObject?.FunctionTypeId ?? 0);
         }
 
         public bool IsModuleAssigned(string terminalName)
