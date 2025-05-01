@@ -16,6 +16,7 @@ namespace ST.EplAddin.PlcEdit
         private string _functionDefinition;
         private string _symbolicAdressDefined;
         private string _functionType;
+        private int _functionTypeId;
         private string _terminalId;
         private string _deviceNameShort;
         private string _devicePinNumber;
@@ -141,7 +142,16 @@ namespace ST.EplAddin.PlcEdit
                 OnPropertyChanged();
             }
         } //многополюсный или обзор
-
+        public int FunctionTypeId
+        {
+            get => _functionTypeId;
+            set
+            {
+                if (value == _functionTypeId) return;
+                _functionTypeId = value;
+                OnPropertyChanged();
+            }
+        } //многополюсный или обзор/1//3
         public string TerminalId
         {
             get => _terminalId;
