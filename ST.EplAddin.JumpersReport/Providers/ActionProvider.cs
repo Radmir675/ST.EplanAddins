@@ -26,7 +26,7 @@ internal class ActionProvider
         CreateReport(subNode, reportBlock);
         Check();
         //удаление клемм
-        //TerminalsRepository.GetInstance().GetAllSavedTerminals().ForEach(z => z.Remove());
+        TerminalsRepository.GetInstance().GetAllSavedTerminals().ForEach(z => z.Remove());
     }
 
     private void Check()
@@ -79,8 +79,13 @@ internal class ActionProvider
     }
     private Project GetCurrentProject()
     {
-        SelectionSet selection = new SelectionSet();
-        Project project = selection.GetCurrentProject(false);
-        return project;
+        using (SafetyPoint safetyPoint = SafetyPoint.Create())
+        {
+            SelectionSet selection = new SelectionSet();
+            selection.LockSelectionByDefault = false;
+            Project project = selection.GetCurrentProject(false);
+
+            return project;
+        }
     }
 }
