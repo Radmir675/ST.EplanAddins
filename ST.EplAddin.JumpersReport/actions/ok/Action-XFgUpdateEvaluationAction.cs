@@ -29,7 +29,7 @@ namespace ST.EplAddin.JumpersReport
             }
 
             ActionManager oMng = new ActionManager();
-            Eplan.EplApi.ApplicationFramework.Action oBaseAction = oMng.FindBaseAction(this, true);
+            Action oBaseAction = oMng.FindBaseAction(this, true);
             string props = oBaseAction.ActionProperties.ToString();
             return oBaseAction.Execute(oActionCallingContext);
         }

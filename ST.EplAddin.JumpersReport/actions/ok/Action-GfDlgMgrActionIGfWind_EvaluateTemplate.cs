@@ -16,12 +16,7 @@ namespace ST.EplAddin.JumpersReport
 
         }
         public bool Execute(ActionCallingContext oActionCallingContext)
-
-
-
         {
-
-
             string functionName = "";
             int count = oActionCallingContext.GetParameterCount();
             string[] contextParams = oActionCallingContext.GetParameters();
@@ -37,7 +32,6 @@ namespace ST.EplAddin.JumpersReport
             Eplan.EplApi.ApplicationFramework.Action oBaseAction = oMng.FindBaseAction(this, true);
             string props = oBaseAction.ActionProperties.ToString();
             return oBaseAction.Execute(oActionCallingContext);
-
         }
     }
 }
