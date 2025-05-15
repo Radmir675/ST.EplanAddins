@@ -24,13 +24,13 @@ internal class ReportBlockCreatorProvider
 
     }
 
-    public List<FunctionBasePropertyList> MethodName()
+    public List<FunctionBasePropertyList> GetTerminalProperties()
     {
 
         var terminalsRepository = TerminalsRepository.GetInstance();
-        var data = terminalsRepository.GetAllSavedTerminals();
-        var list = new List<FunctionBasePropertyList>();
-        list.AddRange(data.Select(x => new FunctionPropertyList(x)));
+        var data = terminalsRepository.GetAllWithoutRemoving();
+        var list = new List<FunctionBasePropertyList>(data.Count);
+        list.AddRange(data.Select(x => x.Properties));
 
         return list;
 
@@ -40,7 +40,9 @@ internal class ReportBlockCreatorProvider
         reportBlock.Type = DocumentTypeManager.DocumentType.TerminalDiagram;
         reportBlock.FormName = subNode.GetStringSetting("FormName", 0);
         reportBlock.IsAutomaticPageDescription = true;
-        // reportBlock.DeviceTagNameParts = MethodName().ToArray();
+        reportBlock.DeviceTagNameParts = GetTerminalProperties().ToArray();
+        var DT = reportBlock.DeviceTag;
+        var date = reportBlock.CreateDate;
 
     }
 }

@@ -54,7 +54,7 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
             {
                 objects = "";
 
-                var terminals = TerminalsRepository.GetInstance().GetData();
+                var terminals = TerminalsRepository.GetInstance().Get();
 
                 if (!terminals.Any()) return false;
 

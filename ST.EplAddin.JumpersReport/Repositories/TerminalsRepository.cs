@@ -15,17 +15,22 @@ namespace ST.EplAddin.JumpersReport
             return instance ??= new TerminalsRepository();
         }
 
-        public List<Terminal> GetData()
+        public List<Terminal> Get()
         {
             return queue.Dequeue();
         }
-        public void Save(List<Terminal> list)
+        public void Set(List<Terminal> list)
         {
             queue.Enqueue(list);
         }
-        public List<Terminal> GetAllSavedTerminals()
+        public List<Terminal> GetAll()
         {
             var result = queue.DequeueAll().SelectMany(x => x).ToList();
+            return result;
+        }
+        public List<Terminal> GetAllWithoutRemoving()
+        {
+            var result = queue.GetAllWithoutRemoving().SelectMany(x => x).ToList();
             return result;
         }
     }

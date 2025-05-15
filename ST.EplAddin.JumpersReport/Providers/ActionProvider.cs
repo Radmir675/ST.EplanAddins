@@ -1,10 +1,7 @@
 ﻿using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
-using ST.EplAddin.JumpersReport.Actions.ok;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 
 namespace ST.EplAddin.JumpersReport.Providers;
 
@@ -21,19 +18,13 @@ internal class ActionProvider
     {
         SettingNode subNode = GetNodeCollection();
         ReportBlockCreatorProvider reportBlockCreatorProvider = new(project, subNode);
-        var reportBlock = reportBlockCreatorProvider.Create();
         GetAndCreateData();
+        var reportBlock = reportBlockCreatorProvider.Create();
         CreateReport(subNode, reportBlock);
-        Check();
-        //удаление клемм
-        TerminalsRepository.GetInstance().GetAllSavedTerminals().ForEach(z => z.Remove());
+        TerminalsRepository.GetInstance().GetAll().ForEach(z => z.Remove());  //удаление клемм
     }
 
-    private void Check()
-    {
-        DMObjectsFinder DMObjectsFinder = new DMObjectsFinder(project);
-        List<ReportBlock> reports1 = DMObjectsFinder.GetAll<ReportBlock>(true).Cast<ReportBlock>().Where(a => a.Action == ShowReportAction.ACTION_NAME).ToList();
-    }
+
 
     private void CreateReport(SettingNode subNode, ReportBlock reportBlock)
     {

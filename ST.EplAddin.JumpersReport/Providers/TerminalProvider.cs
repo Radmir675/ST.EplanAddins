@@ -17,7 +17,7 @@ internal class TerminalProvider(Project project)
         {
             jumpersData.InsertJumperInTerminals(terminal);
         }
-        TerminalsRepository.GetInstance().Save(terminals.SelectMany(z => z).ToList());
+        TerminalsRepository.GetInstance().Set(terminals.SelectMany(z => z).ToList());
     }
     private IEnumerable<IEnumerable<Terminal>> GetTerminals(IEnumerable<IEnumerable<JumperConnection>> sortedList)
     {

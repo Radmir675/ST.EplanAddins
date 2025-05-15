@@ -32,5 +32,10 @@ namespace ST.EplAddin.JumpersReport
             allTerminals.Clear();
             return data;
         }
+        public virtual List<T> GetAllWithoutRemoving()
+        {
+            var data = allTerminals.ToList();
+            return data;
+        }
     }
 }

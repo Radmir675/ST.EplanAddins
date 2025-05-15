@@ -30,7 +30,7 @@ namespace ST.EplAddin.JumpersReport.Providers
                     new List<DocumentTypeManager.DocumentType>(1) { DocumentTypeManager.DocumentType.TerminalDiagram });//TerminalDiagram   //TerminalLineupDiagram
                 safetyPoint.Commit();
             }
-            TerminalsRepository.GetInstance().GetAllSavedTerminals().ForEach(z => z.Remove());
+            TerminalsRepository.GetInstance().GetAll().ForEach(z => z.Remove());
         }
         public void CreateTerminals(Project project)
         {
