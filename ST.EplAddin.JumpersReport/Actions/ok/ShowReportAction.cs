@@ -8,7 +8,7 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
 {
     public class ShowReportAction : IEplAction
     {
-        public const string ACTION_NAME = "JumpersReport";
+        public const string ACTION_NAME = "JumpersReport1";
         private string resultData;
         public static bool IsOtherReportsUpdated = false;
 
@@ -18,8 +18,8 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
         }
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
-            //Name = ACTION_NAME;
-            //Ordinal = 98;
+            Name = ACTION_NAME;
+            Ordinal = 98;
             return true;
 
         }

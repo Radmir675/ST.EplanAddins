@@ -6,6 +6,7 @@ namespace ST.EplAddin.JumpersReport
     {
         private Eplan.EplApi.Base.TraceListener m_oTrace;
         ListenEndGenerateAction _listenEndGenerateAction;
+
         public bool OnUnregister()
         {
             return true;

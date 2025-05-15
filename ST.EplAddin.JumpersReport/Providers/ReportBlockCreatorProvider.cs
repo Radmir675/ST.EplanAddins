@@ -42,6 +42,5 @@ internal class ReportBlockCreatorProvider
         reportBlock.IsAutomaticPageDescription = true;
         reportBlock.DeviceTagNameParts = GetTerminalProperties().ToArray();
         var DT = reportBlock.DeviceTag;
-
     }
 }

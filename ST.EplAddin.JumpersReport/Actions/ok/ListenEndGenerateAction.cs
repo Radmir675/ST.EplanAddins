@@ -21,7 +21,5 @@ public class ListenEndGenerateAction
             actionProvider.Execute();
             safetyPoint.Commit();
         }
-
-
     }
 }

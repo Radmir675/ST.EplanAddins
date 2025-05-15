@@ -9,6 +9,7 @@ namespace ST.EplAddin.JumpersReport.Providers;
 internal class ActionProvider
 {
     private const string EPLAN_ACTION_NAME = "PROJECT.FormGeneratorGui.Templates.PxfForm_TERMINALDIAGRAM";
+    public const string ACTION_NAME = "JumpersReport";
     private readonly Project project;
 
     public ActionProvider()
@@ -20,7 +21,8 @@ internal class ActionProvider
         SettingNode subNode = GetNodeCollection();
         if (subNode == null)
         {
-            throw new NullReferenceException("SettingNode is null");
+            return;
+            throw new NullReferenceException("Отсутствует SettingNode. Возможно не задано корректное название в поле action!");
         }
         ReportBlockCreatorProvider reportBlockCreatorProvider = new(project, subNode);
         GetAndCreateData();
@@ -29,14 +31,11 @@ internal class ActionProvider
         TerminalsRepository.GetInstance().GetAll().ForEach(z => z.Remove());  //удаление клемм
     }
 
-
-
     private void CreateReport(SettingNode subNode, ReportBlock reportBlock)
     {
         var startPage = subNode.GetStringSetting("StartPage", 0);
         Reports reports = new Reports();
         reports.CreateReport(reportBlock, startPage);
-
     }
 
 
@@ -52,13 +51,13 @@ internal class ActionProvider
 
         StringCollection colOfSettings3 = new StringCollection();
         prjNode3.GetListOfAllSettings(ref colOfSettings3, true);
-
-        prjNode3.Write(System.IO.Path.GetTempPath() + "ProjectSettingNode3.xml");
-        var subNode = GetActionSubNode(prjNode3);
+        var path = System.IO.Path.GetTempPath() + "ProjectSettingNode3.xml";
+        prjNode3.Write(path);
+        var subNode = TryGetActionSubNode(prjNode3);
         return subNode;
     }
 
-    private SettingNode GetActionSubNode(ProjectSettingNode prjNode3)
+    private SettingNode TryGetActionSubNode(ProjectSettingNode prjNode3)
     {
         StringCollection sunNodes = new StringCollection();
         prjNode3.GetListOfNodes(ref sunNodes, false);
@@ -66,7 +65,7 @@ internal class ActionProvider
         {
             SettingNode settingNode = prjNode3.GetSubNode(node);
             var actionName = settingNode.GetStringSetting("Action", 0);
-            if (actionName == "JumpersReport")
+            if (actionName == ACTION_NAME)
             {
                 return settingNode;
             }
