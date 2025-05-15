@@ -18,8 +18,8 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
         }
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
-            Name = ACTION_NAME;
-            Ordinal = 98;
+            //Name = ACTION_NAME;
+            //Ordinal = 98;
             return true;
 
         }

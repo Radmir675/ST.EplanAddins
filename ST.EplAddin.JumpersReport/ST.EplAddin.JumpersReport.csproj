@@ -121,7 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\del\ReportBlockFinder.cs" />
-    <Compile Include="Actions\ok\ShowReportAction.cs" />
     <Compile Include="Actions\del\Action7.cs" />
     <Compile Include="Actions\del\Action6.cs" />
     <Compile Include="Actions\del\Action5.cs" />

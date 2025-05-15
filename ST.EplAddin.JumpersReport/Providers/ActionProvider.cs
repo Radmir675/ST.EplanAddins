@@ -1,6 +1,7 @@
 ﻿using Eplan.EplApi.Base;
 using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
+using System;
 using System.Collections.Specialized;
 
 namespace ST.EplAddin.JumpersReport.Providers;
@@ -17,6 +18,10 @@ internal class ActionProvider
     public void Execute()
     {
         SettingNode subNode = GetNodeCollection();
+        if (subNode == null)
+        {
+            throw new NullReferenceException("SettingNode is null");
+        }
         ReportBlockCreatorProvider reportBlockCreatorProvider = new(project, subNode);
         GetAndCreateData();
         var reportBlock = reportBlockCreatorProvider.Create();

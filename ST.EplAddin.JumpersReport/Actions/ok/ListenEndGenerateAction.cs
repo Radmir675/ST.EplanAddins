@@ -12,7 +12,6 @@ public class ListenEndGenerateAction
     {
         onPostCreateEvaluation_EventHandler = new EventHandler("onPostCreateEvaluation");  //обновление отчета через форму Генерировать "Шестеренка" окончание
         onPostCreateEvaluation_EventHandler.EplanEvent += OnPostCreateEvaluationEvent;
-
     }
     private void OnPostCreateEvaluationEvent(IEventParameter eventParameter)
     {
