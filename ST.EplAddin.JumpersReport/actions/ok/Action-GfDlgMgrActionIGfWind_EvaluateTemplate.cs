@@ -17,16 +17,17 @@ namespace ST.EplAddin.JumpersReport
         }
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            string functionName = "";
-            int count = oActionCallingContext.GetParameterCount();
-            string[] contextParams = oActionCallingContext.GetParameters();
-            string[] contextStrings = oActionCallingContext.GetStrings();
+            //string functionName = "";
+            //int count = oActionCallingContext.GetParameterCount();
+            //string[] contextParams = oActionCallingContext.GetParameters();
+            //string[] contextStrings = oActionCallingContext.GetStrings();
 
-            oActionCallingContext.GetParameter("function", ref functionName);
-            if (functionName == "EvaluateTemplate")
-            {
-                int a = 0;
-            }
+            //oActionCallingContext.GetParameter("function", ref functionName);
+            //if (functionName == "EvaluateTemplate")
+            //{
+            //    int a = 0;
+            //}
+
 
             ActionManager oMng = new ActionManager();
             Eplan.EplApi.ApplicationFramework.Action oBaseAction = oMng.FindBaseAction(this, true);
