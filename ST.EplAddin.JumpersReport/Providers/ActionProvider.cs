@@ -29,6 +29,7 @@ internal class ActionProvider
         var reportBlock = reportBlockCreatorProvider.Create();
         CreateReport(subNode, reportBlock);
         TerminalsRepository.GetInstance().GetAll().ForEach(z => z.Remove());  //удаление клемм
+        TerminalsRepository.GetInstance().RemoveTerminalStrips();
     }
 
     private void CreateReport(SettingNode subNode, ReportBlock reportBlock)

@@ -2,6 +2,7 @@
 using Eplan.EplApi.DataModel;
 using System.Collections.Generic;
 using System.Linq;
+using Project = Eplan.EplApi.DataModel.Project;
 
 namespace ST.EplAddin.JumpersReport.Providers;
 
@@ -24,23 +25,46 @@ internal class ReportBlockCreatorProvider
 
     }
 
-    public List<FunctionBasePropertyList> GetTerminalProperties()
-    {
+    //public List<FunctionBasePropertyList> GetTerminalProperties()
+    //{
 
-        var terminalsRepository = TerminalsRepository.GetInstance();
-        var data = terminalsRepository.GetAllWithoutRemoving();
-        var list = new List<FunctionBasePropertyList>(data.Count);
-        list.AddRange(data.Select(x => x.Properties));
+    //    var terminalsRepository = TerminalsRepository.GetInstance();
+    //    var data = terminalsRepository.GetAllWithoutRemoving();
+    //    var list = new List<FunctionBasePropertyList>(data.Count);
+    //    list.AddRange(data.Select(x => x.Properties));
 
-        return list;
+    //    return list;
+    //}
+    //public List<FunctionBasePropertyList> GetTerminalProperties()
+    //{
 
-    }
+    //    var terminalsRepository = TerminalsRepository.GetInstance();
+    //    var data = terminalsRepository.GetFirstTerminalsFromTerminalStrip().ToList();
+    //    var list = new List<FunctionBasePropertyList>(data.Count);
+    //    list.AddRange(data.Select(x => x.Properties));
+
+    //    return list;
+    //}
     private void SetReportProperties(ReportBlock reportBlock, SettingNode subNode)
     {
         reportBlock.Type = DocumentTypeManager.DocumentType.TerminalDiagram;
         reportBlock.FormName = subNode.GetStringSetting("FormName", 0);
         reportBlock.IsAutomaticPageDescription = true;
-        reportBlock.DeviceTagNameParts = GetTerminalProperties().ToArray();
+
+
+        var functionBasePropertyLists = GetTerminalStripProperties()?.ToArray();
+        reportBlock.DeviceTagNameParts = functionBasePropertyLists;
         var DT = reportBlock.DeviceTag;
+    }
+
+    private IEnumerable<FunctionBasePropertyList> GetTerminalStripProperties()
+    {
+        var terminalsRepository = TerminalsRepository.GetInstance();
+        var terminalStrips = terminalsRepository.GetTerminalStrips();
+
+        foreach (var terminalStrip in terminalStrips)
+        {
+            yield return terminalStrip.Properties;
+        }
     }
 }

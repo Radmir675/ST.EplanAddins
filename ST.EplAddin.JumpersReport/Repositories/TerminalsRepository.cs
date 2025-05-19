@@ -8,6 +8,7 @@ namespace ST.EplAddin.JumpersReport
     {
         private static TerminalsRepository instance;
         private ModifyQueue<List<Terminal>> queue = new();
+        private List<TerminalStrip> terminalStrips = new();
         private TerminalsRepository() { }
 
         public static TerminalsRepository GetInstance()
@@ -32,6 +33,30 @@ namespace ST.EplAddin.JumpersReport
         {
             var result = queue.GetAllWithoutRemoving().SelectMany(x => x).ToList();
             return result;
+        }
+        public IEnumerable<Terminal> GetFirstTerminalsFromTerminalStrip()
+        {
+            Terminal terminal = null;
+
+            while ((terminal = queue.Dequeue().FirstOrDefault()) != null)
+            {
+                yield return terminal;
+            }
+
+        }
+
+        internal List<TerminalStrip> GetTerminalStrips()
+        {
+            return terminalStrips;
+        }
+        public void AddTerminalStrips(TerminalStrip terminalStrip)
+        {
+
+            terminalStrips.Add(terminalStrip);
+        }
+        public void RemoveTerminalStrips()
+        {
+            terminalStrips.Clear();
         }
     }
 }

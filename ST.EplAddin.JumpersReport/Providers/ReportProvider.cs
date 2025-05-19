@@ -32,7 +32,7 @@ namespace ST.EplAddin.JumpersReport.Providers
         public void CreateTerminals(Project project)
         {
             UpdateConnections();
-            new TerminalProvider(project).FindAndCreateTerminals();
+            new CreateAndSaveTerminalStrips(project).FindAndCreateTerminals();
             UpdateConnections();
         }
 

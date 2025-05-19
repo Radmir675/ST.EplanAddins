@@ -23,8 +23,12 @@ namespace ST.EplAddin.JumpersReport
 
         public virtual T Dequeue()
         {
-            T item = queue.Dequeue();
-            return item;
+            if (queue.Any())
+            {
+                T item = queue.Dequeue();
+                return item;
+            }
+            return default(T);
         }
         public virtual List<T> DequeueAll()
         {

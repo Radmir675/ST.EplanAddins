@@ -1,11 +1,13 @@
 ﻿using Eplan.EplApi.DataModel;
 using Eplan.EplApi.DataModel.EObjects;
+using Eplan.EplApi.DataModel.MasterData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ST.EplAddin.JumpersReport.Providers;
 
-internal class TerminalProvider(Project project)
+internal class CreateAndSaveTerminalStrips(Project project)
 {
     private readonly JumpersDataProvider jumpersData = new JumpersDataProvider(project);
     public void FindAndCreateTerminals()
@@ -13,10 +15,9 @@ internal class TerminalProvider(Project project)
         var connections = jumpersData.FindInsertableJumperConnections();
         var sortedList = jumpersData.SortDeviceJumpers(connections);
         var terminals = GetTerminals(sortedList).ToList();
-        foreach (var terminal in terminals)
-        {
-            jumpersData.InsertJumperInTerminals(terminal);
-        }
+        terminals.ForEach(terminals => jumpersData.InsertJumperInTerminals(terminals));
+
+        terminals.ForEach(terminal => new CreateAndSaveTerminalStrips(project).CreateAndSaveTerminalStrip(terminal));
         TerminalsRepository.GetInstance().Set(terminals.SelectMany(z => z).ToList());
     }
     private IEnumerable<IEnumerable<Terminal>> GetTerminals(IEnumerable<IEnumerable<JumperConnection>> sortedList)
@@ -68,5 +69,29 @@ internal class TerminalProvider(Project project)
             }
 
         }
+    }
+    private void CreateAndSaveTerminalStrip(IEnumerable<Terminal> terminals)
+    {
+        var firstTerminal = terminals.FirstOrDefault();
+        if (firstTerminal == null)
+        {
+            throw new NullReferenceException("Отсутствуют клеммы в клеммнике");
+        }
+        if (firstTerminal.TerminalStrip != null) return;
+
+        string strSymbolLibName = "SPECIAL";
+        string strSymbolName = "TDEF";
+        int nVariant = 0;
+
+        SymbolLibrary symbolLibriary = new SymbolLibrary(project, strSymbolLibName);
+        Symbol symbol = new Symbol(symbolLibriary, strSymbolName);
+        SymbolVariant symbolVariant = new SymbolVariant();
+        symbolVariant.Initialize(symbol, nVariant);
+
+        Function function = new Function();
+        function.Create(project, symbolVariant);
+        function.Name = firstTerminal.Properties.FUNC_FULLDEVICETAG;
+
+        TerminalsRepository.GetInstance().AddTerminalStrips(firstTerminal.TerminalStrip);
     }
 }
