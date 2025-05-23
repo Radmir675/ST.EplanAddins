@@ -171,6 +171,11 @@ namespace ST.EplAddin.PlcEdit
                     {
                         overviewTerminal.Properties.FUNC_TEXT = string.Empty;
                     }
+                    else
+                    {
+                        overviewTerminal.Properties.FUNC_TEXT = item.FunctionText;
+                    }
+
                 }
             }
         }
