@@ -94,6 +94,7 @@
     <Compile Include="VF\CableConductorsCheckPartsVF.cs" />
     <Compile Include="VF\CableMainFunctionsCheckVF.cs" />
     <Compile Include="VF\ConnectionColorVF.cs" />
+    <Compile Include="VF\ConnectionCountVF.cs" />
     <Compile Include="VF\ConnectionDesignationVF.cs" />
     <Compile Include="VF\Function3DArticlesCoutVF.cs" />
     <Compile Include="VF\LengthPartVF.cs" />
@@ -105,6 +106,8 @@
   <ItemGroup>
     <Content Include="HELP.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Providers\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
