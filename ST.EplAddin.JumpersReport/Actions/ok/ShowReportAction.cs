@@ -47,6 +47,7 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
             if (mode == "Start") //TODO:тут происходят действия при обновлении отчетов
             {
                 var SS = new SelectionSet();
+
                 SS.LockProjectByDefault = false;
                 var currentProject = SS.GetCurrentProject(true);
                 var createAndSaveTerminalStrips = new CreateAndSaveTerminalStrips(currentProject);
