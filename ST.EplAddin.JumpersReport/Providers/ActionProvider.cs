@@ -8,7 +8,7 @@ namespace ST.EplAddin.JumpersReport.Providers;
 
 internal class ActionProvider
 {
-    private const string EPLAN_ACTION_NAME = "PROJECT.FormGeneratorGui.Templates.PxfForm_TERMINALDIAGRAM";
+    private const string EPLAN_ACTION_NAME = "PROJECT.FormGeneratorGui.Templates.PxfForm_TERMINALLINEUPDIAGRAM";
     public const string ACTION_NAME = "JumpersReport";
     private readonly Project project;
 
@@ -21,7 +21,7 @@ internal class ActionProvider
         SettingNode subNode = GetNodeCollection();
         if (subNode == null)
         {
-            return;
+            // return;
             throw new NullReferenceException("Отсутствует SettingNode. Возможно не задано корректное название в поле action!");
         }
         ReportBlockCreatorProvider reportBlockCreatorProvider = new(project, subNode);

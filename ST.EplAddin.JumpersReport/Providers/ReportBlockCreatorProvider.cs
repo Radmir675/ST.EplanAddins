@@ -47,7 +47,7 @@ internal class ReportBlockCreatorProvider
     //}
     private void SetReportProperties(ReportBlock reportBlock, SettingNode subNode)
     {
-        reportBlock.Type = DocumentTypeManager.DocumentType.TerminalDiagram;
+        reportBlock.Type = DocumentTypeManager.DocumentType.TerminalLineupDiagram;
         reportBlock.FormName = subNode.GetStringSetting("FormName", 0);
         reportBlock.IsAutomaticPageDescription = true;
 
@@ -55,6 +55,7 @@ internal class ReportBlockCreatorProvider
         var functionBasePropertyLists = GetTerminalStripProperties()?.ToArray();
         reportBlock.DeviceTagNameParts = functionBasePropertyLists;
         var DT = reportBlock.DeviceTag;
+
     }
 
     private IEnumerable<FunctionBasePropertyList> GetTerminalStripProperties()
