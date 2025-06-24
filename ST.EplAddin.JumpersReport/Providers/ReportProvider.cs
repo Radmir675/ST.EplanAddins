@@ -36,7 +36,7 @@ namespace ST.EplAddin.JumpersReport.Providers
             UpdateConnections();
         }
 
-        private void UpdateConnections()
+        public void UpdateConnections()
         {
             var action = new ActionManager().FindAction("EsGenerateConnections");
 

@@ -1,6 +1,4 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
-using Eplan.EplApi.DataModel;
-using ST.EplAddin.JumpersReport.Providers;
 
 //https://www.eplan.help/en-us/Infoportal/Content/api/2.9/API_REPORTS_MODIFICATION.html
 namespace ST.EplAddin.JumpersReport
@@ -22,12 +20,12 @@ namespace ST.EplAddin.JumpersReport
         }
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-            using (SafetyPoint safetyPoint = SafetyPoint.Create())
-            {
-                ActionProvider actionProvider = new ActionProvider();
-                actionProvider.Execute();
-                safetyPoint.Commit();
-            }
+            //using (SafetyPoint safetyPoint = SafetyPoint.Create())
+            //{
+            //    ActionProvider actionProvider = new ActionProvider();
+            //    actionProvider.Execute();
+            //    safetyPoint.Commit();
+            //}
 
             ActionManager oMng = new ActionManager();
             Action oBaseAction = oMng.FindBaseAction(this, true);
