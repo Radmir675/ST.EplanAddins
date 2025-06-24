@@ -7,6 +7,7 @@ namespace ST.EplAddin.JumpersReport
 {
     //TODO:Разделить клеммники по местам установки
     //TODO:Нужно сортировку по местам установки еще вытащить из свойств
+    // KindOfOutputString 10003.0
     public class Action_XFgUpdateEvaluationAction : IEplAction
     {
         private const string ACTION_NAME = "XFgUpdateEvaluationAction";  //Сервисные программы > Отчеты > Обновить
