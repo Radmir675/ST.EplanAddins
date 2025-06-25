@@ -5,6 +5,10 @@ using Eplan.EplApi.HEServices;
 using ST.EplAddin.JumpersReport.Providers;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
+using Project = Eplan.EplApi.DataModel.Project;
+using SelectionSet = Eplan.EplApi.HEServices.SelectionSet;
+using StorableObject = Eplan.EplApi.DataModel.StorableObject;
 
 //https://www.eplan.help/en-us/Infoportal/Content/api/2.9/API_REPORTS_MODIFICATION.html
 namespace ST.EplAddin.JumpersReport.Actions.ok
@@ -12,54 +16,98 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
     public class ShowReportAction : IEplAction
     {
         public const string ACTION_NAME = "JumpersReport1";
-        private string resultData;
-        bool isLoop;
+        private bool reportBegin = true;
+        private bool ModifyObjectListEntarnce = false;
 
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
+            var s = actionProperties.GetParameterProperties();
         }
 
         public bool OnRegister(ref string Name, ref int Ordinal)
         {
             Name = ACTION_NAME;
-            Ordinal = 98;
+            Ordinal = 20;
             return true;
 
         }
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
+
             int count = oActionCallingContext.GetParameterCount();
             string[] contextParams = oActionCallingContext.GetParameters();
             string[] contextStrings = oActionCallingContext.GetStrings();
 
             string mode = "";
             string objects = "";
+            string pages = "";
 
             oActionCallingContext.GetParameter("mode", ref mode);
             oActionCallingContext.GetParameter("objects", ref objects);
+            oActionCallingContext.GetParameter("pages", ref pages);
 
 
-
-
-
-
-            if (mode == "Start") //TODO:тут происходят действия при обновлении отчетов
+            if (reportBegin)
             {
-                var SS = new SelectionSet();
+                ModifyObjectListEntarnce = false;
+                var selectionSet = new SelectionSet
+                {
+                    LockProjectByDefault = false
+                };
+                var currentProject = selectionSet.GetCurrentProject(true);
 
-                SS.LockProjectByDefault = false;
-                var currentProject = SS.GetCurrentProject(true);
+                var selectedPages = selectionSet.GetSelectedPages();
+                if (selectedPages.Any())
+                {
+
+
+                    MessageBox.Show(
+                        "Ваш отчет по вставным перемычкам благополучно удален. Пожалуйста сгенерируйте его заново.");
+
+                    return false;
+                }
                 var createAndSaveTerminalStrips = new CreateAndSaveTerminalStrips(currentProject);
                 createAndSaveTerminalStrips.FindAndCreateTerminals();
                 new ReportProvider().UpdateConnections();
-
-
-
+                reportBegin = false;
             }
+
+
+
+
+
+            //if (mode == "Start") //TODO:тут происходят действия при обновлении отчетов
+            //{
+            //    var selectionSet = new SelectionSet
+            //    {
+            //        LockProjectByDefault = false
+            //    };
+            //    var currentProject = selectionSet.GetCurrentProject(true);
+
+            //    var selectedPages = selectionSet.GetSelectedPages();
+            //    if (selectedPages.Any())
+            //    {
+
+
+            //        var currentLocation = selectedPages.FirstOrDefault().Properties.DESIGNATION_LOCATION;//"S1"
+
+            //        List<string> resultList = TerminalsRepository.GetInstance().GetAllWithoutRemoving()
+            //            .Where(x => x.Properties[1200] == currentLocation)
+            //            .Select(x => x.ToStringIdentifier())
+            //            .ToList();
+            //        string result = string.Join(";", resultList);
+            //        objects = result + ";";
+            //        oActionCallingContext.AddParameter("objects", objects);
+            //        return true;
+            //    }
+            //}
+
+
 
             if (mode == "ModifyObjectList")
             {
+                ModifyObjectListEntarnce = true;
                 //obj ids
                 List<string> objectsList = objects.Split(';').ToList();
 
@@ -70,51 +118,99 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
                 {
                     if (so != null && so is Terminal terminal)
                     {
-                        if (terminal.Properties[20013].ToString() == "KL" || terminal.Properties[20013].ToString() == "D")
+                        if (terminal.Properties[20013].ToString() == "KL" || terminal.Properties[20013].ToString() == "D" || terminal.Properties[20013].ToString() == "ST")
                         {
                             return true;
                         }
-
                     }
-
                 }
 
                 objects = ";";
                 oActionCallingContext.AddParameter("objects", objects);
-                return true;
+
             }
 
-
-
-
-            //    //TODO:надо найти имя клемммника KL b и только после этого выводить отчет
-            //    objects = ";";
-
-            //    var terminals = TerminalsRepository.GetInstance().Get();
-
-            //    if (terminals == null || !terminals.Any())
-            //    {
-            //        oActionCallingContext.AddParameter("objects", objects);
-            //        return true;
-            //    }
-            //    List<string> resultList =
-            //        terminals.Where(s => s != null).Select(s => s.ToStringIdentifier()).ToList();
-            //    resultData = String.Join(";", resultList);
-
-            //    oActionCallingContext.AddParameter("objects", resultData);
-            //    return true;
-            //}
             if (mode == "Finish")
             {
-                using (SafetyPoint safetyPoint = SafetyPoint.Create())
+                using SafetyPoint safetyPoint = SafetyPoint.Create();
+                TerminalsRepository.GetInstance().GetAll().ForEach(z => z.Remove());
+                reportBegin = true;
+                safetyPoint.Commit();
+                if (ModifyObjectListEntarnce == false)
                 {
-                    TerminalsRepository.GetInstance().GetAll().ForEach(z => z.Remove());
+                    var selectionSet = new SelectionSet
+                    {
+                        LockProjectByDefault = false
+                    };
+                    ModifyObjectListEntarnce = false;
+
+                    //попробовать выполнить через 0,5с
+
+
+
                 }
 
-                return true;
+
             }
             return true;
         }
 
+        private bool SetInitObjectsToUpdate(ActionCallingContext oActionCallingContext, ref string objects,
+            Project currentProject)
+        {
+            var selectionSet = new SelectionSet
+            {
+                LockProjectByDefault = false
+            };
+            var selectedPages = selectionSet.GetSelectedPages();
+            if (selectedPages == null || !selectedPages.Any())
+            {
+                Reports reports = new Reports();
+                using (SafetyPoint safetyPoint = SafetyPoint.Create())
+                {
+
+                    reports.CreateReportsFromTemplates(currentProject,
+                        new List<DocumentTypeManager.DocumentType>(1) { DocumentTypeManager.DocumentType.TerminalDiagram });//TerminalDiagram   //TerminalLineupDiagram
+                    safetyPoint.Commit();
+                }  //TerminalLineupDiagram
+                return false;
+
+            }
+            //получаем страницу обновления
+            var currentLocation = selectedPages.FirstOrDefault().Properties.DESIGNATION_LOCATION;//"S1"
+
+            List<string> resultList = TerminalsRepository.GetInstance().GetAllWithoutRemoving()
+                .Where(x => x.Properties[1200] == currentLocation)
+                .Select(x => x.ToStringIdentifier())
+                .ToList();
+            string result = string.Join(";", resultList);
+            objects = result;
+            oActionCallingContext.AddParameter("objects", result);
+            return true;
+        }
+        //if (isNeedToCreateNew)
+        //{
+        //    var selectionSet = new SelectionSet
+        //    {
+        //        LockProjectByDefault = false
+        //    };
+        //    var selectedPages = selectionSet.GetSelectedPages();
+        //    selectedPages = null;
+        //    Reports reports = new Reports();
+
+        //    reports.CreateReportsFromTemplates(selectionSet.GetCurrentProject(true),
+        //        new List<DocumentTypeManager.DocumentType>(1) { DocumentTypeManager.DocumentType.TerminalConnectiondiagram
+        //        });//TerminalDiagram   //TerminalLineupDiagram
+        //    safetyPoint.Commit();
+        //    reportBegin = false;
+
+        //}
+    }
+    internal class TaskUpdate
+    {
+        public void Start()
+        {
+            MessageBox.Show("Всем привет");
+        }
     }
 }
