@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using Project = Eplan.EplApi.DataModel.Project;
 using SelectionSet = Eplan.EplApi.HEServices.SelectionSet;
 using StorableObject = Eplan.EplApi.DataModel.StorableObject;
-
+//16:25:32	onActionEnd.String.JumpersReport1	JumpersReport1
 //https://www.eplan.help/en-us/Infoportal/Content/api/2.9/API_REPORTS_MODIFICATION.html
 namespace ST.EplAddin.JumpersReport.Actions.ok
 {
@@ -108,8 +108,6 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
                         LockProjectByDefault = false
                     };
                     ModifyObjectListEntarnce = false;
-
-                    //попробовать выполнить через 0,5с
                 }
             }
             return true;
