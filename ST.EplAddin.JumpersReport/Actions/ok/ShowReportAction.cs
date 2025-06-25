@@ -53,7 +53,7 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
                 {
                     LockProjectByDefault = false
                 };
-                var currentProject = selectionSet.GetCurrentProject(true);
+                var currentProject = selectionSet.GetCurrentProject(false);
 
                 var selectedPages = selectionSet.GetSelectedPages();
                 if (selectedPages.Any())
@@ -65,7 +65,7 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
                 }
                 var createAndSaveTerminalStrips = new CreateAndSaveTerminalStrips(currentProject);
                 createAndSaveTerminalStrips.FindAndCreateTerminals();
-                new ReportProvider().UpdateConnections();
+                new ReportProvider().UpdateConnections(currentProject);
                 reportBegin = false;
             }
 

@@ -1,5 +1,4 @@
-﻿using Eplan.EplApi.ApplicationFramework;
-using Eplan.EplApi.DataModel;
+﻿using Eplan.EplApi.DataModel;
 using Eplan.EplApi.HEServices;
 using System;
 using System.Collections.Generic;
@@ -31,20 +30,14 @@ namespace ST.EplAddin.JumpersReport.Providers
         }
         public void CreateTerminals(Project project)
         {
-            UpdateConnections();
+            UpdateConnections(project);
             new CreateAndSaveTerminalStrips(project).FindAndCreateTerminals();
-            UpdateConnections();
+            UpdateConnections(project);
         }
 
-        public void UpdateConnections()
+        public void UpdateConnections(Project project)
         {
-            var action = new ActionManager().FindAction("EsGenerateConnections");
-
-            if (action != null)
-            {
-                ActionCallingContext oContext = new ActionCallingContext();
-                action.Execute(oContext);
-            }
+            new Generate().Connections(project);
         }
     }
 }
