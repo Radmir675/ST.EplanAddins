@@ -21,7 +21,7 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
 
         public void GetActionProperties(ref ActionProperties actionProperties)
         {
-            var s = actionProperties.GetParameterProperties();
+
         }
 
         public bool OnRegister(ref string Name, ref int Ordinal)
@@ -29,12 +29,10 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
             Name = ACTION_NAME;
             Ordinal = 20;
             return true;
-
         }
 
         public bool Execute(ActionCallingContext oActionCallingContext)
         {
-
             int count = oActionCallingContext.GetParameterCount();
             string[] contextParams = oActionCallingContext.GetParameters();
             string[] contextStrings = oActionCallingContext.GetStrings();
@@ -60,8 +58,6 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
                 var selectedPages = selectionSet.GetSelectedPages();
                 if (selectedPages.Any())
                 {
-
-
                     MessageBox.Show(
                         "Ваш отчет по вставным перемычкам благополучно удален. Пожалуйста сгенерируйте его заново.");
 
@@ -72,38 +68,6 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
                 new ReportProvider().UpdateConnections();
                 reportBegin = false;
             }
-
-
-
-
-
-            //if (mode == "Start") //TODO:тут происходят действия при обновлении отчетов
-            //{
-            //    var selectionSet = new SelectionSet
-            //    {
-            //        LockProjectByDefault = false
-            //    };
-            //    var currentProject = selectionSet.GetCurrentProject(true);
-
-            //    var selectedPages = selectionSet.GetSelectedPages();
-            //    if (selectedPages.Any())
-            //    {
-
-
-            //        var currentLocation = selectedPages.FirstOrDefault().Properties.DESIGNATION_LOCATION;//"S1"
-
-            //        List<string> resultList = TerminalsRepository.GetInstance().GetAllWithoutRemoving()
-            //            .Where(x => x.Properties[1200] == currentLocation)
-            //            .Select(x => x.ToStringIdentifier())
-            //            .ToList();
-            //        string result = string.Join(";", resultList);
-            //        objects = result + ";";
-            //        oActionCallingContext.AddParameter("objects", objects);
-            //        return true;
-            //    }
-            //}
-
-
 
             if (mode == "ModifyObjectList")
             {
@@ -118,7 +82,9 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
                 {
                     if (so != null && so is Terminal terminal)
                     {
-                        if (terminal.Properties[20013].ToString() == "KL" || terminal.Properties[20013].ToString() == "D" || terminal.Properties[20013].ToString() == "ST")
+                        var names = TerminalsRepository.GetInstance().GetAllWithoutRemoving()
+                            .Select(x => x.Properties[20013].ToString()).Distinct();
+                        if (names.Contains(terminal.Properties[20013].ToString()))
                         {
                             return true;
                         }
@@ -127,7 +93,6 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
 
                 objects = ";";
                 oActionCallingContext.AddParameter("objects", objects);
-
             }
 
             if (mode == "Finish")
@@ -145,12 +110,7 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
                     ModifyObjectListEntarnce = false;
 
                     //попробовать выполнить через 0,5с
-
-
-
                 }
-
-
             }
             return true;
         }
@@ -214,3 +174,33 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
         }
     }
 }
+
+
+
+
+
+//if (mode == "Start") //TODO:тут происходят действия при обновлении отчетов
+//{
+//    var selectionSet = new SelectionSet
+//    {
+//        LockProjectByDefault = false
+//    };
+//    var currentProject = selectionSet.GetCurrentProject(true);
+
+//    var selectedPages = selectionSet.GetSelectedPages();
+//    if (selectedPages.Any())
+//    {
+
+
+//        var currentLocation = selectedPages.FirstOrDefault().Properties.DESIGNATION_LOCATION;//"S1"
+
+//        List<string> resultList = TerminalsRepository.GetInstance().GetAllWithoutRemoving()
+//            .Where(x => x.Properties[1200] == currentLocation)
+//            .Select(x => x.ToStringIdentifier())
+//            .ToList();
+//        string result = string.Join(";", resultList);
+//        objects = result + ";";
+//        oActionCallingContext.AddParameter("objects", objects);
+//        return true;
+//    }
+//}

@@ -34,6 +34,7 @@ namespace ST.EplAddin.JumpersReport
             var result = queue.GetAllWithoutRemoving().SelectMany(x => x).ToList();
             return result;
         }
+
         public IEnumerable<Terminal> GetFirstTerminalsFromTerminalStrip()
         {
             Terminal terminal = null;
