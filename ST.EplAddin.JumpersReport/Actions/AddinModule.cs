@@ -1,4 +1,5 @@
 ﻿using Eplan.EplApi.ApplicationFramework;
+using ST.EplAddin.JumpersReport.Actions.ok;
 
 namespace ST.EplAddin.JumpersReport
 {
@@ -17,6 +18,7 @@ namespace ST.EplAddin.JumpersReport
             m_oTrace = new Eplan.EplApi.Base.TraceListener();
             System.Diagnostics.Trace.Listeners.Add(m_oTrace);
             _listenEndGenerateAction = new ListenEndGenerateAction();
+            new JumpersReportEndListener();
 
 
             return true;

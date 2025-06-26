@@ -58,10 +58,11 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
                 var selectedPages = selectionSet.GetSelectedPages();
                 if (selectedPages.Any())
                 {
+
                     MessageBox.Show(
                         "Ваш отчет по вставным перемычкам благополучно удален. Пожалуйста сгенерируйте его заново.");
-
-                    return false;
+                    reportBegin = false;
+                    return true;
                 }
                 var createAndSaveTerminalStrips = new CreateAndSaveTerminalStrips(currentProject);
                 createAndSaveTerminalStrips.FindAndCreateTerminals();
@@ -93,24 +94,19 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
 
                 objects = ";";
                 oActionCallingContext.AddParameter("objects", objects);
+                return false;
             }
 
             if (mode == "Finish")
             {
                 using SafetyPoint safetyPoint = SafetyPoint.Create();
                 TerminalsRepository.GetInstance().GetAll().ForEach(z => z.Remove());
-                reportBegin = true;
                 safetyPoint.Commit();
-                if (ModifyObjectListEntarnce == false)
-                {
-                    var selectionSet = new SelectionSet
-                    {
-                        LockProjectByDefault = false
-                    };
-                    ModifyObjectListEntarnce = false;
-                }
+                reportBegin = true;
+                return true;
+
             }
-            return true;
+            return false;
         }
 
         private bool SetInitObjectsToUpdate(ActionCallingContext oActionCallingContext, ref string objects,
@@ -163,13 +159,6 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
         //    reportBegin = false;
 
         //}
-    }
-    internal class TaskUpdate
-    {
-        public void Start()
-        {
-            MessageBox.Show("Всем привет");
-        }
     }
 }
 
