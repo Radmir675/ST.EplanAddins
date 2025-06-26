@@ -42,7 +42,10 @@ namespace ST.EplAddin.JumpersReport.Providers
         public IEnumerable<IEnumerable<JumperConnection>> SortDeviceJumpers(Connection[] connections)
         {
             var result = GetSymbolsData(connections).ToList();
-            var sortedList = result.OrderBy(x => x?.StartLiteralDT ?? x.EndLiteralDT).ThenBy(z => z?.StartDTCounter ?? z.EndDTCounter).ThenBy(y => y?.StartPinDesignation ?? y.EndPinDesignation);
+            var sortedList = result
+                .OrderBy(y => y?.StartPinDesignation ?? y.EndPinDesignation)
+                .ThenBy(x => x?.StartLiteralDT ?? x.EndLiteralDT)
+                .ThenBy(z => z?.StartDTCounter ?? z.EndDTCounter);
             var items = LinqExtension.GroupBy(sortedList);
             return items;
         }

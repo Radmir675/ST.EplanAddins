@@ -16,8 +16,6 @@ internal class CreateAndSaveTerminalStrips(Project project)
         var sortedList = jumpersData.SortDeviceJumpers(connections);
         var terminals = GetTerminals(sortedList).ToList();
         terminals.ForEach(terminals => jumpersData.InsertJumperInTerminals(terminals));
-        //terminals.ForEach(x => TerminalsRepository.GetInstance().Set(x.ToList()));
-        //terminals.ForEach(terminal => new CreateAndSaveTerminalStrips(project).CreateAndSaveTerminalStrip(terminal));
         TerminalsRepository.GetInstance().Set(terminals.SelectMany(z => z).ToList());
     }
     private IEnumerable<IEnumerable<Terminal>> GetTerminals(IEnumerable<IEnumerable<JumperConnection>> sortedList)
