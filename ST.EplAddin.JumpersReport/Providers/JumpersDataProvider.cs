@@ -20,7 +20,7 @@ namespace ST.EplAddin.JumpersReport.Providers
         {
             foreach (var connection in connections)
             {
-
+                //TODO: если нижестоящее буквенное обозначение  равно null или пустой строке то используем это в противном случае надо переписать по другому
                 var connectionResult = new JumperConnection()
                 {
                     StartPinDesignation = connection.StartPin.Name,
