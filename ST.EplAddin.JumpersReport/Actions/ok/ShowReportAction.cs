@@ -4,6 +4,7 @@ using Eplan.EplApi.DataModel.EObjects;
 using Eplan.EplApi.HEServices;
 using ST.EplAddin.JumpersReport.Providers;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using Project = Eplan.EplApi.DataModel.Project;
@@ -58,9 +59,10 @@ namespace ST.EplAddin.JumpersReport.Actions.ok
                 var selectedPages = selectionSet.GetSelectedPages();
                 if (selectedPages.Any())
                 {
-
+                    Process oCurrent = Process.GetCurrentProcess();
+                    var ww = new MessageBoxWrapper(oCurrent.MainWindowHandle);
                     MessageBox.Show(
-                        "Ваш отчет по вставным перемычкам благополучно удален. Пожалуйста сгенерируйте его заново.");
+                        "Ваш отчет по вставным перемычкам благополучно удален. Пожалуйста сгенерируйте его заново.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     reportBegin = false;
                     return true;
                 }

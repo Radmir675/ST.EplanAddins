@@ -131,6 +131,7 @@
     <Compile Include="Actions\ok\Action-XFgUpdateEvaluationAction.cs" />
     <Compile Include="Actions\del\JumpersReportEndListener.cs" />
     <Compile Include="Actions\ok\ShowReportAction.cs" />
+    <Compile Include="MessageBoxWrapper.cs" />
     <Compile Include="Providers\ActionProvider.cs" />
     <Compile Include="LINQ\LinqExtension.cs" />
     <Compile Include="Providers\ReportBlockCreatorProvider.cs" />
