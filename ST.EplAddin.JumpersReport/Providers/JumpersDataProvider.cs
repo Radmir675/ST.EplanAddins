@@ -20,7 +20,6 @@ namespace ST.EplAddin.JumpersReport.Providers
         {
             foreach (var connection in connections)
             {
-                //TODO: если нижестоящее буквенное обозначение  равно null или пустой строке то используем это в противном случае надо переписать по другому
                 var connectionResult = new JumperConnection()
                 {
                     StartPinDesignation = connection.StartPin.Name,
@@ -33,7 +32,10 @@ namespace ST.EplAddin.JumpersReport.Providers
                     EndDTCounter = ((Function)connection.EndSymbolReference).Properties[20014],
                     StartFullDeviceName = ((Function)connection.StartSymbolReference).Properties[20006],
                     EndFullDeviceName = ((Function)connection.EndSymbolReference).Properties[20006],
-
+                    StartSubDTCounter = ((Function)connection.StartSymbolReference).Properties[20004],
+                    EndSubDTCounter = ((Function)connection.EndSymbolReference).Properties[20004],
+                    StartSubLiteralDT = ((Function)connection.StartSymbolReference).Properties[20018],
+                    EndSubLiteralDT = ((Function)connection.EndSymbolReference).Properties[20018]
                 };
                 yield return connectionResult;
             }

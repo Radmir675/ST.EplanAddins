@@ -12,5 +12,9 @@
         public string EndLiteralDT;
         public int StartDTCounter;//9
         public int EndDTCounter;
+        public int StartSubDTCounter;//9
+        public int EndSubDTCounter;
+        public string StartSubLiteralDT;//"KL"
+        public string EndSubLiteralDT;
     }
 }
