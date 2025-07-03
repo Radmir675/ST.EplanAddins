@@ -27,14 +27,15 @@ internal class CreateAndSaveTerminalStrips(Project project)
 
     private bool HasErrorsInTermminals(List<IEnumerable<Terminal>> terminals, out IEnumerable<string> duplicates)
     {
-        var names = terminals.SelectMany(x => x).Select(x => x.Name);
+        var names = terminals.SelectMany(
+            terminal => terminal,
+            (terminal, item) => item.Name
+        );
         duplicates = names.GroupBy(x => x)
            .Where(g => g.Count() > 1)
            .Select(g => g.Key);
         bool hasDuplicates = duplicates.Any();
         return hasDuplicates;
-
-
     }
 
 

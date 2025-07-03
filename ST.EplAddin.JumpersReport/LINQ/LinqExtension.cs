@@ -5,7 +5,7 @@ namespace ST.EplAddin.JumpersReport.LINQ;
 
 internal class LinqExtension
 {
-    public static IEnumerable<IEnumerable<JumperConnection>> GroupBy(IEnumerable<JumperConnection> connections)
+    public static IEnumerable<IEnumerable<JumperConnection>> GroupBy(List<JumperConnection> connections)
     {
         var groups = new List<List<JumperConnection>>();
 

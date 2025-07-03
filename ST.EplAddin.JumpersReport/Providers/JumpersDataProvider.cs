@@ -57,14 +57,37 @@ namespace ST.EplAddin.JumpersReport.Providers
         public IEnumerable<IEnumerable<JumperConnection>> SortDeviceJumpers(Connection[] connections)
         {
             var result = GetSymbolsData(connections).ToList();
-            var sortedList = result
-                .OrderBy(x => x?.StartLocation ?? x.EndLocation)
-                //.ThenBy(y => y?.StartLiteralDT ?? y.EndLiteralDT)
-                //.ThenBy(z => z?.StartDTCounter ?? z.EndDTCounter)
-                .ThenBy(y => y?.StartPinDesignation ?? y.EndPinDesignation, new DesignationComparer());
-            var items = LinqExtension.GroupBy(sortedList);//наверное надо сортировать уже тут
+            var grouppedBy = result
+                .GroupBy(x => x.StartLiteralDT)
+                .Select(g => new
+                {
+                    Key = g.Key,
+                    Items = g.Key == "A"
+                        ? g.OrderBy(x => x?.StartLocation ?? x.EndLocation)
+                            .ThenBy(y => y?.StartLiteralDT ?? y.EndLiteralDT)
+                            .ThenBy(z => z?.StartDTCounter ?? z.EndDTCounter)
+                            .ThenBy(y => y?.StartPinDesignation ?? y.EndPinDesignation, new DesignationComparer())
+                            .ToList()
+                        : g.OrderBy(x => x?.StartLocation ?? x.EndLocation)
+                            .ThenBy(y => y?.StartLiteralDT ?? y.EndLiteralDT)
+                            .ThenBy(y => y?.StartPinDesignation ?? y.EndPinDesignation, new DesignationComparer())
+                            .ThenBy(z => z?.StartDTCounter ?? z.EndDTCounter)
+                            .ToList()
+                });
+
+            //var plcSortingList = result
+            //    .OrderBy(x => x?.StartLocation ?? x.EndLocation)
+            //    .ThenBy(y => y?.StartLiteralDT ?? y.EndLiteralDT)
+            //    .ThenBy(z => z?.StartDTCounter ?? z.EndDTCounter)
+            //    .ThenBy(y => y?.StartPinDesignation ?? y.EndPinDesignation, new DesignationComparer());
+            var items = LinqExtension.GroupBy(grouppedBy.SelectMany(x => x.Items).ToList());
             return items;
         }
+        //var releSortingList = result
+        //    .OrderBy(x => x?.StartLocation ?? x.EndLocation)
+        //    .ThenBy(y => y?.StartLiteralDT ?? y.EndLiteralDT)
+        //    .ThenBy(y => y?.StartPinDesignation ?? y.EndPinDesignation, new DesignationComparer())
+        //    .ThenBy(z => z?.StartDTCounter ?? z.EndDTCounter);
         public void InsertJumperInTerminals(IEnumerable<Terminal> terminals)
         {
             if (!terminals.Any()) return;
