@@ -7,6 +7,19 @@ using System.Text;
 
 namespace ST.EplAddin.JumpersReport.Providers
 {
+    internal class DesignationComparer : IComparer<string>
+    {
+
+        public int Compare(string x, string y)
+        {
+            if (int.TryParse(x, out int xRes) && int.TryParse(y, out int yRes))
+            {
+                return xRes.CompareTo(yRes);
+            }
+            return x.CompareTo(y);
+        }
+    }
+
     internal class JumpersDataProvider(Project project)
     {
         public Connection[] FindInsertableJumperConnections()
@@ -45,10 +58,11 @@ namespace ST.EplAddin.JumpersReport.Providers
         {
             var result = GetSymbolsData(connections).ToList();
             var sortedList = result
-                .OrderBy(y => y?.StartPinDesignation ?? y.EndPinDesignation)
-                .ThenBy(x => x?.StartLiteralDT ?? x.EndLiteralDT)
-                .ThenBy(z => z?.StartDTCounter ?? z.EndDTCounter);
-            var items = LinqExtension.GroupBy(sortedList);
+                .OrderBy(x => x?.StartLocation ?? x.EndLocation)
+                //.ThenBy(y => y?.StartLiteralDT ?? y.EndLiteralDT)
+                //.ThenBy(z => z?.StartDTCounter ?? z.EndDTCounter)
+                .ThenBy(y => y?.StartPinDesignation ?? y.EndPinDesignation, new DesignationComparer());
+            var items = LinqExtension.GroupBy(sortedList);//наверное надо сортировать уже тут
             return items;
         }
         public void InsertJumperInTerminals(IEnumerable<Terminal> terminals)

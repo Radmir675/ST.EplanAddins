@@ -4,6 +4,7 @@ using Eplan.EplApi.DataModel.MasterData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace ST.EplAddin.JumpersReport.Providers;
 
@@ -15,9 +16,28 @@ internal class CreateAndSaveTerminalStrips(Project project)
         var connections = jumpersData.FindInsertableJumperConnections();
         var sortedList = jumpersData.SortDeviceJumpers(connections);
         var terminals = GetTerminals(sortedList).ToList();
+        var isGood = HasErrorsInTermminals(terminals, out IEnumerable<string> duplicates);
+        if (isGood)
+        {
+            MessageBox.Show($"Есть ошибки в отчете. Обратитесь к разработчику! {string.Join(", ", duplicates)}");
+        }
         terminals.ForEach(terminals => jumpersData.InsertJumperInTerminals(terminals));
         TerminalsRepository.GetInstance().Set(terminals.SelectMany(z => z).ToList());
     }
+
+    private bool HasErrorsInTermminals(List<IEnumerable<Terminal>> terminals, out IEnumerable<string> duplicates)
+    {
+        var names = terminals.SelectMany(x => x).Select(x => x.Name);
+        duplicates = names.GroupBy(x => x)
+           .Where(g => g.Count() > 1)
+           .Select(g => g.Key);
+        bool hasDuplicates = duplicates.Any();
+        return hasDuplicates;
+
+
+    }
+
+
     private IEnumerable<IEnumerable<Terminal>> GetTerminals(IEnumerable<IEnumerable<JumperConnection>> sortedList)
     {
         foreach (var terminals in sortedList)
