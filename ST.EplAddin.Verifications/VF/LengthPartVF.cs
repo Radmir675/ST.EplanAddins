@@ -2,6 +2,7 @@
 using Eplan.EplApi.DataModel.E3D;
 using Eplan.EplApi.EServices;
 using System;
+using System.Linq;
 
 namespace ST.EplAddin.Verifications
 {
@@ -40,7 +41,13 @@ namespace ST.EplAddin.Verifications
 
         private double Get2DLength(BusBar busBar)
         {
-            var length = busBar.ArticleReferences[0]?.Properties[20496].ToDouble();
+            var length = busBar.ArticleReferences[0]?.Properties[20496];
+            var result = length.ToString().Split();
+            if (result.Last() != "мм")
+            {
+                length = 0;
+            }
+
             return length ?? 0;
         }
 
